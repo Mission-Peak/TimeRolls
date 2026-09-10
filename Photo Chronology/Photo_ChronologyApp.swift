@@ -11,7 +11,7 @@ import SwiftUI
 struct Photo_ChronologyApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            RootView()
         }
     }
 }

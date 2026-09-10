@@ -1,0 +1,122 @@
+//
+//  CaregiverSettings.swift
+//  Photo Chronology
+//
+//  Caregiver setup state (spec §7.1). Soft-gated, never authenticated, stored
+//  on-device only — including the optional plain-text labels.
+//
+
+import Foundation
+
+struct CaregiverSettings: Codable, Equatable, Sendable {
+
+    enum StartingDifficulty: String, Codable, CaseIterable, Sendable, Identifiable {
+        case gentle, standard, challenging
+        var id: String { rawValue }
+        var title: String {
+            switch self {
+            case .gentle: "Gentle"
+            case .standard: "Standard"
+            case .challenging: "Challenging"
+            }
+        }
+        var detail: String {
+            switch self {
+            case .gentle: "Photos far apart in time. 3 per level."
+            case .standard: "A comfortable mix. 4 per level."
+            case .challenging: "Photos close together in time. 5 per level."
+            }
+        }
+        var knob: DifficultyKnob {
+            switch self {
+            case .gentle: .gentle
+            case .standard: .standard
+            case .challenging: .challenging
+            }
+        }
+    }
+
+    enum TextScale: String, Codable, CaseIterable, Sendable, Identifiable {
+        case standard, large, largest
+        var id: String { rawValue }
+        var title: String {
+            switch self {
+            case .standard: "Standard"
+            case .large: "Large"
+            case .largest: "Largest"
+            }
+        }
+        var multiplier: Double {
+            switch self {
+            case .standard: 1.0
+            case .large: 1.18
+            case .largest: 1.36
+            }
+        }
+    }
+
+    /// The black-and-white difficulty lever. Always optional, always crisp mono —
+    /// never faded sepia — and never the only difficulty axis (accessibility
+    /// guardrail, spec §7.1).
+    enum MonochromeMode: String, Codable, CaseIterable, Sendable, Identifiable {
+        case off, occasional, always
+        var id: String { rawValue }
+        var title: String {
+            switch self {
+            case .off: "Off"
+            case .occasional: "Some levels"
+            case .always: "Every level"
+            }
+        }
+    }
+
+    // Photo sources
+    var useAllPhotos = true
+    /// Album identifier → included. A `false` entry always wins over inclusion.
+    var albumSelection: [String: Bool] = [:]
+    var enabledPackIDs: Set<String> = PublicPackLibrary.defaultEnabledPackIDs
+
+    // Difficulty & pace
+    var startingDifficulty: StartingDifficulty = .standard
+    /// 0 means no set length — the player stops whenever they like.
+    var levelsPerSession = 8
+    /// Silent only: timing is never shown to the player (spec §2).
+    var adaptiveTiming = true
+
+    // Accessibility
+    var textScale: TextScale = .standard
+    var highContrast = false
+    var monochromeMode: MonochromeMode = .off
+    var audioCues = true
+
+    // Optional light labelling (album or photo identifier → plain context)
+    var labels: [String: String] = [:]
+
+    var hasCompletedFirstRun = false
+
+    // MARK: - Persistence
+
+    private static let key = "caregiver-settings-v1"
+
+    static func load() -> CaregiverSettings {
+        guard let data = UserDefaults.standard.data(forKey: key),
+              let decoded = try? JSONDecoder().decode(CaregiverSettings.self, from: data) else {
+            return CaregiverSettings()
+        }
+        return decoded
+    }
+
+    func save() {
+        guard let data = try? JSONEncoder().encode(self) else { return }
+        UserDefaults.standard.set(data, forKey: Self.key)
+    }
+
+    /// Whether a given level should be shown in mono, given the caregiver's choice.
+    func shouldUseMonochrome(levelIndex: Int) -> Bool {
+        switch monochromeMode {
+        case .off: false
+        case .occasional: levelIndex % 3 == 2
+        case .always: true
+        }
+    }
+}
