@@ -46,7 +46,7 @@ final class ImageProvider {
         options.isNetworkAccessAllowed = true
         options.isSynchronous = false
 
-        let scale = UIScreen.main.scale
+        let scale = UITraitCollection.current.displayScale
         let pixelSize = CGSize(width: targetSize.width * scale, height: targetSize.height * scale)
 
         return await withCheckedContinuation { continuation in

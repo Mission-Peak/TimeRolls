@@ -10,10 +10,12 @@ import CoreLocation
 
 // MARK: - Themes
 
-/// v1 ships two themes; both need PhotoKit metadata only (spec §4).
+/// Chronology and Places need PhotoKit metadata only; Objects adds on-device Vision
+/// classification (spec §4, §6.3).
 enum GameTheme: String, CaseIterable, Identifiable, Codable {
     case chronology
     case places
+    case objects
 
     var id: String { rawValue }
 
@@ -21,6 +23,7 @@ enum GameTheme: String, CaseIterable, Identifiable, Codable {
         switch self {
         case .chronology: "Time"
         case .places: "Places"
+        case .objects: "Things"
         }
     }
 
@@ -28,8 +31,12 @@ enum GameTheme: String, CaseIterable, Identifiable, Codable {
         switch self {
         case .chronology: "clock"
         case .places: "map"
+        case .objects: "tag"
         }
     }
+
+    /// True for themes that need to look at the photo itself rather than its metadata.
+    var readsPhotoContent: Bool { self == .objects }
 }
 
 // MARK: - Photos
@@ -72,6 +79,10 @@ struct GamePhoto: Identifiable, Hashable {
     var caregiverLabel: String?
     /// Filled in by `PlaceResolver` for Places levels.
     var placeName: String?
+    /// Allow-listed categories the on-device classifier is confident about (spec §6.3).
+    var objectTags: Set<String> = []
+    /// Categories it saw any hint of — used only to rule this photo out as a distractor.
+    var possibleObjectTags: Set<String> = []
 
     var isPersonal: Bool { origin.isPersonal }
 }
@@ -89,6 +100,9 @@ struct Level: Identifiable {
     var difficulty: Double
     /// Human-readable note on why this set is this hard. Surfaced only in caregiver diagnostics.
     var curationNote: String
+    /// Objects only: the category the question asked about, so the answer's reveal
+    /// caption names *that* rather than whatever else is in the photo.
+    var focusTag: String?
 
     var usesPackPhotos: Bool { photos.contains { !$0.isPersonal } }
 
@@ -99,6 +113,14 @@ struct Level: Identifiable {
             return Level.captionFormatter.string(from: date)
         case .places:
             return photo.placeName ?? photo.caregiverLabel ?? ""
+        case .objects:
+            // On reveal, name what was found in each photo — including the near misses.
+            if photo.id == correctPhotoID,
+               let focusTag,
+               let asked = ObjectCatalog.category(id: focusTag) {
+                return asked.displayName.capitalized
+            }
+            return ObjectCatalog.displayName(forFirstOf: photo.objectTags)?.capitalized ?? ""
         }
     }
 
@@ -107,6 +129,28 @@ struct Level: Identifiable {
         f.dateFormat = "MMMM yyyy"
         return f
     }()
+}
+
+// MARK: - Theme rotation
+
+/// Which theme to play next. Pure and injectable so its distribution can be checked
+/// rather than eyeballed: mostly alternate, occasionally repeat, never starve a theme.
+enum ThemeRotation {
+
+    static let alternateChance = 0.7
+
+    static func next(from available: [GameTheme],
+                     last: GameTheme?,
+                     roll: () -> Double = { Double.random(in: 0...1) },
+                     pick: ([GameTheme]) -> GameTheme? = { $0.randomElement() }) -> GameTheme? {
+        guard !available.isEmpty else { return nil }
+        guard available.count > 1 else { return available[0] }
+        if let last, roll() < alternateChance {
+            let others = available.filter { $0 != last }
+            return pick(others) ?? pick(available)
+        }
+        return pick(available)
+    }
 }
 
 // MARK: - Difficulty
@@ -134,6 +178,11 @@ struct DifficultyKnob {
     var chronologyDecisiveGap: TimeInterval {
         max(45 * .day, chronologyTargetGap * 0.3)
     }
+
+    /// How often an Objects level draws its distractors from the same family as the
+    /// answer — a cat and a horse against a dog, rather than a bridge. Ramps smoothly
+    /// rather than flipping at a threshold.
+    var objectsSameFamilyChance: Double { level }
 
     /// Above this, Places distractors are drawn from nearby towns rather than far-flung ones.
     var placesNeighbourRadius: CLLocationDistance {

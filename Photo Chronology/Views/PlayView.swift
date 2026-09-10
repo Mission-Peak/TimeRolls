@@ -128,6 +128,7 @@ struct PlayView: View {
         switch level.theme {
         case .chronology: "Tap the photo you think came first."
         case .places: "Tap the photo that belongs there."
+        case .objects: "Tap the photo that has it."
         }
     }
 

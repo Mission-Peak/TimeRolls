@@ -8,5 +8,6 @@ swiftc -O -o "$OUT/harness" main.swift \
     "$SRC/Model/GameModel.swift" \
     "$SRC/Curation/Curators.swift" \
     "$SRC/Curation/LevelGenerator.swift" \
-    "$SRC/Sourcing/PublicPacks.swift"
+    "$SRC/Sourcing/PublicPacks.swift" \
+    "$SRC/Sourcing/ObjectCatalog.swift"
 "$OUT/harness"

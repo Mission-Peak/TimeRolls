@@ -13,6 +13,8 @@ struct LevelGenerator {
 
     var personal: [GamePhoto] = []
     var pack: [GamePhoto] = []
+    /// Objects looks at photo content, so the caregiver can switch it off entirely.
+    var allowObjects = true
 
     /// Chance of blending pack photos into an otherwise healthy personal library,
     /// for variety (spec §6.2b).
@@ -29,6 +31,11 @@ struct LevelGenerator {
             let places = Set(pool(for: theme, knob: knob, forceBlend: true)
                 .compactMap(\.placeName))
             return places.count >= 3
+        case .objects:
+            guard allowObjects else { return false }
+            // Needs a subject plus enough photos that plainly don't contain it.
+            return ObjectsCurator.makeLevel(
+                pool: pool(for: theme, knob: knob, forceBlend: true), knob: knob) != nil
         }
     }
 
@@ -48,6 +55,11 @@ struct LevelGenerator {
         case .places:
             return PlacesCurator.makeLevel(pool: pool, knob: knob)
                 ?? PlacesCurator.makeLevel(
+                    pool: self.pool(for: theme, knob: knob, forceBlend: true), knob: knob)
+        case .objects:
+            guard allowObjects else { return nil }
+            return ObjectsCurator.makeLevel(pool: pool, knob: knob)
+                ?? ObjectsCurator.makeLevel(
                     pool: self.pool(for: theme, knob: knob, forceBlend: true), knob: knob)
         }
     }
@@ -69,6 +81,12 @@ struct LevelGenerator {
             // GPS-poor — this is the known gap in spec §5.2.
             usablePersonal = personal.filter { $0.placeName != nil }
             sparse = Set(usablePersonal.compactMap(\.placeName)).count < 3
+        case .objects:
+            // Untagged photos are still useful here: a photo the classifier found
+            // nothing in is a perfectly clean distractor.
+            usablePersonal = personal
+            let subjects = Set(personal.flatMap(\.objectTags))
+            sparse = subjects.count < 2
         }
 
         guard !pack.isEmpty else { return usablePersonal }

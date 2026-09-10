@@ -19,7 +19,10 @@ struct AboutView: View {
             Section("Where photos go") {
                 DataRow(title: "Photo pixels",
                         leaves: "Never",
-                        detail: "Photos are only ever drawn on this screen. Nothing about the image itself is read, stored or sent.")
+                        detail: "Photos are drawn on this screen and, for the Things game, looked at by your iPhone's own photo recognition. No image is ever stored or sent.")
+                DataRow(title: "What's in a photo",
+                        leaves: "Never",
+                        detail: ClaimLanguage.objectsPrivacy)
                 DataRow(title: "Photo dates",
                         leaves: "Never",
                         detail: "Used on this device to pick photo sets.")

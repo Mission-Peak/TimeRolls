@@ -75,6 +75,9 @@ struct CaregiverSettings: Codable, Equatable, Sendable {
     /// Album identifier → included. A `false` entry always wins over inclusion.
     var albumSelection: [String: Bool] = [:]
     var enabledPackIDs: Set<String> = PublicPackLibrary.defaultEnabledPackIDs
+    /// The Objects theme looks at photo content on this device. Switchable off, in which
+    /// case the app stays strictly metadata-only (spec §6.3, §9).
+    var objectsThemeEnabled = true
 
     // Difficulty & pace
     var startingDifficulty: StartingDifficulty = .standard
@@ -93,6 +96,34 @@ struct CaregiverSettings: Codable, Equatable, Sendable {
     var labels: [String: String] = [:]
 
     var hasCompletedFirstRun = false
+
+    // MARK: - Decoding
+    //
+    // Every key is optional on the way in, so adding a setting never discards a
+    // caregiver's existing choices.
+
+    init() {}
+
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        func value<T: Decodable>(_ key: CodingKeys, _ fallback: T) -> T {
+            (try? container.decodeIfPresent(T.self, forKey: key)) .flatMap { $0 } ?? fallback
+        }
+        let defaults = CaregiverSettings()
+        useAllPhotos = value(.useAllPhotos, defaults.useAllPhotos)
+        albumSelection = value(.albumSelection, defaults.albumSelection)
+        enabledPackIDs = value(.enabledPackIDs, defaults.enabledPackIDs)
+        objectsThemeEnabled = value(.objectsThemeEnabled, defaults.objectsThemeEnabled)
+        startingDifficulty = value(.startingDifficulty, defaults.startingDifficulty)
+        levelsPerSession = value(.levelsPerSession, defaults.levelsPerSession)
+        adaptiveTiming = value(.adaptiveTiming, defaults.adaptiveTiming)
+        textScale = value(.textScale, defaults.textScale)
+        highContrast = value(.highContrast, defaults.highContrast)
+        monochromeMode = value(.monochromeMode, defaults.monochromeMode)
+        audioCues = value(.audioCues, defaults.audioCues)
+        labels = value(.labels, defaults.labels)
+        hasCompletedFirstRun = value(.hasCompletedFirstRun, defaults.hasCompletedFirstRun)
+    }
 
     // MARK: - Persistence
 

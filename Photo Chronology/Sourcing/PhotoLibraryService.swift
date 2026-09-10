@@ -79,7 +79,7 @@ final class PhotoLibraryService {
         photos = scan.photos
     }
 
-    private struct ScanResult {
+    nonisolated private struct ScanResult {
         var albums: [AlbumInfo] = []
         var photos: [GamePhoto] = []
         var screenshots: Set<String> = []

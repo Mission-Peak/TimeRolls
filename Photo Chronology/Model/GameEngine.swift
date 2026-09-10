@@ -25,6 +25,7 @@ final class GameEngine {
     // Dependencies
     let library = PhotoLibraryService()
     let places = PlaceResolver()
+    let objects = ObjectTagger()
     let images = ImageProvider()
     let stats = StatsStore()
     let telemetry = TelemetryQueue()
@@ -46,7 +47,7 @@ final class GameEngine {
         settings.shouldUseMonochrome(levelIndex: levelIndex)
     }
 
-    private var generator = LevelGenerator()
+    private(set) var generator = LevelGenerator()
     private var levelStarted = Date()
     private var levelCounter = 0
     private var lastTheme: GameTheme?
@@ -98,6 +99,8 @@ final class GameEngine {
             if case .playing = phase, level == nil { nextLevel() }
         }
 
+        startTaggingIfWanted()
+
         guard !availableThemes.isEmpty else {
             phase = .noContent(noContentReason())
             return
@@ -116,6 +119,7 @@ final class GameEngine {
         knob.photoCount = settings.startingDifficulty.knob.photoCount
         await library.reload(settings: settings)
         refreshPools()
+        startTaggingIfWanted()
         if availableThemes.isEmpty {
             phase = .noContent(noContentReason())
         } else if case .noContent = phase {
@@ -124,9 +128,26 @@ final class GameEngine {
     }
 
     private func refreshPools() {
-        generator.personal = places.annotate(library.photos)
+        generator.personal = objects.annotate(places.annotate(library.photos))
         generator.pack = PublicPackLibrary.photos(enabledPackIDs: settings.enabledPackIDs)
+        generator.allowObjects = settings.objectsThemeEnabled
         availableThemes = generator.availableThemes(knob: knob)
+    }
+
+    /// Classification is incremental: each chunk of photos that comes back can unlock
+    /// the Objects theme mid-session, so a first run doesn't wait on the whole library.
+    private func startTaggingIfWanted() {
+        guard settings.objectsThemeEnabled, library.access.canRead else {
+            objects.stop()
+            return
+        }
+        objects.startTagging(library.photos) { [weak self] in
+            guard let self else { return }
+            refreshPools()
+            if case .noContent = phase, !availableThemes.isEmpty {
+                beginSession()
+            }
+        }
     }
 
     private func noContentReason() -> String {
@@ -166,13 +187,7 @@ final class GameEngine {
     // MARK: - Levels
 
     private func chooseTheme() -> GameTheme? {
-        guard !availableThemes.isEmpty else { return nil }
-        guard availableThemes.count > 1 else { return availableThemes[0] }
-        // Alternate themes most of the time so a session doesn't feel like one long drill.
-        if let last = lastTheme, Double.random(in: 0...1) < 0.7 {
-            return availableThemes.first { $0 != last } ?? availableThemes.randomElement()
-        }
-        return availableThemes.randomElement()
+        ThemeRotation.next(from: availableThemes, last: lastTheme)
     }
 
     private func nextLevel() {
@@ -265,6 +280,18 @@ final class GameEngine {
         }
     }
 
+    /// The annotated pool, for the coverage report.
+    var taggedPool: [GamePhoto] {
+        generator.personal + generator.pack
+    }
+
+    /// Throws away every cached label and looks again — for testing allow-list changes.
+    func reclassifyPhotos() {
+        objects.reset()
+        refreshPools()
+        startTaggingIfWanted()
+    }
+
     // MARK: - Diagnostics (caregiver screen only)
 
     var diagnostics: [(String, String)] {
@@ -275,6 +302,8 @@ final class GameEngine {
             ("Places resolved", "\(places.cache.count) location clusters"),
             ("Pack photos in play",
              "\(PublicPackLibrary.photos(enabledPackIDs: settings.enabledPackIDs).count)"),
+            ("Photos looked at", objectsProgress),
+            ("Things found", objectsFound),
             ("Themes available",
              availableThemes.isEmpty ? "none" : availableThemes.map(\.title).joined(separator: ", ")),
             ("Difficulty knob", String(format: "%.2f", knob.level)),
@@ -289,6 +318,25 @@ final class GameEngine {
             rows.append(("Last geocoding error", error))
         }
         return rows
+    }
+
+    private var objectsProgress: String {
+        guard settings.objectsThemeEnabled else { return "off" }
+        if objects.unavailableReason != nil {
+            return "classifier unavailable — packs only"
+        }
+        let pending = objects.pendingCount(in: library.photos)
+        let done = library.photos.count - pending
+        return pending > 0
+            ? "\(done) of \(library.photos.count) (working…)"
+            : "\(done) of \(library.photos.count)"
+    }
+
+    private var objectsFound: String {
+        let found = objects.coverage(in: generator.personal + generator.pack)
+            .filter { $0.matches > 0 }
+        guard !found.isEmpty else { return "none yet" }
+        return "\(found.count) categories, top: \(found.prefix(3).map(\.category.displayName).joined(separator: ", "))"
     }
 
     private var accessDescription: String {

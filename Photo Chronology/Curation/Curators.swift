@@ -247,3 +247,101 @@ enum PlacesCurator {
             .trimmingCharacters(in: .whitespaces) ?? name
     }
 }
+
+enum ObjectsCurator {
+
+    /// One photo that clearly contains the category, plus distractors the classifier
+    /// saw no hint of it in (spec §5.3, §6.3). Harder levels pull those distractors
+    /// from the same family, so "which one has a dog" sits next to a cat and a horse.
+    static func makeLevel(pool: [GamePhoto], knob: DifficultyKnob) -> Level? {
+        let wanted = min(max(knob.photoCount, 3), 5)
+
+        var byCategory: [String: [GamePhoto]] = [:]
+        for photo in pool {
+            for tag in photo.objectTags where ObjectCatalog.category(id: tag) != nil {
+                byCategory[tag, default: []].append(photo)
+            }
+        }
+        guard !byCategory.isEmpty else { return nil }
+
+        // Favour categories the player has their own photo of.
+        let candidates = byCategory.keys.shuffled().sorted { lhs, rhs in
+            let l = byCategory[lhs]!.contains(where: \.isPersonal) ? 1 : 0
+            let r = byCategory[rhs]!.contains(where: \.isPersonal) ? 1 : 0
+            return l > r
+        }
+
+        let preferSameFamily = Double.random(in: 0...1) < knob.objectsSameFamilyChance
+
+        for categoryID in candidates.prefix(12) {
+            guard let category = ObjectCatalog.category(id: categoryID),
+                  let target = byCategory[categoryID]?.randomElement() else { continue }
+
+            // A distractor must not even arguably contain the target category.
+            let clean = pool.filter {
+                $0.id != target.id && !$0.possibleObjectTags.contains(categoryID)
+            }
+            // Prefer photos that clearly show *something* — a blank wall is filler.
+            let recognisable = clean.filter { !$0.objectTags.isEmpty }
+
+            let sameFamily = recognisable.filter { photo in
+                photo.objectTags.contains {
+                    ObjectCatalog.category(id: $0)?.family == category.family
+                }
+            }
+            let otherFamily = recognisable.filter { photo in
+                !photo.objectTags.contains {
+                    ObjectCatalog.category(id: $0)?.family == category.family
+                }
+            }
+
+            let preferred: [GamePhoto]
+            if preferSameFamily {
+                preferred = sameFamily.count >= wanted - 1 ? sameFamily : recognisable
+            } else {
+                preferred = otherFamily.count >= wanted - 1 ? otherFamily : recognisable
+            }
+
+            // One photo per category among the distractors, so the reveal reads well.
+            var distractors: [GamePhoto] = []
+            var usedTags = Set([categoryID])
+            for photo in preferred.shuffled() where distractors.count < wanted - 1 {
+                let tags = photo.objectTags
+                guard tags.isDisjoint(with: usedTags) else { continue }
+                distractors.append(photo)
+                usedTags.formUnion(tags)
+            }
+            // Top up if the library is too thin to be picky, preferring photos that add
+            // something new — an untagged photo beats a second photo of the same thing.
+            if distractors.count < wanted - 1 {
+                let topUp = clean.shuffled().sorted {
+                    $0.objectTags.intersection(usedTags).count
+                        < $1.objectTags.intersection(usedTags).count
+                }
+                for photo in topUp where distractors.count < wanted - 1 {
+                    guard !distractors.contains(photo) else { continue }
+                    distractors.append(photo)
+                    usedTags.formUnion(photo.objectTags)
+                }
+            }
+            guard distractors.count == wanted - 1 else { continue }
+
+            let photos = ([target] + distractors).shuffled()
+            let personal = photos.filter(\.isPersonal).count
+            let familyNote = preferSameFamily && sameFamily.count >= wanted - 1
+                ? "same-family distractors"
+                : "mixed distractors"
+
+            return Level(theme: .objects,
+                         prompt: category.question,
+                         photos: photos,
+                         correctPhotoID: target.id,
+                         difficulty: knob.level,
+                         curationNote: "\(category.id) · \(familyNote) · "
+                            + "\(byCategory.count) categories in play · "
+                            + "\(personal) personal + \(photos.count - personal) pack",
+                         focusTag: categoryID)
+        }
+        return nil
+    }
+}

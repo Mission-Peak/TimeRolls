@@ -362,11 +362,90 @@ struct DiagnosticsView: View {
             }
 
             Section {
+                NavigationLink("Things coverage") {
+                    ObjectCoverageView(engine: engine)
+                }
+            } header: {
+                Text("Objects theme")
+            } footer: {
+                Text("Which allow-listed categories actually turn up in this library, and "
+                     + "which of them can carry a level. This is the evidence for deciding "
+                     + "which Vision categories are reliable enough to ship.")
+            }
+
+            Section {
                 Button("Reset progress numbers", role: .destructive) {
                     engine.stats.reset()
+                }
+                Button("Forget photo labels and look again", role: .destructive) {
+                    engine.reclassifyPhotos()
                 }
             }
         }
         .navigationTitle("Diagnostics")
+    }
+}
+
+// MARK: - Objects coverage
+
+/// Reports the allow-list against a real library — the evidence for the "which Vision
+/// categories are reliable enough to ship" decision (spec §12).
+struct ObjectCoverageView: View {
+
+    let engine: GameEngine
+
+    private var rows: [(category: ObjectCategory, matches: Int)] {
+        engine.objects.coverage(in: engine.taggedPool)
+    }
+
+    var body: some View {
+        List {
+            Section {
+                LabeledContent("Photos looked at",
+                               value: "\(engine.objects.taggedCount)")
+                LabeledContent("Still to look at",
+                               value: "\(engine.objects.pendingCount(in: engine.library.photos))")
+                LabeledContent("Couldn't be read",
+                               value: "\(engine.objects.unreadableCount)")
+                if engine.objects.isWorking {
+                    HStack(spacing: 8) {
+                        ProgressView().controlSize(.small)
+                        Text("Looking at photos…").foregroundStyle(.secondary)
+                    }
+                    .font(.footnote)
+                }
+            } footer: {
+                if let reason = engine.objects.unavailableReason {
+                    Text("The on-device classifier could not start, so personal photos "
+                         + "have no subjects yet and the Things game is running on the photo "
+                         + "packs alone. This is expected in the iOS Simulator, whose Core ML "
+                         + "runtime cannot load the image classifier — run on a device to see "
+                         + "it work.\n\nReported: \(reason)")
+                }
+            }
+
+            Section {
+                ForEach(rows, id: \.category.id) { row in
+                    HStack {
+                        VStack(alignment: .leading, spacing: 2) {
+                            Text(row.category.displayName)
+                            Text("\(row.category.family.rawValue) · floor \(String(format: "%.2f", row.category.confidence))")
+                                .font(.caption2)
+                                .foregroundStyle(.secondary)
+                        }
+                        Spacer()
+                        Text("\(row.matches)")
+                            .font(.body.monospacedDigit())
+                            .foregroundStyle(row.matches > 0 ? Palette.accent : .secondary)
+                    }
+                }
+            } header: {
+                Text("Photos matched, per category")
+            } footer: {
+                Text("A category needs one clear photo of its own plus enough photos that "
+                     + "plainly don't contain it before it can carry a level.")
+            }
+        }
+        .navigationTitle("Things coverage")
     }
 }

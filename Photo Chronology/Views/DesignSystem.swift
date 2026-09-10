@@ -88,4 +88,11 @@ enum ClaimLanguage {
     Your photos never leave your device; only GPS coordinates are sent to identify a \
     place name, and only once per location.
     """
+
+    /// Parallel line for the Objects theme. Draft — the Evidence Foundation doc's
+    /// "Unified claim language" section is authoritative and should carry the final wording.
+    static let objectsPrivacy = """
+    For the Things game, your iPhone looks at your photos on the device itself to spot \
+    everyday things like a dog or a cake. No photo and no label is ever sent anywhere.
+    """
 }

@@ -9,6 +9,7 @@
 
 import Foundation
 import CoreLocation
+import MapKit
 import Observation
 
 @Observable
@@ -20,11 +21,10 @@ final class PlaceResolver {
     /// Set when geocoding fails (offline, rate limited). Places degrades rather than errors.
     private(set) var lastErrorDescription: String?
 
-    private let geocoder = CLGeocoder()
     private var failedKeys = Set<String>()
     private let storeURL: URL
 
-    /// CLGeocoder throttles aggressively; keep requests slow and bounded per launch.
+    /// MapKit throttles aggressively; keep requests slow and bounded per launch.
     private let minimumInterval: TimeInterval = 1.2
     private let maximumLookupsPerLaunch = 40
     private var lookupsThisLaunch = 0
@@ -91,9 +91,16 @@ final class PlaceResolver {
         lastRequest = Date()
         lookupsThisLaunch += 1
 
+        guard let request = MKReverseGeocodingRequest(location: coordinate.clLocation) else {
+            failedKeys.insert(key)
+            return
+        }
         do {
-            let placemarks = try await geocoder.reverseGeocodeLocation(coordinate.clLocation)
-            if let name = placemarks.first.flatMap(Self.displayName) {
+            let items = try await request.mapItems
+            // `cityWithContext` is already the phrasing we want a question to use —
+            // "Rome, Italy", "San Francisco, CA" — localised to the place itself.
+            if let name = items.first?.addressRepresentations?.cityWithContext
+                ?? items.first?.addressRepresentations?.regionName {
                 cache[key] = name
                 lastErrorDescription = nil
             } else {
@@ -102,18 +109,6 @@ final class PlaceResolver {
         } catch {
             failedKeys.insert(key)
             lastErrorDescription = error.localizedDescription
-        }
-    }
-
-    private static func displayName(_ placemark: CLPlacemark) -> String? {
-        let locality = placemark.locality ?? placemark.subAdministrativeArea ?? placemark.inlandWater
-            ?? placemark.ocean ?? placemark.name
-        let region = placemark.country
-        switch (locality, region) {
-        case let (locality?, region?): return "\(locality), \(region)"
-        case let (locality?, nil): return locality
-        case let (nil, region?): return region
-        default: return nil
         }
     }
 

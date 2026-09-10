@@ -12,7 +12,7 @@
 
 import Foundation
 
-enum DeviceIdentity {
+nonisolated enum DeviceIdentity {
     private static let key = "device-id-v1"
 
     /// Generated at first launch. This is the whole OneBucket namespace — no login (spec §8).
@@ -24,7 +24,7 @@ enum DeviceIdentity {
     }
 }
 
-struct EngagementEvent: Codable, Sendable, Identifiable {
+nonisolated struct EngagementEvent: Codable, Sendable, Identifiable {
     enum Kind: String, Codable, Sendable {
         case sessionStart
         case sessionEnd
@@ -47,14 +47,14 @@ struct EngagementEvent: Codable, Sendable, Identifiable {
 
 /// Where queued events go. The prototype ships the local sink; the OneBucket sink is
 /// the slot for the real client once the bucket and event schema are settled (spec §12).
-protocol EngagementSink: Sendable {
+nonisolated protocol EngagementSink: Sendable {
     var name: String { get }
     var isConfigured: Bool { get }
     func send(_ events: [EngagementEvent]) async throws
 }
 
 /// Writes newline-delimited JSON to Application Support. Nothing leaves the device.
-struct LocalFileSink: EngagementSink {
+nonisolated struct LocalFileSink: EngagementSink {
     let name = "On-device log"
     let isConfigured = true
 
@@ -86,7 +86,7 @@ struct LocalFileSink: EngagementSink {
 
 /// Not wired up. Bucket namespace and event schema are open decisions (spec §12);
 /// AgentMark's upload queue + MCPClient is the intended starting point.
-struct OneBucketSink: EngagementSink {
+nonisolated struct OneBucketSink: EngagementSink {
     let name = "OneBucket"
     let isConfigured = false
 

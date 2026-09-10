@@ -125,7 +125,9 @@ enum PublicPackLibrary {
                               creationDate: item.date,
                               coordinate: item.coordinate,
                               caregiverLabel: nil,
-                              placeName: item.placeName)
+                              placeName: item.placeName,
+                              objectTags: item.motif.objectTags,
+                              possibleObjectTags: item.motif.objectTags)
                 }
             }
     }

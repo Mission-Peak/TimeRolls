@@ -95,7 +95,10 @@ struct FirstRunView: View {
                            detail: "There's no score, no timer, and no wrong turn you can't take back.")
                     Bullet(symbol: "lock.shield",
                            title: "Photos stay on this phone",
-                           detail: ClaimLanguage.placesPrivacy)
+                           detail: "Your photos never leave your device. To spot things like "
+                                + "a dog or a cake, your iPhone looks at them here on the "
+                                + "phone. Only GPS coordinates are sent, to name a place, "
+                                + "and only once per location.")
                 }
 
                 VStack(spacing: 12) {
