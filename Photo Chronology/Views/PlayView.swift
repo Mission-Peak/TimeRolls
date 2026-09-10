@@ -85,15 +85,18 @@ struct PlayView: View {
 
             Spacer()
 
-            // Press-and-hold, so a stray tap never lands here (spec §7.1).
+            // The soft gate is the confirmation step this opens, not the gesture itself
+            // (spec §7.1 allows either). A long press is kept as well, but a plain tap
+            // has to work — a caregiver who can't find setup may as well not have it.
             Image(systemName: "ellipsis.circle")
                 .appFont(24)
-                .foregroundStyle(Palette.softInk(highContrast).opacity(0.55))
+                .foregroundStyle(Palette.softInk(highContrast).opacity(0.6))
                 .frame(width: 44, height: 44)
                 .contentShape(Rectangle())
+                .onTapGesture { onCaregiverGate() }
                 .onLongPressGesture(minimumDuration: 0.7) { onCaregiverGate() }
                 .accessibilityLabel("Caregiver setup")
-                .accessibilityHint("Press and hold to open setup")
+                .accessibilityHint("Opens setup for photo sources, difficulty and text size")
                 .accessibilityAddTraits(.isButton)
         }
         .padding(.horizontal, 20)
