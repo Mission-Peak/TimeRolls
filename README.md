@@ -48,8 +48,21 @@ recorded anyway and shown under Privacy → Photo credits.
 **Sources.** `commons-geo` geosearches Wikimedia Commons around a landmark coordinate, so
 those items carry real coordinates and can drive the Places theme. `smithsonian` pulls
 from Open Access, which holds ~35k CC0 photographs with dates and is where historical
-material comes from. The Smithsonian API needs a key; `DEMO_KEY` works for small runs
-(about 30 requests an hour), and a free key from api.data.gov lifts that — pass `--si-key`.
+material comes from.
+
+**The Smithsonian key.** The API needs one. `DEMO_KEY` is for exploration only — about 30
+requests an hour, explicitly not for automated use — and a Decades build spends one request
+per decade, so it runs out. A free key from <https://api.data.gov/signup/> raises the limit
+to 1,000 requests an hour; pass it as `--si-key` or set `SI_API_KEY`. The key is used by
+this build tool on a developer's Mac and never ships in the app: what ships is the
+resulting CC0 images.
+
+**Is the output shippable?** Yes. The Smithsonian states that CC0 assets may be used
+commercially with no attribution, permission or fee. Two caveats that CC0 does not cover,
+both worth a look before a public release: third-party rights the Smithsonian cannot waive
+(trademark, privacy, publicity — relevant because these are photographs of identifiable
+people, though the ones here are long-dead), and Smithsonian trademarks, which are excluded
+from Open Access entirely and are not used here.
 
 **What ships today**
 
@@ -57,6 +70,12 @@ material comes from. The Smithsonian API needs a key; `DEMO_KEY` works for small
 | --- | --- | --- | --- | --- |
 | Travel Landmarks | 21 | 2005–2017 | Wikimedia Commons | Places (8 cities), Time |
 | Decades | 12 | 1855–1953 | Smithsonian Open Access | Time |
+
+The Decades pack is thin and skewed early because it was built on `DEMO_KEY`, which ran
+out mid-build. The builder now issues one query per decade from the 1880s to the 1980s and
+caps how many items any one decade may contribute, so a run with a real key should spread
+much more evenly. A run that yields fewer photos than the pack already on disk refuses to
+overwrite it.
 | Everyday Life, Classic Holidays | 24 | 1948–2019 | Procedural placeholder art | all three |
 
 **What the licence filter costs.** Strict CC0 buys legal clarity and loses the middle of

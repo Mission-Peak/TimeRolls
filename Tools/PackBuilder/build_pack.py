@@ -63,11 +63,19 @@ PACK_SPECS = {
         # object_type matters as much as the keyword: without it the collection hands
         # back paintings, sketchbook folios and herbarium sheets, which are not what
         # "when was this taken?" means.
+        #
+        # One query per decade, because an untargeted search piles up wherever the
+        # collection is deepest — which for CC0 is the late 1800s. A pack called
+        # Decades should actually span them.
         "queries": [
-            {"q": 'online_media_type:"Images" AND media_usage:"CC0" AND object_type:"Photographs" AND (family OR children OR portrait)', "take": 12},
-            {"q": 'online_media_type:"Images" AND media_usage:"CC0" AND object_type:"Photographs" AND (street OR city OR shop OR market)', "take": 12},
-            {"q": 'online_media_type:"Images" AND media_usage:"CC0" AND object_type:"Photographs" AND (farm OR train OR automobile OR bicycle)', "take": 12},
+            {"decade": decade, "take": 5,
+             "q": ('online_media_type:"Images" AND media_usage:"CC0" AND '
+                   'object_type:"Photographs" AND (%s)'
+                   % " OR ".join(str(decade + offset) for offset in range(0, 10)))}
+            for decade in range(1880, 1990, 10)
         ],
+        # No decade may take over the pack.
+        "perDecadeCap": 5,
     },
 }
 
@@ -273,6 +281,11 @@ def from_smithsonian(spec, rejections, api_key):
                 rejections.add("no image URL")
                 continue
 
+            wanted_decade = query.get("decade")
+            if wanted_decade and not (wanted_decade <= year < wanted_decade + 10):
+                rejections.add("outside the decade asked for")
+                continue
+
             makers = [strip_html(entry.get("content"))
                       for entry in (content.get("freetext", {}).get("name") or [])]
             seen_titles.add(title)
@@ -309,16 +322,17 @@ def build(pack_name, out_root, api_key):
         return 1
 
     pack_dir = os.path.join(out_root, spec["id"])
-    if os.path.exists(pack_dir):
-        shutil.rmtree(pack_dir)
-    os.makedirs(pack_dir)
+    staging = pack_dir + ".building"
+    if os.path.exists(staging):
+        shutil.rmtree(staging)
+    os.makedirs(staging)
 
     print(f"\nDownloading {len(candidates)} images…")
     items = []
     for index, candidate in enumerate(candidates, start=1):
         item_id = f"{spec['id']}-{index:03d}"
         filename = f"{item_id}.jpg"
-        if not download_and_resize(candidate["image"], os.path.join(pack_dir, filename)):
+        if not download_and_resize(candidate["image"], os.path.join(staging, filename)):
             rejections.add("download or resize failed")
             continue
         entry = {
@@ -348,14 +362,34 @@ def build(pack_name, out_root, api_key):
         "builtAt": time.strftime("%Y-%m-%d"),
         "items": items,
     }
+    existing = 0
+    if os.path.isdir(pack_dir):
+        existing = len([name for name in os.listdir(pack_dir) if name.endswith(".jpg")])
+    if items and existing > len(items):
+        print(f"\nStopping: this run produced {len(items)} photos but {pack_dir} already "
+              f"has {existing}. Refusing to replace a fuller pack with a thinner one —")
+        print("rerun with --si-key once you have a key, or delete the pack directory to force it.")
+        shutil.rmtree(staging)
+        print("\nRejected along the way:")
+        print(rejections.report())
+        return 1
+
     manifest_name = f"{spec['id']}.pack.json"
-    with open(os.path.join(pack_dir, manifest_name), "w") as handle:
+    with open(os.path.join(staging, manifest_name), "w") as handle:
         json.dump(manifest, handle, indent=2)
+
+    if os.path.exists(pack_dir):
+        shutil.rmtree(pack_dir)
+    os.rename(staging, pack_dir)
 
     total_bytes = sum(os.path.getsize(os.path.join(pack_dir, entry["file"])) for entry in items)
     years = sorted(entry["year"] for entry in items)
+    spread = {}
+    for entry in items:
+        spread[entry["year"] // 10 * 10] = spread.get(entry["year"] // 10 * 10, 0) + 1
     print(f"\nWrote {len(items)} items to {pack_dir}")
     print(f"  years  {years[0]}–{years[-1]}")
+    print(f"  spread {dict(sorted(spread.items()))}")
     print(f"  size   {total_bytes/1_000_000:.1f} MB")
     print(f"  places {len({entry.get('place') for entry in items if entry.get('place')})}")
     print("\nRejected along the way:")
