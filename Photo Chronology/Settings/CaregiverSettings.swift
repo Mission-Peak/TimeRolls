@@ -85,6 +85,9 @@ struct CaregiverSettings: Codable, Equatable, Sendable {
     var levelsPerSession = 8
     /// Silent only: timing is never shown to the player (spec §2).
     var adaptiveTiming = true
+    /// Together mode: a quiet strip for a companion sitting alongside the player.
+    /// Same room only — nothing is paired, sent or stored (spec §7 rationale).
+    var togetherMode = false
 
     // Accessibility
     var textScale: TextScale = .standard
@@ -117,6 +120,7 @@ struct CaregiverSettings: Codable, Equatable, Sendable {
         startingDifficulty = value(.startingDifficulty, defaults.startingDifficulty)
         levelsPerSession = value(.levelsPerSession, defaults.levelsPerSession)
         adaptiveTiming = value(.adaptiveTiming, defaults.adaptiveTiming)
+        togetherMode = value(.togetherMode, defaults.togetherMode)
         textScale = value(.textScale, defaults.textScale)
         highContrast = value(.highContrast, defaults.highContrast)
         monochromeMode = value(.monochromeMode, defaults.monochromeMode)

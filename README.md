@@ -28,6 +28,28 @@ Around that: errorless feedback (a wrong tap dims and you try again — no score
 fail state, no visible clock), silent adaptive difficulty, a soft-gated caregiver
 setup, on-device aggregate progress, and an anonymous engagement queue.
 
+## Together mode
+
+The evidence spine's strongest cross-cutting finding is that solo delivery of
+reminiscence-type activities underperforms caregiver co-use (spec §7). Together mode is
+the cheapest way to act on that: a quiet strip on the play screen, for a companion
+sitting in the same room. No pairing, no network, nothing stored — the companion can
+offer a hint, and once the photos are open the app suggests something to ask about them.
+
+Two rules govern what it says, both checked in the harness:
+
+- **A hint narrows, it never points.** It works on a different axis from the question —
+  a Places question gets a hint about what's in the picture or when it was taken — and it
+  is only offered when it is true of exactly one photo in the set.
+- **A pack photo is never prompted as a personal memory.** "What do you remember about
+  it?" is reserved for the player's own photos; a stock photo only ever prompts about the
+  player's life in general ("Have you ever been to Rome?").
+
+It deliberately shows no score and keeps no per-item history. A live *remote* version —
+a companion watching right/wrong from their own phone — is a different feature with a
+real privacy cost, since guiding well means seeing the photos: see the note in
+**Deliberately not built**.
+
 ## Design rules held in code
 
 | Spec rule | Where it lives |
@@ -45,7 +67,8 @@ setup, on-device aggregate progress, and an anonymous engagement queue.
 
 ```
 Photo Chronology/
-  Model/          GameModel (themes, photos, levels, difficulty knob, theme rotation), GameEngine
+  Model/          GameModel (themes, photos, levels, difficulty knob, theme rotation),
+                  GameEngine, CompanionPrompts (Together-mode hints and questions)
   Sourcing/       PhotoLibraryService (PhotoKit metadata), PlaceResolver (geocode + cache),
                   ObjectCatalog (Vision allow-list), ObjectTagger (on-device classification),
                   PublicPacks (pack manifests), PackArtRenderer, ImageProvider
@@ -74,7 +97,13 @@ turned up. Copy is device-neutral: nothing says "your iPhone".
 - **Album-scoped themes** (Birthdays / Weddings) — v1.1 in the spec.
 - **Tier 2 caregiver pairing** (§7.2) — deferred, per the spec's own note that it is a
   bigger lift and isn't needed for a playable v1. Tier 1, the on-device "How's it going"
-  screen, is built. The setup screen says so in-app.
+  screen, is built, and Together mode covers the same-room case without any pairing at
+  all. The setup screen says so in-app.
+- **Live remote guiding** — a companion watching right/wrong in real time from elsewhere.
+  Worth naming as a deliberate omission rather than an oversight: to guide usefully the
+  companion needs to see the photos, which is exactly what §9 promises never leaves the
+  device, and a stored per-item right/wrong history is the decline-detection dataset §7.2
+  rules out. Ephemeral live signal could be defensible; persisted history is not.
 - **OneBucket client** (§8) — `EngagementSink` is the seam. `LocalFileSink` ships and
   writes newline-delimited JSON to Application Support; `OneBucketSink` is a stub that
   reports itself unconfigured, because the bucket namespace and event schema are still

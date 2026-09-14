@@ -13,9 +13,27 @@ struct AggregateStats: Codable, Sendable {
     /// yyyy-MM-dd → count. Deliberately the coarsest useful granularity.
     var sessionsByDay: [String: Int] = [:]
     var levelsByDay: [String: Int] = [:]
+    /// Of those sessions, the ones played in Together mode.
+    var togetherSessionsByDay: [String: Int] = [:]
     var totalLevels = 0
     var totalSessions = 0
     var lastPlayed: Date?
+
+    init() {}
+
+    /// Tolerant, so adding a counter never discards the history already collected.
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        func value<T: Decodable>(_ key: CodingKeys, _ fallback: T) -> T {
+            (try? container.decodeIfPresent(T.self, forKey: key)).flatMap { $0 } ?? fallback
+        }
+        sessionsByDay = value(.sessionsByDay, [:])
+        levelsByDay = value(.levelsByDay, [:])
+        togetherSessionsByDay = value(.togetherSessionsByDay, [:])
+        totalLevels = value(.totalLevels, 0)
+        totalSessions = value(.totalSessions, 0)
+        lastPlayed = value(.lastPlayed, Date?.none)
+    }
 }
 
 enum StatsTrend {
@@ -65,9 +83,12 @@ final class StatsStore {
 
     // MARK: - Recording
 
-    func recordSessionStart() {
+    func recordSessionStart(together: Bool) {
         let key = Self.dayFormatter.string(from: Date())
         stats.sessionsByDay[key, default: 0] += 1
+        if together {
+            stats.togetherSessionsByDay[key, default: 0] += 1
+        }
         stats.totalSessions += 1
         stats.lastPlayed = Date()
         save()
@@ -89,6 +110,10 @@ final class StatsStore {
 
     var levelsThisWeek: Int {
         countingBack(days: 7, in: stats.levelsByDay)
+    }
+
+    var togetherSessionsThisWeek: Int {
+        countingBack(days: 7, in: stats.togetherSessionsByDay)
     }
 
     /// Consecutive days played, counting today or yesterday as the anchor so a streak

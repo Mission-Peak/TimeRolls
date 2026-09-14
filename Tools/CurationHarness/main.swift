@@ -170,6 +170,59 @@ packOnly.pack = PublicPackLibrary.photos(enabledPackIDs: PublicPackLibrary.defau
 check(packOnly.makeLevel(theme: .objects, knob: .standard) != nil,
       "the bundled packs should be able to carry an Objects level on their own")
 
+// --- Together mode: a hint must never mislead, and a pack photo must never be
+// prompted as if it were the player's own memory.
+let personalOnlyPhrasings = [
+    "What do you remember about it?",
+    "What was it like there?",
+    "What was going on around then?",
+    "Who else might have been there that day?",
+    "What happened just after this was taken?",
+    "Tell me about the ",
+]
+
+for theme in GameTheme.allCases {
+    for _ in 0..<150 {
+        let knob = DifficultyKnob(level: Double.random(in: 0...1),
+                                  photoCount: Int.random(in: 3...5))
+        guard let level = generator.makeLevel(theme: theme, knob: knob) else { continue }
+        guard let answer = level.photos.first(where: { $0.id == level.correctPhotoID }) else {
+            failures.append("level has no answer photo")
+            continue
+        }
+
+        let hints = CompanionPrompts.hints(for: level)
+        check(!hints.isEmpty, "no hints offered for a \(theme.title) level")
+
+        for hint in hints {
+            // "…has a dog in it" is only allowed when exactly one photo could have a dog.
+            for category in ObjectCatalog.categories where hint.contains("has \(category.subject) in it") {
+                let holders = level.photos.filter { $0.possibleObjectTags.contains(category.id) }
+                check(holders.count == 1,
+                      "hint claims \(category.subject) but \(holders.count) photos could have it")
+            }
+            // "…was taken in Rome, Italy" likewise.
+            for place in Set(level.photos.compactMap(\.placeName))
+            where hint.contains("was taken in \(place)") {
+                let holders = level.photos.filter { $0.placeName == place }
+                check(holders.count == 1,
+                      "hint names \(place) but \(holders.count) photos are from there")
+            }
+        }
+
+        let prompts = CompanionPrompts.conversation(for: level)
+        check(!prompts.isEmpty, "no conversation prompts for a \(theme.title) level")
+        if !answer.isPersonal {
+            for prompt in prompts {
+                for phrasing in personalOnlyPhrasings {
+                    check(!prompt.contains(phrasing),
+                          "a pack photo is prompted as a personal memory: \"\(prompt)\"")
+                }
+            }
+        }
+    }
+}
+
 // --- Theme rotation: no theme may be starved, and repeats stay occasional.
 var picked: [GameTheme: Int] = [:]
 var repeats = 0
@@ -218,6 +271,7 @@ check(gpsPoor.availableThemes(knob: .standard).count == 3,
 let empty = LevelGenerator()
 check(empty.availableThemes(knob: .standard).isEmpty, "an empty library should offer no themes")
 
+print("companion prompts checked on \(GameTheme.allCases.count * 150) levels — hints never mislead, pack photos never prompted as personal memories")
 print("theme rotation over 30k picks — " + allThemes.map { "\($0.title) \(Int(Double(picked[$0] ?? 0) / 300))%" }.joined(separator: ", ") + ", repeats \(Int(repeatShare * 100))%")
 print("chronology mean gap to runner-up — gentlest: \(Int(easy / .year))y, middle: \(Int(mid / .year))y, hardest: \(ChronologyCurator.describe(hard))")
 print("objects same-family distractors — gentlest: \(Int(share(0.0) * 100))%, middle: \(Int(share(0.5) * 100))%, hardest: \(Int(share(1.0) * 100))%")

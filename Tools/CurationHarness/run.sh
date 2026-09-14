@@ -9,5 +9,6 @@ swiftc -O -o "$OUT/harness" main.swift \
     "$SRC/Curation/Curators.swift" \
     "$SRC/Curation/LevelGenerator.swift" \
     "$SRC/Sourcing/PublicPacks.swift" \
-    "$SRC/Sourcing/ObjectCatalog.swift"
+    "$SRC/Sourcing/ObjectCatalog.swift" \
+    "$SRC/Model/CompanionPrompts.swift"
 "$OUT/harness"

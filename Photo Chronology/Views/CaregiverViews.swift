@@ -63,6 +63,23 @@ struct CaregiverHubView: View {
                     }
                 }
 
+                Section {
+                    Toggle(isOn: $engine.settings.togetherMode) {
+                        VStack(alignment: .leading, spacing: 2) {
+                            Text("Playing together")
+                            Text("A quiet row for whoever is sitting alongside")
+                                .font(.footnote)
+                                .foregroundStyle(.secondary)
+                        }
+                    }
+                } header: {
+                    Text("Together")
+                } footer: {
+                    Text("Adds a hint you can offer and something to talk about once the "
+                         + "photos are open. It's for someone in the same room — nothing is "
+                         + "paired, sent or kept, and it never shows a score.")
+                }
+
                 Section("Accessibility") {
                     Picker("Text size", selection: $engine.settings.textScale) {
                         ForEach(CaregiverSettings.TextScale.allCases) { option in

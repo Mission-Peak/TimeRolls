@@ -43,6 +43,8 @@ nonisolated struct EngagementEvent: Codable, Sendable, Identifiable {
     var photoSetSize: Int?
     var blendedPackPhotos: Bool?
     var levelsInSession: Int?
+    /// Whether a companion was playing alongside. A mode flag, not a person.
+    var togetherMode: Bool?
 }
 
 /// Where queued events go. The prototype ships the local sink; the OneBucket sink is

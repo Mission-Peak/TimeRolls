@@ -45,6 +45,11 @@ struct HowsItGoingView: View {
                                    value: last.formatted(date: .abbreviated, time: .shortened))
                 }
                 LabeledContent("Photo sets this week", value: "\(engine.stats.levelsThisWeek)")
+                if engine.stats.togetherSessionsThisWeek > 0 {
+                    LabeledContent("Played together",
+                                   value: "\(engine.stats.togetherSessionsThisWeek) of "
+                                        + "\(engine.stats.sessionsThisWeek) sessions")
+                }
             }
 
             Section {

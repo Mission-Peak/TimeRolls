@@ -165,8 +165,9 @@ final class GameEngine {
     private func beginSession() {
         levelsThisSession = 0
         sessionLevelTotal = 0
-        stats.recordSessionStart()
-        telemetry.record(EngagementEvent(kind: .sessionStart))
+        stats.recordSessionStart(together: settings.togetherMode)
+        telemetry.record(EngagementEvent(kind: .sessionStart,
+                                         togetherMode: settings.togetherMode))
         phase = .playing
         nextLevel()
     }
@@ -179,7 +180,8 @@ final class GameEngine {
 
     func endSession() {
         telemetry.record(EngagementEvent(kind: .sessionEnd,
-                                         levelsInSession: sessionLevelTotal))
+                                         levelsInSession: sessionLevelTotal,
+                                         togetherMode: settings.togetherMode))
         Task { await telemetry.flush() }
         phase = .sessionComplete
     }
@@ -255,7 +257,8 @@ final class GameEngine {
                                          durationMS: Int(elapsed * 1000),
                                          difficulty: knob.level,
                                          photoSetSize: level.photos.count,
-                                         blendedPackPhotos: level.usesPackPhotos))
+                                         blendedPackPhotos: level.usesPackPhotos,
+                                         togetherMode: settings.togetherMode))
 
         // Silent adaptation only (spec §2).
         knob.adapt(wasCorrect: attempts == 1, attempts: attempts)

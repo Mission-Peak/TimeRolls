@@ -45,6 +45,11 @@ struct PlayView: View {
                     .scrollBounceBehavior(.basedOnSize)
                 }
 
+                if engine.settings.togetherMode {
+                    CompanionBar(level: level, hasAnswered: engine.answeredCorrectly)
+                        .id(level.id)
+                }
+
                 footer(level)
             } else {
                 Spacer()
