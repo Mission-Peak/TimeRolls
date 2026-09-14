@@ -41,17 +41,57 @@ PACK_SPECS = {
         "blurb": "Places worth remembering, from six decades of travel photography.",
         "source": "commons-geo",
         # Coordinates are the query; the place name is ours, so Places questions read well.
+        # Each target is a well-photographed landmark; the place name is ours, so a
+        # Places question reads the way a person would say it. More cities is not just
+        # more content — Places picks its distractors by distance from the answer, so a
+        # wider spread is what makes the difficulty lever work.
         "targets": [
-            {"place": "Paris, France",           "lat": 48.8584,  "lon": 2.2945,   "take": 3},
-            {"place": "Rome, Italy",             "lat": 41.8902,  "lon": 12.4922,  "take": 3},
-            {"place": "London, England",         "lat": 51.5007,  "lon": -0.1246,  "take": 3},
-            {"place": "San Francisco, CA",       "lat": 37.8199,  "lon": -122.4783,"take": 3},
-            {"place": "Sydney, Australia",       "lat": -33.8568, "lon": 151.2153, "take": 3},
-            {"place": "Agra, India",             "lat": 27.1751,  "lon": 78.0421,  "take": 2},
-            {"place": "New York, NY",            "lat": 40.6892,  "lon": -74.0445, "take": 3},
-            {"place": "Barcelona, Spain",        "lat": 41.4036,  "lon": 2.1744,   "take": 2},
-            {"place": "Amsterdam, Netherlands",  "lat": 52.3600,  "lon": 4.8852,   "take": 2},
-            {"place": "Venice, Italy",           "lat": 45.4341,  "lon": 12.3388,  "take": 2},
+            # Europe
+            {"place": "Paris, France",          "lat": 48.8584,  "lon": 2.2945,   "take": 2},
+            {"place": "Rome, Italy",            "lat": 41.8902,  "lon": 12.4922,  "take": 2},
+            {"place": "Venice, Italy",          "lat": 45.4341,  "lon": 12.3388,  "take": 2},
+            {"place": "London, England",        "lat": 51.5007,  "lon": -0.1246,  "take": 2},
+            {"place": "Edinburgh, Scotland",    "lat": 55.9486,  "lon": -3.1999,  "take": 2},
+            {"place": "Dublin, Ireland",        "lat": 53.3438,  "lon": -6.2546,  "take": 2},
+            {"place": "Barcelona, Spain",       "lat": 41.4036,  "lon": 2.1744,   "take": 2},
+            {"place": "Lisbon, Portugal",       "lat": 38.6916,  "lon": -9.2160,  "take": 2},
+            {"place": "Amsterdam, Netherlands", "lat": 52.3600,  "lon": 4.8852,   "take": 2},
+            {"place": "Berlin, Germany",        "lat": 52.5163,  "lon": 13.3777,  "take": 2},
+            {"place": "Prague, Czechia",        "lat": 50.0865,  "lon": 14.4114,  "take": 2},
+            {"place": "Vienna, Austria",        "lat": 48.1845,  "lon": 16.3122,  "take": 2},
+            {"place": "Athens, Greece",         "lat": 37.9715,  "lon": 23.7267,  "take": 2},
+            {"place": "Copenhagen, Denmark",    "lat": 55.6798,  "lon": 12.5912,  "take": 2},
+            {"place": "Stockholm, Sweden",      "lat": 59.3251,  "lon": 18.0711,  "take": 2},
+            {"place": "Istanbul, Türkiye",      "lat": 41.0086,  "lon": 28.9802,  "take": 2},
+            {"place": "Reykjavík, Iceland",     "lat": 64.1418,  "lon": -21.9266, "take": 2},
+            # North America
+            {"place": "New York, NY",           "lat": 40.6892,  "lon": -74.0445, "take": 2},
+            {"place": "San Francisco, CA",      "lat": 37.8199,  "lon": -122.4783,"take": 2},
+            {"place": "Chicago, IL",            "lat": 41.8827,  "lon": -87.6233, "take": 2},
+            {"place": "Seattle, WA",            "lat": 47.6205,  "lon": -122.3493,"take": 2},
+            {"place": "Washington, DC",         "lat": 38.8893,  "lon": -77.0502, "take": 2},
+            {"place": "Boston, MA",             "lat": 42.3541,  "lon": -71.0704, "take": 2},
+            {"place": "New Orleans, LA",        "lat": 29.9574,  "lon": -90.0629, "take": 2},
+            {"place": "Toronto, Canada",        "lat": 43.6426,  "lon": -79.3871, "take": 2},
+            {"place": "Mexico City, Mexico",    "lat": 19.4270,  "lon": -99.1677, "take": 2},
+            # South America
+            {"place": "Rio de Janeiro, Brazil", "lat": -22.9519, "lon": -43.2105, "take": 2},
+            {"place": "Buenos Aires, Argentina","lat": -34.6037, "lon": -58.3816, "take": 2},
+            # Asia
+            {"place": "Tokyo, Japan",           "lat": 35.7148,  "lon": 139.7967, "take": 2},
+            {"place": "Kyoto, Japan",           "lat": 34.9671,  "lon": 135.7727, "take": 2},
+            {"place": "Hong Kong",              "lat": 22.2940,  "lon": 114.1722, "take": 2},
+            {"place": "Singapore",              "lat": 1.2834,   "lon": 103.8607, "take": 2},
+            {"place": "Bangkok, Thailand",      "lat": 13.7500,  "lon": 100.4913, "take": 2},
+            {"place": "Dubai, UAE",             "lat": 25.1972,  "lon": 55.2744,  "take": 2},
+            {"place": "Agra, India",            "lat": 27.1751,  "lon": 78.0421,  "take": 2},
+            # Africa
+            {"place": "Cairo, Egypt",           "lat": 29.9792,  "lon": 31.1342,  "take": 2},
+            {"place": "Cape Town, South Africa","lat": -33.9628, "lon": 18.4098,  "take": 2},
+            # Oceania
+            {"place": "Sydney, Australia",      "lat": -33.8568, "lon": 151.2153, "take": 2},
+            {"place": "Melbourne, Australia",   "lat": -37.8183, "lon": 144.9671, "take": 2},
+            {"place": "Auckland, New Zealand",  "lat": -36.8485, "lon": 174.7622, "take": 2},
         ],
     },
     "decades": {
@@ -139,7 +179,14 @@ DISTRESSING = re.compile(
     r"military|legion|officers?|hdqrs|headquarters|"
     r"army|navy|naval|marine|marines|corps|uniform|camouflag\w+|supply train|"
     r"cpl|sgt|lt|lieutenant|capt|captain|gen|general|col|colonel|major|admiral|"
-    r"weapon\w*|rifle|gun|guns|bomb\w*|wreck\w*|crash\w*)\b",
+    r"weapon\w*|rifle|gun|guns|bomb\w*|wreck\w*|crash\w*|"
+    # Proper nouns carry the same weight as the topic words above and none of the same
+    # spelling. A photo captioned only "Hitler at the Charles Bridge" is a picture of an
+    # occupation to anyone old enough to remember it, and nothing in a list of topics
+    # catches it.
+    r"hitler|nazi\w*|f[uü]hrer|reich|gestapo|wehrmacht|swastika|holocaust|"
+    r"concentration camp|genocide|mussolini|stalin|apartheid|ku klux|lynching|"
+    r"execution|hanged|hanging|massacre|atrocit\w+|occupation|invasion)\b",
     re.IGNORECASE)
 
 # The Smithsonian documents itself thoroughly: building interiors, gallery halls,

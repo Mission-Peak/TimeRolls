@@ -68,7 +68,7 @@ from Open Access entirely and are not used here.
 
 | Pack | Items | Years | Source | Serves |
 | --- | --- | --- | --- | --- |
-| Travel Landmarks | 21 | 2005–2017 | Wikimedia Commons | Places (8 cities), Time |
+| Travel Landmarks | 48 | 2002–2025 | Wikimedia Commons | Places (27 cities), Time |
 | Decades | 56 | 1884–1980 | Smithsonian Open Access | Time |
 
 Decades runs one query per decade and caps each decade's contribution, so it spreads
@@ -76,15 +76,25 @@ evenly — six photos per decade from the 1880s through the 1960s. The 1970s and
 out to one apiece: CC0 material from those decades is overwhelmingly the Smithsonian
 photographing its own buildings, which the subject filter removes.
 
+Travel Landmarks queries 40 landmarks across six continents and yields 27 cities; the
+other 13 have no strict-CC0 photography within range. More cities is not only more
+content — Places picks its distractors by distance from the answer, so the spread is what
+gives that difficulty lever something to work with.
+
 **Subject filtering is a safety feature, not tidiness.** An archive search returns a
 lynching victim's funeral, machine-gun companies and train wrecks alongside the picnics —
 the first build of this pack contained Emmett Till's funeral. For an audience of older
 adults, some living with dementia, in a game designed around avoiding distress, none of
 that can ship. The builder filters by subject before anyone sees it: 119 items were
 rejected as distressing on the last run and 303 as institutional records rather than
-scenes. The word lists in `build_pack.py` are deliberately conservative and are the right
-place to adjust that judgement — note that military abbreviations matter, since a title
-like "366 Inf. 92nd Div." never trips a filter looking for "infantry".
+scenes. The landmarks run caught a photograph captioned "Hitler at the Charles Bridge,
+Prague" — a picture of an occupation to anyone old enough to remember it.
+
+The word lists in `build_pack.py` are deliberately conservative and are the right place to
+adjust that judgement. Two lessons are baked into them: military abbreviations matter,
+because a title like "366 Inf. 92nd Div." never trips a filter looking for "infantry"; and
+proper nouns need their own list, because no amount of topic vocabulary catches a caption
+whose only distressing word is a name.
 | Everyday Life, Classic Holidays | 24 | 1948–2019 | Procedural placeholder art | all three |
 
 **What the licence filter costs.** Strict CC0 buys legal clarity and loses the middle of
