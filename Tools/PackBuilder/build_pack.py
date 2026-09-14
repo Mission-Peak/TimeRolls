@@ -68,7 +68,7 @@ PACK_SPECS = {
         # collection is deepest — which for CC0 is the late 1800s. A pack called
         # Decades should actually span them.
         "queries": [
-            {"decade": decade, "take": 5,
+            {"decade": decade, "take": 6,
              "q": ('online_media_type:"Images" AND media_usage:"CC0" AND '
                    'object_type:"Photographs" AND (%s)'
                    % " OR ".join(str(decade + offset) for offset in range(0, 10)))}
@@ -121,6 +121,46 @@ PHOTO_MIMES = {"image/jpeg", "image/png"}
 PHOTOGRAPHIC_TYPES = re.compile(
     r"photograph|photoprint|daguerreotype|ambrotype|tintype|negative|slide|albumen",
     re.IGNORECASE)
+
+
+# Curation, not prudishness. The audience for this game is older adults, some living
+# with dementia, and the whole design is built to avoid distress. An archive search will
+# happily return a lynching victim's funeral, a machine-gun company and a train wreck
+# alongside the picnics. None of that belongs in a gentle reminiscence game, so it is
+# filtered by subject before anyone ever sees it. Word boundaries matter here: without
+# them "Ward" matches "war" and a cassowary matches on "Wattled".
+DISTRESSING = re.compile(
+    r"\b(funeral|cemet\w+|grave|graves|burial|buried|lynch\w*|riot\w*|murder\w*|"
+    r"killed|death|deaths|dead|wounded|casualt\w+|war|wars|battle|combat|"
+    r"disaster|flood|famine|epidemic|hospital|asylum|prison|jail|slave\w*|corpse|autopsy|"
+    # Military, including the abbreviations these catalogues actually use: a title like
+    # "366 Inf. 92nd Div." never trips a filter looking for the word "infantry".
+    r"soldier\w*|infantry|inf|regiment\w*|brigade|battalion|squadron|div|division|troops?|"
+    r"military|legion|officers?|hdqrs|headquarters|"
+    r"army|navy|naval|marine|marines|corps|uniform|camouflag\w+|supply train|"
+    r"cpl|sgt|lt|lieutenant|capt|captain|gen|general|col|colonel|major|admiral|"
+    r"weapon\w*|rifle|gun|guns|bomb\w*|wreck\w*|crash\w*)\b",
+    re.IGNORECASE)
+
+# The Smithsonian documents itself thoroughly: building interiors, gallery halls,
+# construction sites and scanned album pages. All fine records, all dull as a photo to
+# reminisce over.
+INSTITUTIONAL = re.compile(
+    r"\b(national museum|smithsonian institution|smithsonian building|the castle|"
+    r"national gallery|museum of natural history|zoological park|hall of|regents|"
+    r"secretary'?s parlor|si commons|sorting center|exhibits?|exhibition|construction|"
+    r"installation|supplement|arts and industries|south yard|bureau building|centennial|"
+    r"first ladies|album|sign for)\b|pages? \d+",
+    re.IGNORECASE)
+
+
+def unsuitable_subject(title):
+    """Reasons a photograph shouldn't go in a pack, whatever its licence."""
+    if DISTRESSING.search(title):
+        return "distressing subject"
+    if INSTITUTIONAL.search(title):
+        return "institutional record, not a scene"
+    return None
 
 
 def looks_like_a_photograph(title, mime, width):
@@ -201,7 +241,8 @@ def from_commons(spec, rejections, limit_per_target=80):
                 rejections.add(f"licence not CC0 ({licence or 'unknown'})")
                 continue
             title = strip_html(page.get("title", "")).replace("File:", "")
-            complaint = looks_like_a_photograph(title, info.get("mime"), info.get("width"))
+            complaint = (looks_like_a_photograph(title, info.get("mime"), info.get("width"))
+                         or unsuitable_subject(title))
             if complaint:
                 rejections.add(complaint)
                 continue
@@ -235,20 +276,28 @@ def from_smithsonian(spec, rejections, api_key):
     items = []
     seen_titles = set()
     for query in spec["queries"]:
-        params = {"q": query["q"], "rows": 100, "api_key": api_key}
-        url = "https://api.si.edu/openaccess/api/v1.0/search?" + urllib.parse.urlencode(params)
-        try:
-            payload = fetch_json(url)
-        except Exception as error:
-            if "429" in str(error):
-                print("    ! rate limited. DEMO_KEY allows about 30 requests an hour —")
-                print("      get a free key at https://api.data.gov/signup and pass --si-key.")
-            else:
-                print(f"    ! query failed: {error}")
-            continue
-
         taken = 0
-        for row in payload.get("response", {}).get("rows", []):
+        rows = []
+        # Filtering is aggressive, so one page of results often isn't enough.
+        for page in range(3):
+            params = {"q": query["q"], "rows": 100, "start": page * 100, "api_key": api_key}
+            url = "https://api.si.edu/openaccess/api/v1.0/search?" + urllib.parse.urlencode(params)
+            try:
+                payload = fetch_json(url)
+            except Exception as error:
+                if "429" in str(error):
+                    print("    ! rate limited. DEMO_KEY allows about 30 requests an hour —")
+                    print("      get a free key at https://api.data.gov/signup and pass --si-key.")
+                else:
+                    print(f"    ! query failed: {error}")
+                break
+            batch = payload.get("response", {}).get("rows", [])
+            rows.extend(batch)
+            if len(batch) < 100:
+                break
+            time.sleep(0.4)
+
+        for row in rows:
             if taken >= query["take"]:
                 break
             content = row.get("content", {})
@@ -276,6 +325,10 @@ def from_smithsonian(spec, rejections, api_key):
             if title in seen_titles:
                 rejections.add("duplicate title")
                 continue
+            complaint = unsuitable_subject(title)
+            if complaint:
+                rejections.add(complaint)
+                continue
             image = first.get("content")
             if not image:
                 rejections.add("no image URL")
@@ -300,7 +353,8 @@ def from_smithsonian(spec, rejections, api_key):
                 "source_url": f"https://www.si.edu/object/{row.get('id','')}",
             })
             taken += 1
-        print(f"    kept {taken} for: {query['q'][:58]}…")
+        label = str(query.get("decade") or query["q"][:40])
+        print(f"    {label}: kept {taken}")
         time.sleep(1.0)
     return items
 
