@@ -28,6 +28,52 @@ Around that: errorless feedback (a wrong tap dims and you try again — no score
 fail state, no visible clock), silent adaptive difficulty, a soft-gated caregiver
 setup, on-device aggregate progress, and an anonymous engagement queue.
 
+## Photo packs and the CC0 pipeline
+
+`Tools/PackBuilder/build_pack.py` assembles a pack from CC0 sources and writes it in the
+pack format the app loads — the same format a pack delivered over OneBucket would use,
+which is the file-format question left open in spec §12.
+
+```bash
+python3 Tools/PackBuilder/build_pack.py --list
+python3 Tools/PackBuilder/build_pack.py --pack landmarks --out "Photo Chronology/Packs"
+```
+
+**CC0 and nothing else.** The tool drops anything whose licence is not exactly CC0 and
+prints the tally — a landmarks run rejects roughly 240 files to keep 21. That strictness
+is the point: "public domain" depends on which country the viewer is in and the App Store
+is global, while CC0 is a worldwide waiver with no attribution duty. Provenance is
+recorded anyway and shown under Privacy → Photo credits.
+
+**Sources.** `commons-geo` geosearches Wikimedia Commons around a landmark coordinate, so
+those items carry real coordinates and can drive the Places theme. `smithsonian` pulls
+from Open Access, which holds ~35k CC0 photographs with dates and is where historical
+material comes from. The Smithsonian API needs a key; `DEMO_KEY` works for small runs
+(about 30 requests an hour), and a free key from api.data.gov lifts that — pass `--si-key`.
+
+**What ships today**
+
+| Pack | Items | Years | Source | Serves |
+| --- | --- | --- | --- | --- |
+| Travel Landmarks | 21 | 2005–2017 | Wikimedia Commons | Places (8 cities), Time |
+| Decades | 12 | 1855–1953 | Smithsonian Open Access | Time |
+| Everyday Life, Classic Holidays | 24 | 1948–2019 | Procedural placeholder art | all three |
+
+**What the licence filter costs.** Strict CC0 buys legal clarity and loses the middle of
+the twentieth century. CC0 material is bimodal: pre-1900 museum holdings and post-2010
+photography, with 1940–1990 — precisely the era this audience remembers — thinly covered.
+If mid-century nostalgia turns out to matter for the experience, that is an argument for
+licensing a collection rather than for loosening the filter.
+
+**A filter for photographs, not just images.** Geosearch returns whatever is pinned at a
+coordinate (maps, diagrams, a webcam still, a video poster) and the Smithsonian returns
+paintings, sketchbook folios and herbarium sheets. Both are filtered out — by MIME type
+and title for Commons, by `object_type` for the Smithsonian.
+
+Pack photographs are classified on device by the same Vision pass as personal photos, so
+they work in the Things theme too. A pack that appears in a later build arrives switched
+on rather than hidden.
+
 ## Together mode
 
 The evidence spine's strongest cross-cutting finding is that solo delivery of

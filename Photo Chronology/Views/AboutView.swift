@@ -70,3 +70,43 @@ struct AboutView: View {
         }
     }
 }
+
+// MARK: - Photo credits
+
+/// CC0 waives attribution entirely, so nothing here is required. It exists so any
+/// photograph that ships in a pack can be traced back to where it came from.
+struct PhotoCreditsView: View {
+
+    var body: some View {
+        List {
+            ForEach(PublicPackLibrary.creditedPacks, id: \.pack.id) { entry in
+                Section {
+                    ForEach(Array(entry.credits.enumerated()), id: \.offset) { _, credit in
+                        VStack(alignment: .leading, spacing: 3) {
+                            Text(credit.title)
+                                .font(.subheadline)
+                            Text(credit.creator)
+                                .font(.caption)
+                                .foregroundStyle(.secondary)
+                            Text("\(credit.source) · \(credit.license)")
+                                .font(.caption2)
+                                .foregroundStyle(Palette.accent)
+                        }
+                        .padding(.vertical, 2)
+                    }
+                } header: {
+                    Text("\(entry.pack.title) — \(entry.credits.count) photographs")
+                }
+            }
+
+            Section {
+                Text("Every photograph in these packs is released under CC0, a worldwide "
+                     + "waiver of copyright. That matters more than it sounds: \"public "
+                     + "domain\" depends on which country you are in, while CC0 does not.")
+                    .font(.footnote)
+                    .foregroundStyle(.secondary)
+            }
+        }
+        .navigationTitle("Photo credits")
+    }
+}

@@ -1,0 +1,142 @@
+{
+  "formatVersion": 1,
+  "id": "decades",
+  "title": "Decades",
+  "blurb": "Everyday life as it was photographed, decade by decade.",
+  "license": "CC0",
+  "builtAt": "2026-09-14",
+  "items": [
+    {
+      "id": "decades-001",
+      "file": "decades-001.jpg",
+      "title": "Meade Family Children",
+      "year": 1857,
+      "month": 6,
+      "credit": "Meade Brothers Studio, active c. 1840 - c. 1869",
+      "source": "Smithsonian Open Access",
+      "sourceURL": "https://www.si.edu/object/ld1-1643399756728-1643399765511-0",
+      "license": "CC0"
+    },
+    {
+      "id": "decades-002",
+      "file": "decades-002.jpg",
+      "title": "[Family Group]",
+      "year": 1865,
+      "month": 6,
+      "credit": "Unidentified",
+      "source": "Smithsonian Open Access",
+      "sourceURL": "https://www.si.edu/object/ld1-1643381040022-1643381067734-1",
+      "license": "CC0"
+    },
+    {
+      "id": "decades-003",
+      "file": "decades-003.jpg",
+      "title": "[Family]",
+      "year": 1865,
+      "month": 6,
+      "credit": "Unidentified",
+      "source": "Smithsonian Open Access",
+      "sourceURL": "https://www.si.edu/object/ld1-1643381040022-1643381067734-0",
+      "license": "CC0"
+    },
+    {
+      "id": "decades-004",
+      "file": "decades-004.jpg",
+      "title": "[Father, Mother, and Child]",
+      "year": 1865,
+      "month": 6,
+      "credit": "Unidentified",
+      "source": "Smithsonian Open Access",
+      "sourceURL": "https://www.si.edu/object/ld1-1643381040022-1643381067735-0",
+      "license": "CC0"
+    },
+    {
+      "id": "decades-005",
+      "file": "decades-005.jpg",
+      "title": "May and Clarence Stott",
+      "year": 1883,
+      "month": 6,
+      "credit": "Frank Airey, active 19th Century",
+      "source": "Smithsonian Open Access",
+      "sourceURL": "https://www.si.edu/object/ld1-1643381040022-1643381066701-0",
+      "license": "CC0"
+    },
+    {
+      "id": "decades-006",
+      "file": "decades-006.jpg",
+      "title": "Meade Family As Children",
+      "year": 1860,
+      "month": 6,
+      "credit": "Meade Brothers Studio, active c. 1840 - c. 1869",
+      "source": "Smithsonian Open Access",
+      "sourceURL": "https://www.si.edu/object/ld1-1643399756728-1643399779521-0",
+      "license": "CC0"
+    },
+    {
+      "id": "decades-007",
+      "file": "decades-007.jpg",
+      "title": "Street Scene",
+      "year": 1855,
+      "month": 6,
+      "credit": "Peale, Titian Ramsay",
+      "source": "Smithsonian Open Access",
+      "sourceURL": "https://www.si.edu/object/ld1-1643399625297-1643399657504-0",
+      "license": "CC0"
+    },
+    {
+      "id": "decades-008",
+      "file": "decades-008.jpg",
+      "title": "Photograph of Jimmie Lunceford",
+      "year": 1936,
+      "month": 6,
+      "credit": "Unidentified",
+      "source": "Smithsonian Open Access",
+      "sourceURL": "https://www.si.edu/object/ld1-1643398738600-1643398747940-0",
+      "license": "CC0"
+    },
+    {
+      "id": "decades-009",
+      "file": "decades-009.jpg",
+      "title": "Photograph of mail van in the snow",
+      "year": 1953,
+      "month": 6,
+      "credit": "Smithsonian Institution",
+      "source": "Smithsonian Open Access",
+      "sourceURL": "https://www.si.edu/object/ld1-1643399842277-1643399852396-0",
+      "license": "CC0"
+    },
+    {
+      "id": "decades-010",
+      "file": "decades-010.jpg",
+      "title": "Carte-de-visite of a bearded gentleman in Napa, California",
+      "year": 1865,
+      "month": 6,
+      "credit": "Mark Hopkins Strong, American",
+      "source": "Smithsonian Open Access",
+      "sourceURL": "https://www.si.edu/object/ld1-1696063492069-1696063503859-1",
+      "license": "CC0"
+    },
+    {
+      "id": "decades-011",
+      "file": "decades-011.jpg",
+      "title": "Carte-de-visite of a young boy in Napa, California",
+      "year": 1865,
+      "month": 6,
+      "credit": "Mark Hopkins Strong, American",
+      "source": "Smithsonian Open Access",
+      "sourceURL": "https://www.si.edu/object/ld1-1696063492069-1696063503849-1",
+      "license": "CC0"
+    },
+    {
+      "id": "decades-012",
+      "file": "decades-012.jpg",
+      "title": "V19244--Colored Veterans of the 15th Regt. 369th Infantry, Marching up Fifth Ave",
+      "year": 1919,
+      "month": 6,
+      "credit": "Underwood & Underwood, American, 1881 - 1940s",
+      "source": "Smithsonian Open Access",
+      "sourceURL": "https://www.si.edu/object/ld1-1643398738600-1643398744145-0",
+      "license": "CC0"
+    }
+  ]
+}

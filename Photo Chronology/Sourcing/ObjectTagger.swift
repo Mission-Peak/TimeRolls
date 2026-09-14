@@ -69,8 +69,23 @@ final class ObjectTagger {
         }
     }
 
+    /// A photo can be classified if we can get pixels for it: the player's own photos,
+    /// and bundled pack photographs. Procedural pack art keeps its hand-written subjects.
+    private func subject(for photo: GamePhoto) -> Subject? {
+        switch photo.origin {
+        case let .personal(localIdentifier):
+            return .asset(localIdentifier)
+        case let .pack(packID, itemID):
+            guard let item = PublicPackLibrary.item(packID: packID, itemID: itemID),
+                  let url = PublicPackLibrary.imageURL(for: item) else {
+                return nil
+            }
+            return .bundledImage(url.path)
+        }
+    }
+
     func pendingCount(in photos: [GamePhoto]) -> Int {
-        photos.filter { $0.isPersonal && tags[$0.id] == nil }.count
+        photos.filter { tags[$0.id] == nil && subject(for: $0) != nil }.count
     }
 
     /// Works through the untagged photos a chunk at a time, calling back after each so
@@ -78,9 +93,10 @@ final class ObjectTagger {
     func startTagging(_ photos: [GamePhoto],
                       chunkSize: Int = 12,
                       onChunk: @escaping @MainActor () -> Void) {
-        let pending = photos
-            .filter { $0.isPersonal && tags[$0.id] == nil }
-            .map(\.id)
+        let pending: [(String, Subject)] = photos.compactMap { photo in
+            guard tags[photo.id] == nil, let subject = subject(for: photo) else { return nil }
+            return (photo.id, subject)
+        }
         guard !pending.isEmpty else { return }
 
         worker?.cancel()
@@ -90,7 +106,7 @@ final class ObjectTagger {
             for chunk in stride(from: 0, to: pending.count, by: chunkSize) {
                 if Task.isCancelled { break }
                 let slice = Array(pending[chunk..<min(chunk + chunkSize, pending.count)])
-                let results = await Self.classify(assetIDs: slice)
+                let results = await Self.classify(slice)
 
                 guard let self, !Task.isCancelled else { break }
                 var classifierGone = false
@@ -149,13 +165,19 @@ final class ObjectTagger {
         case classifierUnavailable(String)
     }
 
-    private nonisolated static func classify(assetIDs: [String]) async -> [(String, Outcome)] {
+    /// Where a photo's pixels come from.
+    nonisolated enum Subject {
+        case asset(String)
+        case bundledImage(String)
+    }
+
+    private nonisolated static func classify(_ subjects: [(String, Subject)]) async -> [(String, Outcome)] {
         var output: [(String, Outcome)] = []
         let request = ClassifyImageRequest()
 
-        for id in assetIDs {
+        for (id, subject) in subjects {
             if Task.isCancelled { return output }
-            guard let image = thumbnail(assetID: id) else {
+            guard let image = thumbnail(for: subject) else {
                 output.append((id, .unreadable))
                 continue
             }
@@ -195,7 +217,17 @@ final class ObjectTagger {
     }
 
     /// A small thumbnail is all the classifier needs, and it keeps this cheap.
-    private nonisolated static func thumbnail(assetID: String) -> CGImage? {
+    private nonisolated static func thumbnail(for subject: Subject) -> CGImage? {
+        switch subject {
+        case let .asset(localIdentifier):
+            return assetThumbnail(localIdentifier)
+        case let .bundledImage(path):
+            // Pack photographs are already small and local.
+            return UIImage(contentsOfFile: path)?.cgImage
+        }
+    }
+
+    private nonisolated static func assetThumbnail(_ assetID: String) -> CGImage? {
         guard let asset = PHAsset.fetchAssets(withLocalIdentifiers: [assetID], options: nil)
             .firstObject else { return nil }
 

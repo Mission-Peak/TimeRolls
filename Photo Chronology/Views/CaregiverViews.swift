@@ -132,7 +132,7 @@ struct CaregiverHubView: View {
             }
             .onChange(of: engine.settings) { engine.settings.save() }
             .onChange(of: engine.settings.startingDifficulty) { engine.resetDifficulty() }
-            .onChange(of: sourceKey) {
+            .onChange(of: engine.settings.photoSourceFingerprint) {
                 Task { await engine.applySettingsChange() }
             }
         }
@@ -147,20 +147,6 @@ struct CaregiverHubView: View {
         let packs = engine.settings.enabledPackIDs.count
         let base = engine.settings.useAllPhotos ? "All photos" : "Chosen albums"
         return "\(base) · \(packs) photo pack\(packs == 1 ? "" : "s")"
-    }
-
-    /// Only photo-source changes are worth re-indexing the library for.
-    private var sourceKey: String {
-        let albums = engine.settings.albumSelection
-            .sorted { $0.key < $1.key }
-            .map { "\($0.key):\($0.value)" }
-            .joined(separator: "|")
-        let packs = engine.settings.enabledPackIDs.sorted().joined(separator: ",")
-        let labels = engine.settings.labels
-            .sorted { $0.key < $1.key }
-            .map { "\($0.key)=\($0.value)" }
-            .joined(separator: "|")
-        return "\(engine.settings.useAllPhotos)|\(albums)|\(packs)|\(labels)"
     }
 
     private struct Row: View {
@@ -236,10 +222,25 @@ struct PhotoSourcesView: View {
                 ForEach(PublicPackLibrary.packs) { pack in
                     Toggle(isOn: packBinding(pack)) {
                         VStack(alignment: .leading, spacing: 2) {
-                            Text(pack.title)
+                            HStack(spacing: 6) {
+                                Text(pack.title)
+                                if pack.isPhotography, pack.isPlayable {
+                                    Text("PHOTOS")
+                                        .font(.caption2.weight(.semibold))
+                                        .padding(.horizontal, 5)
+                                        .padding(.vertical, 1)
+                                        .background(Palette.accent.opacity(0.14), in: Capsule())
+                                        .foregroundStyle(Palette.accent)
+                                }
+                            }
                             Text(pack.blurb)
                                 .font(.footnote)
                                 .foregroundStyle(.secondary)
+                            if pack.isPlayable {
+                                Text("\(pack.items.count) photos")
+                                    .font(.caption2)
+                                    .foregroundStyle(.secondary)
+                            }
                         }
                     }
                     .disabled(!pack.isPlayable)
@@ -248,8 +249,9 @@ struct PhotoSourcesView: View {
                 Text("Photo packs")
             } footer: {
                 Text("Packs fill in when there aren't enough personal photos for a theme, and "
-                     + "mix in for variety. Pack artwork in this prototype stands in for licensed "
-                     + "historical photography.")
+                     + "mix in for variety. The ones marked PHOTOS are real CC0 photographs; "
+                     + "the rest are placeholder artwork standing in for photography that "
+                     + "hasn't been sourced yet.")
             }
 
             Section {
@@ -262,6 +264,10 @@ struct PhotoSourcesView: View {
             }
         }
         .navigationTitle("Photo sources")
+        .onChange(of: engine.settings) { engine.settings.save() }
+        .onChange(of: engine.settings.photoSourceFingerprint) {
+            Task { await engine.applySettingsChange() }
+        }
     }
 
     /// When "use all photos" is on, the toggle means *skip*; otherwise it means *include*.

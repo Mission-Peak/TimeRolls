@@ -13,10 +13,12 @@ enum PackArtRenderer {
 
     private static let cache = NSCache<NSString, UIImage>()
 
+    /// Placeholder art for an item with no photograph of its own.
     static func image(for item: PackItem, size: CGSize) -> UIImage {
         let key = "\(item.id)-\(Int(size.width))x\(Int(size.height))" as NSString
         if let cached = cache.object(forKey: key) { return cached }
 
+        let motif = item.motif ?? .portrait
         let palette = Palette(year: Calendar.current.component(.year, from: item.date))
         var rng = SeededGenerator(seed: stableHash(item.id))
 
@@ -27,7 +29,7 @@ enum PackArtRenderer {
             let ctx = context.cgContext
             let rect = CGRect(origin: .zero, size: size)
 
-            switch item.motif {
+            switch motif {
             case .mountains: drawMountains(ctx, rect, palette, &rng)
             case .seaside: drawSeaside(ctx, rect, palette, &rng)
             case .cityscape: drawCityscape(ctx, rect, palette, &rng)

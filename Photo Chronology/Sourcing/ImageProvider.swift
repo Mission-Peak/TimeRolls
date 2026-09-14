@@ -27,7 +27,12 @@ final class ImageProvider {
         switch photo.origin {
         case let .pack(packID, itemID):
             guard let item = PublicPackLibrary.item(packID: packID, itemID: itemID) else { return nil }
-            image = PackArtRenderer.image(for: item, size: targetSize)
+            if let url = PublicPackLibrary.imageURL(for: item),
+               let photograph = UIImage(contentsOfFile: url.path) {
+                image = photograph
+            } else {
+                image = PackArtRenderer.image(for: item, size: targetSize)
+            }
         case let .personal(localIdentifier):
             image = await personalImage(localIdentifier: localIdentifier, targetSize: targetSize)
         }

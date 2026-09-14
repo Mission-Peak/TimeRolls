@@ -85,6 +85,9 @@ final class GameEngine {
     /// Rebuild the photo index and start a session. Safe to re-run any time.
     func prepare() async {
         phase = .preparing
+        if settings.adoptNewPacks() {
+            settings.save()
+        }
         if library.access == .notDetermined {
             await library.requestAccess()
         }
@@ -124,6 +127,10 @@ final class GameEngine {
             phase = .noContent(noContentReason())
         } else if case .noContent = phase {
             beginSession()
+        } else if case .playing = phase {
+            // The photos on screen may have just been switched off — deal a fresh set
+            // rather than leaving a level built from sources that are no longer in play.
+            nextLevel()
         }
     }
 

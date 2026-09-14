@@ -75,6 +75,9 @@ struct CaregiverSettings: Codable, Equatable, Sendable {
     /// Album identifier → included. A `false` entry always wins over inclusion.
     var albumSelection: [String: Bool] = [:]
     var enabledPackIDs: Set<String> = PublicPackLibrary.defaultEnabledPackIDs
+    /// Packs these settings have already seen. A pack that appears later — a new build,
+    /// or one delivered over OneBucket — arrives switched on rather than hidden.
+    var knownPackIDs: Set<String> = []
     /// The Objects theme looks at photo content on this device. Switchable off, in which
     /// case the app stays strictly metadata-only (spec §6.3, §9).
     var objectsThemeEnabled = true
@@ -116,6 +119,7 @@ struct CaregiverSettings: Codable, Equatable, Sendable {
         useAllPhotos = value(.useAllPhotos, defaults.useAllPhotos)
         albumSelection = value(.albumSelection, defaults.albumSelection)
         enabledPackIDs = value(.enabledPackIDs, defaults.enabledPackIDs)
+        knownPackIDs = value(.knownPackIDs, defaults.knownPackIDs)
         objectsThemeEnabled = value(.objectsThemeEnabled, defaults.objectsThemeEnabled)
         startingDifficulty = value(.startingDifficulty, defaults.startingDifficulty)
         levelsPerSession = value(.levelsPerSession, defaults.levelsPerSession)
@@ -144,6 +148,33 @@ struct CaregiverSettings: Codable, Equatable, Sendable {
     func save() {
         guard let data = try? JSONEncoder().encode(self) else { return }
         UserDefaults.standard.set(data, forKey: Self.key)
+    }
+
+    /// Fingerprint of everything that decides which photos are in play. Any screen that
+    /// can change a source watches this, so a change made on a pushed screen takes effect
+    /// straight away rather than whenever the parent happens to re-evaluate.
+    var photoSourceFingerprint: String {
+        let albums = albumSelection
+            .sorted { $0.key < $1.key }
+            .map { "\($0.key):\($0.value)" }
+            .joined(separator: "|")
+        let labelled = labels
+            .sorted { $0.key < $1.key }
+            .map { "\($0.key)=\($0.value)" }
+            .joined(separator: "|")
+        return "\(useAllPhotos)|\(albums)|\(enabledPackIDs.sorted().joined(separator: ","))"
+            + "|\(labelled)|\(objectsThemeEnabled)"
+    }
+
+    /// Switch on any playable pack these settings have not met before.
+    /// Returns true when something changed.
+    mutating func adoptNewPacks() -> Bool {
+        let playable = PublicPackLibrary.packs.filter(\.isPlayable).map(\.id)
+        let unseen = playable.filter { !knownPackIDs.contains($0) }
+        guard !unseen.isEmpty else { return false }
+        enabledPackIDs.formUnion(unseen)
+        knownPackIDs.formUnion(PublicPackLibrary.packs.map(\.id))
+        return true
     }
 
     /// Whether a given level should be shown in mono, given the caregiver's choice.
