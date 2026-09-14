@@ -60,6 +60,15 @@ Tools/CurationHarness/  run.sh — invariant checks over thousands of generated 
 no Xcode project — and is the fastest way to re-tune the difficulty knob and see what
 it does to the time windows.
 
+## iPad
+
+The app runs on both device families. On a regular-width screen it keeps its content in
+a centred column rather than stretching edge to edge, brings every size of type up a
+notch (an iPad is held further away and has the room), lays a set of three photos out in
+one row and a set of five as three-then-two, and gives caregiver setup a page-sized sheet
+instead of the small form sheet iPadOS defaults to — which matters once the text size is
+turned up. Copy is device-neutral: nothing says "your iPhone".
+
 ## Deliberately not built
 
 - **Album-scoped themes** (Birthdays / Weddings) — v1.1 in the spec.

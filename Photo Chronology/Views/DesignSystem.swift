@@ -36,6 +36,18 @@ enum Palette {
     static let warmth = Color(red: 0.85, green: 0.52, blue: 0.20)
 }
 
+/// Keeps content in a comfortable column on a big screen instead of letting it
+/// stretch the full width of an iPad.
+private struct ReadableColumn: ViewModifier {
+    let maxWidth: CGFloat
+
+    func body(content: Content) -> some View {
+        content
+            .frame(maxWidth: maxWidth)
+            .frame(maxWidth: .infinity)
+    }
+}
+
 private struct ScaledFont: ViewModifier {
     @Environment(\.photoTextScale) private var scale
     let size: CGFloat
@@ -48,6 +60,10 @@ private struct ScaledFont: ViewModifier {
 }
 
 extension View {
+    func readableColumn(maxWidth: CGFloat = 820) -> some View {
+        modifier(ReadableColumn(maxWidth: maxWidth))
+    }
+
     func appFont(_ size: CGFloat,
                  weight: Font.Weight = .regular,
                  design: Font.Design = .rounded) -> some View {
@@ -92,7 +108,7 @@ enum ClaimLanguage {
     /// Parallel line for the Objects theme. Draft — the Evidence Foundation doc's
     /// "Unified claim language" section is authoritative and should carry the final wording.
     static let objectsPrivacy = """
-    For the Things game, your iPhone looks at your photos on the device itself to spot \
+    For the Things game, this device looks at your photos on the device itself to spot \
     everyday things like a dog or a cake. No photo and no label is ever sent anywhere.
     """
 }

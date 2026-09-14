@@ -14,6 +14,7 @@ struct PlayView: View {
     let onCaregiverGate: () -> Void
 
     @Environment(\.photoHighContrast) private var highContrast
+    @Environment(\.horizontalSizeClass) private var sizeClass
     @State private var showFeedback = false
 
     var body: some View {
@@ -51,6 +52,7 @@ struct PlayView: View {
                 Spacer()
             }
         }
+        .readableColumn(maxWidth: 860)
         .animation(.easeOut(duration: 0.25), value: engine.answeredCorrectly)
         .animation(.easeOut(duration: 0.2), value: engine.wrongIDs)
     }
@@ -137,9 +139,16 @@ struct PlayView: View {
 
     // MARK: - Grid
 
+    /// Two columns on a phone. On an iPad a set of three reads better in one row, and
+    /// five as three-then-two; four stays a square.
+    private var columnCount: Int {
+        guard sizeClass == .regular, let count = engine.level?.photos.count else { return 2 }
+        return count == 4 ? 2 : min(count, 3)
+    }
+
     private func grid(_ level: Level) -> some View {
-        LazyVGrid(columns: [GridItem(.flexible(), spacing: 14),
-                            GridItem(.flexible(), spacing: 14)],
+        LazyVGrid(columns: Array(repeating: GridItem(.flexible(), spacing: 14),
+                                 count: columnCount),
                   spacing: 14) {
             ForEach(Array(level.photos.enumerated()), id: \.element.id) { index, photo in
                 PhotoTile(photo: photo,

@@ -13,6 +13,7 @@ struct RootView: View {
     @State private var engine = GameEngine()
     @State private var isShowingCaregiver = false
     @Environment(\.scenePhase) private var scenePhase
+    @Environment(\.horizontalSizeClass) private var sizeClass
 
     var body: some View {
         let highContrast = engine.settings.highContrast
@@ -33,7 +34,9 @@ struct RootView: View {
                 NoContentView(engine: engine, reason: reason) { isShowingCaregiver = true }
             }
         }
-        .environment(\.photoTextScale, engine.settings.textScale.multiplier)
+        // An iPad is held further away and has the room, so everything comes up a size.
+        .environment(\.photoTextScale,
+                     engine.settings.textScale.multiplier * (sizeClass == .regular ? 1.3 : 1.0))
         .environment(\.photoHighContrast, highContrast)
         .tint(Palette.accent)
         .task { await engine.start() }
@@ -94,10 +97,10 @@ struct FirstRunView: View {
                            title: "Just tap a photo",
                            detail: "There's no score, no timer, and no wrong turn you can't take back.")
                     Bullet(symbol: "lock.shield",
-                           title: "Photos stay on this phone",
-                           detail: "Your photos never leave your device. To spot things like "
-                                + "a dog or a cake, your iPhone looks at them here on the "
-                                + "phone. Only GPS coordinates are sent, to name a place, "
+                           title: "Photos stay on this device",
+                           detail: "Your photos never leave this device. To spot things like "
+                                + "a dog or a cake, it looks at them here, on the device "
+                                + "itself. Only GPS coordinates are sent, to name a place, "
                                 + "and only once per location.")
                 }
 
@@ -201,6 +204,7 @@ struct NoContentView: View {
             }
         }
         .padding(34)
+        .readableColumn(maxWidth: 620)
     }
 }
 
@@ -215,11 +219,21 @@ struct CaregiverGateSheet: View {
     @State private var isConfirmed = false
 
     var body: some View {
+        content
+            // The detent has to follow the step: a half-height card for the question,
+            // the full sheet for the settings list behind it. (Phones only — iPad
+            // ignores detents and gets a page-sized sheet instead of a small form one,
+            // which matters when the text size is turned up.)
+            .presentationDetents(isConfirmed ? [.large] : [.medium])
+            .presentationSizing(.page)
+    }
+
+    @ViewBuilder
+    private var content: some View {
         if isConfirmed {
             CaregiverHubView(engine: engine)
         } else {
             VStack(spacing: 22) {
-                Spacer()
                 Image(systemName: "person.2")
                     .font(.system(size: 44))
                     .foregroundStyle(Palette.accent)
@@ -232,7 +246,7 @@ struct CaregiverGateSheet: View {
                     .multilineTextAlignment(.center)
                     .foregroundStyle(.secondary)
                     .fixedSize(horizontal: false, vertical: true)
-                Spacer()
+                    .padding(.bottom, 8)
                 Button {
                     isConfirmed = true
                 } label: {
@@ -244,13 +258,12 @@ struct CaregiverGateSheet: View {
                 .buttonStyle(.borderedProminent)
                 Button("No, keep playing") { dismiss() }
                     .font(.system(size: 17, weight: .medium, design: .rounded))
-                    .padding(.bottom, 8)
             }
             .padding(28)
+            .readableColumn(maxWidth: 460)
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .background(Color(.systemGroupedBackground))
             .tint(Palette.accent)
-            .presentationDetents([.medium])
             .presentationBackground(Color(.systemGroupedBackground))
         }
     }
