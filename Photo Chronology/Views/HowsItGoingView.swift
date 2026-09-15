@@ -53,7 +53,7 @@ struct HowsItGoingView: View {
             }
 
             Section {
-                Text("These are engagement numbers, not a memory assessment. Photo Chronology "
+                Text("These are engagement numbers, not a memory assessment. iRecollect "
                      + "does not track which people or places were recognised, and nothing here "
                      + "should be read as a sign of how someone is doing medically.")
                     .font(.footnote)

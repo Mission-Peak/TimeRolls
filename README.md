@@ -1,8 +1,14 @@
-# Photo Chronology — v1 prototype
+# iRecollect — v1 prototype
 
 An iOS prototype of the Photo-Chronology concept, built to
 `PhotoChronology_Prototype_Spec_v1` (Attimis, 10 Sep 2026). SwiftUI, iOS 26.5,
 no third-party dependencies.
+
+The app is called **iRecollect** on the home screen and everywhere a person sees it.
+The Xcode project, the scheme and the bundle identifier (`hanna.Photo-Chronology`) keep
+their original names on purpose: changing a bundle identifier makes every installed copy
+a different app, which would wipe the settings and progress on any device already
+testing it. Renaming those is a deliberate, separate step whenever it's wanted.
 
 Open `Photo Chronology.xcodeproj` and run on a simulator or device.
 

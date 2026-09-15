@@ -257,7 +257,8 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Not used. Place names come from photo metadata, never from your current location.";
-				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "Photo Chronology shows a few of your own photos in each round. Your photos stay on this device.";
+				INFOPLIST_KEY_CFBundleDisplayName = iRecollect;
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "iRecollect shows a few of your own photos in each round. Your photos stay on this device.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -291,7 +292,8 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Not used. Place names come from photo metadata, never from your current location.";
-				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "Photo Chronology shows a few of your own photos in each round. Your photos stay on this device.";
+				INFOPLIST_KEY_CFBundleDisplayName = iRecollect;
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "iRecollect shows a few of your own photos in each round. Your photos stay on this device.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;

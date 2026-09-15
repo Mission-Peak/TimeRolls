@@ -159,7 +159,7 @@ final class GameEngine {
 
     private func noContentReason() -> String {
         if !library.access.canRead && settings.enabledPackIDs.isEmpty {
-            return "Photo Chronology needs either photo access or at least one photo pack turned on."
+            return "iRecollect needs either photo access or at least one photo pack turned on."
         }
         if !library.access.canRead {
             return "No photo access yet, and the chosen packs don't have enough photos."

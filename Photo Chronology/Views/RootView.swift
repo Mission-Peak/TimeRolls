@@ -81,7 +81,7 @@ struct FirstRunView: View {
         ScrollView {
             VStack(alignment: .leading, spacing: 26) {
                 VStack(alignment: .leading, spacing: 10) {
-                    Text("Photo Chronology")
+                    Text("iRecollect")
                         .appFont(38, weight: .bold)
                         .foregroundStyle(Palette.ink(highContrast))
                     Text("A gentle photo game for all ages.")
