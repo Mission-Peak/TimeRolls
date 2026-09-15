@@ -25,17 +25,41 @@
     {
       "id": "milestones-002",
       "objectTags": [],
-      "remoteURL": "https://commons.wikimedia.org/wiki/Special:FilePath/Louis-Emile%20Durandelle%2C%20The%20Eiffel%20Tower%20-%20State%20of%20the%20Construction%2C%201888.jpg?width=1200",
+      "remoteURL": "https://commons.wikimedia.org/wiki/Special:FilePath/Construction-of-Statue-of-Liberty-04.jpg?width=1200",
+      "title": "The Statue of Liberty is unveiled",
+      "year": 1886,
+      "month": 6,
+      "credit": "Unknown author Unknown author",
+      "source": "Wikimedia Commons",
+      "sourceURL": "https://commons.wikimedia.org/wiki/File:Construction-of-Statue-of-Liberty-04.jpg",
+      "license": "Public domain"
+    },
+    {
+      "id": "milestones-003",
+      "objectTags": [],
+      "remoteURL": "https://commons.wikimedia.org/wiki/Special:FilePath/Louis-Emile%20Durandelle%2C%20The%20Eiffel%20Tower%20-%20State%20of%20the%20Construction%2C%201888%2C%20grayscale.jpg?width=1200",
       "title": "The Eiffel Tower is finished",
       "year": 1889,
       "month": 6,
       "credit": "Louis-Emile Durandelle",
       "source": "Wikimedia Commons",
-      "sourceURL": "https://commons.wikimedia.org/wiki/File:Louis-Emile_Durandelle,_The_Eiffel_Tower_-_State_of_the_Construction,_1888.jpg",
+      "sourceURL": "https://commons.wikimedia.org/wiki/File:Louis-Emile_Durandelle,_The_Eiffel_Tower_-_State_of_the_Construction,_1888,_grayscale.jpg",
       "license": "Public domain"
     },
     {
-      "id": "milestones-003",
+      "id": "milestones-004",
+      "objectTags": [],
+      "remoteURL": "https://commons.wikimedia.org/wiki/Special:FilePath/Chicago%20World%27s%20Columbian%20Exposition%201893.jpg?width=1200",
+      "title": "The Chicago World's Fair",
+      "year": 1893,
+      "month": 6,
+      "credit": "\"Unidentified photographer\"",
+      "source": "Wikimedia Commons",
+      "sourceURL": "https://commons.wikimedia.org/wiki/File:Chicago_World%27s_Columbian_Exposition_1893.jpg",
+      "license": "Public domain"
+    },
+    {
+      "id": "milestones-005",
       "objectTags": [],
       "remoteURL": "https://commons.wikimedia.org/wiki/Special:FilePath/First%20flight2.jpg?width=1200",
       "title": "The Wright brothers fly",
@@ -47,7 +71,7 @@
       "license": "Public domain"
     },
     {
-      "id": "milestones-004",
+      "id": "milestones-006",
       "objectTags": [],
       "remoteURL": "https://commons.wikimedia.org/wiki/Special:FilePath/Chief%20Purser%20McElroy%20and%20Captain%20Edward%20Smith%2C%20RMS%20Titanic%2C%2011%20April%201912.jpg?width=1200",
       "title": "The Titanic",
@@ -59,7 +83,43 @@
       "license": "Public domain"
     },
     {
-      "id": "milestones-005",
+      "id": "milestones-007",
+      "objectTags": [],
+      "remoteURL": "https://commons.wikimedia.org/wiki/Special:FilePath/Opening%20of%20the%20Panama%20Canal%20SS%20Ancon%20approaching%20Gamboa%20Looking%20north%20Aug%2015%2C%201914%20-%20DPLA%20-%200c0baedc6b427a89406d5779c16b4205.jpg?width=1200",
+      "title": "The Panama Canal opens",
+      "year": 1914,
+      "month": 6,
+      "credit": "Panama Canal Company. 7/1/1951-10/1/1979",
+      "source": "Wikimedia Commons",
+      "sourceURL": "https://commons.wikimedia.org/wiki/File:Opening_of_the_Panama_Canal_SS_Ancon_approaching_Gamboa_Looking_north_Aug_15,_1914_-_DPLA_-_0c0baedc6b427a89406d5779c16b4205.jpg",
+      "license": "Public domain"
+    },
+    {
+      "id": "milestones-008",
+      "objectTags": [],
+      "remoteURL": "https://commons.wikimedia.org/wiki/Special:FilePath/Alcockandbrown%20mail.jpg?width=1200",
+      "title": "The first flight across the Atlantic",
+      "year": 1919,
+      "month": 6,
+      "credit": "Holloway",
+      "source": "Wikimedia Commons",
+      "sourceURL": "https://commons.wikimedia.org/wiki/File:Alcockandbrown_mail.jpg",
+      "license": "Public domain"
+    },
+    {
+      "id": "milestones-009",
+      "objectTags": [],
+      "remoteURL": "https://commons.wikimedia.org/wiki/Special:FilePath/Tutankhamun%20tomb%20photographs%202%20020.jpg?width=1200",
+      "title": "Tutankhamun's tomb is opened",
+      "year": 1922,
+      "month": 6,
+      "credit": "Harry Burton (1879-1940)",
+      "source": "Wikimedia Commons",
+      "sourceURL": "https://commons.wikimedia.org/wiki/File:Tutankhamun_tomb_photographs_2_020.jpg",
+      "license": "Public domain"
+    },
+    {
+      "id": "milestones-010",
       "objectTags": [],
       "remoteURL": "https://commons.wikimedia.org/wiki/Special:FilePath/Appareil%20de%20Lindbergh%20%28le%20Spirit%20of%20Saint-Louis%29%20sur%20le%20terrain%2C%201927%20-%20btv1b532415560.jpg?width=1200",
       "title": "The Spirit of St. Louis",
@@ -71,7 +131,19 @@
       "license": "Public domain"
     },
     {
-      "id": "milestones-006",
+      "id": "milestones-011",
+      "objectTags": [],
+      "remoteURL": "https://commons.wikimedia.org/wiki/Special:FilePath/Hoover%20Dam%201935.jpg?width=1200",
+      "title": "The Hoover Dam is completed",
+      "year": 1935,
+      "month": 6,
+      "credit": "National Archives, Herbert Hoover Presidential Library and Museum",
+      "source": "Wikimedia Commons",
+      "sourceURL": "https://commons.wikimedia.org/wiki/File:Hoover_Dam_1935.jpg",
+      "license": "Public domain"
+    },
+    {
+      "id": "milestones-012",
       "objectTags": [],
       "remoteURL": "https://commons.wikimedia.org/wiki/Special:FilePath/Destitute%20pea%20pickers%20in%20California.%20Mother%20of%20seven%20children.%20Age%20thirty-two.%20Nipomo%2C%20California%20%28LOC%29%20-%20Flickr%20-%20The%20Library%20of%20Congress.jpg?width=1200",
       "title": "Migrant Mother",
@@ -83,7 +155,19 @@
       "license": "No restrictions"
     },
     {
-      "id": "milestones-007",
+      "id": "milestones-013",
+      "objectTags": [],
+      "remoteURL": "https://commons.wikimedia.org/wiki/Special:FilePath/-1939%20New%20York%20World%27s%20Fair%2C%20Entrance%20to%20Perisphere-%20MET%20DP103124.jpg?width=1200",
+      "title": "The New York World's Fair",
+      "year": 1939,
+      "month": 6,
+      "credit": "Creator:Samuel H. Gottscho",
+      "source": "Wikimedia Commons",
+      "sourceURL": "https://commons.wikimedia.org/wiki/File:-1939_New_York_World%27s_Fair,_Entrance_to_Perisphere-_MET_DP103124.jpg",
+      "license": "CC0"
+    },
+    {
+      "id": "milestones-014",
       "objectTags": [],
       "remoteURL": "https://commons.wikimedia.org/wiki/Special:FilePath/Bell%20X-1%20-%20DPLA%20-%2043a580620fa770d55cff14beaeee9579%20%28page%201%29.jpg?width=1200",
       "title": "Breaking the sound barrier",
@@ -95,7 +179,19 @@
       "license": "CC0"
     },
     {
-      "id": "milestones-008",
+      "id": "milestones-015",
+      "objectTags": [],
+      "remoteURL": "https://commons.wikimedia.org/wiki/Special:FilePath/USS%20Nautilus%20%28SSN-571%29%20under%20construction%20c1953.jpg?width=1200",
+      "title": "The first nuclear submarine",
+      "year": 1954,
+      "month": 6,
+      "credit": "USN",
+      "source": "Wikimedia Commons",
+      "sourceURL": "https://commons.wikimedia.org/wiki/File:USS_Nautilus_(SSN-571)_under_construction_c1953.jpg",
+      "license": "Public domain"
+    },
+    {
+      "id": "milestones-016",
       "objectTags": [],
       "remoteURL": "https://commons.wikimedia.org/wiki/Special:FilePath/1956%20face%20detail%2C%20Rosa%20Parks%20being%20fingerprinted%20by%20Deputy%20Sheriff%20D.H.%20Lackey%20after%20being%20arrested%20on%20February%2022%2C%201956%2C%20during%20the%20Montgomery%20bus%20boycott%20%28cropped%29.jpg?width=1200",
       "title": "Rosa Parks in Montgomery",
@@ -107,7 +203,7 @@
       "license": "Public domain"
     },
     {
-      "id": "milestones-009",
+      "id": "milestones-017",
       "objectTags": [],
       "remoteURL": "https://commons.wikimedia.org/wiki/Special:FilePath/Pan%20Am%20%28Boeing%20747%29.jpg?width=1200",
       "title": "The Boeing 747 enters service",
@@ -119,19 +215,31 @@
       "license": "Public domain"
     },
     {
-      "id": "milestones-010",
+      "id": "milestones-018",
       "objectTags": [],
-      "remoteURL": "https://commons.wikimedia.org/wiki/Special:FilePath/Berlin%201989%20Ortsschilder036.jpg?width=1200",
+      "remoteURL": "https://commons.wikimedia.org/wiki/Special:FilePath/MSH80%20early%20eruption%20st%20helens%20from%20NE%2004-10-80.jpg?width=1200",
+      "title": "Mount St. Helens erupts",
+      "year": 1980,
+      "month": 6,
+      "credit": "Donald A. Swanson",
+      "source": "Wikimedia Commons",
+      "sourceURL": "https://commons.wikimedia.org/wiki/File:MSH80_early_eruption_st_helens_from_NE_04-10-80.jpg",
+      "license": "Public domain"
+    },
+    {
+      "id": "milestones-019",
+      "objectTags": [],
+      "remoteURL": "https://commons.wikimedia.org/wiki/Special:FilePath/A%20crowd%20of%20West%20German%20citizens%20gathers%20at%20the%20newly%20created%20opening%20in%20the%20Berlin%20Wall%20at%20Potsdamer%20Platz.jpg?width=1200",
       "title": "The Berlin Wall comes down",
       "year": 1989,
       "month": 6,
-      "credit": "Monster4711",
+      "credit": "Series: Combined Military Service Digital Photographic Files, 1982 - 2007\n \nRecord Group 330: Records of the Office of the Secretary of Defense, 1921 - 2008",
       "source": "Wikimedia Commons",
-      "sourceURL": "https://commons.wikimedia.org/wiki/File:Berlin_1989_Ortsschilder036.jpg",
-      "license": "CC0"
+      "sourceURL": "https://commons.wikimedia.org/wiki/File:A_crowd_of_West_German_citizens_gathers_at_the_newly_created_opening_in_the_Berlin_Wall_at_Potsdamer_Platz.jpg",
+      "license": "Public domain"
     },
     {
-      "id": "milestones-011",
+      "id": "milestones-020",
       "objectTags": [],
       "remoteURL": "https://commons.wikimedia.org/wiki/Special:FilePath/Mars%20Pathfinder%20Landing%20Site%20%28opo9723a%29.jpg?width=1200",
       "title": "Mars Pathfinder lands",
