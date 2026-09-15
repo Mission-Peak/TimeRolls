@@ -156,21 +156,37 @@ photographs available to it.
 
 | Pack | Photos | Years | Carries | Source |
 | --- | --- | --- | --- | --- |
-| Stage and Screen | 43 | 1858–1962 | Time, Things | Smithsonian |
+| Famous Faces | 18 | 1863–1993 | Time, Things | Commons (curated) |
+| Milestones | 11 | 1883–1997 | Time, Things | Commons (curated) |
+| Space | 23 | 1962–2024 | Time, Things | NASA (curated) |
 | Sports | 36 | 1860–1949 | Time, Things | Smithsonian |
-| Decades | 56 | 1884–1980 | Time, Things | Smithsonian (images in the app) |
-| The Seventies | 36 | 1973–1975 | Time, Things | DOCUMERICA, via Commons |
-| Travel Landmarks | 46 | 2002–2025 | Places, Things | Wikimedia Commons |
-| Natural Wonders | 35 | 2012–2026 | Places, Things | Wikimedia Commons |
-| Animals | 68 | 2008–2025 | Things | Wikimedia Commons |
+| Stage and Screen | 43 | 1858–1962 | Time, Things | Smithsonian |
+| Travel Landmarks | 46 | 2002–2025 | Places, Things | Commons |
+| Natural Wonders | 35 | 2012–2026 | Places, Things | Commons |
 
-**Why the Time packs stop around 1980.** It is copyright, not sourcing. Work from
-1930–1990 is still in copyright unless its author released it or the US government made
-it, so CC0 covers the 19th century and the 2010s onward and almost nothing between. The
-one reliable route into the middle is **US federal government photography, which carries
-no copyright at all** — that is what DOCUMERICA is, the EPA's 18,500-photograph survey of
-American life in the 1970s, and it is the only reason that decade is playable. Note the
-licence differs from the rest: public domain by statute rather than a CC0 waiver.
+**Packs are photographs people recognise; everyday life comes from the player's own
+library.** That division is the point of the whole content strategy. An earlier pack of
+anonymous everyday scenes was unplayable — a stranger's 2019 kitchen means nothing to
+anyone, and there is no way to date it either.
+
+**Significance has to be curated, not searched.** An archive has no idea which of its
+holdings everyone has already seen, so Famous Faces, Milestones and Space are written
+lists — Lincoln, Einstein, Migrant Mother, the Wright brothers, Earthrise, the bootprint —
+looked up one at a time.
+
+**And the year has to be checked against the photograph.** The year belongs to the event,
+not to whenever a scan was uploaded, so it is written down with the list; but a keyword
+search for "Neil Armstrong 1969" cheerfully returns a 2020 photograph of a museum display.
+Every curated item is verified against the photograph's own date and dropped if it
+disagrees by more than three years — a dating game that teaches the wrong date is worse
+than one with fewer photographs. That check removed seven of the first thirty-six matches.
+
+**Licences are declared per pack, not assumed.** CC0 is the default and the safest: a
+worldwide waiver. A pack of famous photographs cannot live on it, though — almost nothing
+iconic was ever CC0-released — so the curated packs also accept two other footings, named
+in the manifest: copyright that has expired, and US federal government work, which carries
+none by statute. That second one is why anything between 1930 and 1990 is reachable at
+all.
 
 **A pack says which games it can carry, and that is not a formality.** The first attempt
 at an everyday-life pack was unplayable for "which photo is older" because 331 of its 350

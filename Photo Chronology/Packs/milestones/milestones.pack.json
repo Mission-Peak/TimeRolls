@@ -1,0 +1,146 @@
+{
+  "formatVersion": 2,
+  "themes": [
+    "chronology",
+    "objects"
+  ],
+  "id": "milestones",
+  "title": "Milestones",
+  "blurb": "Moments and machines people remember.",
+  "license": "CC0, No restrictions, Public domain",
+  "builtAt": "2026-09-15",
+  "items": [
+    {
+      "id": "milestones-001",
+      "objectTags": [],
+      "remoteURL": "https://commons.wikimedia.org/wiki/Special:FilePath/1883%20Frank%20Leslie%27s%20Illustrated%20Newspaper%20Brooklyn%20Bridge%20New%20York%20City.jpg?width=1200",
+      "title": "The Brooklyn Bridge opens",
+      "year": 1883,
+      "month": 6,
+      "credit": "Unknown",
+      "source": "Wikimedia Commons",
+      "sourceURL": "https://commons.wikimedia.org/wiki/File:1883_Frank_Leslie%27s_Illustrated_Newspaper_Brooklyn_Bridge_New_York_City.jpg",
+      "license": "Public domain"
+    },
+    {
+      "id": "milestones-002",
+      "objectTags": [],
+      "remoteURL": "https://commons.wikimedia.org/wiki/Special:FilePath/Louis-Emile%20Durandelle%2C%20The%20Eiffel%20Tower%20-%20State%20of%20the%20Construction%2C%201888.jpg?width=1200",
+      "title": "The Eiffel Tower is finished",
+      "year": 1889,
+      "month": 6,
+      "credit": "Louis-Emile Durandelle",
+      "source": "Wikimedia Commons",
+      "sourceURL": "https://commons.wikimedia.org/wiki/File:Louis-Emile_Durandelle,_The_Eiffel_Tower_-_State_of_the_Construction,_1888.jpg",
+      "license": "Public domain"
+    },
+    {
+      "id": "milestones-003",
+      "objectTags": [],
+      "remoteURL": "https://commons.wikimedia.org/wiki/Special:FilePath/First%20flight2.jpg?width=1200",
+      "title": "The Wright brothers fly",
+      "year": 1903,
+      "month": 6,
+      "credit": "John T. Daniels",
+      "source": "Wikimedia Commons",
+      "sourceURL": "https://commons.wikimedia.org/wiki/File:First_flight2.jpg",
+      "license": "Public domain"
+    },
+    {
+      "id": "milestones-004",
+      "objectTags": [],
+      "remoteURL": "https://commons.wikimedia.org/wiki/Special:FilePath/Chief%20Purser%20McElroy%20and%20Captain%20Edward%20Smith%2C%20RMS%20Titanic%2C%2011%20April%201912.jpg?width=1200",
+      "title": "The Titanic",
+      "year": 1912,
+      "month": 6,
+      "credit": "Formerly attributed to   Francis Browne",
+      "source": "Wikimedia Commons",
+      "sourceURL": "https://commons.wikimedia.org/wiki/File:Chief_Purser_McElroy_and_Captain_Edward_Smith,_RMS_Titanic,_11_April_1912.jpg",
+      "license": "Public domain"
+    },
+    {
+      "id": "milestones-005",
+      "objectTags": [],
+      "remoteURL": "https://commons.wikimedia.org/wiki/Special:FilePath/Appareil%20de%20Lindbergh%20%28le%20Spirit%20of%20Saint-Louis%29%20sur%20le%20terrain%2C%201927%20-%20btv1b532415560.jpg?width=1200",
+      "title": "The Spirit of St. Louis",
+      "year": 1927,
+      "month": 6,
+      "credit": "Agence de presse Meurisse. Agence photographique (commanditaire)",
+      "source": "Wikimedia Commons",
+      "sourceURL": "https://commons.wikimedia.org/wiki/File:Appareil_de_Lindbergh_(le_Spirit_of_Saint-Louis)_sur_le_terrain,_1927_-_btv1b532415560.jpg",
+      "license": "Public domain"
+    },
+    {
+      "id": "milestones-006",
+      "objectTags": [],
+      "remoteURL": "https://commons.wikimedia.org/wiki/Special:FilePath/Destitute%20pea%20pickers%20in%20California.%20Mother%20of%20seven%20children.%20Age%20thirty-two.%20Nipomo%2C%20California%20%28LOC%29%20-%20Flickr%20-%20The%20Library%20of%20Congress.jpg?width=1200",
+      "title": "Migrant Mother",
+      "year": 1936,
+      "month": 6,
+      "credit": "The Library of Congress  from Washington, DC, United States",
+      "source": "Wikimedia Commons",
+      "sourceURL": "https://commons.wikimedia.org/wiki/File:Destitute_pea_pickers_in_California._Mother_of_seven_children._Age_thirty-two._Nipomo,_California_(LOC)_-_Flickr_-_The_Library_of_Congress.jpg",
+      "license": "No restrictions"
+    },
+    {
+      "id": "milestones-007",
+      "objectTags": [],
+      "remoteURL": "https://commons.wikimedia.org/wiki/Special:FilePath/Bell%20X-1%20-%20DPLA%20-%2043a580620fa770d55cff14beaeee9579%20%28page%201%29.jpg?width=1200",
+      "title": "Breaking the sound barrier",
+      "year": 1947,
+      "month": 6,
+      "credit": "Bell Aircraft Corp",
+      "source": "Wikimedia Commons",
+      "sourceURL": "https://commons.wikimedia.org/wiki/File:Bell_X-1_-_DPLA_-_43a580620fa770d55cff14beaeee9579_(page_1).jpg",
+      "license": "CC0"
+    },
+    {
+      "id": "milestones-008",
+      "objectTags": [],
+      "remoteURL": "https://commons.wikimedia.org/wiki/Special:FilePath/1956%20face%20detail%2C%20Rosa%20Parks%20being%20fingerprinted%20by%20Deputy%20Sheriff%20D.H.%20Lackey%20after%20being%20arrested%20on%20February%2022%2C%201956%2C%20during%20the%20Montgomery%20bus%20boycott%20%28cropped%29.jpg?width=1200",
+      "title": "Rosa Parks in Montgomery",
+      "year": 1955,
+      "month": 6,
+      "credit": "Associated Press",
+      "source": "Wikimedia Commons",
+      "sourceURL": "https://commons.wikimedia.org/wiki/File:1956_face_detail,_Rosa_Parks_being_fingerprinted_by_Deputy_Sheriff_D.H._Lackey_after_being_arrested_on_February_22,_1956,_during_the_Montgomery_bus_boycott_(cropped).jpg",
+      "license": "Public domain"
+    },
+    {
+      "id": "milestones-009",
+      "objectTags": [],
+      "remoteURL": "https://commons.wikimedia.org/wiki/Special:FilePath/Pan%20Am%20%28Boeing%20747%29.jpg?width=1200",
+      "title": "The Boeing 747 enters service",
+      "year": 1970,
+      "month": 6,
+      "credit": "Karl Gritschke (1923-1990), uploaded by:  Moros",
+      "source": "Wikimedia Commons",
+      "sourceURL": "https://commons.wikimedia.org/wiki/File:Pan_Am_(Boeing_747).jpg",
+      "license": "Public domain"
+    },
+    {
+      "id": "milestones-010",
+      "objectTags": [],
+      "remoteURL": "https://commons.wikimedia.org/wiki/Special:FilePath/Berlin%201989%20Ortsschilder036.jpg?width=1200",
+      "title": "The Berlin Wall comes down",
+      "year": 1989,
+      "month": 6,
+      "credit": "Monster4711",
+      "source": "Wikimedia Commons",
+      "sourceURL": "https://commons.wikimedia.org/wiki/File:Berlin_1989_Ortsschilder036.jpg",
+      "license": "CC0"
+    },
+    {
+      "id": "milestones-011",
+      "objectTags": [],
+      "remoteURL": "https://commons.wikimedia.org/wiki/Special:FilePath/Mars%20Pathfinder%20Landing%20Site%20%28opo9723a%29.jpg?width=1200",
+      "title": "Mars Pathfinder lands",
+      "year": 1997,
+      "month": 6,
+      "credit": "Steve Lee (University of Colorado), Mike Wolff and Phil James (University of Toledo) and  NASA / ESA",
+      "source": "Wikimedia Commons",
+      "sourceURL": "https://commons.wikimedia.org/wiki/File:Mars_Pathfinder_Landing_Site_(opo9723a).jpg",
+      "license": "Public domain"
+    }
+  ]
+}

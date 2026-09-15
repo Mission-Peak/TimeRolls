@@ -218,19 +218,37 @@ PACK_SPECS = {
             {"year": 2024, "title": "Artemis prepares to return", "q": "Artemis Space Launch System rollout"},
         ],
     },
-    "seventies": {
-        "id": "seventies",
-        "title": "The Seventies",
-        "blurb": "American life in the 1970s, photographed for the EPA.",
-        "source": "commons-category",
-        # DOCUMERICA: 18,500 photographs of ordinary life, made by government
-        # photographers and therefore free of copyright entirely — which is how this
-        # decade is reachable at all. CC0 does not cover it: work from the 1970s is
-        # still in copyright unless the government made it.
-        "category": "DOCUMERICA",
+    "faces": {
+        "id": "famous-faces",
+        "title": "Famous Faces",
+        "blurb": "People almost everyone has seen a photograph of.",
+        "source": "commons-curated",
         "themes": ["chronology", "objects"],
-        "terms": "",
-        "queries": [{"decade": 1970, "take": 55}],
+        "licences": {"CC0", "Public domain", "No restrictions"},
+        "photographs": [
+            {"year": 1863, "title": "Abraham Lincoln", "q": "Abraham Lincoln 1863 portrait photograph"},
+            {"year": 1876, "title": "Alexander Graham Bell", "q": "Alexander Graham Bell portrait"},
+            {"year": 1888, "title": "Thomas Edison", "q": "Thomas Edison phonograph portrait"},
+            {"year": 1901, "title": "Theodore Roosevelt", "q": "Theodore Roosevelt portrait 1901"},
+            {"year": 1907, "title": "Mark Twain", "q": "Mark Twain white suit portrait"},
+            {"year": 1912, "title": "Jim Thorpe at the Olympics", "q": "Jim Thorpe 1912 Olympics"},
+            {"year": 1920, "title": "Babe Ruth", "q": "Babe Ruth baseball portrait"},
+            {"year": 1921, "title": "Albert Einstein", "q": "Albert Einstein 1921 portrait"},
+            {"year": 1928, "title": "Amelia Earhart", "q": "Amelia Earhart portrait aircraft"},
+            {"year": 1933, "title": "Franklin D. Roosevelt", "q": "Franklin Roosevelt 1933 portrait"},
+            {"year": 1936, "title": "Jesse Owens in Berlin", "q": "Jesse Owens 1936 Olympics"},
+            {"year": 1945, "title": "Harry Truman", "q": "Harry Truman official portrait"},
+            {"year": 1953, "title": "Dwight Eisenhower", "q": "Dwight Eisenhower official portrait"},
+            {"year": 1956, "title": "Louis Armstrong", "q": "Louis Armstrong trumpet photograph"},
+            {"year": 1961, "title": "John F. Kennedy", "q": "John F Kennedy White House portrait"},
+            {"year": 1963, "title": "Martin Luther King Jr.", "q": "Martin Luther King Jr March on Washington"},
+            {"year": 1964, "title": "Lyndon Johnson", "q": "Lyndon Johnson official portrait"},
+            {"year": 1969, "title": "Neil Armstrong", "q": "Neil Armstrong portrait spacesuit"},
+            {"year": 1977, "title": "Jimmy Carter", "q": "Jimmy Carter official portrait"},
+            {"year": 1981, "title": "Ronald Reagan", "q": "Ronald Reagan official portrait"},
+            {"year": 1984, "title": "Sandra Day O'Connor", "q": "Sandra Day O'Connor official portrait"},
+            {"year": 1993, "title": "Bill Clinton", "q": "Bill Clinton official portrait"},
+        ],
     },
     "animals": {
         "id": "animals",
@@ -265,29 +283,34 @@ PACK_SPECS = {
                   'object_type:"Photographs" AND (laboratory OR telescope OR microscope OR inventor OR engine OR machine OR experiment)'},
         ],
     },
-    "decades": {
-        "id": "decades",
-        "title": "Decades",
-        "blurb": "Everyday life as it was photographed, decade by decade.",
-        "source": "smithsonian",
+    "milestones": {
+        "id": "milestones",
+        "title": "Milestones",
+        "blurb": "Moments and machines people remember.",
+        "source": "commons-curated",
         "themes": ["chronology", "objects"],
-        # Each query is aimed at a slice of the century. Yield varies a lot by era.
-        # object_type matters as much as the keyword: without it the collection hands
-        # back paintings, sketchbook folios and herbarium sheets, which are not what
-        # "when was this taken?" means.
-        #
-        # One query per decade, because an untargeted search piles up wherever the
-        # collection is deepest — which for CC0 is the late 1800s. A pack called
-        # Decades should actually span them.
-        "queries": [
-            {"decade": decade, "take": 6,
-             "q": ('online_media_type:"Images" AND media_usage:"CC0" AND '
-                   'object_type:"Photographs" AND (%s)'
-                   % " OR ".join(str(decade + offset) for offset in range(0, 10)))}
-            for decade in range(1880, 1990, 10)
+        "licences": {"CC0", "Public domain", "No restrictions"},
+        "photographs": [
+            {"year": 1883, "title": "The Brooklyn Bridge opens", "q": "Brooklyn Bridge 1883 photograph"},
+            {"year": 1889, "title": "The Eiffel Tower is finished", "q": "Eiffel Tower 1889 construction"},
+            {"year": 1903, "title": "The Wright brothers fly", "q": "Wright brothers first flight 1903"},
+            {"year": 1908, "title": "The Ford Model T", "q": "Ford Model T 1908 photograph"},
+            {"year": 1912, "title": "The Titanic", "q": "RMS Titanic 1912 photograph"},
+            {"year": 1927, "title": "The Spirit of St. Louis", "q": "Spirit of St Louis Lindbergh 1927"},
+            {"year": 1931, "title": "The Empire State Building", "q": "Empire State Building 1931"},
+            {"year": 1936, "title": "Migrant Mother", "q": "Migrant Mother Dorothea Lange"},
+            {"year": 1937, "title": "The Golden Gate Bridge opens", "q": "Golden Gate Bridge 1937 opening"},
+            {"year": 1947, "title": "Breaking the sound barrier", "q": "Bell X-1 Chuck Yeager 1947"},
+            {"year": 1955, "title": "Rosa Parks in Montgomery", "q": "Rosa Parks 1955 Montgomery"},
+            {"year": 1959, "title": "The Mini arrives", "q": "Austin Mini 1959 car"},
+            {"year": 1964, "title": "The Beatles arrive in America", "q": "Beatles 1964 arrival New York"},
+            {"year": 1970, "title": "The Boeing 747 enters service", "q": "Boeing 747 1970 Pan Am"},
+            {"year": 1976, "title": "Concorde begins flying", "q": "Concorde 1976 first commercial flight"},
+            {"year": 1981, "title": "The personal computer arrives", "q": "IBM Personal Computer 1981"},
+            {"year": 1989, "title": "The Berlin Wall comes down", "q": "Berlin Wall 1989 Brandenburg Gate"},
+            {"year": 1994, "title": "The Channel Tunnel opens", "q": "Channel Tunnel 1994 opening"},
+            {"year": 1997, "title": "Mars Pathfinder lands", "q": "Mars Pathfinder 1997 landing"},
         ],
-        # No decade may take over the pack.
-        "perDecadeCap": 5,
     },
 }
 
@@ -597,6 +620,90 @@ def from_commons_subject(spec, rejections):
     return items
 
 
+def licence_allowed(spec, licence):
+    """Which licences a pack accepts.
+
+    CC0 is the default and the safest: a worldwide waiver. A pack of famous photographs
+    cannot live on it, though — almost nothing iconic was ever CC0-released. Those rest on
+    two other footings, declared per pack rather than quietly assumed: copyright that has
+    expired, and US federal government work, which carries none by statute."""
+    allowed = spec.get("licences", {"CC0"})
+    return any(licence.lower().startswith(a.lower()) for a in allowed)
+
+
+def from_commons_curated(spec, rejections):
+    """A written list of photographs people recognise, looked up on Commons.
+
+    Significance cannot be searched for — an archive has no idea which of its holdings
+    everyone has already seen — and the year belongs to the event rather than to whenever
+    a scan was uploaded. So both are written down."""
+    items = []
+    seen = set()
+    for entry in spec["photographs"]:
+        params = {
+            "action": "query", "format": "json", "generator": "search",
+            "gsrsearch": f'{entry["q"]} filemime:image/jpeg', "gsrnamespace": 6, "gsrlimit": 12,
+            "prop": "imageinfo", "iiprop": "url|extmetadata|size|mime", "iiurlwidth": 1400,
+        }
+        url = "https://commons.wikimedia.org/w/api.php?" + urllib.parse.urlencode(params)
+        try:
+            payload = fetch_json(url, timeout=90)
+        except Exception as error:
+            print(f"    ! {entry['title']}: {error}")
+            continue
+
+        picked = None
+        for page in ((payload.get("query") or {}).get("pages") or {}).values():
+            info = (page.get("imageinfo") or [{}])[0]
+            extra = info.get("extmetadata") or {}
+            title = strip_html(page.get("title", "")).replace("File:", "")
+            licence = strip_html((extra.get("LicenseShortName") or {}).get("value"))
+            if not licence_allowed(spec, licence):
+                rejections.add(f"licence not allowed ({licence or 'unknown'})")
+                continue
+            if title in seen:
+                continue
+            if looks_like_a_photograph(title, info.get("mime"), info.get("width")):
+                continue
+            if not info.get("thumburl"):
+                continue
+            # Check the photograph against the year claimed for it. A keyword search for
+            # "Neil Armstrong 1969" will happily return a 2020 photograph of a museum
+            # display, and a dating game that teaches the wrong date is worse than one
+            # with fewer photographs.
+            found_year = parse_year((extra.get("DateTimeOriginal") or {}).get("value")) \
+                or parse_year(title)
+            if found_year and abs(found_year - entry["year"]) > 3:
+                rejections.add(f"found a {found_year} photograph for {entry['year']}")
+                continue
+            picked = (title, licence,
+                      strip_html((extra.get("Artist") or {}).get("value")) or "Unknown",
+                      info.get("descriptionurl", ""), info["thumburl"])
+            break
+
+        if not picked:
+            rejections.add(f"nothing usable for {entry['title']!r}")
+            continue
+
+        title, licence, artist, page_url, thumb = picked
+        seen.add(title)
+        items.append({
+            "remote": commons_file_url(title),
+            "title": entry["title"],
+            "year": entry["year"],
+            "month": entry.get("month", 6),
+            "place": None, "lat": None, "lon": None,
+            "image": thumb,
+            "credit": artist,
+            "source": "Wikimedia Commons",
+            "source_url": page_url,
+            "licence": licence,
+        })
+        print(f"    {entry['year']}  {entry['title']}")
+        time.sleep(0.3)
+    return items
+
+
 def from_nasa_curated(spec, rejections):
     """A hand-picked list of photographs people recognise, each with the date of the
     event rather than of the upload.
@@ -828,6 +935,8 @@ def build(pack_name, out_root, api_key, metadata_only=False):
         candidates = from_commons_category(spec, rejections)
     elif spec["source"] == "nasa-curated":
         candidates = from_nasa_curated(spec, rejections)
+    elif spec["source"] == "commons-curated":
+        candidates = from_commons_curated(spec, rejections)
     else:
         candidates = from_smithsonian(spec, rejections, api_key)
 
@@ -880,7 +989,7 @@ def build(pack_name, out_root, api_key, metadata_only=False):
             "credit": candidate["credit"],
             "source": candidate["source"],
             "sourceURL": candidate["source_url"],
-            "license": "CC0",
+            "license": candidate.get("licence", "CC0"),
         }
         if not metadata_only:
             entry["file"] = filename
@@ -898,7 +1007,7 @@ def build(pack_name, out_root, api_key, metadata_only=False):
         "id": spec["id"],
         "title": spec["title"],
         "blurb": spec["blurb"],
-        "license": "CC0",
+        "license": ", ".join(sorted(spec.get("licences", {"CC0"}))),
         "builtAt": time.strftime("%Y-%m-%d"),
         "items": items,
     }
