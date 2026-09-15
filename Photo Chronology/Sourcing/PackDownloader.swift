@@ -150,13 +150,24 @@ final class PackDownloader {
     /// looking in entirely the wrong place.
     private static func fetchData(from url: URL) async throws -> Data {
         let (data, response) = try await URLSession.shared.data(from: url)
-        if let http = response as? HTTPURLResponse, !(200...299).contains(http.statusCode) {
-            throw NSError(domain: "PhotoChronology", code: http.statusCode, userInfo: [
-                NSLocalizedDescriptionKey:
-                    "The photo pack server answered \(http.statusCode) for \(url.lastPathComponent)."
-            ])
+        guard let http = response as? HTTPURLResponse else { return data }
+        guard !(200...299).contains(http.statusCode) else { return data }
+
+        // 403 has one overwhelmingly likely cause here and it isn't the device: the
+        // objects are in the bucket but not readable without credentials. Say so,
+        // rather than making someone guess from a status code.
+        let message: String
+        switch http.statusCode {
+        case 403:
+            message = "The photo packs aren't readable yet. They're uploaded, but the "
+                + "bucket still needs to allow anonymous downloads."
+        case 404:
+            message = "The photo packs aren't published at this address yet."
+        default:
+            message = "The photo pack server answered \(http.statusCode)."
         }
-        return data
+        throw NSError(domain: "PhotoChronology", code: http.statusCode,
+                      userInfo: [NSLocalizedDescriptionKey: message])
     }
 
     /// Manifest first, then its photographs, into a staging directory that is only
