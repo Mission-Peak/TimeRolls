@@ -185,6 +185,39 @@ PACK_SPECS = {
                   'object_type:"Photographs" AND (actress OR actor OR musician OR jazz OR theater OR band OR singer OR dancer OR circus)'},
         ],
     },
+    "space": {
+        "id": "space",
+        "title": "Space",
+        "blurb": "Photographs almost everyone has seen, from Mercury to Mars.",
+        "source": "nasa-curated",
+        "themes": ["chronology", "objects"],
+        "photographs": [
+            {"year": 1962, "title": "John Glenn boards Friendship 7", "q": "John Glenn Friendship 7 1962"},
+            {"year": 1965, "title": "The first American spacewalk", "q": "Ed White Gemini 4 EVA"},
+            {"year": 1966, "title": "Gemini in orbit", "q": "Gemini 7 spacecraft in orbit"},
+            {"year": 1968, "title": "Earthrise, seen from Apollo 8", "q": "Earthrise Apollo 8"},
+            {"year": 1969, "title": "A footprint on the Moon", "q": "Apollo 11 bootprint lunar surface"},
+            {"year": 1969, "title": "Buzz Aldrin on the Moon", "q": "Aldrin Apollo 11 visor reflection"},
+            {"year": 1971, "title": "The lunar rover", "q": "Apollo 15 lunar roving vehicle"},
+            {"year": 1972, "title": "The Blue Marble", "q": "Blue Marble Apollo 17 Earth"},
+            {"year": 1973, "title": "Skylab above the Earth", "q": "Skylab space station orbit"},
+            {"year": 1975, "title": "Apollo and Soyuz meet in orbit", "q": "Apollo Soyuz Test Project"},
+            {"year": 1981, "title": "The first Space Shuttle launch", "q": "STS-1 Columbia first launch 1981"},
+            {"year": 1984, "title": "Untethered above the Earth", "q": "McCandless manned maneuvering unit"},
+            {"year": 1990, "title": "Hubble leaves the payload bay", "q": "Hubble Space Telescope deployment 1990"},
+            {"year": 1995, "title": "Shuttle docks with Mir", "q": "Space Shuttle Atlantis Mir docking"},
+            {"year": 1997, "title": "A rover on Mars", "q": "Mars Pathfinder Sojourner rover surface"},
+            {"year": 1998, "title": "The Space Station begins", "q": "International Space Station Unity Zarya 1998"},
+            {"year": 2004, "title": "Opportunity on Mars", "q": "Mars Exploration Rover Opportunity"},
+            {"year": 2005, "title": "The Space Station takes shape", "q": "International Space Station assembly 2005"},
+            {"year": 2012, "title": "Curiosity lands", "q": "Curiosity rover Mars self portrait"},
+            {"year": 2015, "title": "Pluto, close up", "q": "New Horizons Pluto"},
+            {"year": 2019, "title": "A spacewalk at the Station", "q": "spacewalk International Space Station 2019"},
+            {"year": 2021, "title": "A helicopter flies on Mars", "q": "Ingenuity Mars helicopter"},
+            {"year": 2022, "title": "The Webb telescope's first look", "q": "James Webb Space Telescope first images"},
+            {"year": 2024, "title": "Artemis prepares to return", "q": "Artemis Space Launch System rollout"},
+        ],
+    },
     "seventies": {
         "id": "seventies",
         "title": "The Seventies",
@@ -564,6 +597,68 @@ def from_commons_subject(spec, rejections):
     return items
 
 
+def from_nasa_curated(spec, rejections):
+    """A hand-picked list of photographs people recognise, each with the date of the
+    event rather than of the upload.
+
+    Significance cannot be found by keyword search — an archive has no idea which of its
+    photographs everyone has seen. And NASA's own metadata dates many Apollo pictures to
+    the anniversary that reposted them, so the year comes from the list, not the API.
+    NASA imagery is public domain, which is what makes a pack of famous photographs
+    possible at all: almost every other iconic 20th-century photograph is owned by an
+    agency."""
+    items = []
+    seen = set()
+    for entry in spec["photographs"]:
+        url = "https://images-api.nasa.gov/search?" + urllib.parse.urlencode(
+            {"q": entry["q"], "media_type": "image"})
+        try:
+            payload = fetch_json(url, timeout=60)
+        except Exception as error:
+            print(f"    ! {entry['title']}: {error}")
+            continue
+
+        picked = None
+        for candidate in payload.get("collection", {}).get("items", []):
+            data = (candidate.get("data") or [{}])[0]
+            links = candidate.get("links") or []
+            if not links:
+                continue
+            title = strip_html(data.get("title", ""))
+            if title in seen:
+                continue
+            if unsuitable_subject(title):
+                rejections.add("distressing or institutional subject")
+                continue
+            href = links[0].get("href", "")
+            if not href:
+                continue
+            picked = (title, href)
+            break
+
+        if not picked:
+            rejections.add(f"nothing usable for {entry['title']!r}")
+            continue
+
+        title, href = picked
+        seen.add(title)
+        items.append({
+            # NASA serves several renditions; the medium one is tile-sized.
+            "remote": href.replace("~thumb.jpg", "~medium.jpg"),
+            "title": entry["title"],
+            "year": entry["year"],
+            "month": entry.get("month", 6),
+            "place": None, "lat": None, "lon": None,
+            "image": href.replace("~thumb.jpg", "~medium.jpg"),
+            "credit": "NASA",
+            "source": "NASA Image and Video Library",
+            "source_url": "https://images.nasa.gov/",
+        })
+        print(f"    {entry['year']}  {entry['title']}")
+        time.sleep(0.3)
+    return items
+
+
 def from_commons_category(spec, rejections):
     """Commons, inside a category, one query per decade. Used for US government
     photography: public domain by statute rather than by licence, which is how the
@@ -731,6 +826,8 @@ def build(pack_name, out_root, api_key, metadata_only=False):
         candidates = from_commons_subject(spec, rejections)
     elif spec["source"] == "commons-category":
         candidates = from_commons_category(spec, rejections)
+    elif spec["source"] == "nasa-curated":
+        candidates = from_nasa_curated(spec, rejections)
     else:
         candidates = from_smithsonian(spec, rejections, api_key)
 
