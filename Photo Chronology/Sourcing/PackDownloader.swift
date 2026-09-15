@@ -30,7 +30,8 @@ enum PackSource {
            let url = URL(string: override) {
             return url
         }
-        return URL(string: "https://s3.wasabisys.com/irecollect")
+        // OneBucket fronts its own S3 endpoint rather than the storage behind it.
+        return URL(string: "https://s3.us-ashburn-1.onebucket.io/irecollect")
     }
 
     static var catalogURL: URL? {

@@ -166,8 +166,14 @@ are promoted only once every file has arrived — a half-downloaded pack is neve
 
 ```bash
 python3 Tools/PackBuilder/make_catalog.py --packs PacksForDownload --out build/remote
-# then upload the contents of build/remote/ to the bucket root
+export AWS_ACCESS_KEY_ID=…  AWS_SECRET_ACCESS_KEY=…     # from the OneBucket console
+./Tools/PackBuilder/upload_packs.sh
 ```
+
+The bucket is `irecollect` on OneBucket's own S3 endpoint,
+`https://s3.us-ashburn-1.onebucket.io` — not the Wasabi endpoint behind it, which is what
+the first version of this pointed at. The MCP integration can write individual objects
+but does not hand out the access keys, so the bulk sync needs keys from the console.
 
 `PACK_SOURCE_URL` overrides the source at launch, which is how the download path is
 tested against a local server:
