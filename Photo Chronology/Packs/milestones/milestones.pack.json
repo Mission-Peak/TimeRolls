@@ -181,17 +181,29 @@
     {
       "id": "milestones-015",
       "objectTags": [],
-      "remoteURL": "https://commons.wikimedia.org/wiki/Special:FilePath/USS%20Nautilus%20%28SSN-571%29%20under%20construction%20c1953.jpg?width=1200",
-      "title": "The first nuclear submarine",
-      "year": 1954,
+      "remoteURL": "https://commons.wikimedia.org/wiki/Special:FilePath/Classic%20shot%20of%20the%20ENIAC%20%28full%20resolution%29.jpg?width=1200",
+      "title": "The first computer",
+      "year": 1946,
       "month": 6,
-      "credit": "USN",
+      "credit": "Unidentified U.S. Army photographer",
       "source": "Wikimedia Commons",
-      "sourceURL": "https://commons.wikimedia.org/wiki/File:USS_Nautilus_(SSN-571)_under_construction_c1953.jpg",
+      "sourceURL": "https://commons.wikimedia.org/wiki/File:Classic_shot_of_the_ENIAC_(full_resolution).jpg",
       "license": "Public domain"
     },
     {
       "id": "milestones-016",
+      "objectTags": [],
+      "remoteURL": "https://commons.wikimedia.org/wiki/Special:FilePath/USS%20Nautilus%20at%20launch.jpg?width=1200",
+      "title": "The first nuclear submarine",
+      "year": 1954,
+      "month": 6,
+      "credit": "US Navy",
+      "source": "Wikimedia Commons",
+      "sourceURL": "https://commons.wikimedia.org/wiki/File:USS_Nautilus_at_launch.jpg",
+      "license": "Public domain"
+    },
+    {
+      "id": "milestones-017",
       "objectTags": [],
       "remoteURL": "https://commons.wikimedia.org/wiki/Special:FilePath/1956%20face%20detail%2C%20Rosa%20Parks%20being%20fingerprinted%20by%20Deputy%20Sheriff%20D.H.%20Lackey%20after%20being%20arrested%20on%20February%2022%2C%201956%2C%20during%20the%20Montgomery%20bus%20boycott%20%28cropped%29.jpg?width=1200",
       "title": "Rosa Parks in Montgomery",
@@ -203,7 +215,7 @@
       "license": "Public domain"
     },
     {
-      "id": "milestones-017",
+      "id": "milestones-018",
       "objectTags": [],
       "remoteURL": "https://commons.wikimedia.org/wiki/Special:FilePath/Pan%20Am%20%28Boeing%20747%29.jpg?width=1200",
       "title": "The Boeing 747 enters service",
@@ -215,7 +227,7 @@
       "license": "Public domain"
     },
     {
-      "id": "milestones-018",
+      "id": "milestones-019",
       "objectTags": [],
       "remoteURL": "https://commons.wikimedia.org/wiki/Special:FilePath/MSH80%20early%20eruption%20st%20helens%20from%20NE%2004-10-80.jpg?width=1200",
       "title": "Mount St. Helens erupts",
@@ -227,7 +239,7 @@
       "license": "Public domain"
     },
     {
-      "id": "milestones-019",
+      "id": "milestones-020",
       "objectTags": [],
       "remoteURL": "https://commons.wikimedia.org/wiki/Special:FilePath/A%20crowd%20of%20West%20German%20citizens%20gathers%20at%20the%20newly%20created%20opening%20in%20the%20Berlin%20Wall%20at%20Potsdamer%20Platz.jpg?width=1200",
       "title": "The Berlin Wall comes down",
@@ -239,7 +251,7 @@
       "license": "Public domain"
     },
     {
-      "id": "milestones-020",
+      "id": "milestones-021",
       "objectTags": [],
       "remoteURL": "https://commons.wikimedia.org/wiki/Special:FilePath/Mars%20Pathfinder%20Landing%20Site%20%28opo9723a%29.jpg?width=1200",
       "title": "Mars Pathfinder lands",

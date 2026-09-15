@@ -133,13 +133,13 @@
     {
       "id": "famous-faces-011",
       "objectTags": [],
-      "remoteURL": "https://commons.wikimedia.org/wiki/Special:FilePath/Portrait%20of%20Woodrow%20Wilson%20P1893.jpg?width=1200",
+      "remoteURL": "https://commons.wikimedia.org/wiki/Special:FilePath/President%20Woodrow%20Wilson%2C%20center%20left%2C%20wearing%20top%20hat%2C%20and%20others%20seated%20in%20open%20automobile%20LCCN2002712118.jpg?width=1200",
       "title": "Woodrow Wilson",
-      "year": 1916,
+      "year": 1913,
       "month": 6,
-      "credit": "John Singer Sargent",
+      "credit": "Miscellaneous Items in High Demand, PPOC, Library of Congress",
       "source": "Wikimedia Commons",
-      "sourceURL": "https://commons.wikimedia.org/wiki/File:Portrait_of_Woodrow_Wilson_P1893.jpg",
+      "sourceURL": "https://commons.wikimedia.org/wiki/File:President_Woodrow_Wilson,_center_left,_wearing_top_hat,_and_others_seated_in_open_automobile_LCCN2002712118.jpg",
       "license": "Public domain"
     },
     {
@@ -169,18 +169,6 @@
     {
       "id": "famous-faces-014",
       "objectTags": [],
-      "remoteURL": "https://commons.wikimedia.org/wiki/Special:FilePath/Albert%20Einstein%20WZO%20photo%201921.jpg?width=1200",
-      "title": "Albert Einstein",
-      "year": 1921,
-      "month": 6,
-      "credit": "Underwood and Underwood, New York",
-      "source": "Wikimedia Commons",
-      "sourceURL": "https://commons.wikimedia.org/wiki/File:Albert_Einstein_WZO_photo_1921.jpg",
-      "license": "Public domain"
-    },
-    {
-      "id": "famous-faces-015",
-      "objectTags": [],
       "remoteURL": "https://commons.wikimedia.org/wiki/Special:FilePath/Calvin%20Coolidge%20and%20I-See-O.jpg?width=1200",
       "title": "Calvin Coolidge",
       "year": 1923,
@@ -191,7 +179,7 @@
       "license": "Public domain"
     },
     {
-      "id": "famous-faces-016",
+      "id": "famous-faces-015",
       "objectTags": [],
       "remoteURL": "https://commons.wikimedia.org/wiki/Special:FilePath/Charles%20Augustus%20Lindbergh%2C%20Jr.%20by%20Underwood%20%26%20Underwood%2C%201927%2C%20gelatin%20silver%20print%2C%20from%20the%20National%20Portrait%20Gallery%20-%20NPG-NPG%2095%20376Lindbergh-000001.jpg?width=1200",
       "title": "Charles Lindbergh",
@@ -203,7 +191,7 @@
       "license": "Public domain"
     },
     {
-      "id": "famous-faces-017",
+      "id": "famous-faces-016",
       "objectTags": [],
       "remoteURL": "https://commons.wikimedia.org/wiki/Special:FilePath/Amelia%20Earhart%2C%201928.jpg?width=1200",
       "title": "Amelia Earhart",
@@ -215,7 +203,7 @@
       "license": "Public domain"
     },
     {
-      "id": "famous-faces-018",
+      "id": "famous-faces-017",
       "objectTags": [],
       "remoteURL": "https://commons.wikimedia.org/wiki/Special:FilePath/FDR%20in%201933.jpg?width=1200",
       "title": "Franklin D. Roosevelt",
@@ -227,7 +215,7 @@
       "license": "Public domain"
     },
     {
-      "id": "famous-faces-019",
+      "id": "famous-faces-018",
       "objectTags": [],
       "remoteURL": "https://commons.wikimedia.org/wiki/Special:FilePath/Jesse%20Owens%20holding%20medals.jpg?width=1200",
       "title": "Jesse Owens in Berlin",
@@ -239,19 +227,19 @@
       "license": "Public domain"
     },
     {
-      "id": "famous-faces-020",
+      "id": "famous-faces-019",
       "objectTags": [],
-      "remoteURL": "https://commons.wikimedia.org/wiki/Special:FilePath/Masses%20listen%20while%20negress%20sings.%20Washington%2C%20D.C.%2C%20April%209.%20An%20estimated%2075%2C000%20people%20of%20all%20races%20massed%20before%20the%20Lincoln%20Memorial%20today%20while%20negro%20contralto%20Marian%20Anderson%20staged%20on%20LCCN2016875406.jpg?width=1200",
-      "title": "Marian Anderson sings",
-      "year": 1939,
+      "remoteURL": "https://commons.wikimedia.org/wiki/Special:FilePath/Anderson%2C%20Marian%201.jpg?width=1200",
+      "title": "Marian Anderson",
+      "year": 1940,
       "month": 6,
-      "credit": "Harris &amp; Ewing, photographer",
+      "credit": "Carl Van Vechten",
       "source": "Wikimedia Commons",
-      "sourceURL": "https://commons.wikimedia.org/wiki/File:Masses_listen_while_negress_sings._Washington,_D.C.,_April_9._An_estimated_75,000_people_of_all_races_massed_before_the_Lincoln_Memorial_today_while_negro_contralto_Marian_Anderson_staged_on_LCCN2016875406.jpg",
+      "sourceURL": "https://commons.wikimedia.org/wiki/File:Anderson,_Marian_1.jpg",
       "license": "Public domain"
     },
     {
-      "id": "famous-faces-021",
+      "id": "famous-faces-020",
       "objectTags": [],
       "remoteURL": "https://commons.wikimedia.org/wiki/Special:FilePath/Eleanor%20Roosevelt%20and%20John%20Curtin.jpg?width=1200",
       "title": "Eleanor Roosevelt",
@@ -263,7 +251,7 @@
       "license": "Public domain"
     },
     {
-      "id": "famous-faces-022",
+      "id": "famous-faces-021",
       "objectTags": [],
       "remoteURL": "https://commons.wikimedia.org/wiki/Special:FilePath/HarryTruman.jpg?width=1200",
       "title": "Harry Truman",
@@ -275,7 +263,7 @@
       "license": "Public domain"
     },
     {
-      "id": "famous-faces-023",
+      "id": "famous-faces-022",
       "objectTags": [],
       "remoteURL": "https://commons.wikimedia.org/wiki/Special:FilePath/Jackie%20Robinson%20-%20DPLA%20-%20521b24590f28025e098fd17847419f04.jpg?width=1200",
       "title": "Jackie Robinson",
@@ -287,7 +275,7 @@
       "license": "Public domain"
     },
     {
-      "id": "famous-faces-024",
+      "id": "famous-faces-023",
       "objectTags": [],
       "remoteURL": "https://commons.wikimedia.org/wiki/Special:FilePath/Dwight%20David%20Eisenhower%2C%20photo%20portrait%20by%20Bachrach%2C%201952.jpg?width=1200",
       "title": "Dwight Eisenhower",
@@ -299,7 +287,7 @@
       "license": "Public domain"
     },
     {
-      "id": "famous-faces-025",
+      "id": "famous-faces-024",
       "objectTags": [],
       "remoteURL": "https://commons.wikimedia.org/wiki/Special:FilePath/Louis%20Armstrong%20and%20Grace%20Kelly%20on%20the%20set%20of%20%22High%20Society%22%2C%201956.jpg?width=1200",
       "title": "Louis Armstrong",
@@ -311,7 +299,7 @@
       "license": "Public domain"
     },
     {
-      "id": "famous-faces-026",
+      "id": "famous-faces-025",
       "objectTags": [],
       "remoteURL": "https://commons.wikimedia.org/wiki/Special:FilePath/Acknowledgement%20of%20service%20obligation%20sgned%20by%20Elvis%20Presley%20on%20March%2024%2C%201958%2C%20to%20indicate%20that%20he%20understands%20that...%20-%20NARA%20-%20299792.jpg?width=1200",
       "title": "Elvis Presley in the Army",
@@ -323,7 +311,7 @@
       "license": "Public domain"
     },
     {
-      "id": "famous-faces-027",
+      "id": "famous-faces-026",
       "objectTags": [],
       "remoteURL": "https://commons.wikimedia.org/wiki/Special:FilePath/John%20F.%20Kennedy%2C%20White%20House%20color%20photo%20portrait.jpg?width=1200",
       "title": "John F. Kennedy",
@@ -335,7 +323,7 @@
       "license": "Public domain"
     },
     {
-      "id": "famous-faces-028",
+      "id": "famous-faces-027",
       "objectTags": [],
       "remoteURL": "https://commons.wikimedia.org/wiki/Special:FilePath/Civil%20Rights%20March%20on%20Washington%2C%20D.C.%20%28Dr.%20Martin%20Luther%20King%2C%20Jr.%20and%20Mathew%20Ahmann%20in%20a%20crowd.%29%20-%20NARA%20-%20542015%20-%20Restoration.jpg?width=1200",
       "title": "Martin Luther King Jr.",
@@ -347,7 +335,7 @@
       "license": "Public domain"
     },
     {
-      "id": "famous-faces-029",
+      "id": "famous-faces-028",
       "objectTags": [],
       "remoteURL": "https://commons.wikimedia.org/wiki/Special:FilePath/37%20Lyndon%20Johnson%203x4.jpg?width=1200",
       "title": "Lyndon Johnson",
@@ -359,7 +347,7 @@
       "license": "Public domain"
     },
     {
-      "id": "famous-faces-030",
+      "id": "famous-faces-029",
       "objectTags": [],
       "remoteURL": "https://commons.wikimedia.org/wiki/Special:FilePath/Nixon%20Official%20Presidential%20Portrait%2C%2007-08-1971.jpg?width=1200",
       "title": "Richard Nixon",
@@ -371,7 +359,7 @@
       "license": "Public domain"
     },
     {
-      "id": "famous-faces-031",
+      "id": "famous-faces-030",
       "objectTags": [],
       "remoteURL": "https://commons.wikimedia.org/wiki/Special:FilePath/Gerald%20Ford%2C%20official%20Presidential%20photo.jpg?width=1200",
       "title": "Gerald Ford",
@@ -383,7 +371,7 @@
       "license": "Public domain"
     },
     {
-      "id": "famous-faces-032",
+      "id": "famous-faces-031",
       "objectTags": [],
       "remoteURL": "https://commons.wikimedia.org/wiki/Special:FilePath/Jimmy%20Carter%2C%20official%20portrait.jpg?width=1200",
       "title": "Jimmy Carter",
@@ -395,7 +383,7 @@
       "license": "Public domain"
     },
     {
-      "id": "famous-faces-033",
+      "id": "famous-faces-032",
       "objectTags": [],
       "remoteURL": "https://commons.wikimedia.org/wiki/Special:FilePath/Official%20Portrait%20of%20President%20Reagan%201981.jpg?width=1200",
       "title": "Ronald Reagan",
@@ -407,7 +395,7 @@
       "license": "Public domain"
     },
     {
-      "id": "famous-faces-034",
+      "id": "famous-faces-033",
       "objectTags": [],
       "remoteURL": "https://commons.wikimedia.org/wiki/Special:FilePath/Astronaut%20Sally%20K.%20Ride%2C%20STS-7%20mission%20specialist%2C%20in%20a%20T-38%20jet.jpg?width=1200",
       "title": "Sally Ride in orbit",
@@ -419,7 +407,7 @@
       "license": "Public domain"
     },
     {
-      "id": "famous-faces-035",
+      "id": "famous-faces-034",
       "objectTags": [],
       "remoteURL": "https://commons.wikimedia.org/wiki/Special:FilePath/George%20H.%20W.%20Bush%2C%20President%20of%20the%20United%20States%2C%201989%20official%20portrait%20%28cropped%29.jpg?width=1200",
       "title": "George H. W. Bush",
@@ -431,7 +419,7 @@
       "license": "Public domain"
     },
     {
-      "id": "famous-faces-036",
+      "id": "famous-faces-035",
       "objectTags": [],
       "remoteURL": "https://commons.wikimedia.org/wiki/Special:FilePath/44%20Bill%20Clinton%203x4.jpg?width=1200",
       "title": "Bill Clinton",
@@ -443,7 +431,7 @@
       "license": "Public domain"
     },
     {
-      "id": "famous-faces-037",
+      "id": "famous-faces-036",
       "objectTags": [],
       "remoteURL": "https://commons.wikimedia.org/wiki/Special:FilePath/George-W-Bush.jpeg?width=1200",
       "title": "George W. Bush",
@@ -452,6 +440,18 @@
       "credit": "Eric Draper",
       "source": "Wikimedia Commons",
       "sourceURL": "https://commons.wikimedia.org/wiki/File:George-W-Bush.jpeg",
+      "license": "Public domain"
+    },
+    {
+      "id": "famous-faces-037",
+      "objectTags": [],
+      "remoteURL": "https://commons.wikimedia.org/wiki/Special:FilePath/President%20Barack%20Obama%2C%202012%20portrait%20crop.jpg?width=1200",
+      "title": "Barack Obama",
+      "year": 2012,
+      "month": 6,
+      "credit": "Official White House Photo by  Pete Souza",
+      "source": "Wikimedia Commons",
+      "sourceURL": "https://commons.wikimedia.org/wiki/File:President_Barack_Obama,_2012_portrait_crop.jpg",
       "license": "Public domain"
     }
   ]
