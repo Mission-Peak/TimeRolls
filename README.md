@@ -59,10 +59,8 @@ is global, while CC0 is a worldwide waiver with no attribution duty. Provenance 
 recorded anyway and shown under Privacy → Photo credits.
 
 **How much CC0 is out there.** Commons alone holds about **8 million CC0 JPEGs** — 3.3
-million across a dozen everyday subjects — which is the answer to "where do we get a lot
-of free images". The limit is not supply, it's app size: 172 photographs already make the
-app 38 MB, so bundling thousands is not the path. Downloading packs on demand is
-(spec §8), and the pack format is already the same either way.
+million across a dozen everyday subjects. Supply is not the constraint; app size is, which
+is why packs download rather than ship (see below).
 
 Other sources checked: Openverse aggregates far more but its API returned 504s throughout
 testing; the Cleveland Museum (1,023 CC0 works), Art Institute of Chicago (132k) and Met
@@ -144,6 +142,40 @@ library full of real holidays.
 Pack photographs are classified on device by the same Vision pass as personal photos, so
 they work in the Things theme too. A pack that appears in a later build arrives switched
 on rather than hidden.
+
+## Downloadable packs
+
+A starter pack ships in the app and the rest arrive on demand from OneBucket (spec §6.2,
+§8), which is what lets the photo library grow without the binary growing with it —
+bundling all three packs took the app to 38 MB; it is 13 MB with two of them downloadable.
+
+**Layout in the bucket** — plain objects, not an archive, so it stays browsable and a pack
+can be corrected one photograph at a time. This is the pack file format left open in §12:
+
+```
+irecollect/packs/catalog.json
+irecollect/packs/<pack-id>/<pack-id>.pack.json
+irecollect/packs/<pack-id>/<pack-id>-001.jpg
+```
+
+A downloaded pack lands on the device in exactly the shape a bundled one has, so nothing
+downstream knows where a pack came from. Downloads stage in a `.downloading` directory and
+are promoted only once every file has arrived — a half-downloaded pack is never playable.
+
+**Publishing a pack**
+
+```bash
+python3 Tools/PackBuilder/make_catalog.py --packs PacksForDownload --out build/remote
+# then upload the contents of build/remote/ to the bucket root
+```
+
+`PACK_SOURCE_URL` overrides the source at launch, which is how the download path is
+tested against a local server:
+
+```bash
+SIMCTL_CHILD_PACK_SOURCE_URL="http://localhost:8765" \
+  xcrun simctl launch booted hanna.Photo-Chronology
+```
 
 ## Together mode
 

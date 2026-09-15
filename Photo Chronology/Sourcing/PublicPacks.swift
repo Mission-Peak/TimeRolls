@@ -39,8 +39,10 @@ struct PackItem: Identifiable, Hashable {
     var date: Date
     var placeName: String?
     var coordinate: Coordinate?
-    /// A real photograph bundled with the app, by resource name.
+    /// A real photograph, by resource name.
     var imageResource: String?
+    /// Where that photograph lives. nil means it ships inside the app bundle.
+    var imageDirectory: URL?
     /// Placeholder art, drawn on demand when there is no photograph.
     var motif: PackMotif?
     var credit: PackCredit?
@@ -98,20 +100,32 @@ private struct PackManifest: Decodable {
 
 enum PublicPackLibrary {
 
-    static let packs: [PhotoPack] = {
-        let bundled = bundledPacks()
-        let bundledIDs = Set(bundled.map(\.id))
-        // A real pack supersedes the placeholder one it was built to replace.
-        return bundled + proceduralPacks.filter { !bundledIDs.contains($0.id) }
-    }()
+    private(set) static var packs: [PhotoPack] = assemble()
+    private static var lookup: [String: PhotoPack] = Dictionary(
+        packs.map { ($0.id, $0) }, uniquingKeysWith: { first, _ in first })
 
-    static let defaultEnabledPackIDs: Set<String> =
+    /// Call after a pack is downloaded or removed.
+    static func reload() {
+        packs = assemble()
+        lookup = Dictionary(packs.map { ($0.id, $0) }, uniquingKeysWith: { first, _ in first })
+    }
+
+    private static func assemble() -> [PhotoPack] {
+        // A downloaded pack wins over a bundled one of the same id, and a real pack of
+        // either kind supersedes the placeholder art it was built to replace.
+        let downloaded = downloadedPacks()
+        let downloadedIDs = Set(downloaded.map(\.id))
+        let bundled = bundledPacks().filter { !downloadedIDs.contains($0.id) }
+        let realIDs = downloadedIDs.union(bundled.map(\.id))
+        return (downloaded + bundled).sorted { $0.title < $1.title }
+            + proceduralPacks.filter { !realIDs.contains($0.id) }
+    }
+
+    static var defaultEnabledPackIDs: Set<String> {
         Set(packs.filter(\.isPlayable).map(\.id))
+    }
 
     static func pack(id: String) -> PhotoPack? { lookup[id] }
-
-    private static let lookup: [String: PhotoPack] =
-        Dictionary(packs.map { ($0.id, $0) }, uniquingKeysWith: { first, _ in first })
 
     /// Metadata-only `GamePhoto` values for the enabled, playable packs.
     static func photos(enabledPackIDs: Set<String>) -> [GamePhoto] {
@@ -140,6 +154,9 @@ enum PublicPackLibrary {
     /// and silently falling back to placeholder art hides the problem.
     static func imageURL(for item: PackItem) -> URL? {
         guard let resource = item.imageResource else { return nil }
+        if let directory = item.imageDirectory {
+            return directory.appendingPathComponent("\(resource).jpg")
+        }
         return Bundle.main.url(forResource: resource, withExtension: "jpg")
     }
 
@@ -153,16 +170,29 @@ enum PublicPackLibrary {
 
     // MARK: Bundled manifests
 
+    private static func downloadedPacks() -> [PhotoPack] {
+        PackStore.shared.installedDirectories().compactMap { directory in
+            let manifest = directory.appendingPathComponent(
+                "\(directory.lastPathComponent).pack.json")
+            return decodePack(at: manifest, imageDirectory: directory)
+        }
+    }
+
     private static func bundledPacks() -> [PhotoPack] {
         // Xcode flattens bundled resources, so manifests are named <pack-id>.pack.json
         // and looked up by that name rather than by folder.
         let urls = Bundle.main.urls(forResourcesWithExtension: "json", subdirectory: nil) ?? []
         let manifests = urls.filter { $0.lastPathComponent.hasSuffix(".pack.json") }
 
-        let decoder = JSONDecoder()
-        return manifests.compactMap { url -> PhotoPack? in
+        return manifests.compactMap { decodePack(at: $0, imageDirectory: nil) }
+            .sorted { $0.title < $1.title }
+    }
+
+    /// `imageDirectory` is nil for a pack that ships inside the app, where the
+    /// photographs are flattened into the bundle rather than kept in a folder.
+    private static func decodePack(at url: URL, imageDirectory: URL?) -> PhotoPack? {
             guard let data = try? Data(contentsOf: url),
-                  let manifest = try? decoder.decode(PackManifest.self, from: data),
+                  let manifest = try? JSONDecoder().decode(PackManifest.self, from: data),
                   manifest.formatVersion == 1 else { return nil }
 
             let items = manifest.items.map { entry -> PackItem in
@@ -187,6 +217,7 @@ enum PublicPackLibrary {
                     placeName: entry.place,
                     coordinate: coordinate,
                     imageResource: (entry.file as NSString).deletingPathExtension,
+                    imageDirectory: imageDirectory,
                     motif: nil,
                     credit: PackCredit(title: entry.title,
                                        creator: entry.credit,
@@ -201,8 +232,6 @@ enum PublicPackLibrary {
                              availability: .bundled,
                              items: items,
                              isPhotography: true)
-        }
-        .sorted { $0.title < $1.title }
     }
 
     // MARK: Procedural packs
@@ -273,6 +302,7 @@ enum PublicPackLibrary {
                             placeName: place,
                             coordinate: Coordinate(latitude: lat, longitude: lon),
                             imageResource: nil,
+                            imageDirectory: nil,
                             motif: motif,
                             credit: nil)
         }

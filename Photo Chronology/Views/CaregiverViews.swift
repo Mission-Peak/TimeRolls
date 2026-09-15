@@ -255,6 +255,33 @@ struct PhotoSourcesView: View {
             }
 
             Section {
+                NavigationLink("More photo packs") {
+                    MorePacksView(engine: engine)
+                }
+            } footer: {
+                Text("Extra packs are downloaded when you ask for them, so the app itself "
+                     + "stays small.")
+            }
+
+            Section {
+                Toggle(isOn: $engine.settings.objectsThemeEnabled) {
+                    VStack(alignment: .leading, spacing: 2) {
+                        Text("Things game")
+                        Text("\"Which photo has a dog in it?\"")
+                            .font(.footnote)
+                            .foregroundStyle(.secondary)
+                    }
+                }
+            } header: {
+                Text("Things")
+            } footer: {
+                Text("This is the one part of the app that looks at what is *in* a photo. "
+                     + "Your device does it on the device itself, using Apple's built-in "
+                     + "photo recognition — no photo and no label is ever sent anywhere. "
+                     + "Switch it off and the app only ever reads dates and locations.")
+            }
+
+            Section {
                 NavigationLink("Add plain labels") {
                     LabelsView(engine: engine)
                 }
