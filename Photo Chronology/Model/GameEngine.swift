@@ -101,11 +101,17 @@ final class GameEngine {
         refreshPools()
 
         // Geocoding happens in the background; Places simply gets better as it lands.
+        // It keeps going in waves rather than stopping after the first handful: until
+        // enough of the player's own places are named, Places counts as sparse and the
+        // photo packs carry it, which is not what anyone wants from a library full of
+        // real holidays.
         Task { [weak self] in
             guard let self else { return }
-            await places.resolveClusters(in: library.photos, limit: 10)
-            refreshPools()
-            if case .playing = phase, level == nil { nextLevel() }
+            repeat {
+                await places.resolveClusters(in: library.photos, limit: 25)
+                refreshPools()
+                if case .playing = phase, level == nil { nextLevel() }
+            } while places.hasUnresolvedClusters(in: library.photos) && !Task.isCancelled
         }
 
         startTaggingIfWanted()
@@ -369,9 +375,12 @@ final class GameEngine {
             ("Events queued", "\(telemetry.pending.count) (sent \(telemetry.sentCount))"),
             ("Telemetry sink", telemetry.sink.name),
         ]
-        if let note = level?.curationNote {
-            rows.append(("This level", note))
+        if let level {
+            rows.append(("This level", level.curationNote))
+            rows.append(("Photos in this level", generator.packShare(of: level)))
         }
+        rows.append(("Places still to name",
+                     places.hasUnresolvedClusters(in: library.photos) ? "working…" : "all done"))
         if let error = places.lastErrorDescription {
             rows.append(("Last geocoding error", error))
         }

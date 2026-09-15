@@ -26,7 +26,7 @@ final class PlaceResolver {
 
     /// MapKit throttles aggressively; keep requests slow and bounded per launch.
     private let minimumInterval: TimeInterval = 1.2
-    private let maximumLookupsPerLaunch = 40
+    private let maximumLookupsPerLaunch = 250
     private var lookupsThisLaunch = 0
     private var lastRequest: Date = .distantPast
 
@@ -57,6 +57,16 @@ final class PlaceResolver {
     }
 
     /// Resolve the biggest un-named clusters first, so a few lookups unlock the most photos.
+    /// True while there are still un-named clusters worth asking about.
+    func hasUnresolvedClusters(in photos: [GamePhoto]) -> Bool {
+        guard lookupsThisLaunch < maximumLookupsPerLaunch else { return false }
+        return photos.contains { photo in
+            guard let coordinate = photo.coordinate else { return false }
+            let key = coordinate.clusterKey
+            return cache[key] == nil && !failedKeys.contains(key)
+        }
+    }
+
     func resolveClusters(in photos: [GamePhoto], limit: Int = 8) async {
         var counts: [String: (Coordinate, Int)] = [:]
         for photo in photos {

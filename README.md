@@ -58,8 +58,19 @@ is the point: "public domain" depends on which country the viewer is in and the 
 is global, while CC0 is a worldwide waiver with no attribution duty. Provenance is
 recorded anyway and shown under Privacy → Photo credits.
 
+**How much CC0 is out there.** Commons alone holds about **8 million CC0 JPEGs** — 3.3
+million across a dozen everyday subjects — which is the answer to "where do we get a lot
+of free images". The limit is not supply, it's app size: 172 photographs already make the
+app 38 MB, so bundling thousands is not the path. Downloading packs on demand is
+(spec §8), and the pack format is already the same either way.
+
+Other sources checked: Openverse aggregates far more but its API returned 504s throughout
+testing; the Cleveland Museum (1,023 CC0 works), Art Institute of Chicago (132k) and Met
+(577 with images) are all keyless but art-heavy rather than photographic.
+
 **Sources.** `commons-geo` geosearches Wikimedia Commons around a landmark coordinate, so
-those items carry real coordinates and can drive the Places theme. `smithsonian` pulls
+those items carry real coordinates and can drive the Places theme. `commons-subject`
+searches the whole CC0 pool by subject, which is where volume comes from. `smithsonian` pulls
 from Open Access, which holds ~35k CC0 photographs with dates and is where historical
 material comes from.
 
@@ -108,7 +119,7 @@ adjust that judgement. Two lessons are baked into them: military abbreviations m
 because a title like "366 Inf. 92nd Div." never trips a filter looking for "infantry"; and
 proper nouns need their own list, because no amount of topic vocabulary catches a caption
 whose only distressing word is a name.
-| Everyday Life, Classic Holidays | 24 | 1948–2019 | Procedural placeholder art | all three |
+| Classic Holidays | 12 | 1951–2019 | Procedural placeholder art | all three |
 
 **What the licence filter costs.** Strict CC0 buys legal clarity and loses the middle of
 the twentieth century. CC0 material is bimodal: pre-1900 museum holdings and post-2010
@@ -120,6 +131,15 @@ licensing a collection rather than for loosening the filter.
 coordinate (maps, diagrams, a webcam still, a video poster) and the Smithsonian returns
 paintings, sketchbook folios and herbarium sheets. Both are filtered out — by MIME type
 and title for Commons, by `object_type` for the Smithsonian.
+
+**Packs stay in the background when they should.** Once the player's own library can
+carry a theme, a level is allowed at most one pack photo: §6.2b asks for pack photos
+blended *alongside* personal ones, and without a cap a dense pack wins a time window
+outright and the level comes out entirely stock. Curation is random, so the generator
+simply tries a few times and keeps the least-stock result. Geocoding also keeps running in
+waves until the player's own places are named — while fewer than three are known, Places
+counts as sparse and the landmark pack carries it, which is the wrong outcome for a
+library full of real holidays.
 
 Pack photographs are classified on device by the same Vision pass as personal photos, so
 they work in the Things theme too. A pack that appears in a later build arrives switched

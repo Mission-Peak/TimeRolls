@@ -98,7 +98,12 @@ private struct PackManifest: Decodable {
 
 enum PublicPackLibrary {
 
-    static let packs: [PhotoPack] = bundledPacks() + proceduralPacks
+    static let packs: [PhotoPack] = {
+        let bundled = bundledPacks()
+        let bundledIDs = Set(bundled.map(\.id))
+        // A real pack supersedes the placeholder one it was built to replace.
+        return bundled + proceduralPacks.filter { !bundledIDs.contains($0.id) }
+    }()
 
     static let defaultEnabledPackIDs: Set<String> =
         Set(packs.filter(\.isPlayable).map(\.id))

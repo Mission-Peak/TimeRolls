@@ -29,6 +29,7 @@ get a free one at api.data.gov and pass --si-key for anything larger.
 import argparse, json, os, re, shutil, subprocess, sys, tempfile, time, urllib.parse, urllib.request
 
 UA = "PhotoChronologyPackBuilder/1.0 (Attimis prototype; +hanna@attimis.co)"
+CC0_STATEMENT = "Q6938433"   # Wikidata item for the CC0 1.0 licence
 MAX_EDGE = 1200          # long edge, px — enough for a tile on any device
 JPEG_QUALITY = "60"      # sips quality step
 
@@ -92,6 +93,22 @@ PACK_SPECS = {
             {"place": "Sydney, Australia",      "lat": -33.8568, "lon": 151.2153, "take": 2},
             {"place": "Melbourne, Australia",   "lat": -37.8183, "lon": 144.9671, "take": 2},
             {"place": "Auckland, New Zealand",  "lat": -36.8485, "lon": 174.7622, "take": 2},
+        ],
+    },
+    "everyday": {
+        "id": "everyday-life",
+        "title": "Everyday Life",
+        "blurb": "Ordinary things, photographed by people all over the world.",
+        "source": "commons-subject",
+        "queries": [
+            {"q": "kitchen", "take": 5},   {"q": "garden flowers", "take": 5},
+            {"q": "dog", "take": 5},       {"q": "cat", "take": 5},
+            {"q": "beach", "take": 5},     {"q": "market stall", "take": 5},
+            {"q": "bicycle", "take": 4},   {"q": "train station", "take": 4},
+            {"q": "birthday cake", "take": 4}, {"q": "farm harvest", "take": 4},
+            {"q": "village street", "take": 4}, {"q": "mountains", "take": 4},
+            {"q": "boat harbour", "take": 4},  {"q": "forest path", "take": 4},
+            {"q": "snow winter", "take": 4},   {"q": "horses field", "take": 4},
         ],
     },
     "decades": {
@@ -203,12 +220,33 @@ INSTITUTIONAL = re.compile(
     re.IGNORECASE)
 
 
+# Commons holds a great deal of digitised art, and a search for "cat" happily returns a
+# 19th-century engraving of one. Fine pictures; not photographs, and "when was this
+# taken?" is the wrong question to ask about them.
+ARTWORK = re.compile(
+    r"\b(design for|stereograph|engraving|lithograph|etching|woodcut|aquatint|"
+    r"drawing|illustration|sketch|painting|watercolou?r|plate \d+|folio|"
+    r"from the complete works|met d[pt]\d+|yale|b\d{4}\.\d+)\b",
+    re.IGNORECASE)
+
+
+def title_stem(title):
+    """Collapse "Beach near Otaru -22903" and "Beach near Otaru -39689" to one key, so a
+    pack doesn't end up with five photographs of the same afternoon."""
+    stem = re.sub(r"\.(jpe?g|png)$", "", title, flags=re.IGNORECASE)
+    stem = re.sub(r"[-_(\s]*\d+\)?\s*$", "", stem)
+    stem = re.sub(r"[^a-zA-Z]+", " ", stem).strip().lower()
+    return " ".join(stem.split()[:5])
+
+
 def unsuitable_subject(title):
     """Reasons a photograph shouldn't go in a pack, whatever its licence."""
     if DISTRESSING.search(title):
         return "distressing subject"
     if INSTITUTIONAL.search(title):
         return "institutional record, not a scene"
+    if ARTWORK.search(title):
+        return "artwork, not a photograph"
     return None
 
 
@@ -320,6 +358,72 @@ def from_commons(spec, rejections, limit_per_target=80):
     return items
 
 
+def from_commons_subject(spec, rejections):
+    """Commons CC0 search by subject. The licence statement is part of the query, so the
+    pool is CC0 from the start; everything else is verified again client-side."""
+    items = []
+    seen = set()
+    for query in spec["queries"]:
+        search = (f'haswbstatement:P275={CC0_STATEMENT} {query["q"]} '
+                  f'filemime:image/jpeg')
+        params = {
+            "action": "query", "format": "json", "generator": "search",
+            "gsrsearch": search, "gsrnamespace": 6, "gsrlimit": 50,
+            "prop": "imageinfo", "iiprop": "url|extmetadata|size|mime", "iiurlwidth": 1400,
+        }
+        url = "https://commons.wikimedia.org/w/api.php?" + urllib.parse.urlencode(params)
+        try:
+            payload = fetch_json(url)
+        except Exception as error:
+            print(f"    ! {query['q']}: {error}")
+            continue
+
+        taken = 0
+        for page in ((payload.get("query") or {}).get("pages") or {}).values():
+            if taken >= query["take"]:
+                break
+            info = (page.get("imageinfo") or [{}])[0]
+            extra = info.get("extmetadata") or {}
+
+            licence = strip_html((extra.get("LicenseShortName") or {}).get("value"))
+            if licence != "CC0":
+                rejections.add(f"licence not CC0 ({licence or 'unknown'})")
+                continue
+            title = strip_html(page.get("title", "")).replace("File:", "")
+            stem = title_stem(title)
+            if stem in seen:
+                rejections.add("near-duplicate of one already taken")
+                continue
+            complaint = (looks_like_a_photograph(title, info.get("mime"), info.get("width"))
+                         or unsuitable_subject(title))
+            if complaint:
+                rejections.add(complaint)
+                continue
+            year = parse_year((extra.get("DateTimeOriginal") or {}).get("value"))
+            if not year:
+                rejections.add("no usable date")
+                continue
+            if not info.get("thumburl"):
+                rejections.add("no image URL")
+                continue
+
+            seen.add(stem)
+            items.append({
+                "title": title,
+                "year": year,
+                "month": parse_month((extra.get("DateTimeOriginal") or {}).get("value")),
+                "place": None, "lat": None, "lon": None,
+                "image": info["thumburl"],
+                "credit": strip_html((extra.get("Artist") or {}).get("value")) or "Unknown",
+                "source": "Wikimedia Commons",
+                "source_url": info.get("descriptionurl", ""),
+            })
+            taken += 1
+        print(f"    {query['q']}: kept {taken}")
+        time.sleep(0.4)
+    return items
+
+
 def from_smithsonian(spec, rejections, api_key):
     """Smithsonian Open Access, filtered to items whose media is explicitly CC0."""
     items = []
@@ -416,6 +520,8 @@ def build(pack_name, out_root, api_key):
     print(f"\nBuilding '{spec['title']}' from {spec['source']} — CC0 only\n")
     if spec["source"] == "commons-geo":
         candidates = from_commons(spec, rejections)
+    elif spec["source"] == "commons-subject":
+        candidates = from_commons_subject(spec, rejections)
     else:
         candidates = from_smithsonian(spec, rejections, api_key)
 
