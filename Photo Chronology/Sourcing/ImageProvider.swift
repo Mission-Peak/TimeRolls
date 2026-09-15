@@ -19,6 +19,16 @@ final class ImageProvider {
         cache.countLimit = 120
     }
 
+    /// A representative photo for a pack, for the category chooser.
+    func preview(for pack: PhotoPack, targetSize: CGSize) async -> UIImage? {
+        guard let item = pack.items.first else { return nil }
+        let photo = GamePhoto(id: "preview:\(pack.id)",
+                              origin: .pack(packID: pack.id, itemID: item.id),
+                              creationDate: item.date,
+                              coordinate: item.coordinate)
+        return await image(for: photo, targetSize: targetSize)
+    }
+
     func image(for photo: GamePhoto, targetSize: CGSize) async -> UIImage? {
         let key = "\(photo.id)-\(Int(targetSize.width))" as NSString
         if let cached = cache.object(forKey: key) { return cached }

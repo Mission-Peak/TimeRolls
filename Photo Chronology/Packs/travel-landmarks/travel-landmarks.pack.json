@@ -4,7 +4,7 @@
   "title": "Travel Landmarks",
   "blurb": "Places worth remembering, from six decades of travel photography.",
   "license": "CC0",
-  "builtAt": "2026-09-14",
+  "builtAt": "2026-09-15",
   "items": [
     {
       "id": "travel-landmarks-001",
@@ -457,34 +457,6 @@
     {
       "id": "travel-landmarks-033",
       "file": "travel-landmarks-033.jpg",
-      "title": "HK TST Tsim Sha Tsui \u9999\u6e2f\u85dd\u8853\u9928 Hong Kong Museum of Art \u975c\u89c0\u6a13\u85cf\u54c1\u9928 JingGuanLou Gallery \u9999\u6e2f\u6536\u85cf\u5bb6 HK Pride September 2025 R12S 543.jpg",
-      "year": 2025,
-      "month": 9,
-      "credit": "93MAINGMaisee Hungom",
-      "source": "Wikimedia Commons",
-      "sourceURL": "https://commons.wikimedia.org/wiki/File:HK_TST_Tsim_Sha_Tsui_%E9%A6%99%E6%B8%AF%E8%97%9D%E8%A1%93%E9%A4%A8_Hong_Kong_Museum_of_Art_%E9%9D%9C%E8%A7%80%E6%A8%93%E8%97%8F%E5%93%81%E9%A4%A8_JingGuanLou_Gallery_%E9%A6%99%E6%B8%AF%E6%94%B6%E8%97%8F%E5%AE%B6_HK_Pride_September_2025_R12S_543.jpg",
-      "license": "CC0",
-      "place": "Hong Kong",
-      "latitude": 22.294,
-      "longitude": 114.1722
-    },
-    {
-      "id": "travel-landmarks-034",
-      "file": "travel-landmarks-034.jpg",
-      "title": "HK TST Tsim Sha Tsui \u9999\u6e2f\u85dd\u8853\u9928 Hong Kong Museum of Art \u975c\u89c0\u6a13\u85cf\u54c1\u9928 JingGuanLou Gallery \u9999\u6e2f\u6536\u85cf\u5bb6 HK Pride September 2025 R12S 546.jpg",
-      "year": 2025,
-      "month": 9,
-      "credit": "93MAINGMaisee Hungom",
-      "source": "Wikimedia Commons",
-      "sourceURL": "https://commons.wikimedia.org/wiki/File:HK_TST_Tsim_Sha_Tsui_%E9%A6%99%E6%B8%AF%E8%97%9D%E8%A1%93%E9%A4%A8_Hong_Kong_Museum_of_Art_%E9%9D%9C%E8%A7%80%E6%A8%93%E8%97%8F%E5%93%81%E9%A4%A8_JingGuanLou_Gallery_%E9%A6%99%E6%B8%AF%E6%94%B6%E8%97%8F%E5%AE%B6_HK_Pride_September_2025_R12S_546.jpg",
-      "license": "CC0",
-      "place": "Hong Kong",
-      "latitude": 22.294,
-      "longitude": 114.1722
-    },
-    {
-      "id": "travel-landmarks-035",
-      "file": "travel-landmarks-035.jpg",
       "title": "Grand Palace Bangkok (Unsplash).jpg",
       "year": 2017,
       "month": 4,
@@ -497,8 +469,8 @@
       "longitude": 100.4913
     },
     {
-      "id": "travel-landmarks-036",
-      "file": "travel-landmarks-036.jpg",
+      "id": "travel-landmarks-034",
+      "file": "travel-landmarks-034.jpg",
       "title": "Grand Palace, Thailand (Unsplash).jpg",
       "year": 2015,
       "month": 9,
@@ -511,8 +483,8 @@
       "longitude": 100.4913
     },
     {
-      "id": "travel-landmarks-037",
-      "file": "travel-landmarks-037.jpg",
+      "id": "travel-landmarks-035",
+      "file": "travel-landmarks-035.jpg",
       "title": "Dubai, View from Burj Khalifa, 2018.jpg",
       "year": 2018,
       "month": 3,
@@ -525,8 +497,8 @@
       "longitude": 55.2744
     },
     {
-      "id": "travel-landmarks-038",
-      "file": "travel-landmarks-038.jpg",
+      "id": "travel-landmarks-036",
+      "file": "travel-landmarks-036.jpg",
       "title": "Approach to Taj Mahal (23214109725).jpg",
       "year": 2015,
       "month": 11,
@@ -539,8 +511,8 @@
       "longitude": 78.0421
     },
     {
-      "id": "travel-landmarks-039",
-      "file": "travel-landmarks-039.jpg",
+      "id": "travel-landmarks-037",
+      "file": "travel-landmarks-037.jpg",
       "title": "Approach to Taj Mahal (23188050926).jpg",
       "year": 2015,
       "month": 11,
@@ -553,8 +525,8 @@
       "longitude": 78.0421
     },
     {
-      "id": "travel-landmarks-040",
-      "file": "travel-landmarks-040.jpg",
+      "id": "travel-landmarks-038",
+      "file": "travel-landmarks-038.jpg",
       "title": "Giza Great Pyramid of Khufu (9793820575).jpg",
       "year": 2002,
       "month": 6,
@@ -567,8 +539,8 @@
       "longitude": 31.1342
     },
     {
-      "id": "travel-landmarks-041",
-      "file": "travel-landmarks-041.jpg",
+      "id": "travel-landmarks-039",
+      "file": "travel-landmarks-039.jpg",
       "title": "Giza Great Pyramid of Khufu (9793898043).jpg",
       "year": 2002,
       "month": 6,
@@ -581,8 +553,8 @@
       "longitude": 31.1342
     },
     {
-      "id": "travel-landmarks-042",
-      "file": "travel-landmarks-042.jpg",
+      "id": "travel-landmarks-040",
+      "file": "travel-landmarks-040.jpg",
       "title": "View from Table Mountain (Unsplash).jpg",
       "year": 2016,
       "month": 12,
@@ -595,8 +567,8 @@
       "longitude": 18.4098
     },
     {
-      "id": "travel-landmarks-043",
-      "file": "travel-landmarks-043.jpg",
+      "id": "travel-landmarks-041",
+      "file": "travel-landmarks-041.jpg",
       "title": "500px photo (227831095).jpeg",
       "year": 2017,
       "month": 8,
@@ -609,8 +581,8 @@
       "longitude": 18.4098
     },
     {
-      "id": "travel-landmarks-044",
-      "file": "travel-landmarks-044.jpg",
+      "id": "travel-landmarks-042",
+      "file": "travel-landmarks-042.jpg",
       "title": "Sydney Opera House. (19667312379).jpg",
       "year": 2011,
       "month": 7,
@@ -623,8 +595,8 @@
       "longitude": 151.2153
     },
     {
-      "id": "travel-landmarks-045",
-      "file": "travel-landmarks-045.jpg",
+      "id": "travel-landmarks-043",
+      "file": "travel-landmarks-043.jpg",
       "title": "Sydney Opera House, Sydney, Australia (Unsplash).jpg",
       "year": 2017,
       "month": 5,
@@ -637,8 +609,8 @@
       "longitude": 151.2153
     },
     {
-      "id": "travel-landmarks-046",
-      "file": "travel-landmarks-046.jpg",
+      "id": "travel-landmarks-044",
+      "file": "travel-landmarks-044.jpg",
       "title": "Driving outside Flinders Street Railway Station (Unsplash).jpg",
       "year": 2016,
       "month": 8,
@@ -651,8 +623,8 @@
       "longitude": 144.9671
     },
     {
-      "id": "travel-landmarks-047",
-      "file": "travel-landmarks-047.jpg",
+      "id": "travel-landmarks-045",
+      "file": "travel-landmarks-045.jpg",
       "title": "Flinders Street Railway Station, Melbourne, Australia (Unsplash -9UFPg3V6GI).jpg",
       "year": 2017,
       "month": 3,
@@ -665,8 +637,8 @@
       "longitude": 144.9671
     },
     {
-      "id": "travel-landmarks-048",
-      "file": "travel-landmarks-048.jpg",
+      "id": "travel-landmarks-046",
+      "file": "travel-landmarks-046.jpg",
       "title": "Auckland - View from Sky Tower - Jordan Donaldson - @jordi.d 2016 (Unsplash).jpg",
       "year": 2016,
       "month": 2,

@@ -76,8 +76,19 @@ struct FirstRunView: View {
     let engine: GameEngine
     @Environment(\.photoHighContrast) private var highContrast
     @State private var isRequesting = false
+    @State private var isChoosingPhotos = false
 
     var body: some View {
+        if isChoosingPhotos {
+            CategoryChooserView(engine: engine) { packIDs in
+                Task { await engine.applyOnboardingChoice(packIDs: packIDs) }
+            }
+        } else {
+            intro
+        }
+    }
+
+    private var intro: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 26) {
                 VStack(alignment: .leading, spacing: 10) {
@@ -122,7 +133,7 @@ struct FirstRunView: View {
                     .disabled(isRequesting)
 
                     Button("Play with the built-in photos instead") {
-                        Task { await engine.completeFirstRun() }
+                        isChoosingPhotos = true
                     }
                     .appFont(18, weight: .medium)
                 }

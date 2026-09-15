@@ -88,7 +88,9 @@ final class GameEngine {
         if settings.adoptNewPacks() {
             settings.save()
         }
-        if library.access == .notDetermined {
+        // Only ask for the photo library if the player actually wants their own photos
+        // in play. Someone who chose the built-in sets has already answered this.
+        if library.access == .notDetermined, settings.useAllPhotos {
             await library.requestAccess()
         }
         await library.reload(settings: settings)
@@ -196,7 +198,48 @@ final class GameEngine {
     // MARK: - Levels
 
     private func chooseTheme() -> GameTheme? {
-        ThemeRotation.next(from: availableThemes, last: lastTheme)
+        // A theme the player picked wins over the rotation, as long as it can still
+        // be played with the photos currently in play.
+        if let pinned = settings.pinnedTheme, availableThemes.contains(pinned) {
+            return pinned
+        }
+        return ThemeRotation.next(from: availableThemes, last: lastTheme)
+    }
+
+    // MARK: - What the player chose
+
+    /// nil pins nothing — the app mixes the themes, which is the default.
+    func choose(theme: GameTheme?) {
+        settings.pinnedTheme = theme
+        settings.save()
+        if case .playing = phase { nextLevel() }
+    }
+
+    /// The first-run choice made by someone playing without their own photos. Applied
+    /// before the session starts, so it doesn't reload the library twice.
+    func applyOnboardingChoice(packIDs: Set<String>) async {
+        settings.useAllPhotos = false
+        settings.enabledPackIDs = packIDs
+        settings.knownPackIDs.formUnion(PublicPackLibrary.packs.map(\.id))
+        settings.save()
+        await completeFirstRun()
+    }
+
+    /// Which sets of photos are in play. `useOwnPhotos` is ignored without access.
+    func chooseSources(useOwnPhotos: Bool, packIDs: Set<String>) {
+        Task {
+            // Turning their own photos on is the moment to ask for access, not before.
+            if useOwnPhotos, library.access == .notDetermined {
+                await library.requestAccess()
+            }
+            settings.useAllPhotos = useOwnPhotos && library.access.canRead
+            settings.enabledPackIDs = packIDs
+            // Remember every pack we offered, so the new-pack migration doesn't switch
+            // the ones they turned down back on at the next launch.
+            settings.knownPackIDs.formUnion(PublicPackLibrary.packs.map(\.id))
+            settings.save()
+            await applySettingsChange()
+        }
     }
 
     private func nextLevel() {

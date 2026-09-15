@@ -16,6 +16,7 @@ struct PlayView: View {
     @Environment(\.photoHighContrast) private var highContrast
     @Environment(\.horizontalSizeClass) private var sizeClass
     @State private var showFeedback = false
+    @State private var isPickingCategory = false
 
     var body: some View {
         VStack(spacing: 0) {
@@ -58,6 +59,9 @@ struct PlayView: View {
             }
         }
         .readableColumn(maxWidth: 860)
+        .sheet(isPresented: $isPickingCategory) {
+            PlayPickerView(engine: engine)
+        }
         .animation(.easeOut(duration: 0.25), value: engine.answeredCorrectly)
         .animation(.easeOut(duration: 0.2), value: engine.wrongIDs)
     }
@@ -67,12 +71,26 @@ struct PlayView: View {
     private var header: some View {
         HStack {
             if let theme = engine.level?.theme {
-                Label(theme.title, systemImage: theme.symbolName)
+                // The chip says what you're playing, and is how you change it.
+                Button {
+                    isPickingCategory = true
+                } label: {
+                    HStack(spacing: 5) {
+                        Image(systemName: theme.symbolName)
+                        Text(theme.title)
+                        Image(systemName: "chevron.down")
+                            .appFont(11, weight: .bold)
+                            .opacity(0.7)
+                    }
                     .appFont(15, weight: .semibold)
                     .foregroundStyle(Palette.accent)
                     .padding(.horizontal, 12)
                     .padding(.vertical, 7)
                     .background(Palette.accent.opacity(0.12), in: Capsule())
+                }
+                .buttonStyle(.plain)
+                .accessibilityLabel("Playing \(theme.title)")
+                .accessibilityHint("Choose what to look for and which photos to use")
             }
 
             Spacer()

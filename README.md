@@ -34,6 +34,13 @@ Around that: errorless feedback (a wrong tap dims and you try again — no score
 fail state, no visible clock), silent adaptive difficulty, a soft-gated caregiver
 setup, on-device aggregate progress, and an anonymous engagement queue.
 
+**The player picks what they play.** Anyone who declines their own photos at first run
+chooses a set of photos instead — one tap on a card, with a real photograph on it, no
+confirm step. During play the chip at the top left says what is being played and is how
+it changes: it opens a picker for the kind of question (a mix, or one theme pinned) and
+which sets of photos are in play. Both lists are live — turning on a set of photos with
+coordinates makes Places appear as a choice.
+
 ## Photo packs and the CC0 pipeline
 
 `Tools/PackBuilder/build_pack.py` assembles a pack from CC0 sources and writes it in the

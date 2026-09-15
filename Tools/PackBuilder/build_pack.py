@@ -194,7 +194,9 @@ DISTRESSING = re.compile(
 # reminisce over.
 INSTITUTIONAL = re.compile(
     r"\b(national museum|smithsonian institution|smithsonian building|the castle|"
-    r"national gallery|museum of natural history|zoological park|hall of|regents|"
+    # Bare "museum" and "gallery" too: a landmark geosearch otherwise returns exhibit
+    # labels and gallery interiors, and a photograph of a wall of text makes a poor tile.
+    r"national gallery|museum|gallery|zoological park|hall of|regents|"
     r"secretary'?s parlor|si commons|sorting center|exhibits?|exhibition|construction|"
     r"installation|supplement|arts and industries|south yard|bureau building|centennial|"
     r"first ladies|album|sign for)\b|pages? \d+",
