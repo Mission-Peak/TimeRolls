@@ -41,6 +41,10 @@ final class GameEngine {
     private(set) var levelsThisSession = 0
     private(set) var availableThemes: [GameTheme] = []
     private(set) var levelIndex = 0
+    /// The kind of question the player picked from the chip. Deliberately not saved:
+    /// it lasts for this session and goes back to a mix at the next one, so nobody
+    /// returns to find the app narrowed to one theme by a choice they've forgotten.
+    private(set) var pinnedTheme: GameTheme?
 
     /// Computed, so flipping the caregiver's black-and-white setting shows up at once.
     var isMonochromeLevel: Bool {
@@ -172,6 +176,8 @@ final class GameEngine {
     // MARK: - Session
 
     private func beginSession() {
+        // Every session starts on a mix, whatever was pinned last time.
+        pinnedTheme = nil
         levelsThisSession = 0
         sessionLevelTotal = 0
         stats.recordSessionStart(together: settings.togetherMode)
@@ -200,7 +206,7 @@ final class GameEngine {
     private func chooseTheme() -> GameTheme? {
         // A theme the player picked wins over the rotation, as long as it can still
         // be played with the photos currently in play.
-        if let pinned = settings.pinnedTheme, availableThemes.contains(pinned) {
+        if let pinned = pinnedTheme, availableThemes.contains(pinned) {
             return pinned
         }
         return ThemeRotation.next(from: availableThemes, last: lastTheme)
@@ -210,8 +216,7 @@ final class GameEngine {
 
     /// nil pins nothing — the app mixes the themes, which is the default.
     func choose(theme: GameTheme?) {
-        settings.pinnedTheme = theme
-        settings.save()
+        pinnedTheme = theme
         if case .playing = phase { nextLevel() }
     }
 

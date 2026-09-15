@@ -154,7 +154,7 @@ struct PlayPickerView: View {
             List {
                 Section {
                     row(title: "A mix", detail: "Change between them as you go",
-                        isChosen: engine.settings.pinnedTheme == nil) {
+                        isChosen: engine.pinnedTheme == nil) {
                         engine.choose(theme: nil)
                     }
                     ForEach(GameTheme.allCases) { theme in
@@ -162,13 +162,15 @@ struct PlayPickerView: View {
                             row(title: theme.title,
                                 detail: question(for: theme),
                                 symbol: theme.symbolName,
-                                isChosen: engine.settings.pinnedTheme == theme) {
+                                isChosen: engine.pinnedTheme == theme) {
                                 engine.choose(theme: theme)
                             }
                         }
                     }
                 } header: {
                     Text("What to look for")
+                } footer: {
+                    Text("Just for now — next time you play it starts on a mix again.")
                 }
 
                 Section {

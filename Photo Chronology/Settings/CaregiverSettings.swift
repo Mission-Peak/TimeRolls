@@ -88,9 +88,6 @@ struct CaregiverSettings: Codable, Equatable, Sendable {
     var levelsPerSession = 8
     /// Silent only: timing is never shown to the player (spec §2).
     var adaptiveTiming = true
-    /// The kind of question the player picked from the chip on the play screen.
-    /// nil means a mix, which is the default and what the app did before this existed.
-    var pinnedThemeID: String?
     /// Together mode: a quiet strip for a companion sitting alongside the player.
     /// Same room only — nothing is paired, sent or stored (spec §7 rationale).
     var togetherMode = false
@@ -128,7 +125,6 @@ struct CaregiverSettings: Codable, Equatable, Sendable {
         levelsPerSession = value(.levelsPerSession, defaults.levelsPerSession)
         adaptiveTiming = value(.adaptiveTiming, defaults.adaptiveTiming)
         togetherMode = value(.togetherMode, defaults.togetherMode)
-        pinnedThemeID = value(.pinnedThemeID, defaults.pinnedThemeID)
         textScale = value(.textScale, defaults.textScale)
         highContrast = value(.highContrast, defaults.highContrast)
         monochromeMode = value(.monochromeMode, defaults.monochromeMode)
@@ -152,11 +148,6 @@ struct CaregiverSettings: Codable, Equatable, Sendable {
     func save() {
         guard let data = try? JSONEncoder().encode(self) else { return }
         UserDefaults.standard.set(data, forKey: Self.key)
-    }
-
-    var pinnedTheme: GameTheme? {
-        get { pinnedThemeID.flatMap(GameTheme.init(rawValue:)) }
-        set { pinnedThemeID = newValue?.rawValue }
     }
 
     /// Fingerprint of everything that decides which photos are in play. Any screen that
