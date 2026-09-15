@@ -148,6 +148,7 @@ final class GameEngine {
         } else if case .playing = phase {
             // The photos on screen may have just been switched off — deal a fresh set
             // rather than leaving a level built from sources that are no longer in play.
+            discardPreparedLevel()
             nextLevel()
         }
     }
@@ -235,7 +236,18 @@ final class GameEngine {
     /// nil pins nothing — the app mixes the themes, which is the default.
     func choose(theme: GameTheme?) {
         pinnedTheme = theme
+        // The round waiting in the wings was built for the old choice — throw it away,
+        // or picking "Places" hands you one more round of something else first.
+        discardPreparedLevel()
         if case .playing = phase { nextLevel() }
+    }
+
+    /// Forget anything prepared in the background, after a change that would have
+    /// produced a different round.
+    private func discardPreparedLevel() {
+        prepareTask?.cancel()
+        prepareTask = nil
+        pendingLevel = nil
     }
 
     /// The first-run choice made by someone playing without their own photos. Applied

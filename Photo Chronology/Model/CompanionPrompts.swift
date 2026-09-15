@@ -62,7 +62,7 @@ enum CompanionPrompts {
         }
         if level.theme != .places,
            let place = uniquePlace(of: answer, in: level.photos) {
-            return "\(subject) was taken in \(place)."
+            return "\(subject) comes from \(place)."
         }
         if level.theme != .chronology, let decade = decade(of: answer) {
             return "\(subject) is from the \(decade)."

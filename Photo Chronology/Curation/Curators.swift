@@ -230,7 +230,7 @@ enum PlacesCurator {
             let personal = photos.filter(\.isPersonal).count
 
             return Level(theme: .places,
-                         prompt: "Which photo was taken in \(shortName(targetName))?",
+                         prompt: "Which photo is from \(shortName(targetName))?",
                          photos: photos,
                          correctPhotoID: target.id,
                          difficulty: knob.level,

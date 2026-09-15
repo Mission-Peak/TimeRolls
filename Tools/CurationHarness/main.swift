@@ -224,7 +224,7 @@ for theme in GameTheme.allCases {
             }
             // "…was taken in Rome, Italy" likewise.
             for place in Set(level.photos.compactMap(\.placeName))
-            where hint.contains("was taken in \(place)") {
+            where hint.contains("comes from \(place)") {
                 let holders = level.photos.filter { $0.placeName == place }
                 check(holders.count == 1,
                       "hint names \(place) but \(holders.count) photos are from there")

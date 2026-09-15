@@ -36,6 +36,48 @@ JPEG_QUALITY = "60"      # sips quality step
 # --------------------------------------------------------------------------- specs
 
 PACK_SPECS = {
+    "geography": {
+        "id": "geography",
+        "title": "Natural Wonders",
+        "blurb": "Mountains, falls, deserts and coastlines around the world.",
+        "source": "commons-geo",
+        # Modern landscape photography: excellent for "where", no use for "when".
+        "themes": ["places", "objects"],
+        "targets": [
+            # The Americas
+            {"place": "the Grand Canyon, Arizona",   "lat": 36.0544,  "lon": -112.1401, "take": 2},
+            {"place": "Yosemite, California",        "lat": 37.7456,  "lon": -119.5936, "take": 2},
+            {"place": "Monument Valley, Utah",       "lat": 36.9980,  "lon": -110.0985, "take": 2},
+            {"place": "Yellowstone, Wyoming",        "lat": 44.4605,  "lon": -110.8281, "take": 2},
+            {"place": "Death Valley, California",    "lat": 36.5054,  "lon": -117.0794, "take": 2},
+            {"place": "Niagara Falls, Canada",       "lat": 43.0828,  "lon": -79.0742,  "take": 2},
+            {"place": "Lake Louise, Canada",         "lat": 51.4254,  "lon": -116.1773, "take": 2},
+            {"place": "Machu Picchu, Peru",          "lat": -13.1631, "lon": -72.5450,  "take": 2},
+            {"place": "the Iguazú Falls, Brazil",    "lat": -25.6953, "lon": -54.4367,  "take": 2},
+            {"place": "Torres del Paine, Chile",     "lat": -50.9423, "lon": -73.4068,  "take": 2},
+            # Europe
+            {"place": "the Matterhorn, Switzerland", "lat": 45.9763,  "lon": 7.6586,    "take": 2},
+            {"place": "Mont Blanc, France",          "lat": 45.8326,  "lon": 6.8652,    "take": 2},
+            {"place": "the Giant's Causeway, Northern Ireland", "lat": 55.2408, "lon": -6.5116, "take": 2},
+            {"place": "the Cliffs of Moher, Ireland","lat": 52.9715,  "lon": -9.4309,   "take": 2},
+            {"place": "Santorini, Greece",           "lat": 36.4618,  "lon": 25.3753,   "take": 2},
+            {"place": "the Geirangerfjord, Norway",  "lat": 62.1049,  "lon": 7.0055,    "take": 2},
+            {"place": "Plitvice Lakes, Croatia",     "lat": 44.8654,  "lon": 15.5820,   "take": 2},
+            {"place": "Skógafoss, Iceland",          "lat": 63.5321,  "lon": -19.5114,  "take": 2},
+            # Africa and the Middle East
+            {"place": "Victoria Falls, Zimbabwe",    "lat": -17.9243, "lon": 25.8572,   "take": 2},
+            {"place": "the Serengeti, Tanzania",     "lat": -2.3333,  "lon": 34.8333,   "take": 2},
+            {"place": "the Sahara, Morocco",         "lat": 31.0819,  "lon": -4.0135,   "take": 2},
+            {"place": "the Dead Sea, Israel",        "lat": 31.5590,  "lon": 35.4732,   "take": 2},
+            # Asia and Oceania
+            {"place": "Mount Fuji, Japan",           "lat": 35.3606,  "lon": 138.7274,  "take": 2},
+            {"place": "Hạ Long Bay, Vietnam",        "lat": 20.9101,  "lon": 107.1839,  "take": 2},
+            {"place": "Zhangjiajie, China",          "lat": 29.3158,  "lon": 110.4344,  "take": 2},
+            {"place": "Everest, Nepal",              "lat": 27.9881,  "lon": 86.9250,   "take": 2},
+            {"place": "Uluru, Australia",            "lat": -25.3444, "lon": 131.0369,  "take": 2},
+            {"place": "Milford Sound, New Zealand",  "lat": -44.6414, "lon": 167.8974,  "take": 2},
+        ],
+    },
     "landmarks": {
         "id": "travel-landmarks",
         "title": "Travel Landmarks",
