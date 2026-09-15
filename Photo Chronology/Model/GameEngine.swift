@@ -52,6 +52,10 @@ final class GameEngine {
     }
 
     private(set) var generator = LevelGenerator()
+    /// A level generated and made ready in the background, so photographs that live
+    /// online are already on the device before anyone sees the round.
+    private var pendingLevel: Level?
+    private var prepareTask: Task<Void, Never>?
     private var levelStarted = Date()
     private var levelCounter = 0
     private var lastTheme: GameTheme?
@@ -148,7 +152,12 @@ final class GameEngine {
 
     private func refreshPools() {
         generator.personal = objects.annotate(places.annotate(library.photos))
+        let unavailable = RemoteImageCache.shared.unavailable
         generator.pack = PublicPackLibrary.photos(enabledPackIDs: settings.enabledPackIDs)
+            .filter { photo in
+                guard case let .pack(_, itemID) = photo.origin else { return true }
+                return !unavailable.contains(itemID)
+            }
         generator.allowObjects = settings.objectsThemeEnabled
         availableThemes = generator.availableThemes(knob: knob)
     }
@@ -258,33 +267,83 @@ final class GameEngine {
         wrongIDs = []
         answeredCorrectly = false
 
-        guard let theme = chooseTheme() else {
-            phase = .noContent(noContentReason())
+        // A level prepared during the last round is ready to go now.
+        if let ready = pendingLevel {
+            pendingLevel = nil
+            install(ready)
+            prepareUpcoming()
             return
         }
 
-        var generated = generator.makeLevel(theme: theme, knob: knob)
-        if generated == nil {
-            // Theme dried up (Places often does) — drop it and try the others.
-            availableThemes.removeAll { $0 == theme }
-            for fallback in availableThemes {
-                if let level = generator.makeLevel(theme: fallback, knob: knob) {
-                    generated = level
-                    break
-                }
-            }
-        }
-
-        guard let level = generated else {
+        guard let level = generateLevel() else {
             phase = .noContent(noContentReason())
             return
         }
+        install(level)
 
+        Task { [weak self] in
+            guard let self else { return }
+            await ensurePhotographs(for: level)
+            prepareUpcoming()
+        }
+    }
+
+    private func install(_ level: Level) {
         lastTheme = level.theme
         levelIndex = levelCounter
         levelCounter += 1
         levelStarted = Date()
         self.level = level
+    }
+
+    private func generateLevel() -> Level? {
+        guard let theme = chooseTheme() else { return nil }
+        if let level = generator.makeLevel(theme: theme, knob: knob) { return level }
+
+        // Theme dried up (Places often does) — drop it and try the others.
+        availableThemes.removeAll { $0 == theme }
+        for fallback in availableThemes {
+            if let level = generator.makeLevel(theme: fallback, knob: knob) { return level }
+        }
+        return nil
+    }
+
+    /// Build the next round ahead of time and make sure its photographs are on the
+    /// device, so moving on is instant even when a pack is carried as metadata only.
+    private func prepareUpcoming() {
+        prepareTask?.cancel()
+        prepareTask = Task { [weak self] in
+            guard let self else { return }
+            for _ in 0..<3 {
+                guard !Task.isCancelled, let candidate = generateLevel() else { return }
+                if await ensurePhotographs(for: candidate) {
+                    pendingLevel = candidate
+                    return
+                }
+                // Something in that set couldn't be fetched; those photographs are out
+                // of the pool now, so try again with what's left.
+            }
+        }
+    }
+
+    /// Fetch any photographs this level needs. Returns false if some couldn't be had.
+    @discardableResult
+    private func ensurePhotographs(for level: Level) async -> Bool {
+        let items = level.photos.compactMap { photo -> PackItem? in
+            guard case let .pack(packID, itemID) = photo.origin else { return nil }
+            return PublicPackLibrary.item(packID: packID, itemID: itemID)
+        }
+        .filter { $0.remoteURL != nil && !RemoteImageCache.shared.isAvailableOffline($0) }
+        guard !items.isEmpty else { return true }
+
+        let before = RemoteImageCache.shared.unavailable
+        await RemoteImageCache.shared.prefetch(items)
+        let newlyUnavailable = RemoteImageCache.shared.unavailable.subtracting(before)
+        guard newlyUnavailable.isEmpty else {
+            refreshPools()       // keep the dead ones out of future rounds
+            return false
+        }
+        return true
     }
 
     // MARK: - Answering
@@ -379,6 +438,9 @@ final class GameEngine {
             rows.append(("This level", level.curationNote))
             rows.append(("Photos in this level", generator.packShare(of: level)))
         }
+        rows.append(("Photos fetched and kept",
+                     "\(RemoteImageCache.shared.cachedCount) "
+                        + "(\(RemoteImageCache.shared.bytesOnDisk / 1_000_000) MB)"))
         rows.append(("Places still to name",
                      places.hasUnresolvedClusters(in: library.photos) ? "working…" : "all done"))
         if let error = places.lastErrorDescription {

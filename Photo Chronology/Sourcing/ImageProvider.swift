@@ -40,6 +40,9 @@ final class ImageProvider {
             if let url = PublicPackLibrary.imageURL(for: item),
                let photograph = UIImage(contentsOfFile: url.path) {
                 image = photograph
+            } else if item.remoteURL != nil {
+                // Carried as metadata only: fetch it from where it lives, once.
+                image = await RemoteImageCache.shared.image(for: item)
             } else {
                 image = PackArtRenderer.image(for: item, size: targetSize)
             }

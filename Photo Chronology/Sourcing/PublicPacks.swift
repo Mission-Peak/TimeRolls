@@ -43,6 +43,8 @@ struct PackItem: Identifiable, Hashable {
     var imageResource: String?
     /// Where that photograph lives. nil means it ships inside the app bundle.
     var imageDirectory: URL?
+    /// Where the photograph can be fetched from, for packs that carry metadata only.
+    var remoteURL: URL?
     /// Placeholder art, drawn on demand when there is no photograph.
     var motif: PackMotif?
     var credit: PackCredit?
@@ -75,7 +77,8 @@ struct PhotoPack: Identifiable, Hashable {
 private struct PackManifest: Decodable {
     struct Item: Decodable {
         var id: String
-        var file: String
+        var file: String?
+        var remoteURL: String?
         var title: String
         var year: Int
         var month: Int
@@ -193,7 +196,7 @@ enum PublicPackLibrary {
     private static func decodePack(at url: URL, imageDirectory: URL?) -> PhotoPack? {
             guard let data = try? Data(contentsOf: url),
                   let manifest = try? JSONDecoder().decode(PackManifest.self, from: data),
-                  manifest.formatVersion == 1 else { return nil }
+                  (1...2).contains(manifest.formatVersion) else { return nil }
 
             let items = manifest.items.map { entry -> PackItem in
                 var components = DateComponents()
@@ -216,8 +219,9 @@ enum PublicPackLibrary {
                     date: date,
                     placeName: entry.place,
                     coordinate: coordinate,
-                    imageResource: (entry.file as NSString).deletingPathExtension,
-                    imageDirectory: imageDirectory,
+                    imageResource: entry.file.map { ($0 as NSString).deletingPathExtension },
+                    imageDirectory: entry.file == nil ? nil : imageDirectory,
+                    remoteURL: entry.remoteURL.flatMap(URL.init(string:)),
                     motif: nil,
                     credit: PackCredit(title: entry.title,
                                        creator: entry.credit,
@@ -236,47 +240,12 @@ enum PublicPackLibrary {
 
     // MARK: Procedural packs
 
+    // The placeholder-art packs are gone. They existed because there was no licensed
+    // photography to show; there are now 452 CC0 photographs, and the drawn art was
+    // starting to hurt — two motifs of the same kind look nearly identical, so a round
+    // could offer two indistinguishable cakes. PackArtRenderer stays as the fallback for
+    // any item with no photograph of its own.
     private static let proceduralPacks: [PhotoPack] = [
-        PhotoPack(id: "everyday-life",
-                  title: "Everyday Life",
-                  blurb: "Kitchens, gardens and front porches. Placeholder artwork.",
-                  availability: .bundled,
-                  items: build("everyday-life", [
-                    ("el1", .kitchen, 1948, 4, "Sheffield, England", 53.3811, -1.4701),
-                    ("el2", .garden, 1955, 7, "Cork, Ireland", 51.8985, -8.4756),
-                    ("el3", .kitchen, 1962, 11, "Lyon, France", 45.7640, 4.8357),
-                    ("el4", .garden, 1969, 5, "Portland, Oregon", 45.5152, -122.6784),
-                    ("el5", .portrait, 1974, 9, "Naples, Italy", 40.8518, 14.2681),
-                    ("el6", .kitchen, 1981, 2, "Toronto, Canada", 43.6532, -79.3832),
-                    ("el7", .garden, 1988, 6, "Bath, England", 51.3811, -2.3590),
-                    ("el8", .portrait, 1994, 10, "Seville, Spain", 37.3891, -5.9845),
-                    ("el9", .kitchen, 2001, 3, "Austin, Texas", 30.2672, -97.7431),
-                    ("el10", .garden, 2009, 8, "Wellington, New Zealand", -41.2866, 174.7756),
-                    ("el11", .portrait, 2013, 12, "Chicago, Illinois", 41.8781, -87.6298),
-                    ("el12", .kitchen, 2016, 5, "Copenhagen, Denmark", 55.6761, 12.5683),
-                  ]),
-                  isPhotography: false),
-
-        PhotoPack(id: "classic-holidays",
-                  title: "Classic Holidays",
-                  blurb: "Birthdays, weddings and long tables of family. Placeholder artwork.",
-                  availability: .bundled,
-                  items: build("classic-holidays", [
-                    ("ch1", .celebration, 1951, 12, "Boston, Massachusetts", 42.3601, -71.0589),
-                    ("ch2", .celebration, 1959, 6, "Dublin, Ireland", 53.3498, -6.2603),
-                    ("ch3", .portrait, 1966, 12, "Milan, Italy", 45.4642, 9.1900),
-                    ("ch4", .celebration, 1972, 8, "Glasgow, Scotland", 55.8642, -4.2518),
-                    ("ch5", .celebration, 1979, 12, "Denver, Colorado", 39.7392, -104.9903),
-                    ("ch6", .portrait, 1986, 5, "Perth, Australia", -31.9523, 115.8613),
-                    ("ch7", .celebration, 1993, 11, "Munich, Germany", 48.1351, 11.5820),
-                    ("ch8", .celebration, 1999, 12, "Montréal, Canada", 45.5019, -73.5674),
-                    ("ch9", .portrait, 2006, 7, "Valencia, Spain", 39.4699, -0.3763),
-                    ("ch10", .celebration, 2011, 12, "Nashville, Tennessee", 36.1627, -86.7816),
-                    ("ch11", .celebration, 2015, 4, "Amsterdam, Netherlands", 52.3676, 4.9041),
-                    ("ch12", .portrait, 2019, 8, "Oslo, Norway", 59.9139, 10.7522),
-                  ]),
-                  isPhotography: false),
-
         PhotoPack(id: "americana-1970s",
                   title: "1970s Americana",
                   blurb: "Downloadable on demand. Pack delivery is not wired up in this prototype.",
@@ -303,6 +272,7 @@ enum PublicPackLibrary {
                             coordinate: Coordinate(latitude: lat, longitude: lon),
                             imageResource: nil,
                             imageDirectory: nil,
+                            remoteURL: nil,
                             motif: motif,
                             credit: nil)
         }

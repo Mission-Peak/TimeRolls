@@ -143,45 +143,50 @@ Pack photographs are classified on device by the same Vision pass as personal ph
 they work in the Things theme too. A pack that appears in a later build arrives switched
 on rather than hidden.
 
-## Downloadable packs
+## Where the photographs come from
 
-A starter pack ships in the app and the rest arrive on demand from OneBucket (spec §6.2,
-§8), which is what lets the photo library grow without the binary growing with it —
-bundling all three packs took the app to 38 MB; it is 13 MB with two of them downloadable.
+A pack is a manifest: a date, a place, a credit and a source URL per photograph. Most
+packs carry no images at all — the photographs stay where they already live, on Wikimedia
+Commons and Smithsonian Open Access, and are fetched the first time a round needs one and
+kept on the device from then on.
 
-**Layout in the bucket** — plain objects, not an archive, so it stays browsable and a pack
-can be corrected one photograph at a time. This is the pack file format left open in §12:
+That is what makes the catalogue affordable. **350 photographs cost 171 KB as metadata**;
+the same photographs bundled would be roughly 80 MB. The app is 14 MB with 452
+photographs available to it.
 
-```
-irecollect/packs/catalog.json
-irecollect/packs/<pack-id>/<pack-id>.pack.json
-irecollect/packs/<pack-id>/<pack-id>-001.jpg
-```
+| Pack | Photos | Years | Carried how |
+| --- | --- | --- | --- |
+| Decades | 56 | 1884–1980 | Images in the app — the offline starter (spec §6.2) |
+| Everyday Life | 350 | 1871–2026 | Metadata only, fetched on demand |
+| Travel Landmarks | 46 | 2002–2025 | Metadata only, fetched on demand |
 
-A downloaded pack lands on the device in exactly the shape a bundled one has, so nothing
-downstream knows where a pack came from. Downloads stage in a `.downloading` directory and
-are promoted only once every file has arrived — a half-downloaded pack is never playable.
+**Wi-Fi only, and fetched once.** `RemoteImageCache` refuses cellular and expensive
+networks outright, so nobody's mobile data goes on a photo game, and a photograph is
+fetched exactly once ever. Commons permits this kind of linking and asks that reusers
+cache rather than re-fetch, and that tools identify themselves — both of which this does.
 
-**Publishing a pack**
+**Nothing half-ready is ever shown.** The next round is built and its photographs fetched
+while the current one is being played, so moving on is instant. If a photograph can't be
+had — Commons warns that files get renamed or deleted, and it does happen — that
+photograph drops out of the pool and the round is rebuilt without it. A dead link
+degrades the catalogue rather than breaking a game.
+
+**Offline** falls back to the starter pack and the player's own photos, which is the
+trade this design accepts: iPads are almost always on wi-fi, and personal photos never
+need the network at all.
+
+## Publishing a pack
 
 ```bash
-python3 Tools/PackBuilder/make_catalog.py --packs PacksForDownload --out build/remote
-export AWS_ACCESS_KEY_ID=…  AWS_SECRET_ACCESS_KEY=…     # from the OneBucket console
-./Tools/PackBuilder/upload_packs.sh
+python3 Tools/PackBuilder/build_pack.py --pack everyday --metadata-only \
+    --out "Photo Chronology/Packs"
 ```
 
-The bucket is `irecollect` on OneBucket's own S3 endpoint,
-`https://s3.us-ashburn-1.onebucket.io` — not the Wasabi endpoint behind it, which is what
-the first version of this pointed at. The MCP integration can write individual objects
-but does not hand out the access keys, so the bulk sync needs keys from the console.
-
-`PACK_SOURCE_URL` overrides the source at launch, which is how the download path is
-tested against a local server:
-
-```bash
-SIMCTL_CHILD_PACK_SOURCE_URL="http://localhost:8765" \
-  xcrun simctl launch booted hanna.Photo-Chronology
-```
+A metadata-only pack needs no hosting: it points at the original sources. The OneBucket
+delivery path (`PackDownloader`, `make_catalog.py`, `upload_packs.sh`) is still built and
+tested, for packs whose photographs need to be hosted rather than linked — but it is no
+longer on the critical path, and OneBucket's gateway does not currently serve anonymous
+reads (see `diagnose_public.sh`).
 
 ## Together mode
 

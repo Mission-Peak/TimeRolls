@@ -101,14 +101,18 @@ PACK_SPECS = {
         "blurb": "Ordinary things, photographed by people all over the world.",
         "source": "commons-subject",
         "queries": [
-            {"q": "kitchen", "take": 5},   {"q": "garden flowers", "take": 5},
-            {"q": "dog", "take": 5},       {"q": "cat", "take": 5},
-            {"q": "beach", "take": 5},     {"q": "market stall", "take": 5},
-            {"q": "bicycle", "take": 4},   {"q": "train station", "take": 4},
-            {"q": "birthday cake", "take": 4}, {"q": "farm harvest", "take": 4},
-            {"q": "village street", "take": 4}, {"q": "mountains", "take": 4},
-            {"q": "boat harbour", "take": 4},  {"q": "forest path", "take": 4},
-            {"q": "snow winter", "take": 4},   {"q": "horses field", "take": 4},
+            {"q": "kitchen", "take": 18},        {"q": "garden flowers", "take": 18},
+            {"q": "dog", "take": 18},            {"q": "cat", "take": 18},
+            {"q": "beach", "take": 18},          {"q": "market stall", "take": 18},
+            {"q": "bicycle", "take": 16},        {"q": "train station", "take": 16},
+            {"q": "birthday cake", "take": 16},  {"q": "farm harvest", "take": 16},
+            {"q": "village street", "take": 16}, {"q": "mountains", "take": 16},
+            {"q": "boat harbour", "take": 16},   {"q": "forest path", "take": 16},
+            {"q": "snow winter", "take": 16},    {"q": "horses field", "take": 16},
+            {"q": "bakery bread", "take": 14},   {"q": "fishing boats", "take": 14},
+            {"q": "autumn leaves", "take": 14},  {"q": "picnic park", "take": 14},
+            {"q": "teapot tea", "take": 12},     {"q": "knitting sewing", "take": 12},
+            {"q": "vintage car", "take": 14},    {"q": "church village", "take": 14},
         ],
     },
     "decades": {
@@ -153,6 +157,14 @@ def fetch_json(url, timeout=45):
     req = urllib.request.Request(url, headers={"User-Agent": UA})
     with urllib.request.urlopen(req, timeout=timeout) as r:
         return json.load(r)
+
+
+def commons_file_url(title):
+    """Special:FilePath is the form Commons recommends for linking to a file: it follows
+    renames, and takes a width so we ask for a tile-sized rendition rather than a
+    40-megapixel original."""
+    return ("https://commons.wikimedia.org/wiki/Special:FilePath/"
+            + urllib.parse.quote(title) + f"?width={MAX_EDGE}")
 
 
 def strip_html(text):
@@ -342,6 +354,7 @@ def from_commons(spec, rejections, limit_per_target=80):
                 continue
 
             items.append({
+                "remote": commons_file_url(title),
                 "title": title,
                 "year": year,
                 "month": parse_month((extra.get("DateTimeOriginal") or {}).get("value")),
@@ -368,7 +381,7 @@ def from_commons_subject(spec, rejections):
                   f'filemime:image/jpeg')
         params = {
             "action": "query", "format": "json", "generator": "search",
-            "gsrsearch": search, "gsrnamespace": 6, "gsrlimit": 50,
+            "gsrsearch": search, "gsrnamespace": 6, "gsrlimit": 100,
             "prop": "imageinfo", "iiprop": "url|extmetadata|size|mime", "iiurlwidth": 1400,
         }
         url = "https://commons.wikimedia.org/w/api.php?" + urllib.parse.urlencode(params)
@@ -409,6 +422,7 @@ def from_commons_subject(spec, rejections):
 
             seen.add(stem)
             items.append({
+                "remote": commons_file_url(title),
                 "title": title,
                 "year": year,
                 "month": parse_month((extra.get("DateTimeOriginal") or {}).get("value")),
@@ -496,6 +510,7 @@ def from_smithsonian(spec, rejections, api_key):
                       for entry in (content.get("freetext", {}).get("name") or [])]
             seen_titles.add(title)
             items.append({
+                "remote": f"{image}&max={MAX_EDGE}" if "?" in image else image,
                 "title": title[:80],
                 "year": year,
                 "month": 6,
@@ -513,7 +528,7 @@ def from_smithsonian(spec, rejections, api_key):
 
 # --------------------------------------------------------------------------- build
 
-def build(pack_name, out_root, api_key):
+def build(pack_name, out_root, api_key, metadata_only=False):
     spec = PACK_SPECS[pack_name]
     rejections = Rejections()
 
@@ -536,17 +551,21 @@ def build(pack_name, out_root, api_key):
         shutil.rmtree(staging)
     os.makedirs(staging)
 
-    print(f"\nDownloading {len(candidates)} images…")
+    if metadata_only:
+        print(f"\nRecording {len(candidates)} photographs (no images copied)…")
+    else:
+        print(f"\nDownloading {len(candidates)} images…")
     items = []
     for index, candidate in enumerate(candidates, start=1):
         item_id = f"{spec['id']}-{index:03d}"
         filename = f"{item_id}.jpg"
-        if not download_and_resize(candidate["image"], os.path.join(staging, filename)):
-            rejections.add("download or resize failed")
-            continue
+        if not metadata_only:
+            if not download_and_resize(candidate["image"], os.path.join(staging, filename)):
+                rejections.add("download or resize failed")
+                continue
         entry = {
             "id": item_id,
-            "file": filename,
+            "remoteURL": candidate.get("remote") or candidate["image"],
             "title": candidate["title"],
             "year": candidate["year"],
             "month": candidate["month"],
@@ -555,15 +574,18 @@ def build(pack_name, out_root, api_key):
             "sourceURL": candidate["source_url"],
             "license": "CC0",
         }
+        if not metadata_only:
+            entry["file"] = filename
         if candidate["place"]:
             entry.update({"place": candidate["place"],
                           "latitude": candidate["lat"],
                           "longitude": candidate["lon"]})
         items.append(entry)
-        print(f"  {index:3d}/{len(candidates)}  {candidate['year']}  {candidate['title'][:52]}")
+        if not metadata_only:
+            print(f"  {index:3d}/{len(candidates)}  {candidate['year']}  {candidate['title'][:52]}")
 
     manifest = {
-        "formatVersion": 1,
+        "formatVersion": 2,
         "id": spec["id"],
         "title": spec["title"],
         "blurb": spec["blurb"],
@@ -572,7 +594,7 @@ def build(pack_name, out_root, api_key):
         "items": items,
     }
     existing = 0
-    if os.path.isdir(pack_dir):
+    if os.path.isdir(pack_dir) and not metadata_only:
         existing = len([name for name in os.listdir(pack_dir) if name.endswith(".jpg")])
     if items and existing > len(items):
         print(f"\nStopping: this run produced {len(items)} photos but {pack_dir} already "
@@ -591,7 +613,8 @@ def build(pack_name, out_root, api_key):
         shutil.rmtree(pack_dir)
     os.rename(staging, pack_dir)
 
-    total_bytes = sum(os.path.getsize(os.path.join(pack_dir, entry["file"])) for entry in items)
+    total_bytes = sum(os.path.getsize(os.path.join(pack_dir, entry["file"]))
+                      for entry in items if "file" in entry)
     years = sorted(entry["year"] for entry in items)
     spread = {}
     for entry in items:
@@ -613,6 +636,8 @@ def main():
     parser.add_argument("--out", default="../../Photo Chronology/Packs")
     parser.add_argument("--si-key", default=os.environ.get("SI_API_KEY", "DEMO_KEY"))
     parser.add_argument("--list", action="store_true")
+    parser.add_argument("--metadata-only", action="store_true",
+                        help="record where each photograph lives instead of copying it")
     args = parser.parse_args()
 
     if args.list or not args.pack:
@@ -620,7 +645,7 @@ def main():
         for name, spec in sorted(PACK_SPECS.items()):
             print(f"  {name:12} {spec['title']:20} via {spec['source']}")
         return 0
-    return build(args.pack, os.path.abspath(args.out), args.si_key)
+    return build(args.pack, os.path.abspath(args.out), args.si_key, args.metadata_only)
 
 
 if __name__ == "__main__":

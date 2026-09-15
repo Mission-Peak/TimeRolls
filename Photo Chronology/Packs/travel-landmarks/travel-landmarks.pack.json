@@ -1,5 +1,5 @@
 {
-  "formatVersion": 1,
+  "formatVersion": 2,
   "id": "travel-landmarks",
   "title": "Travel Landmarks",
   "blurb": "Places worth remembering, from six decades of travel photography.",
@@ -8,7 +8,7 @@
   "items": [
     {
       "id": "travel-landmarks-001",
-      "file": "travel-landmarks-001.jpg",
+      "remoteURL": "https://commons.wikimedia.org/wiki/Special:FilePath/Eiffel%20Tower%2C%20Paris%2C%20France%20%28Unsplash%29.jpg?width=1200",
       "title": "Eiffel Tower, Paris, France (Unsplash).jpg",
       "year": 2015,
       "month": 7,
@@ -22,7 +22,7 @@
     },
     {
       "id": "travel-landmarks-002",
-      "file": "travel-landmarks-002.jpg",
+      "remoteURL": "https://commons.wikimedia.org/wiki/Special:FilePath/Looking%20down%20from%20the%20Eiffel%20tower%20%28Unsplash%29.jpg?width=1200",
       "title": "Looking down from the Eiffel tower (Unsplash).jpg",
       "year": 2017,
       "month": 1,
@@ -36,7 +36,7 @@
     },
     {
       "id": "travel-landmarks-003",
-      "file": "travel-landmarks-003.jpg",
+      "remoteURL": "https://commons.wikimedia.org/wiki/Special:FilePath/Colosseum%2C%20Roma%2C%20Italy%20%28Unsplash%29.jpg?width=1200",
       "title": "Colosseum, Roma, Italy (Unsplash).jpg",
       "year": 2016,
       "month": 4,
@@ -50,7 +50,7 @@
     },
     {
       "id": "travel-landmarks-004",
-      "file": "travel-landmarks-004.jpg",
+      "remoteURL": "https://commons.wikimedia.org/wiki/Special:FilePath/Colosseum%2C%20Roma%2C%20Italy%20%28Unsplash%20ddawgJ7eGDA%29.jpg?width=1200",
       "title": "Colosseum, Roma, Italy (Unsplash ddawgJ7eGDA).jpg",
       "year": 2016,
       "month": 5,
@@ -64,7 +64,7 @@
     },
     {
       "id": "travel-landmarks-005",
-      "file": "travel-landmarks-005.jpg",
+      "remoteURL": "https://commons.wikimedia.org/wiki/Special:FilePath/Procuratie-Vecchie-Venice-20050524-030.jpg?width=1200",
       "title": "Procuratie-Vecchie-Venice-20050524-030.jpg",
       "year": 2005,
       "month": 5,
@@ -78,7 +78,7 @@
     },
     {
       "id": "travel-landmarks-006",
-      "file": "travel-landmarks-006.jpg",
+      "remoteURL": "https://commons.wikimedia.org/wiki/Special:FilePath/Big%20Ben%20in%20the%20Rain%20%28Unsplash%29.jpg?width=1200",
       "title": "Big Ben in the Rain (Unsplash).jpg",
       "year": 2017,
       "month": 1,
@@ -92,7 +92,7 @@
     },
     {
       "id": "travel-landmarks-007",
-      "file": "travel-landmarks-007.jpg",
+      "remoteURL": "https://commons.wikimedia.org/wiki/Special:FilePath/Big%20Ben%20%28Unsplash%29.jpg?width=1200",
       "title": "Big Ben (Unsplash).jpg",
       "year": 2015,
       "month": 8,
@@ -106,7 +106,7 @@
     },
     {
       "id": "travel-landmarks-008",
-      "file": "travel-landmarks-008.jpg",
+      "remoteURL": "https://commons.wikimedia.org/wiki/Special:FilePath/Edinburgh%20Castle%20%28239295111%29.jpeg?width=1200",
       "title": "Edinburgh Castle (239295111).jpeg",
       "year": 2017,
       "month": 4,
@@ -120,7 +120,7 @@
     },
     {
       "id": "travel-landmarks-009",
-      "file": "travel-landmarks-009.jpg",
+      "remoteURL": "https://commons.wikimedia.org/wiki/Special:FilePath/Karl%C5%AFv%20most%2C%20Prague%2C%20Czech%20Republic%20%28Unsplash%29.jpg?width=1200",
       "title": "Karl\u016fv most, Prague, Czech Republic (Unsplash).jpg",
       "year": 2015,
       "month": 10,
@@ -134,7 +134,7 @@
     },
     {
       "id": "travel-landmarks-010",
-      "file": "travel-landmarks-010.jpg",
+      "remoteURL": "https://commons.wikimedia.org/wiki/Special:FilePath/Lamp%20Sch%C3%B6nbrunn.jpg?width=1200",
       "title": "Lamp Sch\u00f6nbrunn.jpg",
       "year": 2012,
       "month": 2,
@@ -148,7 +148,7 @@
     },
     {
       "id": "travel-landmarks-011",
-      "file": "travel-landmarks-011.jpg",
+      "remoteURL": "https://commons.wikimedia.org/wiki/Special:FilePath/Fa%C3%A7ade%20Sch%C3%B6nbrunn%20Jardins%20horloge.jpg?width=1200",
       "title": "Fa\u00e7ade Sch\u00f6nbrunn Jardins horloge.jpg",
       "year": 2012,
       "month": 2,
@@ -162,7 +162,7 @@
     },
     {
       "id": "travel-landmarks-012",
-      "file": "travel-landmarks-012.jpg",
+      "remoteURL": "https://commons.wikimedia.org/wiki/Special:FilePath/Nyhavn%2C%20K%C3%B8benhavn%2C%20Denmark%20%28Unsplash%29.jpg?width=1200",
       "title": "Nyhavn, K\u00f8benhavn, Denmark (Unsplash).jpg",
       "year": 2016,
       "month": 3,
@@ -176,7 +176,7 @@
     },
     {
       "id": "travel-landmarks-013",
-      "file": "travel-landmarks-013.jpg",
+      "remoteURL": "https://commons.wikimedia.org/wiki/Special:FilePath/Nyhavn%2C%20Copenaghen%2C%20Danemark%20%28Unsplash%29.jpg?width=1200",
       "title": "Nyhavn, Copenaghen, Danemark (Unsplash).jpg",
       "year": 2015,
       "month": 10,
@@ -190,7 +190,7 @@
     },
     {
       "id": "travel-landmarks-014",
-      "file": "travel-landmarks-014.jpg",
+      "remoteURL": "https://commons.wikimedia.org/wiki/Special:FilePath/B%C3%B6rshuset%20Stockholm%202022-09-20%2001.jpg?width=1200",
       "title": "B\u00f6rshuset Stockholm 2022-09-20 01.jpg",
       "year": 2022,
       "month": 9,
@@ -204,7 +204,7 @@
     },
     {
       "id": "travel-landmarks-015",
-      "file": "travel-landmarks-015.jpg",
+      "remoteURL": "https://commons.wikimedia.org/wiki/Special:FilePath/B%C3%B6rshuset%20Stockholm%202022-09-20%2002.jpg?width=1200",
       "title": "B\u00f6rshuset Stockholm 2022-09-20 02.jpg",
       "year": 2022,
       "month": 9,
@@ -218,7 +218,7 @@
     },
     {
       "id": "travel-landmarks-016",
-      "file": "travel-landmarks-016.jpg",
+      "remoteURL": "https://commons.wikimedia.org/wiki/Special:FilePath/Hallgrimskirkja%2C%20Reykjav%C3%ADk%2C%20Iceland%20%28Unsplash%29.jpg?width=1200",
       "title": "Hallgrimskirkja, Reykjav\u00edk, Iceland (Unsplash).jpg",
       "year": 2016,
       "month": 9,
@@ -232,7 +232,7 @@
     },
     {
       "id": "travel-landmarks-017",
-      "file": "travel-landmarks-017.jpg",
+      "remoteURL": "https://commons.wikimedia.org/wiki/Special:FilePath/Hallgrimskirkja%20-%20Tower%20Clock%20%28Unsplash%29.jpg?width=1200",
       "title": "Hallgrimskirkja - Tower Clock (Unsplash).jpg",
       "year": 2017,
       "month": 1,
@@ -246,7 +246,7 @@
     },
     {
       "id": "travel-landmarks-018",
-      "file": "travel-landmarks-018.jpg",
+      "remoteURL": "https://commons.wikimedia.org/wiki/Special:FilePath/I%20lift%20my%20lamp%20beside%20the%20golden%20door%20%28Unsplash%29.jpg?width=1200",
       "title": "I lift my lamp beside the golden door (Unsplash).jpg",
       "year": 2017,
       "month": 5,
@@ -260,7 +260,7 @@
     },
     {
       "id": "travel-landmarks-019",
-      "file": "travel-landmarks-019.jpg",
+      "remoteURL": "https://commons.wikimedia.org/wiki/Special:FilePath/Liberty%20%28Unsplash%29.jpg?width=1200",
       "title": "Liberty (Unsplash).jpg",
       "year": 2017,
       "month": 4,
@@ -274,7 +274,7 @@
     },
     {
       "id": "travel-landmarks-020",
-      "file": "travel-landmarks-020.jpg",
+      "remoteURL": "https://commons.wikimedia.org/wiki/Special:FilePath/Golden%20Gate%20Bridge%2C%20United%20States%20%28Unsplash%29.jpg?width=1200",
       "title": "Golden Gate Bridge, United States (Unsplash).jpg",
       "year": 2015,
       "month": 12,
@@ -288,7 +288,7 @@
     },
     {
       "id": "travel-landmarks-021",
-      "file": "travel-landmarks-021.jpg",
+      "remoteURL": "https://commons.wikimedia.org/wiki/Special:FilePath/Golden%20Gate%20Bridge%2C%20San%20Francisco%2C%20United%20States%20%28Unsplash%29.jpg?width=1200",
       "title": "Golden Gate Bridge, San Francisco, United States (Unsplash).jpg",
       "year": 2017,
       "month": 1,
@@ -302,7 +302,7 @@
     },
     {
       "id": "travel-landmarks-022",
-      "file": "travel-landmarks-022.jpg",
+      "remoteURL": "https://commons.wikimedia.org/wiki/Special:FilePath/Hoisting%20the%20Pride%20Flag%20on%20the%20Space%20Needle%20%2827968009045%29.jpg?width=1200",
       "title": "Hoisting the Pride Flag on the Space Needle (27968009045).jpg",
       "year": 2016,
       "month": 6,
@@ -316,7 +316,7 @@
     },
     {
       "id": "travel-landmarks-023",
-      "file": "travel-landmarks-023.jpg",
+      "remoteURL": "https://commons.wikimedia.org/wiki/Special:FilePath/Abraham%20Lincoln%20seated%20at%20the%20Lincoln%20Memorial%20-%201.JPG?width=1200",
       "title": "Abraham Lincoln seated at the Lincoln Memorial - 1.JPG",
       "year": 2012,
       "month": 7,
@@ -330,7 +330,7 @@
     },
     {
       "id": "travel-landmarks-024",
-      "file": "travel-landmarks-024.jpg",
+      "remoteURL": "https://commons.wikimedia.org/wiki/Special:FilePath/Abraham%20Lincoln%20seated%20at%20the%20Lincoln%20Memorial%20-%202.JPG?width=1200",
       "title": "Abraham Lincoln seated at the Lincoln Memorial - 2.JPG",
       "year": 2012,
       "month": 7,
@@ -344,7 +344,7 @@
     },
     {
       "id": "travel-landmarks-025",
-      "file": "travel-landmarks-025.jpg",
+      "remoteURL": "https://commons.wikimedia.org/wiki/Special:FilePath/NOLA-6%20%2831680416610%29.jpg?width=1200",
       "title": "NOLA-6 (31680416610).jpg",
       "year": 2016,
       "month": 12,
@@ -358,7 +358,7 @@
     },
     {
       "id": "travel-landmarks-026",
-      "file": "travel-landmarks-026.jpg",
+      "remoteURL": "https://commons.wikimedia.org/wiki/Special:FilePath/New%20Orleans%2C%20Jackson%20Sq.%3B%20September%202019.jpg?width=1200",
       "title": "New Orleans, Jackson Sq.; September 2019.jpg",
       "year": 2019,
       "month": 9,
@@ -372,7 +372,7 @@
     },
     {
       "id": "travel-landmarks-027",
-      "file": "travel-landmarks-027.jpg",
+      "remoteURL": "https://commons.wikimedia.org/wiki/Special:FilePath/Christ-the-redeemer%2006%2038%2015%20834000.jpeg?width=1200",
       "title": "Christ-the-redeemer 06 38 15 834000.jpeg",
       "year": 2025,
       "month": 1,
@@ -386,7 +386,7 @@
     },
     {
       "id": "travel-landmarks-028",
-      "file": "travel-landmarks-028.jpg",
+      "remoteURL": "https://commons.wikimedia.org/wiki/Special:FilePath/Christ-the-redeemer%2006%2038%2019%20938000.jpeg?width=1200",
       "title": "Christ-the-redeemer 06 38 19 938000.jpeg",
       "year": 2025,
       "month": 1,
@@ -400,7 +400,7 @@
     },
     {
       "id": "travel-landmarks-029",
-      "file": "travel-landmarks-029.jpg",
+      "remoteURL": "https://commons.wikimedia.org/wiki/Special:FilePath/2011.10.16.164533%20Av.%209%20de%20Julio%20volcanic%20ash%20Buenos%20Aires.jpg?width=1200",
       "title": "2011.10.16.164533 Av. 9 de Julio volcanic ash Buenos Aires.jpg",
       "year": 2011,
       "month": 10,
@@ -414,7 +414,7 @@
     },
     {
       "id": "travel-landmarks-030",
-      "file": "travel-landmarks-030.jpg",
+      "remoteURL": "https://commons.wikimedia.org/wiki/Special:FilePath/Buenos%20Aires%2C%20Argentina%20%28Unsplash%20cKshnMGMBCk%29.jpg?width=1200",
       "title": "Buenos Aires, Argentina (Unsplash cKshnMGMBCk).jpg",
       "year": 2017,
       "month": 3,
@@ -428,7 +428,7 @@
     },
     {
       "id": "travel-landmarks-031",
-      "file": "travel-landmarks-031.jpg",
+      "remoteURL": "https://commons.wikimedia.org/wiki/Special:FilePath/Senso-Ji%20Temple%20%28Unsplash%29.jpg?width=1200",
       "title": "Senso-Ji Temple (Unsplash).jpg",
       "year": 2017,
       "month": 3,
@@ -442,7 +442,7 @@
     },
     {
       "id": "travel-landmarks-032",
-      "file": "travel-landmarks-032.jpg",
+      "remoteURL": "https://commons.wikimedia.org/wiki/Special:FilePath/Asakusa%20Date%20%28Unsplash%29.jpg?width=1200",
       "title": "Asakusa Date (Unsplash).jpg",
       "year": 2017,
       "month": 3,
@@ -456,7 +456,7 @@
     },
     {
       "id": "travel-landmarks-033",
-      "file": "travel-landmarks-033.jpg",
+      "remoteURL": "https://commons.wikimedia.org/wiki/Special:FilePath/Grand%20Palace%20Bangkok%20%28Unsplash%29.jpg?width=1200",
       "title": "Grand Palace Bangkok (Unsplash).jpg",
       "year": 2017,
       "month": 4,
@@ -470,7 +470,7 @@
     },
     {
       "id": "travel-landmarks-034",
-      "file": "travel-landmarks-034.jpg",
+      "remoteURL": "https://commons.wikimedia.org/wiki/Special:FilePath/Grand%20Palace%2C%20Thailand%20%28Unsplash%29.jpg?width=1200",
       "title": "Grand Palace, Thailand (Unsplash).jpg",
       "year": 2015,
       "month": 9,
@@ -484,7 +484,7 @@
     },
     {
       "id": "travel-landmarks-035",
-      "file": "travel-landmarks-035.jpg",
+      "remoteURL": "https://commons.wikimedia.org/wiki/Special:FilePath/Dubai%2C%20View%20from%20Burj%20Khalifa%2C%202018.jpg?width=1200",
       "title": "Dubai, View from Burj Khalifa, 2018.jpg",
       "year": 2018,
       "month": 3,
@@ -498,7 +498,7 @@
     },
     {
       "id": "travel-landmarks-036",
-      "file": "travel-landmarks-036.jpg",
+      "remoteURL": "https://commons.wikimedia.org/wiki/Special:FilePath/Approach%20to%20Taj%20Mahal%20%2823214109725%29.jpg?width=1200",
       "title": "Approach to Taj Mahal (23214109725).jpg",
       "year": 2015,
       "month": 11,
@@ -512,7 +512,7 @@
     },
     {
       "id": "travel-landmarks-037",
-      "file": "travel-landmarks-037.jpg",
+      "remoteURL": "https://commons.wikimedia.org/wiki/Special:FilePath/Approach%20to%20Taj%20Mahal%20%2823188050926%29.jpg?width=1200",
       "title": "Approach to Taj Mahal (23188050926).jpg",
       "year": 2015,
       "month": 11,
@@ -526,7 +526,7 @@
     },
     {
       "id": "travel-landmarks-038",
-      "file": "travel-landmarks-038.jpg",
+      "remoteURL": "https://commons.wikimedia.org/wiki/Special:FilePath/Giza%20Great%20Pyramid%20of%20Khufu%20%289793820575%29.jpg?width=1200",
       "title": "Giza Great Pyramid of Khufu (9793820575).jpg",
       "year": 2002,
       "month": 6,
@@ -540,7 +540,7 @@
     },
     {
       "id": "travel-landmarks-039",
-      "file": "travel-landmarks-039.jpg",
+      "remoteURL": "https://commons.wikimedia.org/wiki/Special:FilePath/Giza%20Great%20Pyramid%20of%20Khufu%20%289793898043%29.jpg?width=1200",
       "title": "Giza Great Pyramid of Khufu (9793898043).jpg",
       "year": 2002,
       "month": 6,
@@ -554,7 +554,7 @@
     },
     {
       "id": "travel-landmarks-040",
-      "file": "travel-landmarks-040.jpg",
+      "remoteURL": "https://commons.wikimedia.org/wiki/Special:FilePath/View%20from%20Table%20Mountain%20%28Unsplash%29.jpg?width=1200",
       "title": "View from Table Mountain (Unsplash).jpg",
       "year": 2016,
       "month": 12,
@@ -568,7 +568,7 @@
     },
     {
       "id": "travel-landmarks-041",
-      "file": "travel-landmarks-041.jpg",
+      "remoteURL": "https://commons.wikimedia.org/wiki/Special:FilePath/500px%20photo%20%28227831095%29.jpeg?width=1200",
       "title": "500px photo (227831095).jpeg",
       "year": 2017,
       "month": 8,
@@ -582,7 +582,7 @@
     },
     {
       "id": "travel-landmarks-042",
-      "file": "travel-landmarks-042.jpg",
+      "remoteURL": "https://commons.wikimedia.org/wiki/Special:FilePath/Sydney%20Opera%20House.%20%2819667312379%29.jpg?width=1200",
       "title": "Sydney Opera House. (19667312379).jpg",
       "year": 2011,
       "month": 7,
@@ -596,7 +596,7 @@
     },
     {
       "id": "travel-landmarks-043",
-      "file": "travel-landmarks-043.jpg",
+      "remoteURL": "https://commons.wikimedia.org/wiki/Special:FilePath/Sydney%20Opera%20House%2C%20Sydney%2C%20Australia%20%28Unsplash%29.jpg?width=1200",
       "title": "Sydney Opera House, Sydney, Australia (Unsplash).jpg",
       "year": 2017,
       "month": 5,
@@ -610,7 +610,7 @@
     },
     {
       "id": "travel-landmarks-044",
-      "file": "travel-landmarks-044.jpg",
+      "remoteURL": "https://commons.wikimedia.org/wiki/Special:FilePath/Driving%20outside%20Flinders%20Street%20Railway%20Station%20%28Unsplash%29.jpg?width=1200",
       "title": "Driving outside Flinders Street Railway Station (Unsplash).jpg",
       "year": 2016,
       "month": 8,
@@ -624,7 +624,7 @@
     },
     {
       "id": "travel-landmarks-045",
-      "file": "travel-landmarks-045.jpg",
+      "remoteURL": "https://commons.wikimedia.org/wiki/Special:FilePath/Flinders%20Street%20Railway%20Station%2C%20Melbourne%2C%20Australia%20%28Unsplash%20-9UFPg3V6GI%29.jpg?width=1200",
       "title": "Flinders Street Railway Station, Melbourne, Australia (Unsplash -9UFPg3V6GI).jpg",
       "year": 2017,
       "month": 3,
@@ -638,7 +638,7 @@
     },
     {
       "id": "travel-landmarks-046",
-      "file": "travel-landmarks-046.jpg",
+      "remoteURL": "https://commons.wikimedia.org/wiki/Special:FilePath/Auckland%20-%20View%20from%20Sky%20Tower%20-%20Jordan%20Donaldson%20-%20%40jordi.d%202016%20%28Unsplash%29.jpg?width=1200",
       "title": "Auckland - View from Sky Tower - Jordan Donaldson - @jordi.d 2016 (Unsplash).jpg",
       "year": 2016,
       "month": 2,

@@ -55,9 +55,30 @@ func check(_ condition: Bool, _ message: String) {
 }
 
 let library = makeLibrary()
+// Stand-in pack photos. The harness builds its own rather than reading the shipped
+// packs: those are app resources, and a check of the curation rules should not depend
+// on which packs happen to be bundled this week.
+func makePackPhotos(count: Int = 40) -> [GamePhoto] {
+    var rng = SystemRandomNumberGenerator()
+    let places = ["Rome, Italy", "Paris, France", "Kyoto, Japan", "Boston, USA",
+                  "Cairo, Egypt", "Sydney, Australia", "Oslo, Norway", "Lima, Peru"]
+    return (0..<count).map { index in
+        let category = ObjectCatalog.categories.randomElement(using: &rng)!
+        let place = places[index % places.count]
+        return GamePhoto(
+            id: "pack:test:\(index)",
+            origin: .pack(packID: "test", itemID: "\(index)"),
+            creationDate: Date(timeIntervalSinceNow: -Double.random(in: 0...(80 * .year), using: &rng)),
+            coordinate: Coordinate(latitude: Double(index % 80) - 40, longitude: Double(index % 170) - 85),
+            placeName: place,
+            objectTags: [category.id],
+            possibleObjectTags: [category.id])
+    }
+}
+
 var generator = LevelGenerator()
 generator.personal = library
-generator.pack = PublicPackLibrary.photos(enabledPackIDs: PublicPackLibrary.defaultEnabledPackIDs)
+generator.pack = makePackPhotos()
 
 // --- Invariants across the whole difficulty range, both themes.
 var gapsByDifficulty: [Double: [TimeInterval]] = [:]
@@ -157,7 +178,7 @@ check(untagged.makeLevel(theme: .objects, knob: .standard) == nil,
 // --- And it must stay off entirely when the caregiver switches it off.
 var objectsOff = LevelGenerator()
 objectsOff.personal = library
-objectsOff.pack = PublicPackLibrary.photos(enabledPackIDs: PublicPackLibrary.defaultEnabledPackIDs)
+objectsOff.pack = makePackPhotos()
 objectsOff.allowObjects = false
 check(objectsOff.makeLevel(theme: .objects, knob: .standard) == nil,
       "Objects should build nothing when switched off")
@@ -166,9 +187,9 @@ check(!objectsOff.availableThemes(knob: .standard).contains(.objects),
 
 // --- Pack art alone can carry the theme (its subjects are hand-written, not classified).
 var packOnly = LevelGenerator()
-packOnly.pack = PublicPackLibrary.photos(enabledPackIDs: PublicPackLibrary.defaultEnabledPackIDs)
+packOnly.pack = makePackPhotos()
 check(packOnly.makeLevel(theme: .objects, knob: .standard) != nil,
-      "the bundled packs should be able to carry an Objects level on their own")
+      "packs should be able to carry an Objects level on their own")
 
 // --- Together mode: a hint must never mislead, and a pack photo must never be
 // prompted as if it were the player's own memory.
@@ -261,7 +282,7 @@ check(sparse.makeLevel(theme: .places, knob: .standard) == nil,
 // --- GPS-poor library must degrade into the packs, not error.
 var gpsPoor = LevelGenerator()
 gpsPoor.personal = sparse.personal
-gpsPoor.pack = PublicPackLibrary.photos(enabledPackIDs: PublicPackLibrary.defaultEnabledPackIDs)
+gpsPoor.pack = makePackPhotos()
 check(gpsPoor.makeLevel(theme: .places, knob: .standard) != nil,
       "Places should fall back to pack photos when the library has no geotags")
 check(gpsPoor.availableThemes(knob: .standard).count == 3,
