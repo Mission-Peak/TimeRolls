@@ -93,7 +93,9 @@ final class GameEngine {
     /// Rebuild the photo index and start a session. Safe to re-run any time.
     func prepare() async {
         phase = .preparing
-        if settings.adoptNewPacks() {
+        var settingsChanged = settings.adoptNewPacks()
+        settingsChanged = settings.healOrphanedPackChoices() || settingsChanged
+        if settingsChanged {
             settings.save()
         }
         // Only ask for the photo library if the player actually wants their own photos

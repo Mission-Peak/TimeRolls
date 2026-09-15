@@ -166,6 +166,17 @@ struct CaregiverSettings: Codable, Equatable, Sendable {
             + "|\(labelled)|\(objectsThemeEnabled)"
     }
 
+    /// Recover if every pack these settings point at has gone away — a pack removed in a
+    /// later build would otherwise leave someone who had chosen only that pack, and who
+    /// isn't using their own photos, with nothing to play.
+    mutating func healOrphanedPackChoices() -> Bool {
+        let playable = Set(PublicPackLibrary.packs.filter(\.isPlayable).map(\.id))
+        guard !playable.isEmpty else { return false }
+        guard enabledPackIDs.intersection(playable).isEmpty else { return false }
+        enabledPackIDs = playable
+        return true
+    }
+
     /// Switch on any playable pack these settings have not met before.
     /// Returns true when something changed.
     mutating func adoptNewPacks() -> Bool {
