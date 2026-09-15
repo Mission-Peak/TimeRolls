@@ -41,6 +41,8 @@ PACK_SPECS = {
         "title": "Travel Landmarks",
         "blurb": "Places worth remembering, from six decades of travel photography.",
         "source": "commons-geo",
+        # Modern travel photography: fine for "where", useless for "when".
+        "themes": ["places", "objects"],
         # Coordinates are the query; the place name is ours, so Places questions read well.
         # Each target is a well-photographed landmark; the place name is ours, so a
         # Places question reads the way a person would say it. More cities is not just
@@ -115,11 +117,64 @@ PACK_SPECS = {
             {"q": "vintage car", "take": 14},    {"q": "church village", "take": 14},
         ],
     },
+    "sports": {
+        "id": "sports",
+        "title": "Sports",
+        "blurb": "A century of games, players and crowds.",
+        "source": "smithsonian",
+        "themes": ["chronology", "objects"],
+        "spreadAcrossDecades": True,
+        "queries": [
+            {"take": 60,
+             "q": 'online_media_type:"Images" AND media_usage:"CC0" AND '
+                  'object_type:"Photographs" AND (baseball OR football OR boxing OR olympic OR tennis OR cycling OR rowing OR athlete)'},
+        ],
+    },
+    "entertainment": {
+        "id": "entertainment",
+        "title": "Stage and Screen",
+        "blurb": "Performers, bands and theatres, decade by decade.",
+        "source": "smithsonian",
+        "themes": ["chronology", "objects"],
+        "spreadAcrossDecades": True,
+        "queries": [
+            {"take": 60,
+             "q": 'online_media_type:"Images" AND media_usage:"CC0" AND '
+                  'object_type:"Photographs" AND (actress OR actor OR musician OR jazz OR theater OR band OR singer OR dancer OR circus)'},
+        ],
+    },
+    "animals": {
+        "id": "animals",
+        "title": "Animals",
+        "blurb": "Creatures large and small, photographed over a century.",
+        "source": "smithsonian",
+        "themes": ["objects", "chronology"],
+        "spreadAcrossDecades": True,
+        "queries": [
+            {"take": 60,
+             "q": 'online_media_type:"Images" AND media_usage:"CC0" AND '
+                  'object_type:"Photographs" AND (dog OR cat OR horse OR bird OR elephant OR cattle OR sheep OR zoo)'},
+        ],
+    },
+    "science": {
+        "id": "science",
+        "title": "Science and Invention",
+        "blurb": "Laboratories, instruments and the people who used them.",
+        "source": "smithsonian",
+        "themes": ["chronology", "objects"],
+        "spreadAcrossDecades": True,
+        "queries": [
+            {"take": 60,
+             "q": 'online_media_type:"Images" AND media_usage:"CC0" AND '
+                  'object_type:"Photographs" AND (laboratory OR telescope OR microscope OR inventor OR engine OR machine OR experiment)'},
+        ],
+    },
     "decades": {
         "id": "decades",
         "title": "Decades",
         "blurb": "Everyday life as it was photographed, decade by decade.",
         "source": "smithsonian",
+        "themes": ["chronology", "objects"],
         # Each query is aimed at a slice of the century. Yield varies a lot by era.
         # object_type matters as much as the keyword: without it the collection hands
         # back paintings, sketchbook folios and herbarium sheets, which are not what
@@ -540,6 +595,22 @@ def build(pack_name, out_root, api_key, metadata_only=False):
     else:
         candidates = from_smithsonian(spec, rejections, api_key)
 
+    if spec.get("spreadAcrossDecades") and candidates:
+        # Keep at most a handful per decade, so a collection that happens to be deep in
+        # the 1880s doesn't become the whole pack.
+        per_decade = spec.get("perDecadeCap", 6)
+        buckets = {}
+        spread = []
+        for candidate in candidates:
+            decade = candidate["year"] // 10 * 10
+            if buckets.get(decade, 0) >= per_decade:
+                rejections.add("decade already full")
+                continue
+            buckets[decade] = buckets.get(decade, 0) + 1
+            spread.append(candidate)
+        candidates = spread
+        print(f"\n  kept across decades: {dict(sorted(buckets.items()))}")
+
     if not candidates:
         print("\nNothing passed the licence gate. Rejections:")
         print(rejections.report())
@@ -586,6 +657,7 @@ def build(pack_name, out_root, api_key, metadata_only=False):
 
     manifest = {
         "formatVersion": 2,
+        "themes": spec.get("themes", ["chronology", "places", "objects"]),
         "id": spec["id"],
         "title": spec["title"],
         "blurb": spec["blurb"],

@@ -650,5 +650,9 @@
       "latitude": -36.8485,
       "longitude": 174.7622
     }
+  ],
+  "themes": [
+    "places",
+    "objects"
   ]
 }

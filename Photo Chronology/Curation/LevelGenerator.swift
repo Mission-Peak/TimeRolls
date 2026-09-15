@@ -15,6 +15,8 @@ struct LevelGenerator {
     var pack: [GamePhoto] = []
     /// Objects looks at photo content, so the caregiver can switch it off entirely.
     var allowObjects = true
+    /// Which games each pack is willing to carry, by pack id.
+    var packThemeSupport: [String: Set<GameTheme>] = [:]
 
     /// Chance of blending pack photos into an otherwise healthy personal library,
     /// for variety (spec §6.2b).
@@ -133,6 +135,12 @@ struct LevelGenerator {
                       knob: DifficultyKnob,
                       forceBlend: Bool = false) -> [GamePhoto] {
         let usable = usablePersonal(for: theme)
+        // Only packs that can carry this game. A pack of undatable photographs must
+        // never end up in "which one is older".
+        let pack = pack.filter { photo in
+            guard case let .pack(packID, _) = photo.origin else { return false }
+            return packThemeSupport[packID]?.contains(theme) ?? true
+        }
         guard !pack.isEmpty else { return usable }
 
         if forceBlend || isSparse(for: theme, knob: knob) {

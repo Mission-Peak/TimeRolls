@@ -66,6 +66,11 @@ struct PhotoPack: Identifiable, Hashable {
     var items: [PackItem]
     /// True when the pack is real photography rather than placeholder art.
     var isPhotography: Bool
+    /// Which games this pack can actually carry. A pack of modern photographs cannot
+    /// answer "which of these is older" — nothing in a 2019 kitchen tells you it isn't
+    /// a 2022 one — so a pack says what it is good for rather than being used for
+    /// everything it technically has metadata for.
+    var themes: Set<GameTheme> = Set(GameTheme.allCases)
 
     var isPlayable: Bool { availability == .bundled && !items.isEmpty }
 }
@@ -96,6 +101,7 @@ private struct PackManifest: Decodable {
     var title: String
     var blurb: String
     var license: String
+    var themes: [String]?
     var items: [Item]
 }
 
@@ -129,6 +135,11 @@ enum PublicPackLibrary {
     }
 
     static func pack(id: String) -> PhotoPack? { lookup[id] }
+
+    /// Which packs are willing to carry each game.
+    static func packThemeSupport() -> [String: Set<GameTheme>] {
+        Dictionary(uniqueKeysWithValues: packs.map { ($0.id, $0.themes) })
+    }
 
     /// Metadata-only `GamePhoto` values for the enabled, playable packs.
     static func photos(enabledPackIDs: Set<String>) -> [GamePhoto] {
@@ -230,12 +241,17 @@ enum PublicPackLibrary {
                                        license: entry.license))
             }
 
+            let themes = manifest.themes.map { names in
+                Set(names.compactMap(GameTheme.init(rawValue:)))
+            } ?? Set(GameTheme.allCases)
+
             return PhotoPack(id: manifest.id,
                              title: manifest.title,
                              blurb: manifest.blurb,
                              availability: .bundled,
                              items: items,
-                             isPhotography: true)
+                             isPhotography: true,
+                             themes: themes.isEmpty ? Set(GameTheme.allCases) : themes)
     }
 
     // MARK: Procedural packs

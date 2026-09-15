@@ -161,6 +161,7 @@ final class GameEngine {
                 return !unavailable.contains(itemID)
             }
         generator.allowObjects = settings.objectsThemeEnabled
+        generator.packThemeSupport = PublicPackLibrary.packThemeSupport()
         availableThemes = generator.availableThemes(knob: knob)
     }
 

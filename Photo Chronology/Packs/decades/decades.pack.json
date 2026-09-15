@@ -622,5 +622,9 @@
       "sourceURL": "https://www.si.edu/object/ld1-1643398738600-1643398749130-0",
       "license": "CC0"
     }
+  ],
+  "themes": [
+    "chronology",
+    "objects"
   ]
 }
