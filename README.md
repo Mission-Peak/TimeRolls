@@ -156,12 +156,21 @@ photographs available to it.
 
 | Pack | Photos | Years | Carries | Source |
 | --- | --- | --- | --- | --- |
-| Decades | 56 | 1884–1980 | Time, Things | Smithsonian (images in the app) |
-| Sports | 36 | 1860–1949 | Time, Things | Smithsonian |
 | Stage and Screen | 43 | 1858–1962 | Time, Things | Smithsonian |
-| Science and Invention | 19 | 1861–1920 | Time, Things | Smithsonian |
-| Animals | 68 | 2008–2025 | Things | Wikimedia Commons |
+| Sports | 36 | 1860–1949 | Time, Things | Smithsonian |
+| Decades | 56 | 1884–1980 | Time, Things | Smithsonian (images in the app) |
+| The Seventies | 36 | 1973–1975 | Time, Things | DOCUMERICA, via Commons |
 | Travel Landmarks | 46 | 2002–2025 | Places, Things | Wikimedia Commons |
+| Natural Wonders | 35 | 2012–2026 | Places, Things | Wikimedia Commons |
+| Animals | 68 | 2008–2025 | Things | Wikimedia Commons |
+
+**Why the Time packs stop around 1980.** It is copyright, not sourcing. Work from
+1930–1990 is still in copyright unless its author released it or the US government made
+it, so CC0 covers the 19th century and the 2010s onward and almost nothing between. The
+one reliable route into the middle is **US federal government photography, which carries
+no copyright at all** — that is what DOCUMERICA is, the EPA's 18,500-photograph survey of
+American life in the 1970s, and it is the only reason that decade is playable. Note the
+licence differs from the rest: public domain by statute rather than a CC0 waiver.
 
 **A pack says which games it can carry, and that is not a formality.** The first attempt
 at an everyday-life pack was unplayable for "which photo is older" because 331 of its 350

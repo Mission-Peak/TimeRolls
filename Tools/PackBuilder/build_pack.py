@@ -185,6 +185,20 @@ PACK_SPECS = {
                   'object_type:"Photographs" AND (actress OR actor OR musician OR jazz OR theater OR band OR singer OR dancer OR circus)'},
         ],
     },
+    "seventies": {
+        "id": "seventies",
+        "title": "The Seventies",
+        "blurb": "American life in the 1970s, photographed for the EPA.",
+        "source": "commons-category",
+        # DOCUMERICA: 18,500 photographs of ordinary life, made by government
+        # photographers and therefore free of copyright entirely — which is how this
+        # decade is reachable at all. CC0 does not cover it: work from the 1970s is
+        # still in copyright unless the government made it.
+        "category": "DOCUMERICA",
+        "themes": ["chronology", "objects"],
+        "terms": "",
+        "queries": [{"decade": 1970, "take": 55}],
+    },
     "animals": {
         "id": "animals",
         "title": "Animals",
@@ -367,8 +381,12 @@ def unsuitable_subject(title):
 
 
 def looks_like_a_photograph(title, mime, width):
-    if mime not in PHOTO_MIMES:
-        return "not a photo file (%s)" % (mime or "unknown")
+    if mime is None:
+        # Some listings omit it; fall back to the filename.
+        if not re.search(r"\.(jpe?g|png)$", title, re.IGNORECASE):
+            return "not a photo file"
+    elif mime not in PHOTO_MIMES:
+        return "not a photo file (%s)" % mime
     if width and width < 800:
         return "too small (%dpx)" % width
     if NOT_A_PHOTOGRAPH.search(title):
@@ -546,6 +564,72 @@ def from_commons_subject(spec, rejections):
     return items
 
 
+def from_commons_category(spec, rejections):
+    """Commons, inside a category, one query per decade. Used for US government
+    photography: public domain by statute rather than by licence, which is how the
+    1960s to 1990s become reachable at all."""
+    items = []
+    seen = set()
+    for query in spec["queries"]:
+        years = " OR ".join(str(query["decade"] + offset) for offset in range(0, 10))
+        search = (f'deepcategory:"{spec["category"]}" filemime:image/jpeg ({years})'
+                  + (f' ({spec["terms"]})' if spec.get("terms") else ""))
+        params = {
+            "action": "query", "format": "json", "generator": "search",
+            "gsrsearch": search, "gsrnamespace": 6, "gsrlimit": 80,
+            "prop": "imageinfo", "iiprop": "url|extmetadata|size|mime", "iiurlwidth": 1400,
+        }
+        url = "https://commons.wikimedia.org/w/api.php?" + urllib.parse.urlencode(params)
+        try:
+            payload = fetch_json(url, timeout=180)
+        except Exception as error:
+            print(f"    ! {query['decade']}s: {error}")
+            continue
+
+        taken = 0
+        for page in ((payload.get("query") or {}).get("pages") or {}).values():
+            if taken >= query["take"]:
+                break
+            info = (page.get("imageinfo") or [{}])[0]
+            extra = info.get("extmetadata") or {}
+            title = strip_html(page.get("title", "")).replace("File:", "")
+
+            stem = title_stem(title)
+            if stem in seen:
+                rejections.add("near-duplicate of one already taken")
+                continue
+            complaint = (looks_like_a_photograph(title, info.get("mime"), info.get("width"))
+                         or unsuitable_subject(title))
+            if complaint:
+                rejections.add(complaint)
+                continue
+            year = parse_year((extra.get("DateTimeOriginal") or {}).get("value")) \
+                or parse_year(title)
+            if not year or not (query["decade"] <= year < query["decade"] + 10):
+                rejections.add("outside the decade asked for")
+                continue
+            if not info.get("thumburl"):
+                rejections.add("no image URL")
+                continue
+
+            seen.add(stem)
+            items.append({
+                "remote": commons_file_url(title),
+                "title": title,
+                "year": year,
+                "month": parse_month((extra.get("DateTimeOriginal") or {}).get("value")),
+                "place": None, "lat": None, "lon": None,
+                "image": info["thumburl"],
+                "credit": strip_html((extra.get("Artist") or {}).get("value")) or "US Government",
+                "source": "US National Archives via Wikimedia Commons",
+                "source_url": info.get("descriptionurl", ""),
+            })
+            taken += 1
+        print(f"    {query['decade']}s: kept {taken}")
+        time.sleep(0.4)
+    return items
+
+
 def from_smithsonian(spec, rejections, api_key):
     """Smithsonian Open Access, filtered to items whose media is explicitly CC0."""
     items = []
@@ -645,6 +729,8 @@ def build(pack_name, out_root, api_key, metadata_only=False):
         candidates = from_commons(spec, rejections)
     elif spec["source"] == "commons-subject":
         candidates = from_commons_subject(spec, rejections)
+    elif spec["source"] == "commons-category":
+        candidates = from_commons_category(spec, rejections)
     else:
         candidates = from_smithsonian(spec, rejections, api_key)
 
