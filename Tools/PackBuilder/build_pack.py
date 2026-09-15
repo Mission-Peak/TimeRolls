@@ -146,14 +146,21 @@ PACK_SPECS = {
     "animals": {
         "id": "animals",
         "title": "Animals",
-        "blurb": "Creatures large and small, photographed over a century.",
-        "source": "smithsonian",
-        "themes": ["objects", "chronology"],
-        "spreadAcrossDecades": True,
+        "blurb": "Creatures large and small.",
+        "source": "commons-subject",
+        "themes": ["objects"],
+        "minYear": 1990,
         "queries": [
-            {"take": 60,
-             "q": 'online_media_type:"Images" AND media_usage:"CC0" AND '
-                  'object_type:"Photographs" AND (dog OR cat OR horse OR bird OR elephant OR cattle OR sheep OR zoo)'},
+            {"q": "dog portrait", "take": 10, "tags": ["dog"]},
+            {"q": "puppy", "take": 8, "tags": ["dog"]},
+            {"q": "dog running grass", "take": 8, "tags": ["dog"]},
+            {"q": "cat sitting", "take": 10, "tags": ["cat"]},
+            {"q": "kitten", "take": 8, "tags": ["cat"]},
+            {"q": "cat window", "take": 8, "tags": ["cat"]},
+            {"q": "horse field", "take": 10, "tags": ["horse"]},
+            {"q": "horses grazing", "take": 8, "tags": ["horse"]},
+            {"q": "bird perched branch", "take": 10, "tags": ["bird"]},
+            {"q": "birds flying", "take": 8, "tags": ["bird"]},
         ],
     },
     "science": {
@@ -471,12 +478,16 @@ def from_commons_subject(spec, rejections):
             if not year:
                 rejections.add("no usable date")
                 continue
+            if year < spec.get("minYear", 0):
+                rejections.add(f"older than {spec['minYear']} (likely artwork, not a photo)")
+                continue
             if not info.get("thumburl"):
                 rejections.add("no image URL")
                 continue
 
             seen.add(stem)
             items.append({
+                "tags": query.get("tags", []),
                 "remote": commons_file_url(title),
                 "title": title,
                 "year": year,
@@ -636,6 +647,7 @@ def build(pack_name, out_root, api_key, metadata_only=False):
                 continue
         entry = {
             "id": item_id,
+            "objectTags": candidate.get("tags") or [],
             "remoteURL": candidate.get("remote") or candidate["image"],
             "title": candidate["title"],
             "year": candidate["year"],

@@ -1,0 +1,965 @@
+{
+  "formatVersion": 2,
+  "themes": [
+    "objects"
+  ],
+  "id": "animals",
+  "title": "Animals",
+  "blurb": "Creatures large and small.",
+  "license": "CC0",
+  "builtAt": "2026-09-15",
+  "items": [
+    {
+      "id": "animals-001",
+      "objectTags": [
+        "dog"
+      ],
+      "remoteURL": "https://commons.wikimedia.org/wiki/Special:FilePath/A%20female%20boxer%20dog%20in%20Iran%20%D9%80%20Mostafa%20Meraji%20Canon%20Photography%2001.jpg?width=1200",
+      "title": "A female boxer dog in Iran \u0640 Mostafa Meraji Canon Photography 01.jpg",
+      "year": 2022,
+      "month": 6,
+      "credit": "Mostafameraji",
+      "source": "Wikimedia Commons",
+      "sourceURL": "https://commons.wikimedia.org/wiki/File:A_female_boxer_dog_in_Iran_%D9%80_Mostafa_Meraji_Canon_Photography_01.jpg",
+      "license": "CC0"
+    },
+    {
+      "id": "animals-002",
+      "objectTags": [
+        "dog"
+      ],
+      "remoteURL": "https://commons.wikimedia.org/wiki/Special:FilePath/A%20pure%20and%20female%20Boxer%20dog%20in%20Iran%2011.jpg?width=1200",
+      "title": "A pure and female Boxer dog in Iran 11.jpg",
+      "year": 2022,
+      "month": 6,
+      "credit": "Mostafameraji",
+      "source": "Wikimedia Commons",
+      "sourceURL": "https://commons.wikimedia.org/wiki/File:A_pure_and_female_Boxer_dog_in_Iran_11.jpg",
+      "license": "CC0"
+    },
+    {
+      "id": "animals-003",
+      "objectTags": [
+        "dog"
+      ],
+      "remoteURL": "https://commons.wikimedia.org/wiki/Special:FilePath/African%20wild%20dog%20%28portrait%29.jpg?width=1200",
+      "title": "African wild dog (portrait).jpg",
+      "year": 2016,
+      "month": 2,
+      "credit": "Mathias Appel",
+      "source": "Wikimedia Commons",
+      "sourceURL": "https://commons.wikimedia.org/wiki/File:African_wild_dog_(portrait).jpg",
+      "license": "CC0"
+    },
+    {
+      "id": "animals-004",
+      "objectTags": [
+        "dog"
+      ],
+      "remoteURL": "https://commons.wikimedia.org/wiki/Special:FilePath/American%20Staffordshire%20terrier%20portrait.jpg?width=1200",
+      "title": "American Staffordshire terrier portrait.jpg",
+      "year": 2025,
+      "month": 4,
+      "credit": "Joselodos",
+      "source": "Wikimedia Commons",
+      "sourceURL": "https://commons.wikimedia.org/wiki/File:American_Staffordshire_terrier_portrait.jpg",
+      "license": "CC0"
+    },
+    {
+      "id": "animals-005",
+      "objectTags": [
+        "dog"
+      ],
+      "remoteURL": "https://commons.wikimedia.org/wiki/Special:FilePath/Boxer%20%28dog%29%20In%20Iran%2C%20Mostafa%20Meraji.jpg?width=1200",
+      "title": "Boxer (dog) In Iran, Mostafa Meraji.jpg",
+      "year": 2022,
+      "month": 6,
+      "credit": "Mostafameraji",
+      "source": "Wikimedia Commons",
+      "sourceURL": "https://commons.wikimedia.org/wiki/File:Boxer_(dog)_In_Iran,_Mostafa_Meraji.jpg",
+      "license": "CC0"
+    },
+    {
+      "id": "animals-006",
+      "objectTags": [
+        "dog"
+      ],
+      "remoteURL": "https://commons.wikimedia.org/wiki/Special:FilePath/10%20Week%20Old%20German%20Shorthaired%20Pointer%20Puppy.jpg?width=1200",
+      "title": "10 Week Old German Shorthaired Pointer Puppy.jpg",
+      "year": 2017,
+      "month": 7,
+      "credit": "TruckMatt",
+      "source": "Wikimedia Commons",
+      "sourceURL": "https://commons.wikimedia.org/wiki/File:10_Week_Old_German_Shorthaired_Pointer_Puppy.jpg",
+      "license": "CC0"
+    },
+    {
+      "id": "animals-007",
+      "objectTags": [
+        "dog"
+      ],
+      "remoteURL": "https://commons.wikimedia.org/wiki/Special:FilePath/1%20Year%20Old%20Miniature%20Dachshund.jpg?width=1200",
+      "title": "1 Year Old Miniature Dachshund.jpg",
+      "year": 2024,
+      "month": 9,
+      "credit": "Idk48",
+      "source": "Wikimedia Commons",
+      "sourceURL": "https://commons.wikimedia.org/wiki/File:1_Year_Old_Miniature_Dachshund.jpg",
+      "license": "CC0"
+    },
+    {
+      "id": "animals-008",
+      "objectTags": [
+        "dog"
+      ],
+      "remoteURL": "https://commons.wikimedia.org/wiki/Special:FilePath/A%20spoiled%20dog%20tucked%20in%20bed.jpg?width=1200",
+      "title": "A spoiled dog tucked in bed.jpg",
+      "year": 2025,
+      "month": 7,
+      "credit": "Fawn-under-stars",
+      "source": "Wikimedia Commons",
+      "sourceURL": "https://commons.wikimedia.org/wiki/File:A_spoiled_dog_tucked_in_bed.jpg",
+      "license": "CC0"
+    },
+    {
+      "id": "animals-009",
+      "objectTags": [
+        "dog"
+      ],
+      "remoteURL": "https://commons.wikimedia.org/wiki/Special:FilePath/Airedale%20Puppies.jpg?width=1200",
+      "title": "Airedale Puppies.jpg",
+      "year": 2024,
+      "month": 12,
+      "credit": "TytoAlba7346",
+      "source": "Wikimedia Commons",
+      "sourceURL": "https://commons.wikimedia.org/wiki/File:Airedale_Puppies.jpg",
+      "license": "CC0"
+    },
+    {
+      "id": "animals-010",
+      "objectTags": [
+        "dog"
+      ],
+      "remoteURL": "https://commons.wikimedia.org/wiki/Special:FilePath/Animals-gfce1d0472%201280.jpg?width=1200",
+      "title": "Animals-gfce1d0472 1280.jpg",
+      "year": 2017,
+      "month": 4,
+      "credit": "blende12",
+      "source": "Wikimedia Commons",
+      "sourceURL": "https://commons.wikimedia.org/wiki/File:Animals-gfce1d0472_1280.jpg",
+      "license": "CC0"
+    },
+    {
+      "id": "animals-011",
+      "objectTags": [
+        "dog"
+      ],
+      "remoteURL": "https://commons.wikimedia.org/wiki/Special:FilePath/Bilbao%20-%20%27Puppy%27%2C%20de%20Koons%20%2801%29.jpg?width=1200",
+      "title": "Bilbao - 'Puppy', de Koons (01).jpg",
+      "year": 2020,
+      "month": 1,
+      "credit": "Zarateman",
+      "source": "Wikimedia Commons",
+      "sourceURL": "https://commons.wikimedia.org/wiki/File:Bilbao_-_%27Puppy%27,_de_Koons_(01).jpg",
+      "license": "CC0"
+    },
+    {
+      "id": "animals-012",
+      "objectTags": [
+        "dog"
+      ],
+      "remoteURL": "https://commons.wikimedia.org/wiki/Special:FilePath/Bilbao%20-%20Guggenheim%2C%20%27Puppy%27%20%28Jeff%20Koons%29%203.jpg?width=1200",
+      "title": "Bilbao - Guggenheim, 'Puppy' (Jeff Koons) 3.jpg",
+      "year": 2015,
+      "month": 3,
+      "credit": "Zarateman",
+      "source": "Wikimedia Commons",
+      "sourceURL": "https://commons.wikimedia.org/wiki/File:Bilbao_-_Guggenheim,_%27Puppy%27_(Jeff_Koons)_3.jpg",
+      "license": "CC0"
+    },
+    {
+      "id": "animals-013",
+      "objectTags": [
+        "dog"
+      ],
+      "remoteURL": "https://commons.wikimedia.org/wiki/Special:FilePath/Bilbao%20-%20Guggenheim%2002.jpg?width=1200",
+      "title": "Bilbao - Guggenheim 02.jpg",
+      "year": 2009,
+      "month": 12,
+      "credit": "Zarateman",
+      "source": "Wikimedia Commons",
+      "sourceURL": "https://commons.wikimedia.org/wiki/File:Bilbao_-_Guggenheim_02.jpg",
+      "license": "CC0"
+    },
+    {
+      "id": "animals-014",
+      "objectTags": [
+        "dog"
+      ],
+      "remoteURL": "https://commons.wikimedia.org/wiki/Special:FilePath/Shih%20tzu%20running.jpg?width=1200",
+      "title": "Shih tzu running.jpg",
+      "year": 2010,
+      "month": 8,
+      "credit": "SpanishSnake",
+      "source": "Wikimedia Commons",
+      "sourceURL": "https://commons.wikimedia.org/wiki/File:Shih_tzu_running.jpg",
+      "license": "CC0"
+    },
+    {
+      "id": "animals-015",
+      "objectTags": [
+        "cat"
+      ],
+      "remoteURL": "https://commons.wikimedia.org/wiki/Special:FilePath/%27Barkat%27%20a%20black%20Persian%20on%20the%20judge%27s%20table%20at%20%27Mumbai%20cat%20show-2014%27.JPG?width=1200",
+      "title": "'Barkat' a black Persian on the judge's table at 'Mumbai cat show-2014'.JPG",
+      "year": 2014,
+      "month": 6,
+      "credit": "Rudolph.A.furtado",
+      "source": "Wikimedia Commons",
+      "sourceURL": "https://commons.wikimedia.org/wiki/File:%27Barkat%27_a_black_Persian_on_the_judge%27s_table_at_%27Mumbai_cat_show-2014%27.JPG",
+      "license": "CC0"
+    },
+    {
+      "id": "animals-016",
+      "objectTags": [
+        "cat"
+      ],
+      "remoteURL": "https://commons.wikimedia.org/wiki/Special:FilePath/%27Radhe%27%20the%20biggest%20cat%20in%20Worli%20Fish%20Market%20in%20Mumbai..jpg?width=1200",
+      "title": "'Radhe' the biggest cat in Worli Fish Market in Mumbai..jpg",
+      "year": 2013,
+      "month": 1,
+      "credit": "Rudolph.A.Furtado",
+      "source": "Wikimedia Commons",
+      "sourceURL": "https://commons.wikimedia.org/wiki/File:%27Radhe%27_the_biggest_cat_in_Worli_Fish_Market_in_Mumbai..jpg",
+      "license": "CC0"
+    },
+    {
+      "id": "animals-017",
+      "objectTags": [
+        "cat"
+      ],
+      "remoteURL": "https://commons.wikimedia.org/wiki/Special:FilePath/065-Barcelona-Cat-1.jpg?width=1200",
+      "title": "065-Barcelona-Cat-1.jpg",
+      "year": 2016,
+      "month": 12,
+      "credit": "MartinThoma",
+      "source": "Wikimedia Commons",
+      "sourceURL": "https://commons.wikimedia.org/wiki/File:065-Barcelona-Cat-1.jpg",
+      "license": "CC0"
+    },
+    {
+      "id": "animals-018",
+      "objectTags": [
+        "cat"
+      ],
+      "remoteURL": "https://commons.wikimedia.org/wiki/Special:FilePath/065-Barcelona-Cat-1%20%282016%20photo%3B%20cropped%202020%29.jpg?width=1200",
+      "title": "065-Barcelona-Cat-1 (2016 photo; cropped 2020).jpg",
+      "year": 2016,
+      "month": 12,
+      "credit": "MartinThoma",
+      "source": "Wikimedia Commons",
+      "sourceURL": "https://commons.wikimedia.org/wiki/File:065-Barcelona-Cat-1_(2016_photo;_cropped_2020).jpg",
+      "license": "CC0"
+    },
+    {
+      "id": "animals-019",
+      "objectTags": [
+        "cat"
+      ],
+      "remoteURL": "https://commons.wikimedia.org/wiki/Special:FilePath/1663Sitting%20cats.jpg?width=1200",
+      "title": "1663Sitting cats.jpg",
+      "year": 2020,
+      "month": 9,
+      "credit": "Judgefloro",
+      "source": "Wikimedia Commons",
+      "sourceURL": "https://commons.wikimedia.org/wiki/File:1663Sitting_cats.jpg",
+      "license": "CC0"
+    },
+    {
+      "id": "animals-020",
+      "objectTags": [
+        "cat"
+      ],
+      "remoteURL": "https://commons.wikimedia.org/wiki/Special:FilePath/2014.06.21.115314%20Cat%20window%20Herrenstra%C3%9Fe%20M%C3%BCnstermaifeld.jpg?width=1200",
+      "title": "2014.06.21.115314 Cat window Herrenstra\u00dfe M\u00fcnstermaifeld.jpg",
+      "year": 2014,
+      "month": 6,
+      "credit": "Hermann Luyken",
+      "source": "Wikimedia Commons",
+      "sourceURL": "https://commons.wikimedia.org/wiki/File:2014.06.21.115314_Cat_window_Herrenstra%C3%9Fe_M%C3%BCnstermaifeld.jpg",
+      "license": "CC0"
+    },
+    {
+      "id": "animals-021",
+      "objectTags": [
+        "cat"
+      ],
+      "remoteURL": "https://commons.wikimedia.org/wiki/Special:FilePath/209Askal%20drinking%20water%20in%20Bulacan%20and%20Sitting%20cats%2001.jpg?width=1200",
+      "title": "209Askal drinking water in Bulacan and Sitting cats 01.jpg",
+      "year": 2020,
+      "month": 10,
+      "credit": "Judgefloro",
+      "source": "Wikimedia Commons",
+      "sourceURL": "https://commons.wikimedia.org/wiki/File:209Askal_drinking_water_in_Bulacan_and_Sitting_cats_01.jpg",
+      "license": "CC0"
+    },
+    {
+      "id": "animals-022",
+      "objectTags": [
+        "cat"
+      ],
+      "remoteURL": "https://commons.wikimedia.org/wiki/Special:FilePath/6272Sitting%20cats%20in%20the%20Philippines.jpg?width=1200",
+      "title": "6272Sitting cats in the Philippines.jpg",
+      "year": 2020,
+      "month": 9,
+      "credit": "Judgefloro",
+      "source": "Wikimedia Commons",
+      "sourceURL": "https://commons.wikimedia.org/wiki/File:6272Sitting_cats_in_the_Philippines.jpg",
+      "license": "CC0"
+    },
+    {
+      "id": "animals-023",
+      "objectTags": [
+        "cat"
+      ],
+      "remoteURL": "https://commons.wikimedia.org/wiki/Special:FilePath/A%20cat%20yawn%20on%20a%20%27Motorcycle%27..JPG?width=1200",
+      "title": "A cat yawn on a 'Motorcycle'..JPG",
+      "year": 2014,
+      "month": 6,
+      "credit": "Rudolph.A.Furtado",
+      "source": "Wikimedia Commons",
+      "sourceURL": "https://commons.wikimedia.org/wiki/File:A_cat_yawn_on_a_%27Motorcycle%27..JPG",
+      "license": "CC0"
+    },
+    {
+      "id": "animals-024",
+      "objectTags": [
+        "cat"
+      ],
+      "remoteURL": "https://commons.wikimedia.org/wiki/Special:FilePath/A%20photo%20of%20a%20cat%20sitting%20down.jpg?width=1200",
+      "title": "A photo of a cat sitting down.jpg",
+      "year": 2019,
+      "month": 5,
+      "credit": "Asabae2752",
+      "source": "Wikimedia Commons",
+      "sourceURL": "https://commons.wikimedia.org/wiki/File:A_photo_of_a_cat_sitting_down.jpg",
+      "license": "CC0"
+    },
+    {
+      "id": "animals-025",
+      "objectTags": [
+        "cat"
+      ],
+      "remoteURL": "https://commons.wikimedia.org/wiki/Special:FilePath/%27BELLA%27%206%20month%20kitten%20won%20%27Best%20of%20Best%20in%20Show%27%20at%20%27Mumbai%20cat%20show-2014%27.JPG?width=1200",
+      "title": "'BELLA' 6 month kitten won 'Best of Best in Show' at 'Mumbai cat show-2014'.JPG",
+      "year": 2014,
+      "month": 6,
+      "credit": "Rudolph.A.furtado",
+      "source": "Wikimedia Commons",
+      "sourceURL": "https://commons.wikimedia.org/wiki/File:%27BELLA%27_6_month_kitten_won_%27Best_of_Best_in_Show%27_at_%27Mumbai_cat_show-2014%27.JPG",
+      "license": "CC0"
+    },
+    {
+      "id": "animals-026",
+      "objectTags": [
+        "cat"
+      ],
+      "remoteURL": "https://commons.wikimedia.org/wiki/Special:FilePath/05752jfCats%20kittens%20Bulacanfvf%2001.jpg?width=1200",
+      "title": "05752jfCats kittens Bulacanfvf 01.jpg",
+      "year": 2017,
+      "month": 7,
+      "credit": "Judgefloro",
+      "source": "Wikimedia Commons",
+      "sourceURL": "https://commons.wikimedia.org/wiki/File:05752jfCats_kittens_Bulacanfvf_01.jpg",
+      "license": "CC0"
+    },
+    {
+      "id": "animals-027",
+      "objectTags": [
+        "cat"
+      ],
+      "remoteURL": "https://commons.wikimedia.org/wiki/Special:FilePath/5406Kittens%20in%20the%20Philippines.jpg?width=1200",
+      "title": "5406Kittens in the Philippines.jpg",
+      "year": 2019,
+      "month": 8,
+      "credit": "Judgefloro",
+      "source": "Wikimedia Commons",
+      "sourceURL": "https://commons.wikimedia.org/wiki/File:5406Kittens_in_the_Philippines.jpg",
+      "license": "CC0"
+    },
+    {
+      "id": "animals-028",
+      "objectTags": [
+        "cat"
+      ],
+      "remoteURL": "https://commons.wikimedia.org/wiki/Special:FilePath/5406Taal%2C%20Pulilan%2C%20Bulacan%2048.jpg?width=1200",
+      "title": "5406Taal, Pulilan, Bulacan 48.jpg",
+      "year": 2019,
+      "month": 8,
+      "credit": "Judgefloro",
+      "source": "Wikimedia Commons",
+      "sourceURL": "https://commons.wikimedia.org/wiki/File:5406Taal,_Pulilan,_Bulacan_48.jpg",
+      "license": "CC0"
+    },
+    {
+      "id": "animals-029",
+      "objectTags": [
+        "cat"
+      ],
+      "remoteURL": "https://commons.wikimedia.org/wiki/Special:FilePath/9568Black%20and%20white%20kitten%20portraits%20in%20the%20Philippines%2001.jpg?width=1200",
+      "title": "9568Black and white kitten portraits in the Philippines 01.jpg",
+      "year": 2020,
+      "month": 12,
+      "credit": "Judgefloro",
+      "source": "Wikimedia Commons",
+      "sourceURL": "https://commons.wikimedia.org/wiki/File:9568Black_and_white_kitten_portraits_in_the_Philippines_01.jpg",
+      "license": "CC0"
+    },
+    {
+      "id": "animals-030",
+      "objectTags": [
+        "cat"
+      ],
+      "remoteURL": "https://commons.wikimedia.org/wiki/Special:FilePath/A%20Kitten%20Relaxing%20While%20Being%20Petted.jpg?width=1200",
+      "title": "A Kitten Relaxing While Being Petted.jpg",
+      "year": 2025,
+      "month": 4,
+      "credit": "Xoqoni Said",
+      "source": "Wikimedia Commons",
+      "sourceURL": "https://commons.wikimedia.org/wiki/File:A_Kitten_Relaxing_While_Being_Petted.jpg",
+      "license": "CC0"
+    },
+    {
+      "id": "animals-031",
+      "objectTags": [
+        "cat"
+      ],
+      "remoteURL": "https://commons.wikimedia.org/wiki/Special:FilePath/A%20black%20and%20an%20orange%20kitten.jpg?width=1200",
+      "title": "A black and an orange kitten.jpg",
+      "year": 2021,
+      "month": 1,
+      "credit": "Jeromi Mikhael",
+      "source": "Wikimedia Commons",
+      "sourceURL": "https://commons.wikimedia.org/wiki/File:A_black_and_an_orange_kitten.jpg",
+      "license": "CC0"
+    },
+    {
+      "id": "animals-032",
+      "objectTags": [
+        "cat"
+      ],
+      "remoteURL": "https://commons.wikimedia.org/wiki/Special:FilePath/1988%20-%20Cat%20Cici%20at%20the%20window%20%2852952276782%29.jpg?width=1200",
+      "title": "1988 - Cat Cici at the window (52952276782).jpg",
+      "year": 2023,
+      "month": 6,
+      "credit": "GROTESQUE  IMAGES  from Bucharest, Romania",
+      "source": "Wikimedia Commons",
+      "sourceURL": "https://commons.wikimedia.org/wiki/File:1988_-_Cat_Cici_at_the_window_(52952276782).jpg",
+      "license": "CC0"
+    },
+    {
+      "id": "animals-033",
+      "objectTags": [
+        "cat"
+      ],
+      "remoteURL": "https://commons.wikimedia.org/wiki/Special:FilePath/2011.09.17.113926%20Cats%20window%20Place%20de%20l%C3%89tolie%20Obernai.jpg?width=1200",
+      "title": "2011.09.17.113926 Cats window Place de l\u00c9tolie Obernai.jpg",
+      "year": 2011,
+      "month": 9,
+      "credit": "Hermann Luyken",
+      "source": "Wikimedia Commons",
+      "sourceURL": "https://commons.wikimedia.org/wiki/File:2011.09.17.113926_Cats_window_Place_de_l%C3%89tolie_Obernai.jpg",
+      "license": "CC0"
+    },
+    {
+      "id": "animals-034",
+      "objectTags": [
+        "cat"
+      ],
+      "remoteURL": "https://commons.wikimedia.org/wiki/Special:FilePath/A%20tuxedo%20cat%20looking%20at%20the%20window.jpg?width=1200",
+      "title": "A tuxedo cat looking at the window.jpg",
+      "year": 2024,
+      "month": 9,
+      "credit": "Punkressph",
+      "source": "Wikimedia Commons",
+      "sourceURL": "https://commons.wikimedia.org/wiki/File:A_tuxedo_cat_looking_at_the_window.jpg",
+      "license": "CC0"
+    },
+    {
+      "id": "animals-035",
+      "objectTags": [
+        "cat"
+      ],
+      "remoteURL": "https://commons.wikimedia.org/wiki/Special:FilePath/April%20Cat%20Loaf.jpg?width=1200",
+      "title": "April Cat Loaf.jpg",
+      "year": 2023,
+      "month": 11,
+      "credit": "Platdujour",
+      "source": "Wikimedia Commons",
+      "sourceURL": "https://commons.wikimedia.org/wiki/File:April_Cat_Loaf.jpg",
+      "license": "CC0"
+    },
+    {
+      "id": "animals-036",
+      "objectTags": [
+        "cat"
+      ],
+      "remoteURL": "https://commons.wikimedia.org/wiki/Special:FilePath/Broshka%20-%20cat.jpg?width=1200",
+      "title": "Broshka - cat.jpg",
+      "year": 2018,
+      "month": 1,
+      "credit": "Pavel Kovalev",
+      "source": "Wikimedia Commons",
+      "sourceURL": "https://commons.wikimedia.org/wiki/File:Broshka_-_cat.jpg",
+      "license": "CC0"
+    },
+    {
+      "id": "animals-037",
+      "objectTags": [
+        "cat"
+      ],
+      "remoteURL": "https://commons.wikimedia.org/wiki/Special:FilePath/Cat%20%2833168036986%29.jpg?width=1200",
+      "title": "Cat (33168036986).jpg",
+      "year": 2017,
+      "month": 2,
+      "credit": "Rob Mitchell",
+      "source": "Wikimedia Commons",
+      "sourceURL": "https://commons.wikimedia.org/wiki/File:Cat_(33168036986).jpg",
+      "license": "CC0"
+    },
+    {
+      "id": "animals-038",
+      "objectTags": [
+        "cat"
+      ],
+      "remoteURL": "https://commons.wikimedia.org/wiki/Special:FilePath/Cat%20%2833168036986%29%20%282017%3B%20cropped%202025%29.jpg?width=1200",
+      "title": "Cat (33168036986) (2017; cropped 2025).jpg",
+      "year": 2017,
+      "month": 2,
+      "credit": "Rob Mitchell",
+      "source": "Wikimedia Commons",
+      "sourceURL": "https://commons.wikimedia.org/wiki/File:Cat_(33168036986)_(2017;_cropped_2025).jpg",
+      "license": "CC0"
+    },
+    {
+      "id": "animals-039",
+      "objectTags": [
+        "cat"
+      ],
+      "remoteURL": "https://commons.wikimedia.org/wiki/Special:FilePath/Cat%20looking%20out%20window%20%282023-08-27%29.jpg?width=1200",
+      "title": "Cat looking out window (2023-08-27).jpg",
+      "year": 2023,
+      "month": 8,
+      "credit": "Roc0ast3r",
+      "source": "Wikimedia Commons",
+      "sourceURL": "https://commons.wikimedia.org/wiki/File:Cat_looking_out_window_(2023-08-27).jpg",
+      "license": "CC0"
+    },
+    {
+      "id": "animals-040",
+      "objectTags": [
+        "horse"
+      ],
+      "remoteURL": "https://commons.wikimedia.org/wiki/Special:FilePath/A%20neighbors%20horse%20wandered%20up%20as%20I%20drove%20by%20waving%20a%20camera%20-%20%22Come%20here%21%20Don%27t%20you%20want%20to%20be%20on%20flickr%3F%3F%3F%22%20%283032562946%29.jpg?width=1200",
+      "title": "A neighbors horse wandered up as I drove by waving a camera - \"Come here! Don't you want to be on flickr???\" (3032562946).jpg",
+      "year": 2008,
+      "month": 11,
+      "credit": "cogdogblog",
+      "source": "Wikimedia Commons",
+      "sourceURL": "https://commons.wikimedia.org/wiki/File:A_neighbors_horse_wandered_up_as_I_drove_by_waving_a_camera_-_%22Come_here!_Don%27t_you_want_to_be_on_flickr%3F%3F%3F%22_(3032562946).jpg",
+      "license": "CC0"
+    },
+    {
+      "id": "animals-041",
+      "objectTags": [
+        "horse"
+      ],
+      "remoteURL": "https://commons.wikimedia.org/wiki/Special:FilePath/Beautiful%20Brown%20Horse%20%28198516275%29.jpeg?width=1200",
+      "title": "Beautiful Brown Horse (198516275).jpeg",
+      "year": 2014,
+      "month": 6,
+      "credit": "Halyna Feshchak",
+      "source": "Wikimedia Commons",
+      "sourceURL": "https://commons.wikimedia.org/wiki/File:Beautiful_Brown_Horse_(198516275).jpeg",
+      "license": "CC0"
+    },
+    {
+      "id": "animals-042",
+      "objectTags": [
+        "horse"
+      ],
+      "remoteURL": "https://commons.wikimedia.org/wiki/Special:FilePath/Black%20horse%20on%20branches%20%28Unsplash%29.jpg?width=1200",
+      "title": "Black horse on branches (Unsplash).jpg",
+      "year": 2014,
+      "month": 5,
+      "credit": "Gabriela Kucerova  gabrielakucerova",
+      "source": "Wikimedia Commons",
+      "sourceURL": "https://commons.wikimedia.org/wiki/File:Black_horse_on_branches_(Unsplash).jpg",
+      "license": "CC0"
+    },
+    {
+      "id": "animals-043",
+      "objectTags": [
+        "horse"
+      ],
+      "remoteURL": "https://commons.wikimedia.org/wiki/Special:FilePath/Bronze%20Horse%20Trappings%20%2843220673811%29.jpg?width=1200",
+      "title": "Bronze Horse Trappings (43220673811).jpg",
+      "year": 2018,
+      "month": 7,
+      "credit": "Gary Todd  from Xinzheng, China",
+      "source": "Wikimedia Commons",
+      "sourceURL": "https://commons.wikimedia.org/wiki/File:Bronze_Horse_Trappings_(43220673811).jpg",
+      "license": "CC0"
+    },
+    {
+      "id": "animals-044",
+      "objectTags": [
+        "horse"
+      ],
+      "remoteURL": "https://commons.wikimedia.org/wiki/Special:FilePath/Canon%27s%20Field%20Mass%20path%20entry%20Kilkenny%20Street.jpg?width=1200",
+      "title": "Canon's Field Mass path entry Kilkenny Street.jpg",
+      "year": 2023,
+      "month": 8,
+      "credit": "A.-K. D.",
+      "source": "Wikimedia Commons",
+      "sourceURL": "https://commons.wikimedia.org/wiki/File:Canon%27s_Field_Mass_path_entry_Kilkenny_Street.jpg",
+      "license": "CC0"
+    },
+    {
+      "id": "animals-045",
+      "objectTags": [
+        "horse"
+      ],
+      "remoteURL": "https://commons.wikimedia.org/wiki/Special:FilePath/Chestnut%20horse%20in%20a%20shed%20%28Unsplash%29.jpg?width=1200",
+      "title": "Chestnut horse in a shed (Unsplash).jpg",
+      "year": 2016,
+      "month": 10,
+      "credit": "Gert Boers  geboers",
+      "source": "Wikimedia Commons",
+      "sourceURL": "https://commons.wikimedia.org/wiki/File:Chestnut_horse_in_a_shed_(Unsplash).jpg",
+      "license": "CC0"
+    },
+    {
+      "id": "animals-046",
+      "objectTags": [
+        "horse"
+      ],
+      "remoteURL": "https://commons.wikimedia.org/wiki/Special:FilePath/Close-up%20on%20a%20skewbald%20horse%20%28Unsplash%29.jpg?width=1200",
+      "title": "Close-up on a skewbald horse (Unsplash).jpg",
+      "year": 2016,
+      "month": 5,
+      "credit": "Ivan Bertona  ibrt",
+      "source": "Wikimedia Commons",
+      "sourceURL": "https://commons.wikimedia.org/wiki/File:Close-up_on_a_skewbald_horse_(Unsplash).jpg",
+      "license": "CC0"
+    },
+    {
+      "id": "animals-047",
+      "objectTags": [
+        "horse"
+      ],
+      "remoteURL": "https://commons.wikimedia.org/wiki/Special:FilePath/Curious%20horse%202024-07-19.jpg?width=1200",
+      "title": "Curious horse 2024-07-19.jpg",
+      "year": 2024,
+      "month": 7,
+      "credit": "Andy Li",
+      "source": "Wikimedia Commons",
+      "sourceURL": "https://commons.wikimedia.org/wiki/File:Curious_horse_2024-07-19.jpg",
+      "license": "CC0"
+    },
+    {
+      "id": "animals-048",
+      "objectTags": [
+        "horse"
+      ],
+      "remoteURL": "https://commons.wikimedia.org/wiki/Special:FilePath/FIELD%20TRIP%202016-09-12%20%2829346391050%29.jpg?width=1200",
+      "title": "FIELD TRIP 2016-09-12 (29346391050).jpg",
+      "year": 2016,
+      "month": 9,
+      "credit": "EU2016 SK",
+      "source": "Wikimedia Commons",
+      "sourceURL": "https://commons.wikimedia.org/wiki/File:FIELD_TRIP_2016-09-12_(29346391050).jpg",
+      "license": "CC0"
+    },
+    {
+      "id": "animals-049",
+      "objectTags": [
+        "horse"
+      ],
+      "remoteURL": "https://commons.wikimedia.org/wiki/Special:FilePath/Field%20with%20horses%20on%20the%20Oak%20Trail.jpg?width=1200",
+      "title": "Field with horses on the Oak Trail.jpg",
+      "year": 2020,
+      "month": 10,
+      "credit": "Mx. Granger",
+      "source": "Wikimedia Commons",
+      "sourceURL": "https://commons.wikimedia.org/wiki/File:Field_with_horses_on_the_Oak_Trail.jpg",
+      "license": "CC0"
+    },
+    {
+      "id": "animals-050",
+      "objectTags": [
+        "horse"
+      ],
+      "remoteURL": "https://commons.wikimedia.org/wiki/Special:FilePath/05559jfNative%20horses%20in%20grasslands%20Baliuag%20Bulacanfvf%2026.jpg?width=1200",
+      "title": "05559jfNative horses in grasslands Baliuag Bulacanfvf 26.jpg",
+      "year": 2017,
+      "month": 7,
+      "credit": "Judgefloro",
+      "source": "Wikimedia Commons",
+      "sourceURL": "https://commons.wikimedia.org/wiki/File:05559jfNative_horses_in_grasslands_Baliuag_Bulacanfvf_26.jpg",
+      "license": "CC0"
+    },
+    {
+      "id": "animals-051",
+      "objectTags": [
+        "horse"
+      ],
+      "remoteURL": "https://commons.wikimedia.org/wiki/Special:FilePath/2%20chevaux%20wakhan%20Sahrad-e-Broghil.jpg?width=1200",
+      "title": "2 chevaux wakhan Sahrad-e-Broghil.jpg",
+      "year": 2019,
+      "month": 8,
+      "credit": "Beno\u00eet Vicart",
+      "source": "Wikimedia Commons",
+      "sourceURL": "https://commons.wikimedia.org/wiki/File:2_chevaux_wakhan_Sahrad-e-Broghil.jpg",
+      "license": "CC0"
+    },
+    {
+      "id": "animals-052",
+      "objectTags": [
+        "horse"
+      ],
+      "remoteURL": "https://commons.wikimedia.org/wiki/Special:FilePath/500px%20photo%20%28216066123%29.jpeg?width=1200",
+      "title": "500px photo (216066123).jpeg",
+      "year": 2017,
+      "month": 5,
+      "credit": "San Dta",
+      "source": "Wikimedia Commons",
+      "sourceURL": "https://commons.wikimedia.org/wiki/File:500px_photo_(216066123).jpeg",
+      "license": "CC0"
+    },
+    {
+      "id": "animals-053",
+      "objectTags": [
+        "horse"
+      ],
+      "remoteURL": "https://commons.wikimedia.org/wiki/Special:FilePath/9701Lanas%2C%20Mangaldan%2C%20Pangasinan%2017.jpg?width=1200",
+      "title": "9701Lanas, Mangaldan, Pangasinan 17.jpg",
+      "year": 2019,
+      "month": 11,
+      "credit": "Judgefloro",
+      "source": "Wikimedia Commons",
+      "sourceURL": "https://commons.wikimedia.org/wiki/File:9701Lanas,_Mangaldan,_Pangasinan_17.jpg",
+      "license": "CC0"
+    },
+    {
+      "id": "animals-054",
+      "objectTags": [
+        "horse"
+      ],
+      "remoteURL": "https://commons.wikimedia.org/wiki/Special:FilePath/A%20lovely%20start%20of%20spring%20%28Unsplash%29.jpg?width=1200",
+      "title": "A lovely start of spring (Unsplash).jpg",
+      "year": 2017,
+      "month": 4,
+      "credit": "Fabrizio Verrecchia  fabryv",
+      "source": "Wikimedia Commons",
+      "sourceURL": "https://commons.wikimedia.org/wiki/File:A_lovely_start_of_spring_(Unsplash).jpg",
+      "license": "CC0"
+    },
+    {
+      "id": "animals-055",
+      "objectTags": [
+        "horse"
+      ],
+      "remoteURL": "https://commons.wikimedia.org/wiki/Special:FilePath/Ama%20-%20m%C3%BCr%C3%BCl%C3%BC.jpg?width=1200",
+      "title": "Ama - m\u00fcr\u00fcl\u00fc.jpg",
+      "year": 2025,
+      "month": 3,
+      "credit": "Ruberlis2112",
+      "source": "Wikimedia Commons",
+      "sourceURL": "https://commons.wikimedia.org/wiki/File:Ama_-_m%C3%BCr%C3%BCl%C3%BC.jpg",
+      "license": "CC0"
+    },
+    {
+      "id": "animals-056",
+      "objectTags": [
+        "horse"
+      ],
+      "remoteURL": "https://commons.wikimedia.org/wiki/Special:FilePath/Animal-silhouette-horizon-horse%20%2824030389210%29.jpg?width=1200",
+      "title": "Animal-silhouette-horizon-horse (24030389210).jpg",
+      "year": 2015,
+      "month": 7,
+      "credit": "www.Pixel.la Free Stock Photos",
+      "source": "Wikimedia Commons",
+      "sourceURL": "https://commons.wikimedia.org/wiki/File:Animal-silhouette-horizon-horse_(24030389210).jpg",
+      "license": "CC0"
+    },
+    {
+      "id": "animals-057",
+      "objectTags": [
+        "horse"
+      ],
+      "remoteURL": "https://commons.wikimedia.org/wiki/Special:FilePath/Cerro%20bahia%20blanca%20y%20ventana%20062.jpg?width=1200",
+      "title": "Cerro bahia blanca y ventana 062.jpg",
+      "year": 2011,
+      "month": 11,
+      "credit": "Lucia marianel",
+      "source": "Wikimedia Commons",
+      "sourceURL": "https://commons.wikimedia.org/wiki/File:Cerro_bahia_blanca_y_ventana_062.jpg",
+      "license": "CC0"
+    },
+    {
+      "id": "animals-058",
+      "objectTags": [
+        "bird"
+      ],
+      "remoteURL": "https://commons.wikimedia.org/wiki/Special:FilePath/Bird%202%20%28Unsplash%29.jpg?width=1200",
+      "title": "Bird 2 (Unsplash).jpg",
+      "year": 2017,
+      "month": 1,
+      "credit": "ken chan  ttww88_100",
+      "source": "Wikimedia Commons",
+      "sourceURL": "https://commons.wikimedia.org/wiki/File:Bird_2_(Unsplash).jpg",
+      "license": "CC0"
+    },
+    {
+      "id": "animals-059",
+      "objectTags": [
+        "bird"
+      ],
+      "remoteURL": "https://commons.wikimedia.org/wiki/Special:FilePath/Bird%20Alone%20%28Unsplash%29.jpg?width=1200",
+      "title": "Bird Alone (Unsplash).jpg",
+      "year": 2017,
+      "month": 3,
+      "credit": "Mat\u00edas Guerrero Gatica  matiasgueg",
+      "source": "Wikimedia Commons",
+      "sourceURL": "https://commons.wikimedia.org/wiki/File:Bird_Alone_(Unsplash).jpg",
+      "license": "CC0"
+    },
+    {
+      "id": "animals-060",
+      "objectTags": [
+        "bird"
+      ],
+      "remoteURL": "https://commons.wikimedia.org/wiki/Special:FilePath/Bird%20At%20Sunset%20%28Unsplash%29.jpg?width=1200",
+      "title": "Bird At Sunset (Unsplash).jpg",
+      "year": 2016,
+      "month": 5,
+      "credit": "Benjamin Bal\u00e1zs  brenkee",
+      "source": "Wikimedia Commons",
+      "sourceURL": "https://commons.wikimedia.org/wiki/File:Bird_At_Sunset_(Unsplash).jpg",
+      "license": "CC0"
+    },
+    {
+      "id": "animals-061",
+      "objectTags": [
+        "bird"
+      ],
+      "remoteURL": "https://commons.wikimedia.org/wiki/Special:FilePath/Bird%20on%20a%20Branch%20%28Unsplash%29.jpg?width=1200",
+      "title": "Bird on a Branch (Unsplash).jpg",
+      "year": 2017,
+      "month": 5,
+      "credit": "Doug Swinson  dougswinson",
+      "source": "Wikimedia Commons",
+      "sourceURL": "https://commons.wikimedia.org/wiki/File:Bird_on_a_Branch_(Unsplash).jpg",
+      "license": "CC0"
+    },
+    {
+      "id": "animals-062",
+      "objectTags": [
+        "bird"
+      ],
+      "remoteURL": "https://commons.wikimedia.org/wiki/Special:FilePath/Bird%20on%20branch%20%28Unsplash%29.jpg?width=1200",
+      "title": "Bird on branch (Unsplash).jpg",
+      "year": 2017,
+      "month": 3,
+      "credit": "Pritiranjan Maharana  pritiranjan101",
+      "source": "Wikimedia Commons",
+      "sourceURL": "https://commons.wikimedia.org/wiki/File:Bird_on_branch_(Unsplash).jpg",
+      "license": "CC0"
+    },
+    {
+      "id": "animals-063",
+      "objectTags": [
+        "bird"
+      ],
+      "remoteURL": "https://commons.wikimedia.org/wiki/Special:FilePath/Bird%20perching%20on%20a%20branch%20in%20the%20snow%20%28Unsplash%29.jpg?width=1200",
+      "title": "Bird perching on a branch in the snow (Unsplash).jpg",
+      "year": 2016,
+      "month": 1,
+      "credit": "Alice Donovan Rouse  alicekat",
+      "source": "Wikimedia Commons",
+      "sourceURL": "https://commons.wikimedia.org/wiki/File:Bird_perching_on_a_branch_in_the_snow_(Unsplash).jpg",
+      "license": "CC0"
+    },
+    {
+      "id": "animals-064",
+      "objectTags": [
+        "bird"
+      ],
+      "remoteURL": "https://commons.wikimedia.org/wiki/Special:FilePath/Black%20phoebe%2C%202023-03-31.jpg?width=1200",
+      "title": "Black phoebe, 2023-03-31.jpg",
+      "year": 2023,
+      "month": 3,
+      "credit": "Laurel Wreath of Victors",
+      "source": "Wikimedia Commons",
+      "sourceURL": "https://commons.wikimedia.org/wiki/File:Black_phoebe,_2023-03-31.jpg",
+      "license": "CC0"
+    },
+    {
+      "id": "animals-065",
+      "objectTags": [
+        "bird"
+      ],
+      "remoteURL": "https://commons.wikimedia.org/wiki/Special:FilePath/Blue-Bellied%20Roller.jpg?width=1200",
+      "title": "Blue-Bellied Roller.jpg",
+      "year": 2011,
+      "month": 10,
+      "credit": "Claudia Durand",
+      "source": "Wikimedia Commons",
+      "sourceURL": "https://commons.wikimedia.org/wiki/File:Blue-Bellied_Roller.jpg",
+      "license": "CC0"
+    },
+    {
+      "id": "animals-066",
+      "objectTags": [
+        "bird"
+      ],
+      "remoteURL": "https://commons.wikimedia.org/wiki/Special:FilePath/Brahminy%20kite%20perched%20on%20dry%20branch.jpg?width=1200",
+      "title": "Brahminy kite perched on dry branch.jpg",
+      "year": 2024,
+      "month": 6,
+      "credit": "Drsssuresh1961",
+      "source": "Wikimedia Commons",
+      "sourceURL": "https://commons.wikimedia.org/wiki/File:Brahminy_kite_perched_on_dry_branch.jpg",
+      "license": "CC0"
+    },
+    {
+      "id": "animals-067",
+      "objectTags": [
+        "bird"
+      ],
+      "remoteURL": "https://commons.wikimedia.org/wiki/Special:FilePath/C188a632%2001.jpg?width=1200",
+      "title": "C188a632 01.jpg",
+      "year": 2024,
+      "month": 10,
+      "credit": "Southwold1966",
+      "source": "Wikimedia Commons",
+      "sourceURL": "https://commons.wikimedia.org/wiki/File:C188a632_01.jpg",
+      "license": "CC0"
+    },
+    {
+      "id": "animals-068",
+      "objectTags": [
+        "bird"
+      ],
+      "remoteURL": "https://commons.wikimedia.org/wiki/Special:FilePath/08972jfBalucuc%20Apalit%20Pampanga%20plowing%20paddy%20fields%20irrigation%20flying%20birds%20Roadsfvf%2002.jpg?width=1200",
+      "title": "08972jfBalucuc Apalit Pampanga plowing paddy fields irrigation flying birds Roadsfvf 02.jpg",
+      "year": 2016,
+      "month": 12,
+      "credit": "Judgefloro",
+      "source": "Wikimedia Commons",
+      "sourceURL": "https://commons.wikimedia.org/wiki/File:08972jfBalucuc_Apalit_Pampanga_plowing_paddy_fields_irrigation_flying_birds_Roadsfvf_02.jpg",
+      "license": "CC0"
+    }
+  ]
+}

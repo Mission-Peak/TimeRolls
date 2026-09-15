@@ -154,11 +154,28 @@ That is what makes the catalogue affordable. **350 photographs cost 171 KB as me
 the same photographs bundled would be roughly 80 MB. The app is 14 MB with 452
 photographs available to it.
 
-| Pack | Photos | Years | Carried how |
-| --- | --- | --- | --- |
-| Decades | 56 | 1884–1980 | Images in the app — the offline starter (spec §6.2) |
-| Everyday Life | 350 | 1871–2026 | Metadata only, fetched on demand |
-| Travel Landmarks | 46 | 2002–2025 | Metadata only, fetched on demand |
+| Pack | Photos | Years | Carries | Source |
+| --- | --- | --- | --- | --- |
+| Decades | 56 | 1884–1980 | Time, Things | Smithsonian (images in the app) |
+| Sports | 36 | 1860–1949 | Time, Things | Smithsonian |
+| Stage and Screen | 43 | 1858–1962 | Time, Things | Smithsonian |
+| Science and Invention | 19 | 1861–1920 | Time, Things | Smithsonian |
+| Animals | 68 | 2008–2025 | Things | Wikimedia Commons |
+| Travel Landmarks | 46 | 2002–2025 | Places, Things | Wikimedia Commons |
+
+**A pack says which games it can carry, and that is not a formality.** The first attempt
+at an everyday-life pack was unplayable for "which photo is older" because 331 of its 350
+photographs came from 2000 onward — nothing about a 2019 kitchen tells you it isn't a 2022
+one. Travel Landmarks has the same shape and is declared places-and-things for the same
+reason. Anything asked to carry Time has to come from an era-spread historical source,
+which in practice means the Smithsonian: its CC0 photographs run from the 1850s to the
+1960s, while Commons CC0 is overwhelmingly post-2010.
+
+Where a pack is built by searching for a subject, the subject is recorded in the manifest
+rather than left to the classifier — a photograph found under "kitten" contains a cat. That
+also closes a gap: photographs fetched on demand never reach the on-device classifier, so
+without declared subjects they could never be the *answer* to a Things round, only a
+distractor.
 
 **Wi-Fi only, and fetched once.** `RemoteImageCache` refuses cellular and expensive
 networks outright, so nobody's mobile data goes on a photo game, and a photograph is

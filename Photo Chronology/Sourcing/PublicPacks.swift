@@ -48,8 +48,10 @@ struct PackItem: Identifiable, Hashable {
     /// Placeholder art, drawn on demand when there is no photograph.
     var motif: PackMotif?
     var credit: PackCredit?
+    /// Subjects recorded when the pack was built, for packs found by searching for them.
+    var declaredTags: Set<String> = []
 
-    var objectTags: Set<String> { motif?.objectTags ?? [] }
+    var objectTags: Set<String> { declaredTags.union(motif?.objectTags ?? []) }
 }
 
 struct PhotoPack: Identifiable, Hashable {
@@ -84,6 +86,7 @@ private struct PackManifest: Decodable {
         var id: String
         var file: String?
         var remoteURL: String?
+        var objectTags: [String]?
         var title: String
         var year: Int
         var month: Int
@@ -238,7 +241,8 @@ enum PublicPackLibrary {
                                        creator: entry.credit,
                                        source: entry.source,
                                        sourceURL: entry.sourceURL,
-                                       license: entry.license))
+                                       license: entry.license),
+                    declaredTags: Set(entry.objectTags ?? []))
             }
 
             let themes = manifest.themes.map { names in
