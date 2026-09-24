@@ -1,0 +1,62 @@
+[
+  {
+    "id": "place-outdoor",
+    "title": "Somewhere outdoors",
+    "prompt": "a photograph of a place: a street, a building, a landscape, scenery"
+  },
+  {
+    "id": "place-indoor",
+    "title": "A room",
+    "prompt": "a photograph of the inside of a building, a room, a hall"
+  },
+  {
+    "id": "people-closeup",
+    "title": "People close up",
+    "prompt": "a close-up photograph of a person's face, a portrait, a selfie"
+  },
+  {
+    "id": "people-group",
+    "title": "People together",
+    "prompt": "a photograph of a group of people posing together"
+  },
+  {
+    "id": "note-surface",
+    "title": "A surface",
+    "prompt": "a close-up photograph of a floor, a wall, a carpet or a plain surface"
+  },
+  {
+    "id": "note-reminder",
+    "title": "A reminder",
+    "prompt": "a photograph taken as a reminder: a label, a parking space, a price tag, a serial number"
+  },
+  {
+    "id": "note-damage",
+    "title": "Something broken",
+    "prompt": "a photograph documenting damage: a scratch, a dent, a stain, a repair"
+  },
+  {
+    "id": "note-object",
+    "title": "An item",
+    "prompt": "a plain photograph of a single object for sale, a product listing photo"
+  },
+  {
+    "id": "note-document",
+    "title": "A card or document",
+    "prompt": "a photograph of an identity card, a driving licence, a passport, a ticket or a form"
+  },
+  {
+    "id": "null-generic",
+    "title": "Just a photograph",
+    "prompt": "a photograph"
+  },
+  {
+    "id": "null-ordinary",
+    "title": "Something else",
+    "prompt": "an ordinary photograph of something else"
+  },
+  {
+    "id": "null-indoors",
+    "title": "An everyday scene",
+    "prompt": "an everyday scene with nothing remarkable in it"
+  }
+]

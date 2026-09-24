@@ -1,0 +1,302 @@
+[
+  {
+    "id": "dog",
+    "title": "dog",
+    "prompts": [
+      "a photo of a dog",
+      "a photograph with a dog in it",
+      "a dog",
+      "a snapshot of a dog"
+    ]
+  },
+  {
+    "id": "cat",
+    "title": "cat",
+    "prompts": [
+      "a photo of a cat",
+      "a photograph with a cat in it",
+      "a cat",
+      "a snapshot of a cat"
+    ]
+  },
+  {
+    "id": "bird",
+    "title": "bird",
+    "prompts": [
+      "a photo of a bird",
+      "a photograph with a bird in it",
+      "a bird",
+      "a snapshot of a bird"
+    ]
+  },
+  {
+    "id": "horse",
+    "title": "horse",
+    "prompts": [
+      "a photo of a horse",
+      "a photograph with a horse in it",
+      "a horse",
+      "a snapshot of a horse"
+    ]
+  },
+  {
+    "id": "cake",
+    "title": "cake",
+    "prompts": [
+      "a photo of a cake",
+      "a photograph with a cake in it",
+      "a cake",
+      "a snapshot of a cake"
+    ]
+  },
+  {
+    "id": "food",
+    "title": "food",
+    "prompts": [
+      "a photo of food",
+      "a photograph with food in it",
+      "food",
+      "a snapshot of food"
+    ]
+  },
+  {
+    "id": "fruit",
+    "title": "fruit",
+    "prompts": [
+      "a photo of fruit",
+      "a photograph with fruit in it",
+      "fruit",
+      "a snapshot of fruit"
+    ]
+  },
+  {
+    "id": "flower",
+    "title": "flower",
+    "prompts": [
+      "a photo of a flower",
+      "a photograph with a flower in it",
+      "a flower",
+      "a snapshot of a flower"
+    ]
+  },
+  {
+    "id": "tree",
+    "title": "tree",
+    "prompts": [
+      "a photo of a tree",
+      "a photograph with a tree in it",
+      "a tree",
+      "a snapshot of a tree"
+    ]
+  },
+  {
+    "id": "beach",
+    "title": "beach",
+    "prompts": [
+      "a photo of a beach",
+      "a photograph with a beach in it",
+      "a beach",
+      "a snapshot of a beach"
+    ]
+  },
+  {
+    "id": "mountain",
+    "title": "mountain",
+    "prompts": [
+      "a photo of a mountain",
+      "a photograph with a mountain in it",
+      "a mountain",
+      "a snapshot of a mountain"
+    ]
+  },
+  {
+    "id": "snow",
+    "title": "snow",
+    "prompts": [
+      "a photo of snow",
+      "a photograph with snow in it",
+      "snow",
+      "a snapshot of snow"
+    ]
+  },
+  {
+    "id": "water",
+    "title": "water",
+    "prompts": [
+      "a photo of water",
+      "a photograph with water in it",
+      "water",
+      "a snapshot of water"
+    ]
+  },
+  {
+    "id": "garden",
+    "title": "garden",
+    "prompts": [
+      "a photo of a garden",
+      "a photograph with a garden in it",
+      "a garden",
+      "a snapshot of a garden"
+    ]
+  },
+  {
+    "id": "forest",
+    "title": "forest",
+    "prompts": [
+      "a photo of a forest",
+      "a photograph with a forest in it",
+      "a forest",
+      "a snapshot of a forest"
+    ]
+  },
+  {
+    "id": "sunset",
+    "title": "sunset",
+    "prompts": [
+      "a photo of a sunset",
+      "a photograph with a sunset in it",
+      "a sunset",
+      "a snapshot of a sunset"
+    ]
+  },
+  {
+    "id": "car",
+    "title": "car",
+    "prompts": [
+      "a photo of a car",
+      "a photograph with a car in it",
+      "a car",
+      "a snapshot of a car"
+    ]
+  },
+  {
+    "id": "bicycle",
+    "title": "bicycle",
+    "prompts": [
+      "a photo of a bicycle",
+      "a photograph with a bicycle in it",
+      "a bicycle",
+      "a snapshot of a bicycle"
+    ]
+  },
+  {
+    "id": "boat",
+    "title": "boat",
+    "prompts": [
+      "a photo of a boat",
+      "a photograph with a boat in it",
+      "a boat",
+      "a snapshot of a boat"
+    ]
+  },
+  {
+    "id": "train",
+    "title": "train",
+    "prompts": [
+      "a photo of a train",
+      "a photograph with a train in it",
+      "a train",
+      "a snapshot of a train"
+    ]
+  },
+  {
+    "id": "book",
+    "title": "book",
+    "prompts": [
+      "a photo of a book",
+      "a photograph with a book in it",
+      "a book",
+      "a snapshot of a book"
+    ]
+  },
+  {
+    "id": "instrument",
+    "title": "musical instrument",
+    "prompts": [
+      "a photo of a musical instrument",
+      "a photograph with a musical instrument in it",
+      "a musical instrument",
+      "a snapshot of a musical instrument"
+    ]
+  },
+  {
+    "id": "building",
+    "title": "building",
+    "prompts": [
+      "a photo of a building",
+      "a photograph with a building in it",
+      "a building",
+      "a snapshot of a building"
+    ]
+  },
+  {
+    "id": "bridge",
+    "title": "bridge",
+    "prompts": [
+      "a photo of a bridge",
+      "a photograph with a bridge in it",
+      "a bridge",
+      "a snapshot of a bridge"
+    ]
+  },
+  {
+    "id": "class-mammal",
+    "title": "mammal",
+    "prompts": [
+      "a photo of a mammal",
+      "a photograph with a mammal in it",
+      "a mammal",
+      "a snapshot of a mammal"
+    ]
+  },
+  {
+    "id": "class-bird",
+    "title": "bird",
+    "prompts": [
+      "a photo of a bird",
+      "a photograph with a bird in it",
+      "a bird",
+      "a snapshot of a bird"
+    ]
+  },
+  {
+    "id": "class-reptile",
+    "title": "reptile",
+    "prompts": [
+      "a photo of a reptile",
+      "a photograph with a reptile in it",
+      "a reptile",
+      "a snapshot of a reptile"
+    ]
+  },
+  {
+    "id": "class-amphibian",
+    "title": "amphibian",
+    "prompts": [
+      "a photo of an amphibian",
+      "a photograph with an amphibian in it",
+      "an amphibian",
+      "a snapshot of an amphibian"
+    ]
+  },
+  {
+    "id": "class-fish",
+    "title": "fish",
+    "prompts": [
+      "a photo of a fish",
+      "a photograph with a fish in it",
+      "a fish",
+      "a snapshot of a fish"
+    ]
+  },
+  {
+    "id": "class-insect",
+    "title": "insect",
+    "prompts": [
+      "a photo of an insect",
+      "a photograph with an insect in it",
+      "an insect",
+      "a snapshot of an insect"
+    ]
+  }
+]

@@ -12,7 +12,7 @@ set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 PROJECT_DIR="$(cd "$SCRIPT_DIR/../.." && pwd)"
-IN_APP="$PROJECT_DIR/Photo Chronology/Packs"
+IN_APP="$PROJECT_DIR/TimeRolls/Packs"
 FOR_DOWNLOAD="$PROJECT_DIR/PacksForDownload"
 
 if [ "${1:-}" = "--undo" ]; then

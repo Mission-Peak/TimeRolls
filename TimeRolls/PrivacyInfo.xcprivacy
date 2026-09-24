@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <!-- No tracking of any kind: no advertising identifier, no third-party SDK, and
+         nothing that could link a person across apps or websites. -->
+    <key>NSPrivacyTracking</key>
+    <false/>
+    <key>NSPrivacyTrackingDomains</key>
+    <array/>
+
+    <!-- Nothing is collected. Gameplay counts are written to a file inside this app's
+         own container and are never sent anywhere, so there is no collection to declare.
+         An earlier draft declared Product Interaction; that described an intention rather
+         than the code, and a manifest that over-declares is still a manifest that does not
+         match the app. -->
+    <key>NSPrivacyCollectedDataTypes</key>
+    <array/>
+
+    <key>NSPrivacyAccessedAPITypes</key>
+    <array>
+        <!-- Settings, stars and the caregiver's hidden-photo list, in this app's own
+             storage and nowhere else. -->
+        <dict>
+            <key>NSPrivacyAccessedAPIType</key>
+            <string>NSPrivacyAccessedAPICategoryUserDefaults</string>
+            <key>NSPrivacyAccessedAPITypeReasons</key>
+            <array><string>CA92.1</string></array>
+        </dict>
+        <!-- The pack-photograph cache reads each file's last-access date so the oldest
+             can be dropped when the cache reaches its size limit. Files inside this
+             app's own container only. -->
+        <dict>
+            <key>NSPrivacyAccessedAPIType</key>
+            <string>NSPrivacyAccessedAPICategoryFileTimestamp</string>
+            <key>NSPrivacyAccessedAPITypeReasons</key>
+            <array><string>DDA9.1</string></array>
+        </dict>
+    </array>
+</dict>
+</plist>

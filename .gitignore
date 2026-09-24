@@ -1,0 +1,8 @@
+
+# Real credentials. The .example beside it is the one that is committed.
+TimeRolls/Secrets.xcconfig
+
+# Working data, all of it regenerable: downloaded candidates, the staged copies of what
+# goes to OneBucket, harvest results and build logs. Hundreds of megabytes that would
+# otherwise be in the history for ever.
+build/

@@ -10,7 +10,11 @@ their original names on purpose: changing a bundle identifier makes every instal
 a different app, which would wipe the settings and progress on any device already
 testing it. Renaming those is a deliberate, separate step whenever it's wanted.
 
-Open `Photo Chronology.xcodeproj` and run on a simulator or device.
+Open `TimeRolls.xcodeproj` and run on a simulator or device.
+
+See [`Tools/CURATION.md`](Tools/CURATION.md) for how a round is built —
+what the device reads from each photograph, what never reaches a round, and the rules
+each theme applies.
 
 ## What plays today
 
@@ -49,7 +53,7 @@ which is the file-format question left open in spec §12.
 
 ```bash
 python3 Tools/PackBuilder/build_pack.py --list
-python3 Tools/PackBuilder/build_pack.py --pack landmarks --out "Photo Chronology/Packs"
+python3 Tools/PackBuilder/build_pack.py --pack landmarks --out "TimeRolls/Packs"
 ```
 
 **CC0 and nothing else.** The tool drops anything whose licence is not exactly CC0 and
@@ -156,13 +160,13 @@ photographs available to it.
 
 | Pack | Photos | Years | Carries | Source |
 | --- | --- | --- | --- | --- |
-| Famous Faces | 18 | 1863–1993 | Time, Things | Commons (curated) |
-| Milestones | 11 | 1883–1997 | Time, Things | Commons (curated) |
-| Space | 23 | 1962–2024 | Time, Things | NASA (curated) |
-| Sports | 36 | 1860–1949 | Time, Things | Smithsonian |
-| Stage and Screen | 43 | 1858–1962 | Time, Things | Smithsonian |
-| Travel Landmarks | 46 | 2002–2025 | Places, Things | Commons |
-| Natural Wonders | 35 | 2012–2026 | Places, Things | Commons |
+| Animals | 376 | — | Things | Wikimedia Commons (CC BY) |
+| Famous Faces | 169 | 1802–1997 | Time | Wikimedia Commons (CC BY) |
+| Landmarks | 388 | — | Places | Wikimedia Commons (CC BY) |
+
+Milestones was removed in September 2026: at 24 photographs it could not fill a round
+without showing the same pictures over and over, and a pack too small to vary is worse
+than no pack — it makes the whole game feel smaller than it is.
 
 **Packs are photographs people recognise; everyday life comes from the player's own
 library.** That division is the point of the whole content strategy. An earlier pack of
@@ -170,9 +174,8 @@ anonymous everyday scenes was unplayable — a stranger's 2019 kitchen means not
 anyone, and there is no way to date it either.
 
 **Significance has to be curated, not searched.** An archive has no idea which of its
-holdings everyone has already seen, so Famous Faces, Milestones and Space are written
-lists — Lincoln, Einstein, Migrant Mother, the Wright brothers, Earthrise, the bootprint —
-looked up one at a time.
+holdings everyone has already seen, so Famous Faces is a written list — Lincoln,
+Einstein, Curie, Armstrong — looked up one at a time.
 
 **And the year has to be checked against the photograph.** The year belongs to the event,
 not to whenever a scan was uploaded, so it is written down with the list; but a keyword
@@ -221,7 +224,7 @@ need the network at all.
 
 ```bash
 python3 Tools/PackBuilder/build_pack.py --pack everyday --metadata-only \
-    --out "Photo Chronology/Packs"
+    --out "TimeRolls/Packs"
 ```
 
 A metadata-only pack needs no hosting: it points at the original sources. The OneBucket
@@ -268,7 +271,7 @@ real privacy cost, since guiding well means seeing the photos: see the note in
 ## Layout
 
 ```
-Photo Chronology/
+TimeRolls/
   Model/          GameModel (themes, photos, levels, difficulty knob, theme rotation),
                   GameEngine, CompanionPrompts (Together-mode hints and questions)
   Sourcing/       PhotoLibraryService (PhotoKit metadata), PlaceResolver (geocode + cache),

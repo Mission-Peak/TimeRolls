@@ -1,47 +1,27 @@
 #!/bin/bash
+# Put the staged photo packs into the OneBucket bucket.
 #
-# upload_packs.sh — publish the assembled pack tree to the OneBucket bucket.
+# Run this yourself: it needs the Wasabi keys, and those belong in your shell rather than
+# in anything I can read. Set up a profile once —
 #
-# Works from any directory: paths are resolved relative to this script, not to wherever
-# it happens to be run from.
+#   aws configure --profile onebucket     # your OneBucket key and secret, region us-east-1
 #
-# Needs the bucket's access keys. The MCP integration holds them but does not hand them
-# out, so take them from the OneBucket console:
-#
-#   export AWS_ACCESS_KEY_ID=…
-#   export AWS_SECRET_ACCESS_KEY=…
-#   "…/Tools/PackBuilder/upload_packs.sh"
-#
+# then run this. It is a sync, so running it twice only uploads what changed.
 set -euo pipefail
-
-SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-PROJECT_DIR="$(cd "$SCRIPT_DIR/../.." && pwd)"
-
+cd "$(dirname "$0")/../.."
+PROFILE="${1:-default}"
+# OneBucket, not Wasabi directly. Wasabi is where OneBucket keeps the bytes, but
+# the credentials that exist are OneBucket ones and the app reads through OneBucket.
 ENDPOINT="${ONEBUCKET_ENDPOINT:-https://s3.us-ashburn-1.onebucket.io}"
-BUCKET="${ONEBUCKET_BUCKET:-irecollect}"
-TREE="${1:-$PROJECT_DIR/../build/remote}"
 
-if [ -z "${AWS_ACCESS_KEY_ID:-}" ] || [ -z "${AWS_SECRET_ACCESS_KEY:-}" ]; then
-    echo "Set AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY first (OneBucket console)." >&2
-    exit 1
-fi
-
-if [ ! -d "$TREE/packs" ]; then
-    echo "No pack tree at $TREE" >&2
-    echo "Build one first:" >&2
-    echo "  python3 \"$SCRIPT_DIR/make_catalog.py\" --packs \"$PROJECT_DIR/PacksForDownload\" --out \"$TREE\"" >&2
-    exit 1
-fi
-
-count=$(find "$TREE" -type f | wc -l | tr -d ' ')
-echo "Publishing $count objects from $TREE"
-echo "            → s3://$BUCKET  ($ENDPOINT)"
-echo
-
-aws s3 sync "$TREE/" "s3://$BUCKET/" \
-    --endpoint-url "$ENDPOINT" \
-    --exclude ".DS_Store" \
-    --only-show-errors
-
-echo
-echo "Done. The app reads $ENDPOINT/$BUCKET/packs/catalog.json"
+[ -d build/onebucket/packs ] || { echo "nothing staged — run Tools/PackBuilder/to_onebucket.py"; exit 1; }
+echo "▸ uploading $(find build/onebucket/packs -name '*.jpg' | wc -l | tr -d ' ') photographs"
+aws s3 sync build/onebucket/packs "s3://timerolls/packs" \
+    --endpoint-url "$ENDPOINT" --profile "$PROFILE" \
+    --content-type image/jpeg --exclude "*.json"
+aws s3 sync build/onebucket/packs "s3://timerolls/packs" \
+    --endpoint-url "$ENDPOINT" --profile "$PROFILE" \
+    --content-type application/json --exclude "*" --include "*.json"
+echo "✓ uploaded."
+echo "  The bucket is private, so the app still cannot read these — see"
+  echo "  Tools/PackBuilder/README-onebucket.md for the one policy that changes that."
