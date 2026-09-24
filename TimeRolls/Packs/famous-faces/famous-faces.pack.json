@@ -28,13 +28,13 @@
       "knownBy": 999,
       "creator": null,
       "creatorDied": null,
-      "group": null,
       "latitude": null,
       "longitude": null,
       "fact": "Christopher Columbus (; between 25 August and 31 October 1451 – 20 May 1506) was an Italian explorer and navigator from the Republic of Genoa who completed four Spanish transatlantic voyages in the name of the Catholic Monarchs, opening the way for the widespread European exploration and colonization of the Americas.",
       "factSource": "https://en.wikipedia.org/wiki/Christopher_Columbus",
       "remoteKey": "packs/famous-faces/famous-faces-christopher-columbus-1.jpg",
-      "originalURL": "https://upload.wikimedia.org/wikipedia/commons/0/05/Ridolfo_del_Ghirlandaio_-_Ritratto_di_Cristoforo_Colombo_%281520%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled"
+      "originalURL": "https://upload.wikimedia.org/wikipedia/commons/0/05/Ridolfo_del_Ghirlandaio_-_Ritratto_di_Cristoforo_Colombo_%281520%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled",
+      "group": "an Italian explorer and navigator"
     },
     {
       "id": "famous-faces-michelangelo-buonarroti-1",
@@ -54,13 +54,13 @@
       "knownBy": 999,
       "creator": null,
       "creatorDied": null,
-      "group": null,
       "latitude": null,
       "longitude": null,
       "fact": "Michelangelo di Lodovico Buonarroti Simoni (6 March 1475 – 18 February 1564), known mononymously as Michelangelo, was an Italian sculptor, painter, architect, and poet of the High Renaissance. He was born in the Republic of Florence but was mostly active in Rome from his 30s onwards.",
       "factSource": "https://en.wikipedia.org/wiki/Michelangelo",
       "remoteKey": "packs/famous-faces/famous-faces-michelangelo-buonarroti-1.jpg",
-      "originalURL": "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/02/Michelangelo_Daniele_da_Volterra_%28dettaglio%29.jpg/1280px-Michelangelo_Daniele_da_Volterra_%28dettaglio%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+      "originalURL": "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/02/Michelangelo_Daniele_da_Volterra_%28dettaglio%29.jpg/1280px-Michelangelo_Daniele_da_Volterra_%28dettaglio%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "group": "an Italian sculptor"
     },
     {
       "id": "famous-faces-william-shakespeare-1",
@@ -80,13 +80,13 @@
       "knownBy": 999,
       "creator": null,
       "creatorDied": null,
-      "group": null,
       "latitude": null,
       "longitude": null,
       "fact": "William Shakespeare (c. 23 April 1564 – 23 April 1616) was an English playwright, poet and actor.",
       "factSource": "https://en.wikipedia.org/wiki/William_Shakespeare",
       "remoteKey": "packs/famous-faces/famous-faces-william-shakespeare-1.jpg",
-      "originalURL": "https://thumb.wikimedia.org/wikipedia/commons/thumb/a/a2/Shakespeare.jpg/1280px-Shakespeare.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+      "originalURL": "https://thumb.wikimedia.org/wikipedia/commons/thumb/a/a2/Shakespeare.jpg/1280px-Shakespeare.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "group": "an English playwright"
     },
     {
       "id": "famous-faces-galileo-galilei-1",
@@ -106,13 +106,13 @@
       "knownBy": 999,
       "creator": null,
       "creatorDied": null,
-      "group": null,
       "latitude": null,
       "longitude": null,
       "fact": "Galileo di Vincenzo Bonaiuti de' Galilei (15 February 1564 – 8 January 1642), commonly referred to as Galileo Galilei or mononymously as Galileo, was an Italian astronomer, physicist, engineer and polymath. He was born in Pisa, then part of the Duchy of Florence.",
       "factSource": "https://en.wikipedia.org/wiki/Galileo_Galilei",
       "remoteKey": "packs/famous-faces/famous-faces-galileo-galilei-1.jpg",
-      "originalURL": "https://upload.wikimedia.org/wikipedia/commons/c/cc/Galileo.arp.300pix.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled"
+      "originalURL": "https://upload.wikimedia.org/wikipedia/commons/c/cc/Galileo.arp.300pix.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled",
+      "group": "an Italian astronomer"
     },
     {
       "id": "famous-faces-rembrandt-1",
@@ -132,13 +132,13 @@
       "knownBy": 999,
       "creator": null,
       "creatorDied": null,
-      "group": null,
       "latitude": null,
       "longitude": null,
       "fact": "Rembrandt Harmenszoon van Rijn (15 July 1606 – 4 October 1669), known mononymously as Rembrandt, was a Dutch Golden Age painter, printmaker, and draughtsman. He is generally considered one of the greatest visual artists in the history of Western art.",
       "factSource": "https://en.wikipedia.org/wiki/Rembrandt",
       "remoteKey": "packs/famous-faces/famous-faces-rembrandt-1.jpg",
-      "originalURL": "https://thumb.wikimedia.org/wikipedia/commons/thumb/b/bd/Rembrandt_van_Rijn_-_Self-Portrait_-_Google_Art_Project.jpg/1280px-Rembrandt_van_Rijn_-_Self-Portrait_-_Google_Art_Project.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+      "originalURL": "https://thumb.wikimedia.org/wikipedia/commons/thumb/b/bd/Rembrandt_van_Rijn_-_Self-Portrait_-_Google_Art_Project.jpg/1280px-Rembrandt_van_Rijn_-_Self-Portrait_-_Google_Art_Project.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "group": "a Dutch Golden Age painter"
     },
     {
       "id": "famous-faces-johann-sebastian-bach-1",
@@ -158,13 +158,13 @@
       "knownBy": 999,
       "creator": null,
       "creatorDied": null,
-      "group": null,
       "latitude": null,
       "longitude": null,
       "fact": "Johann Sebastian Bach (31 March [O.S. 21 March] 1685 – 28 July 1750) was a German composer and musician of the late Baroque period.",
       "factSource": "https://en.wikipedia.org/wiki/Johann_Sebastian_Bach",
       "remoteKey": "packs/famous-faces/famous-faces-johann-sebastian-bach-1.jpg",
-      "originalURL": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/5e/Johann_Sebastian_Bach.png/1280px-Johann_Sebastian_Bach.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+      "originalURL": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/5e/Johann_Sebastian_Bach.png/1280px-Johann_Sebastian_Bach.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "group": "a German composer"
     },
     {
       "id": "famous-faces-benjamin-franklin-1",
@@ -184,13 +184,13 @@
       "knownBy": 999,
       "creator": null,
       "creatorDied": null,
-      "group": null,
       "latitude": null,
       "longitude": null,
       "fact": "Benjamin Franklin (January 17, 1706 [O.S. January 6, 1705] – April 17, 1790) was an American polymath who was one of the Founding Fathers of the United States.",
       "factSource": "https://en.wikipedia.org/wiki/Benjamin_Franklin",
       "remoteKey": "packs/famous-faces/famous-faces-benjamin-franklin-1.jpg",
-      "originalURL": "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/87/Joseph_Siffrein_Duplessis_-_Benjamin_Franklin_-_Google_Art_Project.jpg/1280px-Joseph_Siffrein_Duplessis_-_Benjamin_Franklin_-_Google_Art_Project.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+      "originalURL": "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/87/Joseph_Siffrein_Duplessis_-_Benjamin_Franklin_-_Google_Art_Project.jpg/1280px-Joseph_Siffrein_Duplessis_-_Benjamin_Franklin_-_Google_Art_Project.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "group": "an American polymath"
     },
     {
       "id": "famous-faces-george-washington-1",
@@ -210,13 +210,13 @@
       "knownBy": 999,
       "creator": null,
       "creatorDied": null,
-      "group": null,
       "latitude": null,
       "longitude": null,
       "fact": "George Washington (February 22, 1732 [O.S. February 11, 1731] – December 14, 1799) was a Founding Father and the first president of the United States, serving from 1789 to 1797.",
       "factSource": "https://en.wikipedia.org/wiki/George_Washington",
       "remoteKey": "packs/famous-faces/famous-faces-george-washington-1.jpg",
-      "originalURL": "https://thumb.wikimedia.org/wikipedia/commons/thumb/b/b6/Gilbert_Stuart_Williamstown_Portrait_of_George_Washington.jpg/1280px-Gilbert_Stuart_Williamstown_Portrait_of_George_Washington.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+      "originalURL": "https://thumb.wikimedia.org/wikipedia/commons/thumb/b/b6/Gilbert_Stuart_Williamstown_Portrait_of_George_Washington.jpg/1280px-Gilbert_Stuart_Williamstown_Portrait_of_George_Washington.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "group": "a Founding Father"
     },
     {
       "id": "famous-faces-wolfgang-amadeus-mozart-1",
@@ -236,13 +236,13 @@
       "knownBy": 999,
       "creator": null,
       "creatorDied": null,
-      "group": null,
       "latitude": null,
       "longitude": null,
       "fact": "Wolfgang Amadeus Mozart (27 January 1756 – 5 December 1791) was a Classical composer and musician.",
       "factSource": "https://en.wikipedia.org/wiki/Wolfgang_Amadeus_Mozart",
       "remoteKey": "packs/famous-faces/famous-faces-wolfgang-amadeus-mozart-1.jpg",
-      "originalURL": "https://thumb.wikimedia.org/wikipedia/commons/thumb/1/1e/Wolfgang-amadeus-mozart_1.jpg/1280px-Wolfgang-amadeus-mozart_1.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+      "originalURL": "https://thumb.wikimedia.org/wikipedia/commons/thumb/1/1e/Wolfgang-amadeus-mozart_1.jpg/1280px-Wolfgang-amadeus-mozart_1.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "group": "a Classical composer"
     },
     {
       "id": "famous-faces-ludwig-van-beethoven-1",
@@ -262,13 +262,13 @@
       "knownBy": 999,
       "creator": null,
       "creatorDied": null,
-      "group": null,
       "latitude": null,
       "longitude": null,
       "fact": "Ludwig van Beethoven (baptised 17 December 1770 – 26 March 1827) was a German composer, conductor, and pianist.",
       "factSource": "https://en.wikipedia.org/wiki/Ludwig_van_Beethoven",
       "remoteKey": "packs/famous-faces/famous-faces-ludwig-van-beethoven-1.jpg",
-      "originalURL": "https://upload.wikimedia.org/wikipedia/commons/6/6f/Beethoven.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled"
+      "originalURL": "https://upload.wikimedia.org/wikipedia/commons/6/6f/Beethoven.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled",
+      "group": "a German composer"
     },
     {
       "id": "famous-faces-abraham-lincoln-1",
@@ -288,7 +288,6 @@
       "knownBy": 999,
       "creator": null,
       "creatorDied": null,
-      "group": null,
       "latitude": null,
       "longitude": null,
       "fact": "Abraham Lincoln (February 12, 1809 – April 15, 1865) was the 16th president of the United States, serving from 1861 until his assassination in 1865. He led the United States through the American Civil War, defeating the Confederacy and playing a major role in the abolition of slavery.",
@@ -314,13 +313,13 @@
       "knownBy": 999,
       "creator": null,
       "creatorDied": null,
-      "group": null,
       "latitude": null,
       "longitude": null,
       "fact": "Charles Robert Darwin ( DAR-win; 12 February 1809 – 19 April 1882) was an English naturalist, geologist, and biologist, widely known for his contributions to evolutionary biology. His proposition that all species of life have descended from a common ancestor is now generally accepted and considered a fundamental scientific concept.",
       "factSource": "https://en.wikipedia.org/wiki/Charles_Darwin",
       "remoteKey": "packs/famous-faces/famous-faces-charles-darwin-1.jpg",
-      "originalURL": "https://upload.wikimedia.org/wikipedia/commons/f/f1/Charles_Darwin_portrait.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled"
+      "originalURL": "https://upload.wikimedia.org/wikipedia/commons/f/f1/Charles_Darwin_portrait.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled",
+      "group": "an English naturalist"
     },
     {
       "id": "famous-faces-charles-dickens-1",
@@ -340,13 +339,13 @@
       "knownBy": 999,
       "creator": null,
       "creatorDied": null,
-      "group": null,
       "latitude": null,
       "longitude": null,
       "fact": "Charles John Huffam Dickens ( ; 7 February 1812 – 9 June 1870) was an English writer and journalist. He created some of literature's best-known fictional characters, and is regarded by many as the greatest novelist of the Victorian era.",
       "factSource": "https://en.wikipedia.org/wiki/Charles_Dickens",
       "remoteKey": "packs/famous-faces/famous-faces-charles-dickens-1.jpg",
-      "originalURL": "https://upload.wikimedia.org/wikipedia/commons/a/aa/Dickens_Gurney_head.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled"
+      "originalURL": "https://upload.wikimedia.org/wikipedia/commons/a/aa/Dickens_Gurney_head.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled",
+      "group": "an English writer and journalist"
     },
     {
       "id": "famous-faces-queen-victoria-1",
@@ -366,7 +365,6 @@
       "knownBy": 999,
       "creator": null,
       "creatorDied": null,
-      "group": null,
       "latitude": null,
       "longitude": null,
       "fact": "Victoria (Alexandrina Victoria; 24 May 1819 – 22 January 1901) was Queen of the United Kingdom of Great Britain and Ireland from 20 June 1837 until her death in 1901.",
@@ -392,13 +390,13 @@
       "knownBy": 999,
       "creator": null,
       "creatorDied": null,
-      "group": null,
       "latitude": null,
       "longitude": null,
       "fact": "Florence Nightingale () (12 May 1820 – 13 August 1910) was an English social reformer, statistician and the founder of modern nursing. Nightingale came to prominence while serving as a manager and trainer of nurses during the Crimean War, in which she organised care for wounded soldiers at Constantinople.",
       "factSource": "https://en.wikipedia.org/wiki/Florence_Nightingale",
       "remoteKey": "packs/famous-faces/famous-faces-florence-nightingale-1.jpg",
-      "originalURL": "https://upload.wikimedia.org/wikipedia/commons/a/ab/Florence_Nightingale_%28H_Hering_NPG_x82368%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled"
+      "originalURL": "https://upload.wikimedia.org/wikipedia/commons/a/ab/Florence_Nightingale_%28H_Hering_NPG_x82368%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled",
+      "group": "an English social reformer"
     },
     {
       "id": "famous-faces-louisa-may-alcott-1",
@@ -418,13 +416,13 @@
       "knownBy": 999,
       "creator": null,
       "creatorDied": null,
-      "group": null,
       "latitude": null,
       "longitude": null,
       "fact": "Louisa May Alcott ( AWL-kət; November 29, 1832 – March 6, 1888) was an American novelist, short story writer, and poet best known for writing the novel Little Women (1868) and its sequels Good Wives (1869), Little Men (1871), and Jo's Boys (1886).",
       "factSource": "https://en.wikipedia.org/wiki/Louisa_May_Alcott",
       "remoteKey": "packs/famous-faces/famous-faces-louisa-may-alcott-1.jpg",
-      "originalURL": "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/82/Louisa_May_Alcott%2C_c._1870_-_Warren%27s_Portraits%2C_Boston.jpg/1280px-Louisa_May_Alcott%2C_c._1870_-_Warren%27s_Portraits%2C_Boston.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+      "originalURL": "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/82/Louisa_May_Alcott%2C_c._1870_-_Warren%27s_Portraits%2C_Boston.jpg/1280px-Louisa_May_Alcott%2C_c._1870_-_Warren%27s_Portraits%2C_Boston.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "group": "an American novelist"
     },
     {
       "id": "famous-faces-mark-twain-1",
@@ -444,13 +442,13 @@
       "knownBy": 999,
       "creator": null,
       "creatorDied": null,
-      "group": null,
       "latitude": null,
       "longitude": null,
       "fact": "Samuel Langhorne Clemens (November 30, 1835 – April 21, 1910), known by the pen name Mark Twain, was an American writer, humorist, and essayist. He has been praised as the \"greatest humorist the United States has produced\", with William Faulkner calling him \"the father of American literature\".",
       "factSource": "https://en.wikipedia.org/wiki/Mark_Twain",
       "remoteKey": "packs/famous-faces/famous-faces-mark-twain-1.jpg",
-      "originalURL": "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/31/MarkTwain.LOC.jpg/1280px-MarkTwain.LOC.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+      "originalURL": "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/31/MarkTwain.LOC.jpg/1280px-MarkTwain.LOC.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "group": "an American writer"
     },
     {
       "id": "famous-faces-thomas-edison-1",
@@ -470,13 +468,13 @@
       "knownBy": 999,
       "creator": null,
       "creatorDied": null,
-      "group": null,
       "latitude": null,
       "longitude": null,
       "fact": "Thomas Alva Edison (February 11, 1847 – October 18, 1931) was an American inventor and businessman known for his work on the incandescent light bulb, the phonograph, electric power distribution and early motion pictures.",
       "factSource": "https://en.wikipedia.org/wiki/Thomas_Edison",
       "remoteKey": "packs/famous-faces/famous-faces-thomas-edison-1.jpg",
-      "originalURL": "https://upload.wikimedia.org/wikipedia/commons/4/40/Thomas_Edison2-crop.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled"
+      "originalURL": "https://upload.wikimedia.org/wikipedia/commons/4/40/Thomas_Edison2-crop.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled",
+      "group": "an American inventor"
     },
     {
       "id": "famous-faces-vincent-van-gogh-1",
@@ -496,13 +494,13 @@
       "knownBy": 999,
       "creator": null,
       "creatorDied": null,
-      "group": null,
       "latitude": null,
       "longitude": null,
       "fact": "Vincent Willem van Gogh (Dutch: [ˈvɪnsɛnt ˈʋɪləɱ vɑŋ ˈɣɔx] ; 30 March 1853 – 29 July 1890) was a Dutch Post-Impressionist painter who is among the most famous and influential figures in the history of Western art.",
       "factSource": "https://en.wikipedia.org/wiki/Vincent_van_Gogh",
       "remoteKey": "packs/famous-faces/famous-faces-vincent-van-gogh-1.jpg",
-      "originalURL": "https://thumb.wikimedia.org/wikipedia/commons/thumb/d/d1/Self-portrait_-_Vincent_van_Gogh.jpg/1280px-Self-portrait_-_Vincent_van_Gogh.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+      "originalURL": "https://thumb.wikimedia.org/wikipedia/commons/thumb/d/d1/Self-portrait_-_Vincent_van_Gogh.jpg/1280px-Self-portrait_-_Vincent_van_Gogh.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "group": "a Dutch Post-Impressionist painter"
     },
     {
       "id": "famous-faces-nikola-tesla-1",
@@ -522,13 +520,13 @@
       "knownBy": 999,
       "creator": null,
       "creatorDied": null,
-      "group": null,
       "latitude": null,
       "longitude": null,
       "fact": "Nikola Tesla (10 July 1856 – 7 January 1943) was a Serbian-American engineer, futurist, and inventor. He is known for his contributions to the design of the modern alternating current (AC) electricity supply system.",
       "factSource": "https://en.wikipedia.org/wiki/Nikola_Tesla",
       "remoteKey": "packs/famous-faces/famous-faces-nikola-tesla-1.jpg",
-      "originalURL": "https://upload.wikimedia.org/wikipedia/commons/7/79/Tesla_circa_1890.jpeg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled"
+      "originalURL": "https://upload.wikimedia.org/wikipedia/commons/7/79/Tesla_circa_1890.jpeg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled",
+      "group": "a Serbian-American engineer"
     },
     {
       "id": "famous-faces-arthur-conan-doyle-1",
@@ -548,13 +546,13 @@
       "knownBy": 999,
       "creator": null,
       "creatorDied": null,
-      "group": null,
       "latitude": null,
       "longitude": null,
       "fact": "Sir Arthur Ignatius Conan Doyle (22 May 1859 – 7 July 1930) was a British writer and physician. He is best known for his four novels and fifty-six short stories about the fictional consulting detective Sherlock Holmes and his assistant Dr.",
       "factSource": "https://en.wikipedia.org/wiki/Arthur_Conan_Doyle",
       "remoteKey": "packs/famous-faces/famous-faces-arthur-conan-doyle-1.jpg",
-      "originalURL": "https://upload.wikimedia.org/wikipedia/commons/b/bd/Arthur_Conan_Doyle_by_Walter_Benington%2C_1914.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled"
+      "originalURL": "https://upload.wikimedia.org/wikipedia/commons/b/bd/Arthur_Conan_Doyle_by_Walter_Benington%2C_1914.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled",
+      "group": "a British writer"
     },
     {
       "id": "famous-faces-marie-curie-1",
@@ -574,13 +572,13 @@
       "knownBy": 999,
       "creator": null,
       "creatorDied": null,
-      "group": null,
       "latitude": null,
       "longitude": null,
       "fact": "Maria Salomea Skłodowska Curie (née Skłodowska; 7 November 1867 – 4 July 1934), better known as Marie Curie, was a Polish and naturalised-French physicist and chemist.",
       "factSource": "https://en.wikipedia.org/wiki/Marie_Curie",
       "remoteKey": "packs/famous-faces/famous-faces-marie-curie-1.jpg",
-      "originalURL": "https://upload.wikimedia.org/wikipedia/commons/7/72/Marie_Sklodowska_16_years_old.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled"
+      "originalURL": "https://upload.wikimedia.org/wikipedia/commons/7/72/Marie_Sklodowska_16_years_old.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled",
+      "group": "a Polish and naturalised-French physicist"
     },
     {
       "id": "famous-faces-orville-wright-1",
@@ -600,7 +598,6 @@
       "knownBy": 999,
       "creator": null,
       "creatorDied": null,
-      "group": null,
       "latitude": null,
       "longitude": null,
       "fact": "The Wright brothers, Orville Wright (August 19, 1871 – January 30, 1948) and Wilbur Wright (April 16, 1867 – May 30, 1912), were American aviation pioneers generally credited with inventing, building, and flying the world's first successful airplane.",
@@ -626,13 +623,13 @@
       "knownBy": 999,
       "creator": null,
       "creatorDied": null,
-      "group": null,
       "latitude": null,
       "longitude": null,
       "fact": "Pablo Ruiz Picasso (25 October 1881 – 8 April 1973) was a Spanish painter and sculptor who spent most of his adult life in France.",
       "factSource": "https://en.wikipedia.org/wiki/Pablo_Picasso",
       "remoteKey": "packs/famous-faces/famous-faces-pablo-picasso-1.jpg",
-      "originalURL": "https://upload.wikimedia.org/wikipedia/commons/9/98/Pablo_picasso_1.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled"
+      "originalURL": "https://upload.wikimedia.org/wikipedia/commons/9/98/Pablo_picasso_1.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled",
+      "group": "a Spanish painter and sculptor"
     },
     {
       "id": "famous-faces-franklin-d-roosevelt-1",
@@ -652,7 +649,6 @@
       "knownBy": 999,
       "creator": null,
       "creatorDied": null,
-      "group": null,
       "latitude": null,
       "longitude": null,
       "fact": "Franklin Delano Roosevelt (January 30, 1882 – April 12, 1945), also known as FDR, was the 32nd president of the United States, serving from 1933 until his death in 1945. He is the longest-serving US president and the only one to have served more than two terms.",
@@ -678,13 +674,13 @@
       "knownBy": 999,
       "creator": null,
       "creatorDied": null,
-      "group": null,
       "latitude": null,
       "longitude": null,
       "fact": "Anna Eleanor Roosevelt ( EL-in-or ROH-zə-velt; October 11, 1884 – November 7, 1962) was an American political figure, diplomat, and activist. She was the longest-serving first lady of the United States, during her husband Franklin D.",
       "factSource": "https://en.wikipedia.org/wiki/Eleanor_Roosevelt",
       "remoteKey": "packs/famous-faces/famous-faces-eleanor-roosevelt-1.jpg",
-      "originalURL": "https://thumb.wikimedia.org/wikipedia/commons/thumb/7/7d/Eleanor_Roosevelt_at_the_United_Nations%2C_circa_1946-1947_%283x4_cropped%29.jpg/1280px-Eleanor_Roosevelt_at_the_United_Nations%2C_circa_1946-1947_%283x4_cropped%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+      "originalURL": "https://thumb.wikimedia.org/wikipedia/commons/thumb/7/7d/Eleanor_Roosevelt_at_the_United_Nations%2C_circa_1946-1947_%283x4_cropped%29.jpg/1280px-Eleanor_Roosevelt_at_the_United_Nations%2C_circa_1946-1947_%283x4_cropped%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "group": "an American political figure"
     },
     {
       "id": "famous-faces-charlie-chaplin-1",
@@ -704,13 +700,13 @@
       "knownBy": 999,
       "creator": null,
       "creatorDied": null,
-      "group": null,
       "latitude": null,
       "longitude": null,
       "fact": "Sir Charles Spencer Chaplin Jr. (16 April 1889 – 25 December 1977) was an English comic actor, filmmaker, singer, film editor and composer who rose to fame in the era of silent film.",
       "factSource": "https://en.wikipedia.org/wiki/Charlie_Chaplin",
       "remoteKey": "packs/famous-faces/famous-faces-charlie-chaplin-1.jpg",
-      "originalURL": "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/82/Charlie_Chaplin_portrait_Getty_1739411952.jpg/1280px-Charlie_Chaplin_portrait_Getty_1739411952.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+      "originalURL": "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/82/Charlie_Chaplin_portrait_Getty_1739411952.jpg/1280px-Charlie_Chaplin_portrait_Getty_1739411952.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "group": "an English comic actor"
     },
     {
       "id": "famous-faces-agatha-christie-1",
@@ -730,13 +726,13 @@
       "knownBy": 999,
       "creator": null,
       "creatorDied": null,
-      "group": null,
       "latitude": null,
       "longitude": null,
       "fact": "Dame Agatha Mary Clarissa Mallowan, Lady Mallowan (née Miller, 15 September 1890 – 12 January 1976), usually known by her first married name, Agatha Christie, was an English author known for her 66 detective novels and 14 short-story collections, particularly those revolving around fictional detectives Hercule Poirot (with the novel…",
       "factSource": "https://en.wikipedia.org/wiki/Agatha_Christie",
       "remoteKey": "packs/famous-faces/famous-faces-agatha-christie-1.jpg",
-      "originalURL": "https://thumb.wikimedia.org/wikipedia/commons/thumb/f/f7/Agatha_Christie_in_Nederland_%28detectiveschrijfster%29%2C_bij_aankomst_op_Schiphol_me%2C_Bestanddeelnr_916-8898_%28cropped%29.jpg/1280px-Agatha_Christie_in_Nederland_%28detectiveschrijfster%29%2C_bij_aankomst_op_Schiphol_me%2C_Bestanddeelnr_916-8898_%28cropped%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+      "originalURL": "https://thumb.wikimedia.org/wikipedia/commons/thumb/f/f7/Agatha_Christie_in_Nederland_%28detectiveschrijfster%29%2C_bij_aankomst_op_Schiphol_me%2C_Bestanddeelnr_916-8898_%28cropped%29.jpg/1280px-Agatha_Christie_in_Nederland_%28detectiveschrijfster%29%2C_bij_aankomst_op_Schiphol_me%2C_Bestanddeelnr_916-8898_%28cropped%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "group": "an English author"
     },
     {
       "id": "famous-faces-louis-armstrong-1",
@@ -756,13 +752,13 @@
       "knownBy": 999,
       "creator": null,
       "creatorDied": null,
-      "group": null,
       "latitude": null,
       "longitude": null,
       "fact": "Louis Daniel Armstrong (August 4, 1901 – July 6, 1971), nicknamed \"Satchmo\", \"Satch\", and \"Pops\", was an American jazz and blues trumpeter and vocalist. Among the most influential figures in jazz, his career spanned five decades and several eras in the history of the genre.",
       "factSource": "https://en.wikipedia.org/wiki/Louis_Armstrong",
       "remoteKey": "packs/famous-faces/famous-faces-louis-armstrong-1.jpg",
-      "originalURL": "https://thumb.wikimedia.org/wikipedia/commons/thumb/6/63/Louis_Armstrong%2C_by_Harry_Warnecke_and_Gus_Schoenbaechler%2C_1947.jpg/1280px-Louis_Armstrong%2C_by_Harry_Warnecke_and_Gus_Schoenbaechler%2C_1947.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+      "originalURL": "https://thumb.wikimedia.org/wikipedia/commons/thumb/6/63/Louis_Armstrong%2C_by_Harry_Warnecke_and_Gus_Schoenbaechler%2C_1947.jpg/1280px-Louis_Armstrong%2C_by_Harry_Warnecke_and_Gus_Schoenbaechler%2C_1947.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "group": "an American jazz and blues"
     },
     {
       "id": "famous-faces-john-steinbeck-1",
@@ -782,13 +778,13 @@
       "knownBy": 999,
       "creator": null,
       "creatorDied": null,
-      "group": null,
       "latitude": null,
       "longitude": null,
       "fact": "John Ernst Steinbeck ( STYNE-bek; February 27, 1902 – December 20, 1968) was an American writer and novelist. He won the 1962 Nobel Prize in Literature \"for his realistic and imaginative writings, combining as they do sympathetic humor and keen social perception\".",
       "factSource": "https://en.wikipedia.org/wiki/John_Steinbeck",
       "remoteKey": "packs/famous-faces/famous-faces-john-steinbeck-1.jpg",
-      "originalURL": "https://upload.wikimedia.org/wikipedia/commons/d/d7/John_Steinbeck_1939_%28cropped%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled"
+      "originalURL": "https://upload.wikimedia.org/wikipedia/commons/d/d7/John_Steinbeck_1939_%28cropped%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled",
+      "group": "an American writer and novelist"
     },
     {
       "id": "famous-faces-cary-grant-1",
@@ -808,13 +804,13 @@
       "knownBy": 999,
       "creator": null,
       "creatorDied": null,
-      "group": null,
       "latitude": null,
       "longitude": null,
       "fact": "Cary Grant (born Archibald Alec Leach; 18 January 1904 – 29 November 1986) was an English-American actor. Known for his blended British and American accent, debonair demeanor, lighthearted approach to acting, and sense of comic timing, he was one of classic Hollywood's definitive leading men.",
       "factSource": "https://en.wikipedia.org/wiki/Cary_Grant",
       "remoteKey": "packs/famous-faces/famous-faces-cary-grant-1.jpg",
-      "originalURL": "https://thumb.wikimedia.org/wikipedia/commons/thumb/2/27/Grant%2C_Cary_%28Suspicion%29_01_Crisco_edit.jpg/1280px-Grant%2C_Cary_%28Suspicion%29_01_Crisco_edit.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+      "originalURL": "https://thumb.wikimedia.org/wikipedia/commons/thumb/2/27/Grant%2C_Cary_%28Suspicion%29_01_Crisco_edit.jpg/1280px-Grant%2C_Cary_%28Suspicion%29_01_Crisco_edit.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "group": "an English-American actor"
     },
     {
       "id": "famous-faces-duke-ellington-1",
@@ -834,13 +830,13 @@
       "knownBy": 999,
       "creator": null,
       "creatorDied": null,
-      "group": null,
       "latitude": null,
       "longitude": null,
       "fact": "Edward Kennedy \"Duke\" Ellington (April 29, 1899 – May 24, 1974) was an American jazz pianist, composer, and leader of his eponymous jazz orchestra from 1924 through the rest of his life. Music critic Ralph J.",
       "factSource": "https://en.wikipedia.org/wiki/Duke_Ellington",
       "remoteKey": "packs/famous-faces/famous-faces-duke-ellington-1.jpg",
-      "originalURL": "https://upload.wikimedia.org/wikipedia/commons/a/af/Duke_Ellington_-_publicity.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled"
+      "originalURL": "https://upload.wikimedia.org/wikipedia/commons/a/af/Duke_Ellington_-_publicity.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled",
+      "group": "an American jazz pianist"
     },
     {
       "id": "famous-faces-katharine-hepburn-1",
@@ -860,7 +856,6 @@
       "knownBy": 999,
       "creator": null,
       "creatorDied": null,
-      "group": null,
       "latitude": null,
       "longitude": null,
       "fact": "Katharine Houghton Hepburn (May 12, 1907 – June 29, 2003) was an American actress whose career as a leading lady on stage and screen spanned six decades.",
@@ -886,13 +881,13 @@
       "knownBy": 999,
       "creator": null,
       "creatorDied": null,
-      "group": null,
       "latitude": null,
       "longitude": null,
       "fact": "Jacques-Yves Cousteau (, also UK: ; French: [ʒak iv kusto]; 11 June 1910 – 25 June 1997) was a French naval officer, oceanographer, filmmaker and author.",
       "factSource": "https://en.wikipedia.org/wiki/Jacques_Cousteau",
       "remoteKey": "packs/famous-faces/famous-faces-jacques-cousteau-1.jpg",
-      "originalURL": "https://upload.wikimedia.org/wikipedia/commons/1/10/Cousteau1972_%28cropped%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled"
+      "originalURL": "https://upload.wikimedia.org/wikipedia/commons/1/10/Cousteau1972_%28cropped%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled",
+      "group": "a French naval officer"
     },
     {
       "id": "famous-faces-mother-teresa-1",
@@ -912,13 +907,13 @@
       "knownBy": 999,
       "creator": null,
       "creatorDied": null,
-      "group": null,
       "latitude": null,
       "longitude": null,
       "fact": "Anjezë Gonxhe Bojaxhiu (Albanian: [aˈɲɛzə ˈɡɔndʒɛ bɔjaˈdʒi.u]; 26 August 1910 – 5 September 1997), better known as Mother Teresa or Saint Mother Teresa of Calcutta, was an Albanian-Indian Catholic nun, founder of the Missionaries of Charity and a Catholic saint.",
       "factSource": "https://en.wikipedia.org/wiki/Mother_Teresa",
       "remoteKey": "packs/famous-faces/famous-faces-mother-teresa-1.jpg",
-      "originalURL": "https://upload.wikimedia.org/wikipedia/commons/8/8e/MotherTeresa_090.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled"
+      "originalURL": "https://upload.wikimedia.org/wikipedia/commons/8/8e/MotherTeresa_090.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled",
+      "group": "an Albanian-Indian Catholic"
     },
     {
       "id": "famous-faces-jesse-owens-1",
@@ -938,13 +933,13 @@
       "knownBy": 999,
       "creator": null,
       "creatorDied": null,
-      "group": null,
       "latitude": null,
       "longitude": null,
       "fact": "James Cleveland \"Jesse\" Owens (September 12, 1913 – March 31, 1980) was an American track and field athlete. He made history at the 1936 Olympic Games by winning four gold medals, setting individual Olympic records in each event, plus another as a member of the 400-meter relay.",
       "factSource": "https://en.wikipedia.org/wiki/Jesse_Owens",
       "remoteKey": "packs/famous-faces/famous-faces-jesse-owens-1.jpg",
-      "originalURL": "https://upload.wikimedia.org/wikipedia/commons/a/ac/Jesse_Owens_1936_%28cropped%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled"
+      "originalURL": "https://upload.wikimedia.org/wikipedia/commons/a/ac/Jesse_Owens_1936_%28cropped%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled",
+      "group": "an American track and field"
     },
     {
       "id": "famous-faces-frank-sinatra-1",
@@ -964,13 +959,13 @@
       "knownBy": 999,
       "creator": null,
       "creatorDied": null,
-      "group": null,
       "latitude": null,
       "longitude": null,
       "fact": "Francis Albert Sinatra (; December 12, 1915 – May 14, 1998) was an American singer, conductor, and actor. Nicknamed the \"Chairman of the Board\" and \"Ol' Blue Eyes\", he is regarded as one of the most influential entertainers of the 20th century.",
       "factSource": "https://en.wikipedia.org/wiki/Frank_Sinatra",
       "remoteKey": "packs/famous-faces/famous-faces-frank-sinatra-1.jpg",
-      "originalURL": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/41/Frank_Sinatra_%281957%29.jpg/1280px-Frank_Sinatra_%281957%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+      "originalURL": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/41/Frank_Sinatra_%281957%29.jpg/1280px-Frank_Sinatra_%281957%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "group": "an American singer"
     },
     {
       "id": "famous-faces-ella-fitzgerald-1",
@@ -990,13 +985,13 @@
       "knownBy": 999,
       "creator": null,
       "creatorDied": null,
-      "group": null,
       "latitude": null,
       "longitude": null,
       "fact": "Ella Jane Fitzgerald (April 25, 1917 – June 15, 1996) was an American jazz vocalist, songwriter and composer, sometimes referred to as the \"First Lady of Song\", \"Queen of Jazz\", and \"Lady Ella\".",
       "factSource": "https://en.wikipedia.org/wiki/Ella_Fitzgerald",
       "remoteKey": "packs/famous-faces/famous-faces-ella-fitzgerald-1.jpg",
-      "originalURL": "https://thumb.wikimedia.org/wikipedia/commons/thumb/a/aa/Ella_Fitzgerald_by_Carl_Van_Vechten_-_American_Flag_%28cropped%29.jpg/1280px-Ella_Fitzgerald_by_Carl_Van_Vechten_-_American_Flag_%28cropped%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+      "originalURL": "https://thumb.wikimedia.org/wikipedia/commons/thumb/a/aa/Ella_Fitzgerald_by_Carl_Van_Vechten_-_American_Flag_%28cropped%29.jpg/1280px-Ella_Fitzgerald_by_Carl_Van_Vechten_-_American_Flag_%28cropped%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "group": "an American jazz vocalist"
     },
     {
       "id": "famous-faces-nelson-mandela-1",
@@ -1016,13 +1011,13 @@
       "knownBy": 999,
       "creator": null,
       "creatorDied": null,
-      "group": null,
       "latitude": null,
       "longitude": null,
       "fact": "Nelson Rolihlahla Mandela (18 July 1918 – 5 December 2013) was a South African anti-apartheid revolutionary, politician, and philanthropist, who served as President of South Africa from 1994 to 1999. He was the country's first black head of state and the first elected in a fully representative democratic election.",
       "factSource": "https://en.wikipedia.org/wiki/Nelson_Mandela",
       "remoteKey": "packs/famous-faces/famous-faces-nelson-mandela-1.jpg",
-      "originalURL": "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/02/Nelson_Mandela_1994.jpg/1280px-Nelson_Mandela_1994.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+      "originalURL": "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/02/Nelson_Mandela_1994.jpg/1280px-Nelson_Mandela_1994.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "group": "a South African anti-apartheid revolutionary"
     },
     {
       "id": "famous-faces-audrey-hepburn-1",
@@ -1042,13 +1037,13 @@
       "knownBy": 999,
       "creator": null,
       "creatorDied": null,
-      "group": null,
       "latitude": null,
       "longitude": null,
       "fact": "Audrey Kathleen Hepburn-Ruston (née Ruston; 4 May 1929 – 20 January 1993) was a British actress and humanitarian. Recognised as a film and fashion icon, she was ranked by the American Film Institute as the third-greatest female screen legend from the Classical Hollywood cinema.",
       "factSource": "https://en.wikipedia.org/wiki/Audrey_Hepburn",
       "remoteKey": "packs/famous-faces/famous-faces-audrey-hepburn-1.jpg",
-      "originalURL": "https://thumb.wikimedia.org/wikipedia/commons/thumb/6/6e/Audrey_Hepburn_in_1966.jpg/1280px-Audrey_Hepburn_in_1966.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+      "originalURL": "https://thumb.wikimedia.org/wikipedia/commons/thumb/6/6e/Audrey_Hepburn_in_1966.jpg/1280px-Audrey_Hepburn_in_1966.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "group": "a British actress"
     },
     {
       "id": "famous-faces-marilyn-monroe-1",
@@ -1068,13 +1063,13 @@
       "knownBy": 999,
       "creator": null,
       "creatorDied": null,
-      "group": null,
       "latitude": null,
       "longitude": null,
       "fact": "Marilyn Monroe ( MAIR-ə-lin mən-ROH; born Norma Jeane Mortenson; June 1, 1926 – August 4, 1962) was an American actress and model. Known for playing comic \"Blonde bombshell\" characters, she became one of the most popular sex symbols of the 1950s and early 1960s, as well as an emblem of the era's sexual revolution.",
       "factSource": "https://en.wikipedia.org/wiki/Marilyn_Monroe",
       "remoteKey": "packs/famous-faces/famous-faces-marilyn-monroe-1.jpg",
-      "originalURL": "https://thumb.wikimedia.org/wikipedia/commons/thumb/2/2a/Marilyn_Monroe_in_How_to_Marry_a_Millionaire.jpg/1280px-Marilyn_Monroe_in_How_to_Marry_a_Millionaire.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+      "originalURL": "https://thumb.wikimedia.org/wikipedia/commons/thumb/2/2a/Marilyn_Monroe_in_How_to_Marry_a_Millionaire.jpg/1280px-Marilyn_Monroe_in_How_to_Marry_a_Millionaire.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "group": "an American actress and model"
     },
     {
       "id": "famous-faces-martin-luther-king-jr-1",
@@ -1094,13 +1089,13 @@
       "knownBy": 999,
       "creator": null,
       "creatorDied": null,
-      "group": null,
       "latitude": null,
       "longitude": null,
       "fact": "Martin Luther King Jr. (born Michael King Jr.; January 15, 1929 – April 4, 1968) was an American civil rights activist and Baptist minister who was a prominent leader of the civil rights movement from 1955 until his assassination in 1968.",
       "factSource": "https://en.wikipedia.org/wiki/Martin_Luther_King_Jr.",
       "remoteKey": "packs/famous-faces/famous-faces-martin-luther-king-jr-1.jpg",
-      "originalURL": "https://upload.wikimedia.org/wikipedia/commons/1/1c/The_Rev._Dr._Martin_Luther_King_Jr._Color_Portrait_%28high_quality%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled"
+      "originalURL": "https://upload.wikimedia.org/wikipedia/commons/1/1c/The_Rev._Dr._Martin_Luther_King_Jr._Color_Portrait_%28high_quality%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled",
+      "group": "an American civil rights activist"
     },
     {
       "id": "famous-faces-johnny-cash-1",
@@ -1120,7 +1115,6 @@
       "knownBy": 999,
       "creator": null,
       "creatorDied": null,
-      "group": null,
       "latitude": null,
       "longitude": null,
       "fact": "John R. Cash (born J.",
@@ -1146,13 +1140,13 @@
       "knownBy": 999,
       "creator": null,
       "creatorDied": null,
-      "group": null,
       "latitude": null,
       "longitude": null,
       "fact": "Elvis Aaron Presley (January 8, 1935 – August 16, 1977) was an American singer and actor. Referred to as the \"King of Rock and Roll\", he is widely regarded as one of the most culturally significant figures of the 20th century.",
       "factSource": "https://en.wikipedia.org/wiki/Elvis_Presley",
       "remoteKey": "packs/famous-faces/famous-faces-elvis-presley-1.jpg",
-      "originalURL": "https://upload.wikimedia.org/wikipedia/commons/c/cc/Annex_-_Presley%2C_Elvis_%28King_Creole%29_01.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled"
+      "originalURL": "https://upload.wikimedia.org/wikipedia/commons/c/cc/Annex_-_Presley%2C_Elvis_%28King_Creole%29_01.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled",
+      "group": "an American singer and actor"
     },
     {
       "id": "famous-faces-muhammad-ali-1",
@@ -1172,13 +1166,13 @@
       "knownBy": 999,
       "creator": null,
       "creatorDied": null,
-      "group": null,
       "latitude": null,
       "longitude": null,
       "fact": "Muhammad Ali ( ah-LEE; born Cassius Marcellus Clay Jr.; January 17, 1942 – June 3, 2016) was an American professional boxer and activist. A global cultural icon, widely known by the nickname \"the Greatest\", he is often regarded as the greatest heavyweight boxer of all time.",
       "factSource": "https://en.wikipedia.org/wiki/Muhammad_Ali",
       "remoteKey": "packs/famous-faces/famous-faces-muhammad-ali-1.jpg",
-      "originalURL": "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/89/Muhammad_Ali_NYWTS.jpg/1280px-Muhammad_Ali_NYWTS.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+      "originalURL": "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/89/Muhammad_Ali_NYWTS.jpg/1280px-Muhammad_Ali_NYWTS.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "group": "an American professional boxer"
     },
     {
       "id": "famous-faces-dolly-parton-1",
@@ -1198,13 +1192,13 @@
       "knownBy": 999,
       "creator": null,
       "creatorDied": null,
-      "group": null,
       "latitude": null,
       "longitude": null,
       "fact": "Dolly Rebecca Parton Dean (née Parton; January 19, 1946 – August 25, 2026) was an American singer-songwriter, actress, philanthropist, and businesswoman. Dubbed the \"Queen of Country\", Parton was one of the most successful performers in the history of country music.",
       "factSource": "https://en.wikipedia.org/wiki/Dolly_Parton",
       "remoteKey": "packs/famous-faces/famous-faces-dolly-parton-1.jpg",
-      "originalURL": "https://upload.wikimedia.org/wikipedia/commons/a/a3/Young-Dolly-Parton.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled"
+      "originalURL": "https://upload.wikimedia.org/wikipedia/commons/a/a3/Young-Dolly-Parton.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled",
+      "group": "an American singer-songwriter"
     },
     {
       "id": "famous-faces-pelé-1",
@@ -1224,13 +1218,13 @@
       "knownBy": 999,
       "creator": null,
       "creatorDied": null,
-      "group": null,
       "latitude": null,
       "longitude": null,
       "fact": "Edson Arantes do Nascimento (23 October 1940 – 29 December 2022), better known by his nickname Pelé, was a Brazilian professional footballer who played as a forward. Widely regarded as one of the greatest players in history, he was among the most successful and popular sports figures of the 20th century.",
       "factSource": "https://en.wikipedia.org/wiki/Pel%C3%A9",
       "remoteKey": "packs/famous-faces/famous-faces-pelé-1.jpg",
-      "originalURL": "https://upload.wikimedia.org/wikipedia/commons/2/24/De_estudante_a_piloto_de_avi%C3%A3o%2C_Pel%C3%A9_em_cem_imagens_raras_fora_do_futebol_%28101%29.webp?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled"
+      "originalURL": "https://upload.wikimedia.org/wikipedia/commons/2/24/De_estudante_a_piloto_de_avi%C3%A3o%2C_Pel%C3%A9_em_cem_imagens_raras_fora_do_futebol_%28101%29.webp?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled",
+      "group": "a Brazilian professional footballer"
     },
     {
       "id": "famous-faces-billie-jean-king-1",
@@ -1250,7 +1244,6 @@
       "knownBy": 999,
       "creator": null,
       "creatorDied": null,
-      "group": null,
       "latitude": null,
       "longitude": null,
       "fact": "Billie Jean King (née Moffitt; born November 22, 1943) is an American former world No. 1 tennis player.",
@@ -1276,13 +1269,13 @@
       "knownBy": 999,
       "creator": null,
       "creatorDied": null,
-      "group": null,
       "latitude": null,
       "longitude": null,
       "fact": "Robert Nesta Marley (6 February 1945 – 11 May 1981) was a Jamaican reggae singer, songwriter, and guitarist. Considered one of the pioneers of the genre, he was renowned for his distinctive vocal and songwriting style.",
       "factSource": "https://en.wikipedia.org/wiki/Bob_Marley",
       "remoteKey": "packs/famous-faces/famous-faces-bob-marley-1.jpg",
-      "originalURL": "https://upload.wikimedia.org/wikipedia/commons/4/4b/Bob_Marley_%281976%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled"
+      "originalURL": "https://upload.wikimedia.org/wikipedia/commons/4/4b/Bob_Marley_%281976%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled",
+      "group": "a Jamaican reggae singer"
     },
     {
       "id": "famous-faces-freddie-mercury-1",
@@ -1302,13 +1295,13 @@
       "knownBy": 999,
       "creator": null,
       "creatorDied": null,
-      "group": null,
       "latitude": null,
       "longitude": null,
       "fact": "Freddie Mercury (born Farrokh Bulsara; 5 September 1946 – 24 November 1991) was a British singer and songwriter who achieved global fame as the lead vocalist and pianist of the rock band Queen. Regarded as one of the greatest singers in the history of rock music, he is known for his flamboyant stage persona and four-octave vocal range.",
       "factSource": "https://en.wikipedia.org/wiki/Freddie_Mercury",
       "remoteKey": "packs/famous-faces/famous-faces-freddie-mercury-1.jpg",
-      "originalURL": "https://thumb.wikimedia.org/wikipedia/commons/thumb/e/e5/Bisexual_men.jpg/1280px-Bisexual_men.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+      "originalURL": "https://thumb.wikimedia.org/wikipedia/commons/thumb/e/e5/Bisexual_men.jpg/1280px-Bisexual_men.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "group": "a British singer and songwriter"
     },
     {
       "id": "famous-faces-wayne-gretzky-1",
@@ -1328,7 +1321,6 @@
       "knownBy": 999,
       "creator": null,
       "creatorDied": null,
-      "group": null,
       "latitude": null,
       "longitude": null,
       "fact": "Wayne Douglas Gretzky ( GRET-skee; born January 26, 1961) is a Canadian former professional ice hockey player and head coach. He played 20 seasons in the National Hockey League (NHL) for four teams from 1979 to 1999.",
@@ -1354,7 +1346,6 @@
       "knownBy": 999,
       "creator": null,
       "creatorDied": null,
-      "group": null,
       "latitude": null,
       "longitude": null,
       "fact": "Michael Jeffrey Jordan (born February 17, 1963), also known by his initials MJ, is an American businessman, former professional basketball player, and former baseball player. He played 15 seasons in the National Basketball Association (NBA) between 1984 and 2003, winning six NBA championships with the Chicago Bulls.",
@@ -1380,7 +1371,6 @@
       "knownBy": 999,
       "creator": null,
       "creatorDied": null,
-      "group": null,
       "latitude": null,
       "longitude": null,
       "fact": "Serena Jameka Williams (born September 26, 1981) is an American professional tennis player. She was ranked as the world No.",
@@ -1406,7 +1396,6 @@
       "knownBy": 999,
       "creator": null,
       "creatorDied": null,
-      "group": null,
       "latitude": null,
       "longitude": null,
       "fact": "Lionel Andrés \"Leo\" Messi (born 24 June 1987) is an Argentine professional footballer who plays as a forward for the Major League Soccer club Inter Miami, which he captains, and the Argentina national team.",
@@ -1432,7 +1421,6 @@
       "knownBy": 999,
       "creator": null,
       "creatorDied": null,
-      "group": null,
       "latitude": null,
       "longitude": null,
       "fact": "Katheryn Elizabeth Hudson (born October 25, 1984), known professionally as Katy Perry, is an American singer, songwriter, and television personality. Known for her influence on pop music and her camp style, she has been dubbed the \"Queen of Camp\" by Vogue and Rolling Stone.",
@@ -1458,13 +1446,13 @@
       "knownBy": 999,
       "creator": null,
       "creatorDied": null,
-      "group": null,
       "latitude": null,
       "longitude": null,
       "fact": "Gaius Julius Caesar (12 or 13 July 100 BC – 15 March 44 BC) was a Roman general, statesman, and author who was the dictator of the Roman Republic almost continuously from 49 BC until his assassination in 44 BC.",
       "factSource": "https://en.wikipedia.org/wiki/Julius_Caesar",
       "remoteKey": "packs/famous-faces/famous-faces-julius-caesar-1.jpg",
-      "originalURL": "https://thumb.wikimedia.org/wikipedia/commons/thumb/6/62/Retrato_de_Julio_C%C3%A9sar_%2826724093101%29_%28cropped%29.jpg/1280px-Retrato_de_Julio_C%C3%A9sar_%2826724093101%29_%28cropped%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+      "originalURL": "https://thumb.wikimedia.org/wikipedia/commons/thumb/6/62/Retrato_de_Julio_C%C3%A9sar_%2826724093101%29_%28cropped%29.jpg/1280px-Retrato_de_Julio_C%C3%A9sar_%2826724093101%29_%28cropped%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "group": "a Roman general"
     },
     {
       "id": "famous-faces-nicolaus-copernicus-1",
@@ -1484,13 +1472,13 @@
       "knownBy": 999,
       "creator": null,
       "creatorDied": null,
-      "group": null,
       "latitude": null,
       "longitude": null,
       "fact": "Nicolaus Copernicus (19 February 1473 – 24 May 1543) was a Renaissance polymath who formulated a model of the universe that placed the Sun rather than Earth at its center.",
       "factSource": "https://en.wikipedia.org/wiki/Nicolaus_Copernicus",
       "remoteKey": "packs/famous-faces/famous-faces-nicolaus-copernicus-1.jpg",
-      "originalURL": "https://thumb.wikimedia.org/wikipedia/commons/thumb/e/e2/Nikolaus_Kopernikus_MOT.jpg/1280px-Nikolaus_Kopernikus_MOT.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+      "originalURL": "https://thumb.wikimedia.org/wikipedia/commons/thumb/e/e2/Nikolaus_Kopernikus_MOT.jpg/1280px-Nikolaus_Kopernikus_MOT.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "group": "a Renaissance polymath"
     },
     {
       "id": "famous-faces-martin-luther-1",
@@ -1510,13 +1498,13 @@
       "knownBy": 999,
       "creator": null,
       "creatorDied": null,
-      "group": null,
       "latitude": null,
       "longitude": null,
       "fact": "Martin Luther ( LOO-thər; German: [ˈmaʁtiːn ˈlʊtɐ] ; 10 November 1483 – 18 February 1546) was a German priest, theologian, author, hymnwriter, professor, and former Augustinian friar. Luther was the seminal figure of the Protestant Reformation, and his theological beliefs form the basis of Lutheranism.",
       "factSource": "https://en.wikipedia.org/wiki/Martin_Luther",
       "remoteKey": "packs/famous-faces/famous-faces-martin-luther-1.jpg",
-      "originalURL": "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/90/Lucas_Cranach_d.%C3%84._-_Martin_Luther%2C_1528_%28Veste_Coburg%29.jpg/1280px-Lucas_Cranach_d.%C3%84._-_Martin_Luther%2C_1528_%28Veste_Coburg%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+      "originalURL": "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/90/Lucas_Cranach_d.%C3%84._-_Martin_Luther%2C_1528_%28Veste_Coburg%29.jpg/1280px-Lucas_Cranach_d.%C3%84._-_Martin_Luther%2C_1528_%28Veste_Coburg%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "group": "a German priest"
     },
     {
       "id": "famous-faces-miguel-de-cervantes-1",
@@ -1536,13 +1524,13 @@
       "knownBy": 999,
       "creator": null,
       "creatorDied": null,
-      "group": null,
       "latitude": null,
       "longitude": null,
       "fact": "Miguel de Cervantes Saavedra ( sur-VAN-teez, -⁠tiz; Spanish: [miˈɣel de θeɾˈβantes sa(.a)ˈβeðɾa]; 29 September 1547 (assumed) – 22 April 1616) was a Spanish writer widely regarded as the greatest writer in the Spanish language and one of the world's pre-eminent novelists.",
       "factSource": "https://en.wikipedia.org/wiki/Miguel_de_Cervantes",
       "remoteKey": "packs/famous-faces/famous-faces-miguel-de-cervantes-1.jpg",
-      "originalURL": "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/09/Cervantes_J%C3%A1uregui.jpg/1280px-Cervantes_J%C3%A1uregui.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+      "originalURL": "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/09/Cervantes_J%C3%A1uregui.jpg/1280px-Cervantes_J%C3%A1uregui.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "group": "a Spanish writer widely regarded"
     },
     {
       "id": "famous-faces-antonio-vivaldi-1",
@@ -1562,13 +1550,13 @@
       "knownBy": 999,
       "creator": null,
       "creatorDied": null,
-      "group": null,
       "latitude": null,
       "longitude": null,
       "fact": "Antonio Lucio Vivaldi (4 March 1678 – 28 July 1741) was an Italian composer, virtuoso violinist, and impresario of Baroque music. Regarded as one of the greatest Baroque composers, Vivaldi's influence during his lifetime was widespread across Europe, giving origin to many imitators and admirers.",
       "factSource": "https://en.wikipedia.org/wiki/Antonio_Vivaldi",
       "remoteKey": "packs/famous-faces/famous-faces-antonio-vivaldi-1.jpg",
-      "originalURL": "https://thumb.wikimedia.org/wikipedia/commons/thumb/2/27/Antonio_Vivaldi_2.jpg/1280px-Antonio_Vivaldi_2.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+      "originalURL": "https://thumb.wikimedia.org/wikipedia/commons/thumb/2/27/Antonio_Vivaldi_2.jpg/1280px-Antonio_Vivaldi_2.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "group": "an Italian composer"
     },
     {
       "id": "famous-faces-voltaire-1",
@@ -1588,13 +1576,13 @@
       "knownBy": 999,
       "creator": null,
       "creatorDied": null,
-      "group": null,
       "latitude": null,
       "longitude": null,
       "fact": "François-Marie Arouet (French: [fʁɑ̃swa maʁi aʁwɛ]; 21 November 1694 – 30 May 1778), known by his pen name Voltaire (, US also ; French: [vɔltɛːʁ]), was a French Enlightenment writer, philosopher (philosophe), satirist, and historian.",
       "factSource": "https://en.wikipedia.org/wiki/Voltaire",
       "remoteKey": "packs/famous-faces/famous-faces-voltaire-1.jpg",
-      "originalURL": "https://thumb.wikimedia.org/wikipedia/commons/thumb/b/bf/Nicolas_de_Largilli%C3%A8re_-_Portrait_de_Voltaire_%281694-1778%29_en_1718_-_P208_-_mus%C3%A9e_Carnavalet_-_5_%28cropped%29.jpg/1280px-Nicolas_de_Largilli%C3%A8re_-_Portrait_de_Voltaire_%281694-1778%29_en_1718_-_P208_-_mus%C3%A9e_Carnavalet_-_5_%28cropped%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+      "originalURL": "https://thumb.wikimedia.org/wikipedia/commons/thumb/b/bf/Nicolas_de_Largilli%C3%A8re_-_Portrait_de_Voltaire_%281694-1778%29_en_1718_-_P208_-_mus%C3%A9e_Carnavalet_-_5_%28cropped%29.jpg/1280px-Nicolas_de_Largilli%C3%A8re_-_Portrait_de_Voltaire_%281694-1778%29_en_1718_-_P208_-_mus%C3%A9e_Carnavalet_-_5_%28cropped%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "group": "a French Enlightenment writer"
     },
     {
       "id": "famous-faces-john-adams-1",
@@ -1614,13 +1602,13 @@
       "knownBy": 999,
       "creator": null,
       "creatorDied": null,
-      "group": null,
       "latitude": null,
       "longitude": null,
       "fact": "John Adams (October 30, 1735 – July 4, 1826) was a Founding Father and the second president of the United States from 1797 to 1801. Before his presidency, he was a leader of the American Revolution that achieved independence from Great Britain.",
       "factSource": "https://en.wikipedia.org/wiki/John_Adams",
       "remoteKey": "packs/famous-faces/famous-faces-john-adams-1.jpg",
-      "originalURL": "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/07/John_Adams_A18236.jpg/1280px-John_Adams_A18236.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+      "originalURL": "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/07/John_Adams_A18236.jpg/1280px-John_Adams_A18236.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "group": "a Founding Father"
     },
     {
       "id": "famous-faces-thomas-jefferson-1",
@@ -1640,13 +1628,13 @@
       "knownBy": 999,
       "creator": null,
       "creatorDied": null,
-      "group": null,
       "latitude": null,
       "longitude": null,
       "fact": "Thomas Jefferson (April 13 [O.S. April 2], 1743 – July 4, 1826) was a Founding Father and the third president of the United States, serving from 1801 to 1809.",
       "factSource": "https://en.wikipedia.org/wiki/Thomas_Jefferson",
       "remoteKey": "packs/famous-faces/famous-faces-thomas-jefferson-1.jpg",
-      "originalURL": "https://upload.wikimedia.org/wikipedia/commons/b/b1/Official_Presidential_portrait_of_Thomas_Jefferson_%28by_Rembrandt_Peale%2C_1800%29%28cropped%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled"
+      "originalURL": "https://upload.wikimedia.org/wikipedia/commons/b/b1/Official_Presidential_portrait_of_Thomas_Jefferson_%28by_Rembrandt_Peale%2C_1800%29%28cropped%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled",
+      "group": "a Founding Father"
     },
     {
       "id": "famous-faces-honoré-de-balzac-1",
@@ -1666,13 +1654,13 @@
       "knownBy": 999,
       "creator": null,
       "creatorDied": null,
-      "group": null,
       "latitude": null,
       "longitude": null,
       "fact": "Honoré de Balzac ( BAL-zak, also US: BAWL-; French: [ɔnɔʁe d(ə) balzak]; born Honoré Balzac; 20 May 1799 – 18 August 1850) was a French novelist and playwright. The novel sequence La Comédie humaine, described as a panorama of post-Napoleonic French life, is generally viewed as his magnum opus.",
       "factSource": "https://en.wikipedia.org/wiki/Honor%C3%A9_de_Balzac",
       "remoteKey": "packs/famous-faces/famous-faces-honoré-de-balzac-1.jpg",
-      "originalURL": "https://upload.wikimedia.org/wikipedia/commons/8/82/Honor%C3%A9_de_Balzac_%281842%29_detail.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled"
+      "originalURL": "https://upload.wikimedia.org/wikipedia/commons/8/82/Honor%C3%A9_de_Balzac_%281842%29_detail.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled",
+      "group": "a French novelist and playwright"
     },
     {
       "id": "famous-faces-john-stuart-mill-1",
@@ -1692,13 +1680,13 @@
       "knownBy": 999,
       "creator": null,
       "creatorDied": null,
-      "group": null,
       "latitude": null,
       "longitude": null,
       "fact": "John Stuart Mill (20 May 1806 – 7 May 1873) was an English philosopher, political economist, and politician. He was a paradigmatic philosopher of liberalism and has been described as \"the most influential English-speaking philosopher of the nineteenth century\" by the Stanford Encyclopedia of Philosophy.",
       "factSource": "https://en.wikipedia.org/wiki/John_Stuart_Mill",
       "remoteKey": "packs/famous-faces/famous-faces-john-stuart-mill-1.jpg",
-      "originalURL": "https://upload.wikimedia.org/wikipedia/commons/9/99/John_Stuart_Mill_by_London_Stereoscopic_Company%2C_c1870.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled"
+      "originalURL": "https://upload.wikimedia.org/wikipedia/commons/9/99/John_Stuart_Mill_by_London_Stereoscopic_Company%2C_c1870.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled",
+      "group": "an English philosopher"
     },
     {
       "id": "famous-faces-edgar-allan-poe-1",
@@ -1718,13 +1706,13 @@
       "knownBy": 999,
       "creator": null,
       "creatorDied": null,
-      "group": null,
       "latitude": null,
       "longitude": null,
       "fact": "Edgar Allan Poe (January 19, 1809 – October 7, 1849) was an American writer, poet, editor, and literary critic who is best known for his poetry and short stories, particularly his tales involving mystery and the macabre.",
       "factSource": "https://en.wikipedia.org/wiki/Edgar_Allan_Poe",
       "remoteKey": "packs/famous-faces/famous-faces-edgar-allan-poe-1.jpg",
-      "originalURL": "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/97/Edgar_Allan_Poe%2C_circa_1849%2C_restored%2C_squared_off.jpg/1280px-Edgar_Allan_Poe%2C_circa_1849%2C_restored%2C_squared_off.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+      "originalURL": "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/97/Edgar_Allan_Poe%2C_circa_1849%2C_restored%2C_squared_off.jpg/1280px-Edgar_Allan_Poe%2C_circa_1849%2C_restored%2C_squared_off.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "group": "an American writer"
     },
     {
       "id": "famous-faces-felix-mendelssohn-1",
@@ -1744,13 +1732,13 @@
       "knownBy": 999,
       "creator": null,
       "creatorDied": null,
-      "group": null,
       "latitude": null,
       "longitude": null,
       "fact": "Jakob Ludwig Felix Mendelssohn Bartholdy (3 February 1809 – 4 November 1847), simply known as Felix Mendelssohn, was a German composer, pianist, organist and conductor of the early Romantic era. Mendelssohn's compositions include symphonies, concertos, piano music, organ music and chamber music.",
       "factSource": "https://en.wikipedia.org/wiki/Felix_Mendelssohn",
       "remoteKey": "packs/famous-faces/famous-faces-felix-mendelssohn-1.jpg",
-      "originalURL": "https://thumb.wikimedia.org/wikipedia/commons/thumb/c/c2/Felix_Mendelssohn_Bartholdy_by_Eduard_Magnus_%281833%29.jpg/1280px-Felix_Mendelssohn_Bartholdy_by_Eduard_Magnus_%281833%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+      "originalURL": "https://thumb.wikimedia.org/wikipedia/commons/thumb/c/c2/Felix_Mendelssohn_Bartholdy_by_Eduard_Magnus_%281833%29.jpg/1280px-Felix_Mendelssohn_Bartholdy_by_Eduard_Magnus_%281833%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "group": "a German composer"
     },
     {
       "id": "famous-faces-giuseppe-verdi-1",
@@ -1770,13 +1758,13 @@
       "knownBy": 999,
       "creator": null,
       "creatorDied": null,
-      "group": null,
       "latitude": null,
       "longitude": null,
       "fact": "Giuseppe Fortunino Francesco Verdi ( VAIR-dee; Italian: [dʒuˈzɛppe ˈverdi]; 9 or 10 October 1813 – 27 January 1901) was an Italian composer best known for his operas.",
       "factSource": "https://en.wikipedia.org/wiki/Giuseppe_Verdi",
       "remoteKey": "packs/famous-faces/famous-faces-giuseppe-verdi-1.jpg",
-      "originalURL": "https://thumb.wikimedia.org/wikipedia/commons/thumb/a/a1/Giuseppe_Verdi_xilografia.jpg/1280px-Giuseppe_Verdi_xilografia.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+      "originalURL": "https://thumb.wikimedia.org/wikipedia/commons/thumb/a/a1/Giuseppe_Verdi_xilografia.jpg/1280px-Giuseppe_Verdi_xilografia.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "group": "an Italian composer"
     },
     {
       "id": "famous-faces-karl-marx-1",
@@ -1796,13 +1784,13 @@
       "knownBy": 999,
       "creator": null,
       "creatorDied": null,
-      "group": null,
       "latitude": null,
       "longitude": null,
       "fact": "Karl Marx (German: [ˈkaʁl ˈmaʁks]; 5 May 1818 – 14 March 1883) was a German philosopher, social and political theorist, and revolutionary socialist.",
       "factSource": "https://en.wikipedia.org/wiki/Karl_Marx",
       "remoteKey": "packs/famous-faces/famous-faces-karl-marx-1.jpg",
-      "originalURL": "https://thumb.wikimedia.org/wikipedia/commons/thumb/f/f5/%22Das_neunzehnte_Jahrhundert_in_Deutschlands_Entwicklung_..._Herausgegeben_von_Paul_Schlenther%22.jpg/1280px-%22Das_neunzehnte_Jahrhundert_in_Deutschlands_Entwicklung_..._Herausgegeben_von_Paul_Schlenther%22.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+      "originalURL": "https://thumb.wikimedia.org/wikipedia/commons/thumb/f/f5/%22Das_neunzehnte_Jahrhundert_in_Deutschlands_Entwicklung_..._Herausgegeben_von_Paul_Schlenther%22.jpg/1280px-%22Das_neunzehnte_Jahrhundert_in_Deutschlands_Entwicklung_..._Herausgegeben_von_Paul_Schlenther%22.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "group": "a German philosopher"
     },
     {
       "id": "famous-faces-walt-whitman-1",
@@ -1822,13 +1810,13 @@
       "knownBy": 999,
       "creator": null,
       "creatorDied": null,
-      "group": null,
       "latitude": null,
       "longitude": null,
       "fact": "Walter Whitman Jr. (; May 31, 1819 – March 26, 1892) was an American poet, essayist, and journalist; he also wrote two novels.",
       "factSource": "https://en.wikipedia.org/wiki/Walt_Whitman",
       "remoteKey": "packs/famous-faces/famous-faces-walt-whitman-1.jpg",
-      "originalURL": "https://thumb.wikimedia.org/wikipedia/commons/thumb/f/fa/Walt_Whitman_-_George_Collins_Cox.jpg/1280px-Walt_Whitman_-_George_Collins_Cox.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+      "originalURL": "https://thumb.wikimedia.org/wikipedia/commons/thumb/f/fa/Walt_Whitman_-_George_Collins_Cox.jpg/1280px-Walt_Whitman_-_George_Collins_Cox.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "group": "an American poet"
     },
     {
       "id": "famous-faces-louis-pasteur-1",
@@ -1848,13 +1836,13 @@
       "knownBy": 999,
       "creator": null,
       "creatorDied": null,
-      "group": null,
       "latitude": null,
       "longitude": null,
       "fact": "Louis Pasteur (; French: [lwi pastœʁ] ; 27 December 1822 – 28 September 1895) was a French chemist, pharmacist, and microbiologist renowned for his discoveries of the principles of vaccination, microbial fermentation, and pasteurization, the last of which was named after him.",
       "factSource": "https://en.wikipedia.org/wiki/Louis_Pasteur",
       "remoteKey": "packs/famous-faces/famous-faces-louis-pasteur-1.jpg",
-      "originalURL": "https://thumb.wikimedia.org/wikipedia/commons/thumb/e/e3/Louis_Pasteur_%281822_-_1895%29%2C_microbiologist_and_chemist_Wellcome_V0026980.jpg/1280px-Louis_Pasteur_%281822_-_1895%29%2C_microbiologist_and_chemist_Wellcome_V0026980.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+      "originalURL": "https://thumb.wikimedia.org/wikipedia/commons/thumb/e/e3/Louis_Pasteur_%281822_-_1895%29%2C_microbiologist_and_chemist_Wellcome_V0026980.jpg/1280px-Louis_Pasteur_%281822_-_1895%29%2C_microbiologist_and_chemist_Wellcome_V0026980.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "group": "a French chemist"
     },
     {
       "id": "famous-faces-jules-verne-1",
@@ -1874,13 +1862,13 @@
       "knownBy": 999,
       "creator": null,
       "creatorDied": null,
-      "group": null,
       "latitude": null,
       "longitude": null,
       "fact": "Jules Gabriel Verne ( VURN; French: [ʒyl ɡabʁijɛl vɛʁn]; 8 February 1828 – 24 March 1905) was a French novelist, poet, and playwright.",
       "factSource": "https://en.wikipedia.org/wiki/Jules_Verne",
       "remoteKey": "packs/famous-faces/famous-faces-jules-verne-1.jpg",
-      "originalURL": "https://thumb.wikimedia.org/wikipedia/commons/thumb/a/ac/A_Maravilhosa_Vida_de_Santos%3DDumont_%28page_18b_crop%29.jpg/1280px-A_Maravilhosa_Vida_de_Santos%3DDumont_%28page_18b_crop%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+      "originalURL": "https://thumb.wikimedia.org/wikipedia/commons/thumb/a/ac/A_Maravilhosa_Vida_de_Santos%3DDumont_%28page_18b_crop%29.jpg/1280px-A_Maravilhosa_Vida_de_Santos%3DDumont_%28page_18b_crop%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "group": "a French novelist"
     },
     {
       "id": "famous-faces-pierre-auguste-renoir-1",
@@ -1900,13 +1888,13 @@
       "knownBy": 999,
       "creator": null,
       "creatorDied": null,
-      "group": null,
       "latitude": null,
       "longitude": null,
       "fact": "Pierre-Auguste Renoir (; French: [pjɛʁ oɡyst ʁənwaʁ]; 25 February 1841 – 3 December 1919) was a leading French Impressionist artist.",
       "factSource": "https://en.wikipedia.org/wiki/Pierre-Auguste_Renoir",
       "remoteKey": "packs/famous-faces/famous-faces-pierre-auguste-renoir-1.jpg",
-      "originalURL": "https://upload.wikimedia.org/wikipedia/commons/6/67/Pierre_Auguste_Renoir%2C_uncropped_image.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled"
+      "originalURL": "https://upload.wikimedia.org/wikipedia/commons/6/67/Pierre_Auguste_Renoir%2C_uncropped_image.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled",
+      "group": "a leading French Impressionist artist"
     },
     {
       "id": "famous-faces-antoni-gaudí-1",
@@ -1926,13 +1914,13 @@
       "knownBy": 999,
       "creator": null,
       "creatorDied": null,
-      "group": null,
       "latitude": null,
       "longitude": null,
       "fact": "Antoni Gaudí i Cornet ( gow-DEE, GOW-dee; Catalan: [ənˈtɔni‿ɣəwˈði]; 25 June 1852 – 10 June 1926) was a Catalan architect and designer, widely known as the greatest exponent of Catalan Modernisme. Gaudí's works have a sui generis style, with most located in Barcelona, including his magnum opus, the Sagrada Família church.",
       "factSource": "https://en.wikipedia.org/wiki/Antoni_Gaud%C3%AD",
       "remoteKey": "packs/famous-faces/famous-faces-antoni-gaudí-1.jpg",
-      "originalURL": "https://upload.wikimedia.org/wikipedia/commons/a/a8/Antoni_Gaud%C3%AD_i_Cornet%2C_1878_colorized_portrait.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled"
+      "originalURL": "https://upload.wikimedia.org/wikipedia/commons/a/a8/Antoni_Gaud%C3%AD_i_Cornet%2C_1878_colorized_portrait.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled",
+      "group": "a Catalan architect and designer"
     },
     {
       "id": "famous-faces-sigmund-freud-1",
@@ -1952,13 +1940,13 @@
       "knownBy": 999,
       "creator": null,
       "creatorDied": null,
-      "group": null,
       "latitude": null,
       "longitude": null,
       "fact": "Sigmund Freud (born Sigismund Schlomo Freud; 6 May 1856 – 23 September 1939) was an Austrian neurologist and the founder of psychoanalysis, a clinical method for evaluating and treating pathologies arising from conflicts in the psyche through dialogue between patient and psychoanalyst, and the distinctive theory of mind and human agency derived from it.",
       "factSource": "https://en.wikipedia.org/wiki/Sigmund_Freud",
       "remoteKey": "packs/famous-faces/famous-faces-sigmund-freud-1.jpg",
-      "originalURL": "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/36/Sigmund_Freud%2C_by_Max_Halberstadt_%28cropped%29.jpg/1280px-Sigmund_Freud%2C_by_Max_Halberstadt_%28cropped%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+      "originalURL": "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/36/Sigmund_Freud%2C_by_Max_Halberstadt_%28cropped%29.jpg/1280px-Sigmund_Freud%2C_by_Max_Halberstadt_%28cropped%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "group": "an Austrian neurologist"
     },
     {
       "id": "famous-faces-joseph-conrad-1",
@@ -1978,13 +1966,13 @@
       "knownBy": 999,
       "creator": null,
       "creatorDied": null,
-      "group": null,
       "latitude": null,
       "longitude": null,
       "fact": "Joseph Conrad (born Józef Teodor Konrad Korzeniowski, Polish: [ˈjuzɛf tɛˈɔdɔr ˈkɔnrat kɔʐɛˈɲɔfskʲi] ; 3 December 1857 – 3 August 1924) was a Polish-British novelist and story writer.",
       "factSource": "https://en.wikipedia.org/wiki/Joseph_Conrad",
       "remoteKey": "packs/famous-faces/famous-faces-joseph-conrad-1.jpg",
-      "originalURL": "https://upload.wikimedia.org/wikipedia/commons/e/e7/Joseph_Conrad-remastered_to_black_and_white.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled"
+      "originalURL": "https://upload.wikimedia.org/wikipedia/commons/e/e7/Joseph_Conrad-remastered_to_black_and_white.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled",
+      "group": "a Polish-British novelist and story"
     },
     {
       "id": "famous-faces-henry-ford-1",
@@ -2004,13 +1992,13 @@
       "knownBy": 999,
       "creator": null,
       "creatorDied": null,
-      "group": null,
       "latitude": null,
       "longitude": null,
       "fact": "Henry Ford (July 30, 1863 – April 7, 1947) was an American industrialist and business magnate. As the founder of the Ford Motor Company, he is credited as a pioneer in making automobiles affordable for middle-class Americans through the system that came to be known as Fordism.",
       "factSource": "https://en.wikipedia.org/wiki/Henry_Ford",
       "remoteKey": "packs/famous-faces/famous-faces-henry-ford-1.jpg",
-      "originalURL": "https://thumb.wikimedia.org/wikipedia/commons/thumb/1/18/Henry_ford_1919.jpg/1280px-Henry_ford_1919.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+      "originalURL": "https://thumb.wikimedia.org/wikipedia/commons/thumb/1/18/Henry_ford_1919.jpg/1280px-Henry_ford_1919.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "group": "an American industrialist and business"
     },
     {
       "id": "famous-faces-wassily-kandinsky-1",
@@ -2030,13 +2018,13 @@
       "knownBy": 999,
       "creator": null,
       "creatorDied": null,
-      "group": null,
       "latitude": null,
       "longitude": null,
       "fact": "Wassily Wassilyevich Kandinsky (16 December [O.S. 4 December] 1866 – 13 December 1944) was a Russian painter and art theorist active in Germany during the late Belle Époque and Interwar eras.",
       "factSource": "https://en.wikipedia.org/wiki/Wassily_Kandinsky",
       "remoteKey": "packs/famous-faces/famous-faces-wassily-kandinsky-1.jpg",
-      "originalURL": "https://upload.wikimedia.org/wikipedia/commons/d/d6/Wassily_kandinsky.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled"
+      "originalURL": "https://upload.wikimedia.org/wikipedia/commons/d/d6/Wassily_kandinsky.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled",
+      "group": "a Russian painter and art"
     },
     {
       "id": "famous-faces-frank-lloyd-wright-1",
@@ -2056,13 +2044,13 @@
       "knownBy": 999,
       "creator": null,
       "creatorDied": null,
-      "group": null,
       "latitude": null,
       "longitude": null,
       "fact": "Frank Lloyd Wright Sr. (June 8, 1867 – April 9, 1959) was an American architect, designer, writer, and educator.",
       "factSource": "https://en.wikipedia.org/wiki/Frank_Lloyd_Wright",
       "remoteKey": "packs/famous-faces/famous-faces-frank-lloyd-wright-1.jpg",
-      "originalURL": "https://upload.wikimedia.org/wikipedia/commons/9/99/Frank_Lloyd_Wright_LC-USZ62-36384.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled"
+      "originalURL": "https://upload.wikimedia.org/wikipedia/commons/9/99/Frank_Lloyd_Wright_LC-USZ62-36384.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled",
+      "group": "an American architect"
     },
     {
       "id": "famous-faces-henri-matisse-1",
@@ -2082,13 +2070,13 @@
       "knownBy": 999,
       "creator": null,
       "creatorDied": null,
-      "group": null,
       "latitude": null,
       "longitude": null,
       "fact": "Henri Émile Benoît Matisse (French: [ɑ̃ʁi emil bənwa matis]; 31 December 1869 – 3 November 1954) was a French visual artist, known for both his use of colour and his fluid and original draughtsmanship. He was a draughtsman, printmaker, and sculptor, but is known primarily as a painter.",
       "factSource": "https://en.wikipedia.org/wiki/Henri_Matisse",
       "remoteKey": "packs/famous-faces/famous-faces-henri-matisse-1.jpg",
-      "originalURL": "https://upload.wikimedia.org/wikipedia/commons/b/b1/Portrait_of_Henri_Matisse_1933_May_20.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled"
+      "originalURL": "https://upload.wikimedia.org/wikipedia/commons/b/b1/Portrait_of_Henri_Matisse_1933_May_20.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled",
+      "group": "a French visual artist"
     },
     {
       "id": "famous-faces-rosa-luxemburg-1",
@@ -2108,13 +2096,13 @@
       "knownBy": 999,
       "creator": null,
       "creatorDied": null,
-      "group": null,
       "latitude": null,
       "longitude": null,
       "fact": "Rosa Luxemburg ( LUK-səm-burg; Polish: Róża Luksemburg [ˈruʐa ˈluksɛmburk] ; German: [ˈʁoːza ˈlʊksm̩bʊʁk] ; 5 March 1871 – 15 January 1919) was a Polish and naturalised-German Marxist theorist and revolutionary.",
       "factSource": "https://en.wikipedia.org/wiki/Rosa_Luxemburg",
       "remoteKey": "packs/famous-faces/famous-faces-rosa-luxemburg-1.jpg",
-      "originalURL": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/52/Rosa_Luxemburg.jpg/1280px-Rosa_Luxemburg.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+      "originalURL": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/52/Rosa_Luxemburg.jpg/1280px-Rosa_Luxemburg.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "group": "a Polish and naturalised-German Marxist"
     },
     {
       "id": "famous-faces-bertrand-russell-1",
@@ -2134,13 +2122,13 @@
       "knownBy": 999,
       "creator": null,
       "creatorDied": null,
-      "group": null,
       "latitude": null,
       "longitude": null,
       "fact": "Bertrand Arthur William Russell, 3rd Earl Russell (18 May 1872 – 2 February 1970), was an English philosopher, logician, and social reformer.",
       "factSource": "https://en.wikipedia.org/wiki/Bertrand_Russell",
       "remoteKey": "packs/famous-faces/famous-faces-bertrand-russell-1.jpg",
-      "originalURL": "https://upload.wikimedia.org/wikipedia/commons/a/a6/Bertrand_Russell_transparent_bg.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled"
+      "originalURL": "https://upload.wikimedia.org/wikipedia/commons/a/a6/Bertrand_Russell_transparent_bg.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled",
+      "group": "an English philosopher"
     },
     {
       "id": "famous-faces-jack-london-1",
@@ -2160,13 +2148,13 @@
       "knownBy": 999,
       "creator": null,
       "creatorDied": null,
-      "group": null,
       "latitude": null,
       "longitude": null,
       "fact": "John Griffith London (né Chaney; January 12, 1876 – November 22, 1916), better known as Jack London, was an American novelist, journalist and activist. A pioneer of commercial fiction and American magazines, he was one of the first American authors to become an international celebrity and earn a large fortune from writing.",
       "factSource": "https://en.wikipedia.org/wiki/Jack_London",
       "remoteKey": "packs/famous-faces/famous-faces-jack-london-1.jpg",
-      "originalURL": "https://thumb.wikimedia.org/wikipedia/commons/thumb/2/2d/Jack_London_young.jpg/1280px-Jack_London_young.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+      "originalURL": "https://thumb.wikimedia.org/wikipedia/commons/thumb/2/2d/Jack_London_young.jpg/1280px-Jack_London_young.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "group": "an American novelist"
     },
     {
       "id": "famous-faces-virginia-woolf-1",
@@ -2186,13 +2174,13 @@
       "knownBy": 999,
       "creator": null,
       "creatorDied": null,
-      "group": null,
       "latitude": null,
       "longitude": null,
       "fact": "Adeline Virginia Woolf ( \"wolf\"; née Stephen; 25 January 1882 – 28 March 1941) was an English writer and one of the most influential 20th-century modernist authors. She helped to pioneer the use of stream of consciousness narration as a literary device.",
       "factSource": "https://en.wikipedia.org/wiki/Virginia_Woolf",
       "remoteKey": "packs/famous-faces/famous-faces-virginia-woolf-1.jpg",
-      "originalURL": "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/0b/George_Charles_Beresford_-_Virginia_Woolf_in_1902_-_Restoration.jpg/1280px-George_Charles_Beresford_-_Virginia_Woolf_in_1902_-_Restoration.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+      "originalURL": "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/0b/George_Charles_Beresford_-_Virginia_Woolf_in_1902_-_Restoration.jpg/1280px-George_Charles_Beresford_-_Virginia_Woolf_in_1902_-_Restoration.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "group": "an English writer"
     },
     {
       "id": "famous-faces-niels-bohr-1",
@@ -2212,13 +2200,13 @@
       "knownBy": 999,
       "creator": null,
       "creatorDied": null,
-      "group": null,
       "latitude": null,
       "longitude": null,
       "fact": "Niels Henrik David Bohr (; Danish: [ˈne̝ls ˈpoɐ̯ˀ]; 7 October 1885 – 18 November 1962) was a Danish theoretical physicist who made foundational contributions to understanding atomic structure and quantum theory, for which he received the Nobel Prize in Physics in 1922. He was also a philosopher and a promoter of scientific research.",
       "factSource": "https://en.wikipedia.org/wiki/Niels_Bohr",
       "remoteKey": "packs/famous-faces/famous-faces-niels-bohr-1.jpg",
-      "originalURL": "https://thumb.wikimedia.org/wikipedia/commons/thumb/6/6d/Niels_Bohr.jpg/1280px-Niels_Bohr.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+      "originalURL": "https://thumb.wikimedia.org/wikipedia/commons/thumb/6/6d/Niels_Bohr.jpg/1280px-Niels_Bohr.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "group": "a Danish theoretical physicist"
     },
     {
       "id": "famous-faces-erwin-schrödinger-1",
@@ -2238,13 +2226,13 @@
       "knownBy": 999,
       "creator": null,
       "creatorDied": null,
-      "group": null,
       "latitude": null,
       "longitude": null,
       "fact": "Erwin Rudolf Josef Alexander Schrödinger (12 August 1887 – 4 January 1961), sometimes anglicised as Schroedinger or Schrodinger, was an Austrian theoretical physicist who developed fundamental results in quantum theory.",
       "factSource": "https://en.wikipedia.org/wiki/Erwin_Schr%C3%B6dinger",
       "remoteKey": "packs/famous-faces/famous-faces-erwin-schrödinger-1.jpg",
-      "originalURL": "https://thumb.wikimedia.org/wikipedia/commons/thumb/7/77/Erwin_Schr%C3%B6dinger_-_Narodowe_Archiwum_Cyfrowe_%281-E-939%29.jpg/1280px-Erwin_Schr%C3%B6dinger_-_Narodowe_Archiwum_Cyfrowe_%281-E-939%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+      "originalURL": "https://thumb.wikimedia.org/wikipedia/commons/thumb/7/77/Erwin_Schr%C3%B6dinger_-_Narodowe_Archiwum_Cyfrowe_%281-E-939%29.jpg/1280px-Erwin_Schr%C3%B6dinger_-_Narodowe_Archiwum_Cyfrowe_%281-E-939%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "group": "an Austrian theoretical physicist"
     },
     {
       "id": "famous-faces-alfred-hitchcock-1",
@@ -2264,13 +2252,13 @@
       "knownBy": 999,
       "creator": null,
       "creatorDied": null,
-      "group": null,
       "latitude": null,
       "longitude": null,
       "fact": "Sir Alfred Joseph Hitchcock (13 August 1899 – 29 April 1980) was an English filmmaker. He is widely regarded as one of the greatest and most influential figures in the history of cinema.",
       "factSource": "https://en.wikipedia.org/wiki/Alfred_Hitchcock",
       "remoteKey": "packs/famous-faces/famous-faces-alfred-hitchcock-1.jpg",
-      "originalURL": "https://upload.wikimedia.org/wikipedia/commons/9/94/Hitchcock%2C_Alfred_02.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled"
+      "originalURL": "https://upload.wikimedia.org/wikipedia/commons/9/94/Hitchcock%2C_Alfred_02.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled",
+      "group": "an English filmmaker"
     },
     {
       "id": "famous-faces-ernest-hemingway-1",
@@ -2290,13 +2278,13 @@
       "knownBy": 999,
       "creator": null,
       "creatorDied": null,
-      "group": null,
       "latitude": null,
       "longitude": null,
       "fact": "Ernest Miller Hemingway ( HEM-ing-way; July 21, 1899 – July 2, 1961) was an American novelist, short-story writer, and journalist. Known for an economical, understated style that influenced later 20th-century writers, he has been romanticized for his adventurous lifestyle and outspoken, blunt public image.",
       "factSource": "https://en.wikipedia.org/wiki/Ernest_Hemingway",
       "remoteKey": "packs/famous-faces/famous-faces-ernest-hemingway-1.jpg",
-      "originalURL": "https://thumb.wikimedia.org/wikipedia/commons/thumb/2/28/ErnestHemingway.jpg/1280px-ErnestHemingway.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+      "originalURL": "https://thumb.wikimedia.org/wikipedia/commons/thumb/2/28/ErnestHemingway.jpg/1280px-ErnestHemingway.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "group": "an American novelist"
     },
     {
       "id": "famous-faces-duke-kahanamoku-1",
@@ -2316,13 +2304,13 @@
       "knownBy": 999,
       "creator": null,
       "creatorDied": null,
-      "group": null,
       "latitude": null,
       "longitude": null,
       "fact": "Duke Paoa Kahinu Mokoe Hulikohola Kahanamoku (August 24, 1890 – January 22, 1968) was a Hawaiian competition swimmer, lifeguard, and popularizer of the sport of surfing. A Native Hawaiian, he was born three years before the overthrow of the Hawaiian Kingdom.",
       "factSource": "https://en.wikipedia.org/wiki/Duke_Kahanamoku",
       "remoteKey": "packs/famous-faces/famous-faces-duke-kahanamoku-1.jpg",
-      "originalURL": "https://upload.wikimedia.org/wikipedia/commons/6/6d/Duke_Kahanamoku_1920c.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled"
+      "originalURL": "https://upload.wikimedia.org/wikipedia/commons/6/6d/Duke_Kahanamoku_1920c.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled",
+      "group": "a Hawaiian competition swimmer"
     },
     {
       "id": "famous-faces-j-r-r-tolkien-1",
@@ -2342,13 +2330,13 @@
       "knownBy": 999,
       "creator": null,
       "creatorDied": null,
-      "group": null,
       "latitude": null,
       "longitude": null,
       "fact": "John Ronald Reuel Tolkien (; 3 January 1892 – 2 September 1973) was an English writer and academic philologist. He was the author of the high fantasy works The Hobbit (1937) and The Lord of the Rings (1954–1955).",
       "factSource": "https://en.wikipedia.org/wiki/J._R._R._Tolkien",
       "remoteKey": "packs/famous-faces/famous-faces-j-r-r-tolkien-1.jpg",
-      "originalURL": "https://thumb.wikimedia.org/wikipedia/commons/thumb/d/d4/J._R._R._Tolkien%2C_ca._1925.jpg/1280px-J._R._R._Tolkien%2C_ca._1925.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+      "originalURL": "https://thumb.wikimedia.org/wikipedia/commons/thumb/d/d4/J._R._R._Tolkien%2C_ca._1925.jpg/1280px-J._R._R._Tolkien%2C_ca._1925.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "group": "an English writer and academic"
     },
     {
       "id": "famous-faces-mao-zedong-1",
@@ -2368,13 +2356,13 @@
       "knownBy": 999,
       "creator": null,
       "creatorDied": null,
-      "group": null,
       "latitude": null,
       "longitude": null,
       "fact": "Mao Zedong (26 December 1893 – 9 September 1976) was a Chinese communist revolutionary, political theorist and the founder of the People's Republic of China (PRC). He led China from the PRC's establishment in October 1949 until his death in September 1976, primarily through his role as the Chairman of the Chinese Communist Party (CCP).",
       "factSource": "https://en.wikipedia.org/wiki/Mao_Zedong",
       "remoteKey": "packs/famous-faces/famous-faces-mao-zedong-1.jpg",
-      "originalURL": "https://upload.wikimedia.org/wikipedia/commons/9/9b/Mao_Tse_Tung.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled"
+      "originalURL": "https://upload.wikimedia.org/wikipedia/commons/9/9b/Mao_Tse_Tung.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled",
+      "group": "a Chinese communist revolutionary"
     },
     {
       "id": "famous-faces-f-scott-fitzgerald-1",
@@ -2394,13 +2382,13 @@
       "knownBy": 999,
       "creator": null,
       "creatorDied": null,
-      "group": null,
       "latitude": null,
       "longitude": null,
       "fact": "Francis Scott Key Fitzgerald (September 24, 1896 – December 21, 1940), widely known as F. Scott Fitzgerald or simply Scott Fitzgerald, was an American novelist, essayist, and short story writer.",
       "factSource": "https://en.wikipedia.org/wiki/F._Scott_Fitzgerald",
       "remoteKey": "packs/famous-faces/famous-faces-f-scott-fitzgerald-1.jpg",
-      "originalURL": "https://upload.wikimedia.org/wikipedia/commons/8/85/Carl_van_Vechten_-_Francis_Scott_Fitzgerald_1937_Detail.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled"
+      "originalURL": "https://upload.wikimedia.org/wikipedia/commons/8/85/Carl_van_Vechten_-_Francis_Scott_Fitzgerald_1937_Detail.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled",
+      "group": "an American novelist"
     },
     {
       "id": "famous-faces-george-orwell-1",
@@ -2420,13 +2408,13 @@
       "knownBy": 999,
       "creator": null,
       "creatorDied": null,
-      "group": null,
       "latitude": null,
       "longitude": null,
       "fact": "Eric Arthur Blair (25 June 1903 – 21 January 1950) was an English novelist, poet, essayist, journalist, and critic who wrote under the pen name of George Orwell. His work is characterised by lucid prose, social criticism, opposition to all totalitarianism (both authoritarian communism and fascism), and support of democratic socialism.",
       "factSource": "https://en.wikipedia.org/wiki/George_Orwell",
       "remoteKey": "packs/famous-faces/famous-faces-george-orwell-1.jpg",
-      "originalURL": "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/82/George_Orwell%2C_c._1940_%2841928180381%29.jpg/1280px-George_Orwell%2C_c._1940_%2841928180381%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+      "originalURL": "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/82/George_Orwell%2C_c._1940_%2841928180381%29.jpg/1280px-George_Orwell%2C_c._1940_%2841928180381%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "group": "an English novelist"
     },
     {
       "id": "famous-faces-frida-kahlo-1",
@@ -2446,13 +2434,13 @@
       "knownBy": 999,
       "creator": null,
       "creatorDied": null,
-      "group": null,
       "latitude": null,
       "longitude": null,
       "fact": "Magdalena Carmen Frida Kahlo y Calderón (Spanish pronunciation: [ˈfɾiða ˈkalo]; 6 July 1907 – 13 July 1954) was a Mexican painter known for her many portraits, self-portraits, and works inspired by the nature and artifacts of Mexico.",
       "factSource": "https://en.wikipedia.org/wiki/Frida_Kahlo",
       "remoteKey": "packs/famous-faces/famous-faces-frida-kahlo-1.jpg",
-      "originalURL": "https://upload.wikimedia.org/wikipedia/commons/0/09/Frida_Kahlo%2C_by_Guillermo_Kahlo_%28cropped%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled"
+      "originalURL": "https://upload.wikimedia.org/wikipedia/commons/0/09/Frida_Kahlo%2C_by_Guillermo_Kahlo_%28cropped%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled",
+      "group": "a Mexican painter"
     },
     {
       "id": "famous-faces-jacques-tati-1",
@@ -2472,13 +2460,13 @@
       "knownBy": 999,
       "creator": null,
       "creatorDied": null,
-      "group": null,
       "latitude": null,
       "longitude": null,
       "fact": "Jacques Tati (French: [tati]; born Jacques Tatischeff, pronounced [tatiʃɛf]; 9 October 1907 – 5 November 1982) was a French mime, filmmaker, actor and screenwriter. He is best known for portraying the character Monsieur Hulot in his films Les Vacances de Monsieur Hulot (1953), Mon Oncle (1958), Playtime (1967), and Trafic (1971).",
       "factSource": "https://en.wikipedia.org/wiki/Jacques_Tati",
       "remoteKey": "packs/famous-faces/famous-faces-jacques-tati-1.jpg",
-      "originalURL": "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/85/09.07.1961._La_Belle_Gaillarde_%C3%A0_No%C3%A9_%281961%29_-_53Fi2337.jpg/1280px-09.07.1961._La_Belle_Gaillarde_%C3%A0_No%C3%A9_%281961%29_-_53Fi2337.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+      "originalURL": "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/85/09.07.1961._La_Belle_Gaillarde_%C3%A0_No%C3%A9_%281961%29_-_53Fi2337.jpg/1280px-09.07.1961._La_Belle_Gaillarde_%C3%A0_No%C3%A9_%281961%29_-_53Fi2337.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "group": "a French mime"
     },
     {
       "id": "famous-faces-simone-de-beauvoir-1",
@@ -2498,13 +2486,13 @@
       "knownBy": 999,
       "creator": null,
       "creatorDied": null,
-      "group": null,
       "latitude": null,
       "longitude": null,
       "fact": "Simone Lucie Ernestine Marie Bertrand de Beauvoir (9 January 1908 – 14 April 1986) was a French existentialist philosopher, writer, social theorist, and feminist activist.",
       "factSource": "https://en.wikipedia.org/wiki/Simone_de_Beauvoir",
       "remoteKey": "packs/famous-faces/famous-faces-simone-de-beauvoir-1.jpg",
-      "originalURL": "https://upload.wikimedia.org/wikipedia/commons/c/c1/Simone_de_Beauvoir2.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled"
+      "originalURL": "https://upload.wikimedia.org/wikipedia/commons/c/c1/Simone_de_Beauvoir2.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled",
+      "group": "a French existentialist philosopher"
     },
     {
       "id": "famous-faces-alan-turing-1",
@@ -2524,13 +2512,13 @@
       "knownBy": 999,
       "creator": null,
       "creatorDied": null,
-      "group": null,
       "latitude": null,
       "longitude": null,
       "fact": "Alan Mathison Turing (; 23 June 1912 – 7 June 1954) was an English mathematician, computer scientist, logician, cryptanalyst, philosopher and theoretical biologist.",
       "factSource": "https://en.wikipedia.org/wiki/Alan_Turing",
       "remoteKey": "packs/famous-faces/famous-faces-alan-turing-1.jpg",
-      "originalURL": "https://upload.wikimedia.org/wikipedia/commons/6/66/Alan_Turing_%281951%29_%28crop%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled"
+      "originalURL": "https://upload.wikimedia.org/wikipedia/commons/6/66/Alan_Turing_%281951%29_%28crop%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled",
+      "group": "an English"
     },
     {
       "id": "famous-faces-julia-child-1",
@@ -2550,13 +2538,13 @@
       "knownBy": 999,
       "creator": null,
       "creatorDied": null,
-      "group": null,
       "latitude": null,
       "longitude": null,
       "fact": "Julia Carolyn Child (née McWilliams; August 15, 1912 – August 13, 2004) was an American chef, author, and television personality.",
       "factSource": "https://en.wikipedia.org/wiki/Julia_Child",
       "remoteKey": "packs/famous-faces/famous-faces-julia-child-1.jpg",
-      "originalURL": "https://thumb.wikimedia.org/wikipedia/commons/thumb/e/e7/Cleopatra_Birrenbach_with_Julia_Child_wearing_Cleopatra%27s_scarf_in_2000.jpg/1280px-Cleopatra_Birrenbach_with_Julia_Child_wearing_Cleopatra%27s_scarf_in_2000.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+      "originalURL": "https://thumb.wikimedia.org/wikipedia/commons/thumb/e/e7/Cleopatra_Birrenbach_with_Julia_Child_wearing_Cleopatra%27s_scarf_in_2000.jpg/1280px-Cleopatra_Birrenbach_with_Julia_Child_wearing_Cleopatra%27s_scarf_in_2000.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "group": "an American chef"
     },
     {
       "id": "famous-faces-albert-camus-1",
@@ -2576,13 +2564,13 @@
       "knownBy": 999,
       "creator": null,
       "creatorDied": null,
-      "group": null,
       "latitude": null,
       "longitude": null,
       "fact": "Albert Camus ( kam-OO; French: [albɛʁ kamy] ; 7 November 1913 – 4 January 1960) was a French philosopher, writer, and political activist. He was the recipient of the 1957 Nobel Prize in Literature at the age of 44, the second-youngest recipient in history, and the first laureate in literature born in Africa.",
       "factSource": "https://en.wikipedia.org/wiki/Albert_Camus",
       "remoteKey": "packs/famous-faces/famous-faces-albert-camus-1.jpg",
-      "originalURL": "https://upload.wikimedia.org/wikipedia/commons/0/08/Albert_Camus%2C_gagnant_de_prix_Nobel%2C_portrait_en_buste%2C_pos%C3%A9_au_bureau%2C_faisant_face_%C3%A0_gauche%2C_cigarette_de_tabagisme.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled"
+      "originalURL": "https://upload.wikimedia.org/wikipedia/commons/0/08/Albert_Camus%2C_gagnant_de_prix_Nobel%2C_portrait_en_buste%2C_pos%C3%A9_au_bureau%2C_faisant_face_%C3%A0_gauche%2C_cigarette_de_tabagisme.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled",
+      "group": "a French philosopher"
     },
     {
       "id": "famous-faces-orson-welles-1",
@@ -2602,13 +2590,13 @@
       "knownBy": 999,
       "creator": null,
       "creatorDied": null,
-      "group": null,
       "latitude": null,
       "longitude": null,
       "fact": "George Orson Welles (May 6, 1915 – October 10, 1985) was an American actor and filmmaker. Remembered for his innovative work in film, radio, and theatre, he is considered among the greatest and most influential filmmakers of all time.",
       "factSource": "https://en.wikipedia.org/wiki/Orson_Welles",
       "remoteKey": "packs/famous-faces/famous-faces-orson-welles-1.jpg",
-      "originalURL": "https://thumb.wikimedia.org/wikipedia/commons/thumb/b/bc/Orson_Welles_1937_cr3-4.jpg/1280px-Orson_Welles_1937_cr3-4.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+      "originalURL": "https://thumb.wikimedia.org/wikipedia/commons/thumb/b/bc/Orson_Welles_1937_cr3-4.jpg/1280px-Orson_Welles_1937_cr3-4.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "group": "an American actor and filmmaker"
     },
     {
       "id": "famous-faces-billie-holiday-1",
@@ -2628,13 +2616,13 @@
       "knownBy": 999,
       "creator": null,
       "creatorDied": null,
-      "group": null,
       "latitude": null,
       "longitude": null,
       "fact": "Billie Holiday (born Eleanora Fagan; April 7, 1915 – July 17, 1959) was an American jazz and swing music singer. Nicknamed \"Lady Day\" by her friend and music partner, Lester Young, Holiday made significant contributions to jazz music and pop singing.",
       "factSource": "https://en.wikipedia.org/wiki/Billie_Holiday",
       "remoteKey": "packs/famous-faces/famous-faces-billie-holiday-1.jpg",
-      "originalURL": "https://thumb.wikimedia.org/wikipedia/commons/thumb/d/d1/%28Portrait_of_Billie_Holiday%2C_Downbeat%2C_New_York%2C_N.Y.%2C_ca._Feb._1947%29_%28LOC%29_%284843765564%29.jpg/1280px-%28Portrait_of_Billie_Holiday%2C_Downbeat%2C_New_York%2C_N.Y.%2C_ca._Feb._1947%29_%28LOC%29_%284843765564%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+      "originalURL": "https://thumb.wikimedia.org/wikipedia/commons/thumb/d/d1/%28Portrait_of_Billie_Holiday%2C_Downbeat%2C_New_York%2C_N.Y.%2C_ca._Feb._1947%29_%28LOC%29_%284843765564%29.jpg/1280px-%28Portrait_of_Billie_Holiday%2C_Downbeat%2C_New_York%2C_N.Y.%2C_ca._Feb._1947%29_%28LOC%29_%284843765564%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "group": "an American jazz and swing"
     },
     {
       "id": "famous-faces-roald-dahl-1",
@@ -2654,13 +2642,13 @@
       "knownBy": 999,
       "creator": null,
       "creatorDied": null,
-      "group": null,
       "latitude": null,
       "longitude": null,
       "fact": "Roald Dahl (13 September 1916 – 23 November 1990) was a British author of popular children's literature and short stories, a poet, screenwriter and a wartime fighter ace. His books have sold more than 300 million copies worldwide.",
       "factSource": "https://en.wikipedia.org/wiki/Roald_Dahl",
       "remoteKey": "packs/famous-faces/famous-faces-roald-dahl-1.jpg",
-      "originalURL": "https://upload.wikimedia.org/wikipedia/commons/0/01/Roald_Dahl_%281982%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled"
+      "originalURL": "https://upload.wikimedia.org/wikipedia/commons/0/01/Roald_Dahl_%281982%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled",
+      "group": "a British author"
     },
     {
       "id": "famous-faces-ingrid-bergman-1",
@@ -2680,13 +2668,13 @@
       "knownBy": 999,
       "creator": null,
       "creatorDied": null,
-      "group": null,
       "latitude": null,
       "longitude": null,
       "fact": "Ingrid Bergman (29 August 1915 – 29 August 1982) was a Swedish actress. With a career spanning five decades, Bergman is often regarded as one of the most influential actresses in the history of cinema.",
       "factSource": "https://en.wikipedia.org/wiki/Ingrid_Bergman",
       "remoteKey": "packs/famous-faces/famous-faces-ingrid-bergman-1.jpg",
-      "originalURL": "https://upload.wikimedia.org/wikipedia/commons/b/b8/Ingrid_Bergman_The_Constant_Wife_1975_%28cropped%29.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled"
+      "originalURL": "https://upload.wikimedia.org/wikipedia/commons/b/b8/Ingrid_Bergman_The_Constant_Wife_1975_%28cropped%29.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled",
+      "group": "a Swedish actress"
     },
     {
       "id": "famous-faces-leonard-bernstein-1",
@@ -2706,13 +2694,13 @@
       "knownBy": 999,
       "creator": null,
       "creatorDied": null,
-      "group": null,
       "latitude": null,
       "longitude": null,
       "fact": "Leonard Bernstein ( BURN-styne; born Louis Bernstein; August 25, 1918 – October 14, 1990) was an American conductor, composer, pianist, music educator, author, and humanitarian. Considered to be one of the most important conductors of his time, he was the first American-born conductor to receive international acclaim.",
       "factSource": "https://en.wikipedia.org/wiki/Leonard_Bernstein",
       "remoteKey": "packs/famous-faces/famous-faces-leonard-bernstein-1.jpg",
-      "originalURL": "https://thumb.wikimedia.org/wikipedia/commons/thumb/1/11/Leonard_Bernstein_by_Jack_Mitchell_%28high_quality%29.jpg/1280px-Leonard_Bernstein_by_Jack_Mitchell_%28high_quality%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+      "originalURL": "https://thumb.wikimedia.org/wikipedia/commons/thumb/1/11/Leonard_Bernstein_by_Jack_Mitchell_%28high_quality%29.jpg/1280px-Leonard_Bernstein_by_Jack_Mitchell_%28high_quality%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "group": "an American conductor"
     },
     {
       "id": "famous-faces-doris-day-1",
@@ -2732,13 +2720,13 @@
       "knownBy": 999,
       "creator": null,
       "creatorDied": null,
-      "group": null,
       "latitude": null,
       "longitude": null,
       "fact": "Doris Day (born Doris Mary Anne Kappelhoff; April 3, 1922 – May 13, 2019) was an American actress and singer.",
       "factSource": "https://en.wikipedia.org/wiki/Doris_Day",
       "remoteKey": "packs/famous-faces/famous-faces-doris-day-1.jpg",
-      "originalURL": "https://upload.wikimedia.org/wikipedia/commons/5/5e/Doris_Day_1958_crop.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled"
+      "originalURL": "https://upload.wikimedia.org/wikipedia/commons/5/5e/Doris_Day_1958_crop.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled",
+      "group": "an American actress and singer"
     },
     {
       "id": "famous-faces-charlie-parker-1",
@@ -2758,13 +2746,13 @@
       "knownBy": 999,
       "creator": null,
       "creatorDied": null,
-      "group": null,
       "latitude": null,
       "longitude": null,
       "fact": "Charles Parker Jr. (August 29, 1920 – March 12, 1955), nicknamed \"Bird\" or \"Yardbird\", was an American jazz saxophonist, bandleader, and composer.",
       "factSource": "https://en.wikipedia.org/wiki/Charlie_Parker",
       "remoteKey": "packs/famous-faces/famous-faces-charlie-parker-1.jpg",
-      "originalURL": "https://upload.wikimedia.org/wikipedia/commons/4/48/%28Portrait_of_Charlie_Parker_and_Tommy_Potter%2C_Three_Deuces%2C_New_York%2C_N.Y.%2C_ca._Aug._1947%29_%28LOC%29_%284843140637%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled"
+      "originalURL": "https://upload.wikimedia.org/wikipedia/commons/4/48/%28Portrait_of_Charlie_Parker_and_Tommy_Potter%2C_Three_Deuces%2C_New_York%2C_N.Y.%2C_ca._Aug._1947%29_%28LOC%29_%284843140637%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled",
+      "group": "an American jazz saxophonist"
     },
     {
       "id": "famous-faces-james-baldwin-1",
@@ -2784,13 +2772,13 @@
       "knownBy": 999,
       "creator": null,
       "creatorDied": null,
-      "group": null,
       "latitude": null,
       "longitude": null,
       "fact": "James Arthur Baldwin (né Jones; August 2, 1924 – December 1, 1987) was an American writer and civil rights activist who garnered acclaim for his essays, novels, plays, and poems. His 1953 novel Go Tell It on the Mountain has been ranked by Time magazine as one of the top 100 English-language novels.",
       "factSource": "https://en.wikipedia.org/wiki/James_Baldwin",
       "remoteKey": "packs/famous-faces/famous-faces-james-baldwin-1.jpg",
-      "originalURL": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/46/James_Baldwin_2_Allan_Warren.jpg/1280px-James_Baldwin_2_Allan_Warren.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+      "originalURL": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/46/James_Baldwin_2_Allan_Warren.jpg/1280px-James_Baldwin_2_Allan_Warren.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "group": "an American writer and civil"
     },
     {
       "id": "famous-faces-chuck-berry-1",
@@ -2810,13 +2798,13 @@
       "knownBy": 999,
       "creator": null,
       "creatorDied": null,
-      "group": null,
       "latitude": null,
       "longitude": null,
       "fact": "Charles Edward Anderson Berry (October 18, 1926 – March 18, 2017) was an American guitarist, singer, and songwriter who was one of the pioneers of rock and roll.",
       "factSource": "https://en.wikipedia.org/wiki/Chuck_Berry",
       "remoteKey": "packs/famous-faces/famous-faces-chuck-berry-1.jpg",
-      "originalURL": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/4e/Chuck_Berry_1965.jpg/1280px-Chuck_Berry_1965.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+      "originalURL": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/4e/Chuck_Berry_1965.jpg/1280px-Chuck_Berry_1965.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "group": "an American guitarist"
     },
     {
       "id": "famous-faces-gabriel-garcía-márquez-1",
@@ -2836,13 +2824,13 @@
       "knownBy": 999,
       "creator": null,
       "creatorDied": null,
-      "group": null,
       "latitude": null,
       "longitude": null,
       "fact": "Gabriel José García Márquez (Latin American Spanish: [ɡaˈβɾjel ɣaɾˈsi.a ˈmaɾ.kes] ; 6 March 1927 – 17 April 2014) was a Colombian writer and journalist, known affectionately as Gabo ([ˈɡaβo]) or Gabito ([ɡaˈβito]) throughout Latin America.",
       "factSource": "https://en.wikipedia.org/wiki/Gabriel_Garc%C3%ADa_M%C3%A1rquez",
       "remoteKey": "packs/famous-faces/famous-faces-gabriel-garcía-márquez-1.jpg",
-      "originalURL": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/5b/Gabriel_Garc%C3%ADa_M%C3%A1rquez_02.jpg/1280px-Gabriel_Garc%C3%ADa_M%C3%A1rquez_02.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+      "originalURL": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/5b/Gabriel_Garc%C3%ADa_M%C3%A1rquez_02.jpg/1280px-Gabriel_Garc%C3%ADa_M%C3%A1rquez_02.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "group": "a Colombian writer and journalist"
     },
     {
       "id": "famous-faces-grace-kelly-1",
@@ -2862,13 +2850,13 @@
       "knownBy": 999,
       "creator": null,
       "creatorDied": null,
-      "group": null,
       "latitude": null,
       "longitude": null,
       "fact": "Grace Patricia Kelly (November 12, 1929 – September 14, 1982) was an American actress and Princess of Monaco as the wife of Prince Rainier III from their marriage on April 18, 1956, until her death in 1982. Prior to her marriage, she achieved stardom in several significant Hollywood films in the early to mid-1950s.",
       "factSource": "https://en.wikipedia.org/wiki/Grace_Kelly",
       "remoteKey": "packs/famous-faces/famous-faces-grace-kelly-1.jpg",
-      "originalURL": "https://thumb.wikimedia.org/wikipedia/commons/thumb/f/f3/Gracia_van_Monaco_%281972%29.jpg/1280px-Gracia_van_Monaco_%281972%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+      "originalURL": "https://thumb.wikimedia.org/wikipedia/commons/thumb/f/f3/Gracia_van_Monaco_%281972%29.jpg/1280px-Gracia_van_Monaco_%281972%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "group": "an American actress and Princess"
     },
     {
       "id": "famous-faces-sean-connery-1",
@@ -2888,13 +2876,13 @@
       "knownBy": 999,
       "creator": null,
       "creatorDied": null,
-      "group": null,
       "latitude": null,
       "longitude": null,
       "fact": "Sir Thomas Sean Connery (25 August 1930 – 31 October 2020) was a Scottish actor and film producer. Connery was the first actor to portray the fictional British secret agent James Bond in motion pictures, starring in seven Bond films between 1962 and 1983.",
       "factSource": "https://en.wikipedia.org/wiki/Sean_Connery",
       "remoteKey": "packs/famous-faces/famous-faces-sean-connery-1.jpg",
-      "originalURL": "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/96/Sean_Connery_%281983%29.jpg/1280px-Sean_Connery_%281983%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+      "originalURL": "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/96/Sean_Connery_%281983%29.jpg/1280px-Sean_Connery_%281983%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "group": "a Scottish actor and film"
     },
     {
       "id": "famous-faces-ray-charles-1",
@@ -2914,13 +2902,13 @@
       "knownBy": 999,
       "creator": null,
       "creatorDied": null,
-      "group": null,
       "latitude": null,
       "longitude": null,
       "fact": "Ray Charles Robinson (September 23, 1930 – June 10, 2004) was an American singer, songwriter, and pianist. He is regarded as one of the most influential musicians of the 20th century and was often referred to by contemporaries as \"The Genius\".",
       "factSource": "https://en.wikipedia.org/wiki/Ray_Charles",
       "remoteKey": "packs/famous-faces/famous-faces-ray-charles-1.jpg",
-      "originalURL": "https://thumb.wikimedia.org/wikipedia/commons/thumb/e/ed/Aankomst_Ray_Charles_%28kop%29_op_Schiphol%2C_Bestanddeelnr_921-7410.jpg/1280px-Aankomst_Ray_Charles_%28kop%29_op_Schiphol%2C_Bestanddeelnr_921-7410.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+      "originalURL": "https://thumb.wikimedia.org/wikipedia/commons/thumb/e/ed/Aankomst_Ray_Charles_%28kop%29_op_Schiphol%2C_Bestanddeelnr_921-7410.jpg/1280px-Aankomst_Ray_Charles_%28kop%29_op_Schiphol%2C_Bestanddeelnr_921-7410.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "group": "an American singer"
     },
     {
       "id": "famous-faces-toni-morrison-1",
@@ -2940,13 +2928,13 @@
       "knownBy": 999,
       "creator": null,
       "creatorDied": null,
-      "group": null,
       "latitude": null,
       "longitude": null,
       "fact": "Chloe Anthony Wofford \"Toni\" Morrison (born Chloe Ardelia Wofford; February 18, 1931 – August 5, 2019) was an American novelist and editor. She was awarded the Nobel Prize in Literature in 1993.",
       "factSource": "https://en.wikipedia.org/wiki/Toni_Morrison",
       "remoteKey": "packs/famous-faces/famous-faces-toni-morrison-1.jpg",
-      "originalURL": "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/3a/Toni_Morrison.jpg/1280px-Toni_Morrison.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+      "originalURL": "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/3a/Toni_Morrison.jpg/1280px-Toni_Morrison.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "group": "an American novelist and editor"
     },
     {
       "id": "famous-faces-elizabeth-taylor-1",
@@ -2966,13 +2954,13 @@
       "knownBy": 999,
       "creator": null,
       "creatorDied": null,
-      "group": null,
       "latitude": null,
       "longitude": null,
       "fact": "Dame Elizabeth Rosemond Taylor (February 27, 1932 – March 23, 2011) was a British and American actress. She began her career as a child actress in the early 1940s and was one of the most popular stars of classical Hollywood cinema in the 1950s.",
       "factSource": "https://en.wikipedia.org/wiki/Elizabeth_Taylor",
       "remoteKey": "packs/famous-faces/famous-faces-elizabeth-taylor-1.jpg",
-      "originalURL": "https://upload.wikimedia.org/wikipedia/commons/4/40/Elizabeth_Taylor_with_Kennedy_award.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled"
+      "originalURL": "https://upload.wikimedia.org/wikipedia/commons/4/40/Elizabeth_Taylor_with_Kennedy_award.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled",
+      "group": "a British and American actress"
     },
     {
       "id": "famous-faces-yuri-gagarin-1",
@@ -2992,13 +2980,13 @@
       "knownBy": 999,
       "creator": null,
       "creatorDied": null,
-      "group": null,
       "latitude": null,
       "longitude": null,
       "fact": "Yuri Alekseyevich Gagarin (9 March 1934 – 27 March 1968) was a Soviet pilot and cosmonaut who became the first person to journey into outer space during the first successful crewed spaceflight. He was launched from the Baikonur Cosmodrome in the Kazakh SSR.",
       "factSource": "https://en.wikipedia.org/wiki/Yuri_Gagarin",
       "remoteKey": "packs/famous-faces/famous-faces-yuri-gagarin-1.jpg",
-      "originalURL": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/4d/Yuri_Gagarin_portrait.png/1280px-Yuri_Gagarin_portrait.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+      "originalURL": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/4d/Yuri_Gagarin_portrait.png/1280px-Yuri_Gagarin_portrait.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "group": "a Soviet pilot and cosmonaut"
     },
     {
       "id": "famous-faces-brigitte-bardot-1",
@@ -3018,13 +3006,13 @@
       "knownBy": 999,
       "creator": null,
       "creatorDied": null,
-      "group": null,
       "latitude": null,
       "longitude": null,
       "fact": "Brigitte Anne-Marie Bardot (French: [bʁiʒit anmaʁi baʁdo]; 28 September 1934 – 28 December 2025), often referred to by her initials B.B., was a French actress, singer, model, and animal rights activist.",
       "factSource": "https://en.wikipedia.org/wiki/Brigitte_Bardot",
       "remoteKey": "packs/famous-faces/famous-faces-brigitte-bardot-1.jpg",
-      "originalURL": "https://upload.wikimedia.org/wikipedia/commons/e/e1/Brigitte_Bardot_-_1962.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled"
+      "originalURL": "https://upload.wikimedia.org/wikipedia/commons/e/e1/Brigitte_Bardot_-_1962.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled",
+      "group": "a French actress"
     },
     {
       "id": "famous-faces-luciano-pavarotti-1",
@@ -3044,13 +3032,13 @@
       "knownBy": 999,
       "creator": null,
       "creatorDied": null,
-      "group": null,
       "latitude": null,
       "longitude": null,
       "fact": "Luciano Pavarotti (12 October 1935 – 6 September 2007) was an Italian operatic tenor who during the late part of his career crossed over into popular music, eventually becoming one of the most acclaimed tenors of all time.",
       "factSource": "https://en.wikipedia.org/wiki/Luciano_Pavarotti",
       "remoteKey": "packs/famous-faces/famous-faces-luciano-pavarotti-1.jpg",
-      "originalURL": "https://upload.wikimedia.org/wikipedia/commons/0/09/Luciano_Pavarotti_2004.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled"
+      "originalURL": "https://upload.wikimedia.org/wikipedia/commons/0/09/Luciano_Pavarotti_2004.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled",
+      "group": "an Italian operatic tenor"
     },
     {
       "id": "famous-faces-aretha-franklin-1",
@@ -3070,13 +3058,13 @@
       "knownBy": 999,
       "creator": null,
       "creatorDied": null,
-      "group": null,
       "latitude": null,
       "longitude": null,
       "fact": "Aretha Louise Franklin ( ə-REE-thə; March 25, 1942 – August 16, 2018) was an American singer-songwriter and pianist. Regarded as the \"Queen of Soul\", she was twice named by Rolling Stone magazine as the greatest singer of all time.",
       "factSource": "https://en.wikipedia.org/wiki/Aretha_Franklin",
       "remoteKey": "packs/famous-faces/famous-faces-aretha-franklin-1.jpg",
-      "originalURL": "https://upload.wikimedia.org/wikipedia/commons/f/f9/Aretha_Franklin.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled"
+      "originalURL": "https://upload.wikimedia.org/wikipedia/commons/f/f9/Aretha_Franklin.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled",
+      "group": "an American singer-songwriter and pianist"
     },
     {
       "id": "famous-faces-jimi-hendrix-1",
@@ -3096,13 +3084,13 @@
       "knownBy": 999,
       "creator": null,
       "creatorDied": null,
-      "group": null,
       "latitude": null,
       "longitude": null,
       "fact": "James Marshall \"Jimi\" Hendrix (born Johnny Allen Hendrix; November 27, 1942 – September 18, 1970) was an American guitarist, singer, and songwriter. He is widely regarded as one of the greatest and most influential guitarists of all time.",
       "factSource": "https://en.wikipedia.org/wiki/Jimi_Hendrix",
       "remoteKey": "packs/famous-faces/famous-faces-jimi-hendrix-1.jpg",
-      "originalURL": "https://upload.wikimedia.org/wikipedia/commons/f/fa/1968_The_Jimi_Hendrix_Experience_%28cropped%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled"
+      "originalURL": "https://upload.wikimedia.org/wikipedia/commons/f/fa/1968_The_Jimi_Hendrix_Experience_%28cropped%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled",
+      "group": "an American guitarist"
     },
     {
       "id": "famous-faces-harrison-ford-1",
@@ -3122,7 +3110,6 @@
       "knownBy": 999,
       "creator": null,
       "creatorDied": null,
-      "group": null,
       "latitude": null,
       "longitude": null,
       "fact": "Harrison Ford (born July 13, 1942) is an American actor. Regarded as a cinematic cultural icon, Ford's accolades include nominations for an Academy Award, a British Academy Film Award, two Emmy Awards, five Golden Globes and two SAG-AFTRA's Actor Awards.",
@@ -3148,13 +3135,13 @@
       "knownBy": 999,
       "creator": null,
       "creatorDied": null,
-      "group": null,
       "latitude": null,
       "longitude": null,
       "fact": "Bruce Lee (born Lee Jun-fan; November 27, 1940 – July 20, 1973) was a Hong Kong and American martial artist, actor, and filmmaker.",
       "factSource": "https://en.wikipedia.org/wiki/Bruce_Lee",
       "remoteKey": "packs/famous-faces/famous-faces-bruce-lee-1.jpg",
-      "originalURL": "https://upload.wikimedia.org/wikipedia/commons/c/ca/Bruce_Lee_1973.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled"
+      "originalURL": "https://upload.wikimedia.org/wikipedia/commons/c/ca/Bruce_Lee_1973.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled",
+      "group": "a Hong Kong and American"
     },
     {
       "id": "famous-faces-stephen-king-1",
@@ -3174,7 +3161,6 @@
       "knownBy": 999,
       "creator": null,
       "creatorDied": null,
-      "group": null,
       "latitude": null,
       "longitude": null,
       "fact": "Stephen Edwin King (born September 21, 1947) is an American author. Dubbed the \"King of Horror\", he is widely known for his horror fiction and has also explored other genres, among them suspense, crime, science-fiction, fantasy, and mystery.",
@@ -3200,7 +3186,6 @@
       "knownBy": 999,
       "creator": null,
       "creatorDied": null,
-      "group": null,
       "latitude": null,
       "longitude": null,
       "fact": "Sir Elton Hercules John (born Reginald Kenneth Dwight, 25 March 1947) is a British singer, composer and pianist. An influential figure in popular culture, he is known for his flamboyant fashion, showmanship and songwriting partnership with the lyricist Bernie Taupin.",
@@ -3226,7 +3211,6 @@
       "knownBy": 999,
       "creator": null,
       "creatorDied": null,
-      "group": null,
       "latitude": null,
       "longitude": null,
       "fact": "Mary Louise \"Meryl\" Streep (born June 22, 1949) is an American actress.",
@@ -3252,7 +3236,6 @@
       "knownBy": 999,
       "creator": null,
       "creatorDied": null,
-      "group": null,
       "latitude": null,
       "longitude": null,
       "fact": "Stevland Hardaway Morris ( STEEV-lənd; né Judkins; born May 13, 1950), known professionally as Stevie Wonder, is an American singer-songwriter, musician, and record producer.",
@@ -3278,7 +3261,6 @@
       "knownBy": 999,
       "creator": null,
       "creatorDied": null,
-      "group": null,
       "latitude": null,
       "longitude": null,
       "fact": "William Henry Gates III (born October 28, 1955) is an American businessman and philanthropist. A pioneer of the microcomputer revolution of the 1970s and 1980s, he co-founded the software company Microsoft in 1975 with his childhood friend Paul Allen.",
@@ -3304,13 +3286,13 @@
       "knownBy": 999,
       "creator": null,
       "creatorDied": null,
-      "group": null,
       "latitude": null,
       "longitude": null,
       "fact": "Steven Paul Jobs (February 24, 1955 – October 5, 2011) was an American businessman and investor. A pioneer of the personal computer revolution of the 1970s and 1980s, Jobs co-founded Apple Inc.",
       "factSource": "https://en.wikipedia.org/wiki/Steve_Jobs",
       "remoteKey": "packs/famous-faces/famous-faces-steve-jobs-1.jpg",
-      "originalURL": "https://thumb.wikimedia.org/wikipedia/commons/thumb/f/f5/Steve_Jobs_Headshot_2010-CROP2.jpg/1280px-Steve_Jobs_Headshot_2010-CROP2.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+      "originalURL": "https://thumb.wikimedia.org/wikipedia/commons/thumb/f/f5/Steve_Jobs_Headshot_2010-CROP2.jpg/1280px-Steve_Jobs_Headshot_2010-CROP2.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "group": "an American businessman and investor"
     },
     {
       "id": "famous-faces-whitney-houston-1",
@@ -3330,13 +3312,13 @@
       "knownBy": 999,
       "creator": null,
       "creatorDied": null,
-      "group": null,
       "latitude": null,
       "longitude": null,
       "fact": "Whitney Elizabeth Houston (August 9, 1963 – February 11, 2012) was an American singer, actress, film producer, and record producer. Commonly referred to as \"the Voice\", Houston is one of the best-selling music artists of all time, with sales of more than 220 million records worldwide.",
       "factSource": "https://en.wikipedia.org/wiki/Whitney_Houston",
       "remoteKey": "packs/famous-faces/famous-faces-whitney-houston-1.jpg",
-      "originalURL": "https://upload.wikimedia.org/wikipedia/commons/5/52/Whitney_Houston_%28cropped3%29.JPEG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled"
+      "originalURL": "https://upload.wikimedia.org/wikipedia/commons/5/52/Whitney_Houston_%28cropped3%29.JPEG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled",
+      "group": "an American singer"
     },
     {
       "id": "famous-faces-oprah-winfrey-1",
@@ -3356,7 +3338,6 @@
       "knownBy": 999,
       "creator": null,
       "creatorDied": null,
-      "group": null,
       "latitude": null,
       "longitude": null,
       "fact": "Oprah Gail Winfrey (; born Orpah Gail Winfrey; January 29, 1954) is an American media mogul, actress, executive producer, author, and television personality. She is best known for her talk show, The Oprah Winfrey Show, broadcast from Chicago, which ran in national syndication for 25 years, from 1986 to 2011.",
@@ -3382,13 +3363,13 @@
       "knownBy": 999,
       "creator": null,
       "creatorDied": null,
-      "group": null,
       "latitude": null,
       "longitude": null,
       "fact": "Diana, Princess of Wales (born Diana Frances Spencer; 1 July 1961 – 31 August 1997), was a member of the British royal family. She was the first wife of Charles III (then Prince of Wales) and mother of Princes William and Harry.",
       "factSource": "https://en.wikipedia.org/wiki/Diana%2C_Princess_of_Wales",
       "remoteKey": "packs/famous-faces/famous-faces-diana-princess-of-wales-1.jpg",
-      "originalURL": "https://upload.wikimedia.org/wikipedia/commons/f/f3/Diana%2C_Princess_of_Wales_1997_%282%29_%28cropped%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled"
+      "originalURL": "https://upload.wikimedia.org/wikipedia/commons/f/f3/Diana%2C_Princess_of_Wales_1997_%282%29_%28cropped%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled",
+      "group": "a member"
     },
     {
       "id": "famous-faces-barack-obama-1",
@@ -3408,13 +3389,13 @@
       "knownBy": 999,
       "creator": null,
       "creatorDied": null,
-      "group": null,
       "latitude": null,
       "longitude": null,
       "fact": "Barack Hussein Obama II (born August 4, 1961) is an American retired politician who served as the 44th president of the United States from 2009 to 2017. A member of the Democratic Party, he was the first African American to serve as president.",
       "factSource": "https://en.wikipedia.org/wiki/Barack_Obama",
       "remoteKey": "packs/famous-faces/famous-faces-barack-obama-1.jpg",
-      "originalURL": "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/8d/President_Barack_Obama.jpg/1280px-President_Barack_Obama.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+      "originalURL": "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/8d/President_Barack_Obama.jpg/1280px-President_Barack_Obama.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "group": "a first African American"
     },
     {
       "id": "famous-faces-mahatma-gandhi-1",
@@ -3434,13 +3415,13 @@
       "knownBy": 287,
       "creator": null,
       "creatorDied": null,
-      "group": null,
       "latitude": null,
       "longitude": null,
       "fact": "Mohandas Karamchand Gandhi (2 October 1869 – 30 January 1948) was an Indian lawyer, anti-colonial nationalist, and political ethicist who employed nonviolent resistance to lead the successful campaign for India's independence from British rule, and to later inspire movements for civil rights and freedom across the world.",
       "factSource": "https://en.wikipedia.org/wiki/Mahatma_Gandhi",
       "remoteKey": "packs/famous-faces/famous-faces-mahatma-gandhi-1.jpg",
-      "originalURL": "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/8d/2025-09-18T10_56_19.426319.jpg/1280px-2025-09-18T10_56_19.426319.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+      "originalURL": "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/8d/2025-09-18T10_56_19.426319.jpg/1280px-2025-09-18T10_56_19.426319.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "group": "an Indian lawyer"
     },
     {
       "id": "famous-faces-george-frideric-handel-1",
@@ -3460,13 +3441,13 @@
       "knownBy": 159,
       "creator": null,
       "creatorDied": null,
-      "group": null,
       "latitude": null,
       "longitude": null,
       "fact": "George Frideric (or Frederick) Handel ( HAN-dəl; baptised Georg Fried[e]rich Händel, German: [ˈɡeːɔʁk ˈfʁiːdʁɪç ˈhɛndl̩] ; 5 March 1685 [O.S. 23 February 1684] – 14 April 1759) was a German-British Baroque composer well-known for his operas, oratorios, anthems, concerti grossi, and organ concerti.",
       "factSource": "https://en.wikipedia.org/wiki/George_Frideric_Handel",
       "remoteKey": "packs/famous-faces/famous-faces-george-frideric-handel-1.jpg",
-      "originalURL": "https://thumb.wikimedia.org/wikipedia/commons/thumb/f/fa/George_Frideric_Handel_by_Balthasar_Denner.jpg/1280px-George_Frideric_Handel_by_Balthasar_Denner.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+      "originalURL": "https://thumb.wikimedia.org/wikipedia/commons/thumb/f/fa/George_Frideric_Handel_by_Balthasar_Denner.jpg/1280px-George_Frideric_Handel_by_Balthasar_Denner.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "group": "a German-British Baroque composer well-known"
     },
     {
       "id": "famous-faces-johann-gottlieb-fichte-1",
@@ -3486,13 +3467,13 @@
       "knownBy": 114,
       "creator": null,
       "creatorDied": null,
-      "group": null,
       "latitude": null,
       "longitude": null,
       "fact": "Johann Gottlieb Fichte (19 May 1762 – 29 January 1814) was a German philosopher, and a founding figure of German idealism, which developed from the theoretical and ethical writings of Immanuel Kant. Fichte is an important philosopher in his own right due to his original insights into the nature of self-consciousness or self-awareness.",
       "factSource": "https://en.wikipedia.org/wiki/Johann_Gottlieb_Fichte",
       "remoteKey": "packs/famous-faces/famous-faces-johann-gottlieb-fichte-1.jpg",
-      "originalURL": "https://upload.wikimedia.org/wikipedia/commons/5/55/Americana_Fichte_Johann_Gottlieb.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled"
+      "originalURL": "https://upload.wikimedia.org/wikipedia/commons/5/55/Americana_Fichte_Johann_Gottlieb.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled",
+      "group": "a German philosopher"
     },
     {
       "id": "famous-faces-harriet-tubman-1",
@@ -3512,13 +3493,13 @@
       "knownBy": 106,
       "creator": null,
       "creatorDied": null,
-      "group": null,
       "latitude": null,
       "longitude": null,
       "fact": "Harriet Tubman (born Araminta Ross, c. March 1822 – March 10, 1913) was an American abolitionist and social activist.",
       "factSource": "https://en.wikipedia.org/wiki/Harriet_Tubman",
       "remoteKey": "packs/famous-faces/famous-faces-harriet-tubman-1.jpg",
-      "originalURL": "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/8e/%22Harriet_Tubman%22_-_NARA_-_559120.jpg/1280px-%22Harriet_Tubman%22_-_NARA_-_559120.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+      "originalURL": "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/8e/%22Harriet_Tubman%22_-_NARA_-_559120.jpg/1280px-%22Harriet_Tubman%22_-_NARA_-_559120.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "group": "an American abolitionist and social"
     },
     {
       "id": "famous-faces-winona-ryder-1",
@@ -3538,7 +3519,6 @@
       "knownBy": 100,
       "creator": null,
       "creatorDied": null,
-      "group": null,
       "latitude": null,
       "longitude": null,
       "fact": "Winona Laura Horowitz ( wi-NOH-nə; born October 29, 1971), known professionally as Winona Ryder, is an American actress. Having come to attention playing \"quirky\" characters in the late 1980s, she achieved success with her more dramatic performances in the 1990s.",
@@ -3564,13 +3544,13 @@
       "knownBy": 94,
       "creator": null,
       "creatorDied": null,
-      "group": null,
       "latitude": null,
       "longitude": null,
       "fact": "Sir Ronald Ross (13 May 1857 – 16 September 1932) was a British medical doctor. He received the 1902 Nobel Prize for Physiology or Medicine \"for his work on malaria, by which he has shown how it enters the organism and thereby has laid the foundation for successful research on this disease and methods of combating it\".",
       "factSource": "https://en.wikipedia.org/wiki/Ronald_Ross",
       "remoteKey": "packs/famous-faces/famous-faces-ronald-ross-1.jpg",
-      "originalURL": "https://thumb.wikimedia.org/wikipedia/commons/thumb/d/d0/Portrait_of_Sir_Ronald_Ross_%281857-1932%29_Wellcome_L0035995.jpg/1280px-Portrait_of_Sir_Ronald_Ross_%281857-1932%29_Wellcome_L0035995.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+      "originalURL": "https://thumb.wikimedia.org/wikipedia/commons/thumb/d/d0/Portrait_of_Sir_Ronald_Ross_%281857-1932%29_Wellcome_L0035995.jpg/1280px-Portrait_of_Sir_Ronald_Ross_%281857-1932%29_Wellcome_L0035995.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "group": "a British medical doctor"
     },
     {
       "id": "famous-faces-andy-murray-1",
@@ -3590,7 +3570,6 @@
       "knownBy": 91,
       "creator": null,
       "creatorDied": null,
-      "group": null,
       "latitude": null,
       "longitude": null,
       "fact": "Sir Andrew Barron Murray (born 15 May 1987) is a British professional tennis coach and former player. He was ranked as the world No.",
@@ -3616,7 +3595,6 @@
       "knownBy": 90,
       "creator": null,
       "creatorDied": null,
-      "group": null,
       "latitude": null,
       "longitude": null,
       "fact": "Pope Pius II (Latin: Pius PP. II, Italian: Pio II), born Enea Silvio Bartolomeo Piccolomini (Latin: Aeneas Silvius Bartholomeus; 18 October 1405 – 14 August 1464), was head of the Catholic Church and ruler of the Papal States from 19 August 1458 to his death in 1464.",
@@ -3642,7 +3620,6 @@
       "knownBy": 89,
       "creator": null,
       "creatorDied": null,
-      "group": null,
       "latitude": null,
       "longitude": null,
       "fact": "Jennifer Lynn Connelly (born December 12, 1970) is an American actress. She began her career as a child model before making her acting debut in the 1984 crime film Once Upon a Time in America.",
@@ -3668,13 +3645,13 @@
       "knownBy": 83,
       "creator": null,
       "creatorDied": null,
-      "group": null,
       "latitude": null,
       "longitude": null,
       "fact": "Michel Houellebecq (French pronunciation: [miʃɛl wɛlbɛk]; born Michel Thomas on 26 February 1956) is a French author of novels, poems, and essays, as well as an occasional actor, filmmaker, and singer. His first book was a monograph on the horror writer H.",
       "factSource": "https://en.wikipedia.org/wiki/Michel_Houellebecq",
       "remoteKey": "packs/famous-faces/famous-faces-michel-houellebecq-1.jpg",
-      "originalURL": "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/84/Michel_Houellebecq_no_Fronteiras_do_Pensamento_Porto_Alegre_2016_%2830895029365%29_%28cropped%29.jpg/1280px-Michel_Houellebecq_no_Fronteiras_do_Pensamento_Porto_Alegre_2016_%2830895029365%29_%28cropped%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+      "originalURL": "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/84/Michel_Houellebecq_no_Fronteiras_do_Pensamento_Porto_Alegre_2016_%2830895029365%29_%28cropped%29.jpg/1280px-Michel_Houellebecq_no_Fronteiras_do_Pensamento_Porto_Alegre_2016_%2830895029365%29_%28cropped%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "group": "a monograph on the horror"
     },
     {
       "id": "famous-faces-alexander-viii-1",
@@ -3694,7 +3671,6 @@
       "knownBy": 80,
       "creator": null,
       "creatorDied": null,
-      "group": null,
       "latitude": null,
       "longitude": null,
       "fact": "Pope Alexander VIII (Italian: Alessandro VIII; 22 April 1610 – 1 February 1691), born Pietro Vito Ottoboni, was head of the Catholic Church and ruler of the Papal States from 6 October 1689 to his death in February 1691. He is the most recent pope to take the pontifical name \"Alexander\".",
@@ -3720,13 +3696,13 @@
       "knownBy": 80,
       "creator": null,
       "creatorDied": null,
-      "group": null,
       "latitude": null,
       "longitude": null,
       "fact": "Mikhail Tal (9 November 1936 – 28 June 1992) was a Soviet Latvian chess grandmaster and the eighth World Chess Champion. He is considered a creative genius and is widely regarded as one of the most influential players in chess history.",
       "factSource": "https://en.wikipedia.org/wiki/Mikhail_Tal",
       "remoteKey": "packs/famous-faces/famous-faces-mikhail-tal-1.jpg",
-      "originalURL": "https://thumb.wikimedia.org/wikipedia/commons/thumb/b/bf/Mikhail_Tal_1982.jpg/1280px-Mikhail_Tal_1982.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+      "originalURL": "https://thumb.wikimedia.org/wikipedia/commons/thumb/b/bf/Mikhail_Tal_1982.jpg/1280px-Mikhail_Tal_1982.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "group": "a Soviet Latvian chess grandmaster"
     },
     {
       "id": "famous-faces-farrah-fawcett-1",
@@ -3746,13 +3722,13 @@
       "knownBy": 79,
       "creator": null,
       "creatorDied": null,
-      "group": null,
       "latitude": null,
       "longitude": null,
       "fact": "Mary Ferrah Leni Fawcett (February 2, 1947 – June 25, 2009) was an American actress. A four-time Primetime Emmy Award nominee and six-time Golden Globe Award nominee, Fawcett rose to international fame when she played a starring role in the first season of the television series Charlie's Angels.",
       "factSource": "https://en.wikipedia.org/wiki/Farrah_Fawcett",
       "remoteKey": "packs/famous-faces/famous-faces-farrah-fawcett-1.jpg",
-      "originalURL": "https://upload.wikimedia.org/wikipedia/commons/b/ba/Farrah_Fawcett_1977.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled"
+      "originalURL": "https://upload.wikimedia.org/wikipedia/commons/b/ba/Farrah_Fawcett_1977.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled",
+      "group": "an American actress"
     },
     {
       "id": "famous-faces-francis-william-aston-1",
@@ -3772,13 +3748,13 @@
       "knownBy": 78,
       "creator": null,
       "creatorDied": null,
-      "group": null,
       "latitude": null,
       "longitude": null,
       "fact": "Francis William Aston FRS (1 September 1877 – 20 November 1945) was a British chemist and physicist who won the 1922 Nobel Prize in Chemistry for his discovery, by means of his mass spectrograph, of isotopes in many non-radioactive elements and for his enunciation of the whole number rule.",
       "factSource": "https://en.wikipedia.org/wiki/Francis_William_Aston",
       "remoteKey": "packs/famous-faces/famous-faces-francis-william-aston-1.jpg",
-      "originalURL": "https://thumb.wikimedia.org/wikipedia/commons/thumb/e/ea/Portrait_of_Francis_William_Aston_%281877-1945%29%2C_Chemist_and_Physicist_%282536015497%29_%28cropped%29.jpg/1280px-Portrait_of_Francis_William_Aston_%281877-1945%29%2C_Chemist_and_Physicist_%282536015497%29_%28cropped%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+      "originalURL": "https://thumb.wikimedia.org/wikipedia/commons/thumb/e/ea/Portrait_of_Francis_William_Aston_%281877-1945%29%2C_Chemist_and_Physicist_%282536015497%29_%28cropped%29.jpg/1280px-Portrait_of_Francis_William_Aston_%281877-1945%29%2C_Chemist_and_Physicist_%282536015497%29_%28cropped%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "group": "a British chemist and physicist"
     },
     {
       "id": "famous-faces-gaetano-donizetti-1",
@@ -3798,13 +3774,13 @@
       "knownBy": 77,
       "creator": null,
       "creatorDied": null,
-      "group": null,
       "latitude": null,
       "longitude": null,
       "fact": "Domenico Gaetano Maria Donizetti (29 November 1797 – 8 April 1848) was an Italian composer of the early Romantic era, best known for his over 70 operas.",
       "factSource": "https://en.wikipedia.org/wiki/Gaetano_Donizetti",
       "remoteKey": "packs/famous-faces/famous-faces-gaetano-donizetti-1.jpg",
-      "originalURL": "https://thumb.wikimedia.org/wikipedia/commons/thumb/c/c4/Fotoreproductie_van_Gaetano_Donizetti.png/1280px-Fotoreproductie_van_Gaetano_Donizetti.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+      "originalURL": "https://thumb.wikimedia.org/wikipedia/commons/thumb/c/c4/Fotoreproductie_van_Gaetano_Donizetti.png/1280px-Fotoreproductie_van_Gaetano_Donizetti.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "group": "an Italian composer"
     },
     {
       "id": "famous-faces-ernest-borgnine-1",
@@ -3824,13 +3800,13 @@
       "knownBy": 77,
       "creator": null,
       "creatorDied": null,
-      "group": null,
       "latitude": null,
       "longitude": null,
       "fact": "Ernest Borgnine ( BORG-nyne; born Ermes Effron Borgnino; January 24, 1917 – July 8, 2012) was an American actor whose career spanned over six decades. He was noted for his gruff but relaxed voice and gap-toothed Cheshire Cat grin.",
       "factSource": "https://en.wikipedia.org/wiki/Ernest_Borgnine",
       "remoteKey": "packs/famous-faces/famous-faces-ernest-borgnine-1.jpg",
-      "originalURL": "https://upload.wikimedia.org/wikipedia/commons/8/89/Ernest_Borgnine_McHale_McHale%27s_Navy_1962.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled"
+      "originalURL": "https://upload.wikimedia.org/wikipedia/commons/8/89/Ernest_Borgnine_McHale_McHale%27s_Navy_1962.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled",
+      "group": "an American actor whose career"
     },
     {
       "id": "famous-faces-kurt-russell-1",
@@ -3850,7 +3826,6 @@
       "knownBy": 76,
       "creator": null,
       "creatorDied": null,
-      "group": null,
       "latitude": null,
       "longitude": null,
       "fact": "Kurt Vogel Russell (born March 17, 1951) is an American actor. He began his career as a child actor before transitioning to leading roles as an adult in various genres such as action adventures, science-fiction, westerns, romance films, comedic films, and family dramas.",
@@ -3876,7 +3851,6 @@
       "knownBy": 73,
       "creator": null,
       "creatorDied": null,
-      "group": null,
       "latitude": null,
       "longitude": null,
       "fact": "Ingrida Šimonytė (Lithuanian: [ɪŋʲɡʲrʲɪˈdˠɐ ʃʲɪmˠoːˈnʲîːtʲeː]; born 15 November 1974) is a Lithuanian politician, public servant, and economist who served as the 17th prime minister of Lithuania from 2020 to 2024.",
@@ -3902,13 +3876,13 @@
       "knownBy": 73,
       "creator": null,
       "creatorDied": null,
-      "group": null,
       "latitude": null,
       "longitude": null,
       "fact": "Yuliy Borisovich Briner (Russian: Юлий Борисович Бринер; July 11, 1920 – October 10, 1985), known professionally as Yul Brynner (Russian: Юл Бриннер), was a Russian and American actor.",
       "factSource": "https://en.wikipedia.org/wiki/Yul_Brynner",
       "remoteKey": "packs/famous-faces/famous-faces-yul-brynner-1.jpg",
-      "originalURL": "https://upload.wikimedia.org/wikipedia/commons/3/39/Yul_Brynner_Anna_and_the_King_television_1972.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled"
+      "originalURL": "https://upload.wikimedia.org/wikipedia/commons/3/39/Yul_Brynner_Anna_and_the_King_television_1972.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled",
+      "group": "a Russian and American actor"
     },
     {
       "id": "famous-faces-paul-berg-1",
@@ -3928,13 +3902,13 @@
       "knownBy": 67,
       "creator": null,
       "creatorDied": null,
-      "group": null,
       "latitude": null,
       "longitude": null,
       "fact": "Paul Berg (June 30, 1926 – February 15, 2023) was an American biochemist and professor at Stanford University. He received the 1980 Nobel Prize in Chemistry \"for his fundamental studies of the biochemistry of nucleic acids, with particular regard to recombinant-DNA\".",
       "factSource": "https://en.wikipedia.org/wiki/Paul_Berg",
       "remoteKey": "packs/famous-faces/famous-faces-paul-berg-1.jpg",
-      "originalURL": "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/88/Paul_Berg_in_1980.jpg/1280px-Paul_Berg_in_1980.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+      "originalURL": "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/88/Paul_Berg_in_1980.jpg/1280px-Paul_Berg_in_1980.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "group": "an American biochemist and professor"
     },
     {
       "id": "famous-faces-peter-agre-1",
@@ -3954,7 +3928,6 @@
       "knownBy": 64,
       "creator": null,
       "creatorDied": null,
-      "group": null,
       "latitude": null,
       "longitude": null,
       "fact": "Peter Courtland Agre (; born January 30, 1949) is a Nobel Laureate American physician, molecular biologist, Bloomberg Distinguished Professor at the Johns Hopkins Bloomberg School of Public Health and Johns Hopkins School of Medicine, and director of the Johns Hopkins Malaria Research Institute.",
@@ -3980,13 +3953,13 @@
       "knownBy": 61,
       "creator": null,
       "creatorDied": null,
-      "group": null,
       "latitude": null,
       "longitude": null,
       "fact": "Christian Boehmer Anfinsen Jr. (March 26, 1916 – May 14, 1995) was an American biochemist.",
       "factSource": "https://en.wikipedia.org/wiki/Christian_B._Anfinsen",
       "remoteKey": "packs/famous-faces/famous-faces-christian-b-anfinsen-1.jpg",
-      "originalURL": "https://upload.wikimedia.org/wikipedia/commons/b/bb/Christian_B._Anfinsen_1950s.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled"
+      "originalURL": "https://upload.wikimedia.org/wikipedia/commons/b/bb/Christian_B._Anfinsen_1950s.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled",
+      "group": "an American biochemist"
     },
     {
       "id": "famous-faces-larry-hagman-1",
@@ -4006,13 +3979,13 @@
       "knownBy": 60,
       "creator": null,
       "creatorDied": null,
-      "group": null,
       "latitude": null,
       "longitude": null,
       "fact": "Larry Martin Hagman (September 21, 1931 – November 23, 2012) was an American actor, best known for playing ruthless oil baron J. R.",
       "factSource": "https://en.wikipedia.org/wiki/Larry_Hagman",
       "remoteKey": "packs/famous-faces/famous-faces-larry-hagman-1.jpg",
-      "originalURL": "https://upload.wikimedia.org/wikipedia/commons/c/c4/Larry_Hagman_2010.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled"
+      "originalURL": "https://upload.wikimedia.org/wikipedia/commons/c/c4/Larry_Hagman_2010.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled",
+      "group": "an American actor"
     },
     {
       "id": "famous-faces-herbert-c-brown-1",
@@ -4032,13 +4005,13 @@
       "knownBy": 58,
       "creator": null,
       "creatorDied": null,
-      "group": null,
       "latitude": null,
       "longitude": null,
       "fact": "Herbert Charles Brown (22 May 1912 – 19 December 2004) was an American chemist and recipient of the 1979 Nobel Prize in Chemistry for his work with organoboranes.",
       "factSource": "https://en.wikipedia.org/wiki/Herbert_C._Brown",
       "remoteKey": "packs/famous-faces/famous-faces-herbert-c-brown-1.jpg",
-      "originalURL": "https://upload.wikimedia.org/wikipedia/commons/1/11/33._Tagung_1983_Chemiker_Herbert_C._Brown_-_W134Nr.120809d_-_Willy_Pragher_%28cropped%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled"
+      "originalURL": "https://upload.wikimedia.org/wikipedia/commons/1/11/33._Tagung_1983_Chemiker_Herbert_C._Brown_-_W134Nr.120809d_-_Willy_Pragher_%28cropped%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled",
+      "group": "an American chemist and recipient"
     },
     {
       "id": "famous-faces-sergei-prokudin-gorskii-1",
@@ -4058,13 +4031,13 @@
       "knownBy": 57,
       "creator": null,
       "creatorDied": null,
-      "group": null,
       "latitude": null,
       "longitude": null,
       "fact": "Sergey Mikhaylovich Prokudin-Gorsky (Russian: Сергей Михайлович Прокудин-Горский, IPA: [sʲɪrˈɡʲej mʲɪˈxajləvʲɪtɕ prɐˈkudʲɪn ˈɡorskʲɪj] ; 30 August [O.S. 18 August] 1863 – September 27, 1944) was a Russian chemist and photographer.",
       "factSource": "https://en.wikipedia.org/wiki/Sergey_Prokudin-Gorsky",
       "remoteKey": "packs/famous-faces/famous-faces-sergei-prokudin-gorskii-1.jpg",
-      "originalURL": "https://thumb.wikimedia.org/wikipedia/commons/thumb/c/c9/Prokudin-Gorskii_05599u.jpg/1280px-Prokudin-Gorskii_05599u.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+      "originalURL": "https://thumb.wikimedia.org/wikipedia/commons/thumb/c/c9/Prokudin-Gorskii_05599u.jpg/1280px-Prokudin-Gorskii_05599u.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "group": "a Russian chemist and photographer"
     },
     {
       "id": "famous-faces-peter-bosz-1",
@@ -4084,7 +4057,6 @@
       "knownBy": 56,
       "creator": null,
       "creatorDied": null,
-      "group": null,
       "latitude": null,
       "longitude": null,
       "fact": "Peter Sylvester Bosz (Dutch pronunciation: [ˈpeːtər ˈbɔs]; born 21 November 1963) is a Dutch professional football manager and former player. He is currently the head coach of Dutch Eredivisie club PSV Eindhoven.",
@@ -4110,13 +4082,13 @@
       "knownBy": 55,
       "creator": null,
       "creatorDied": null,
-      "group": null,
       "latitude": null,
       "longitude": null,
       "fact": "Paul Delos Boyer (July 31, 1918 – June 2, 2018) was an American biochemist, analytical chemist, and a professor of chemistry at University of California, Los Angeles (UCLA).",
       "factSource": "https://en.wikipedia.org/wiki/Paul_D._Boyer",
       "remoteKey": "packs/famous-faces/famous-faces-paul-d-boyer-1.jpg",
-      "originalURL": "https://upload.wikimedia.org/wikipedia/commons/7/7d/Paul_D._Boyer.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled"
+      "originalURL": "https://upload.wikimedia.org/wikipedia/commons/7/7d/Paul_D._Boyer.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled",
+      "group": "an American biochemist"
     },
     {
       "id": "famous-faces-mohammed-rafi-1",
@@ -4136,13 +4108,13 @@
       "knownBy": 54,
       "creator": null,
       "creatorDied": null,
-      "group": null,
       "latitude": null,
       "longitude": null,
       "fact": "Mohammed Rafi (24 December 1924 – 31 July 1980) was an Indian playback singer. He is considered to have been one of the greatest and most influential singers of India.",
       "factSource": "https://en.wikipedia.org/wiki/Mohammed_Rafi",
       "remoteKey": "packs/famous-faces/famous-faces-mohammed-rafi-1.jpg",
-      "originalURL": "https://upload.wikimedia.org/wikipedia/commons/d/d4/Md._Rafi_-_legendary_singer.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled"
+      "originalURL": "https://upload.wikimedia.org/wikipedia/commons/d/d4/Md._Rafi_-_legendary_singer.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled",
+      "group": "an Indian playback singer"
     },
     {
       "id": "famous-faces-luis-muriel-1",
@@ -4162,7 +4134,6 @@
       "knownBy": 50,
       "creator": null,
       "creatorDied": null,
-      "group": null,
       "latitude": null,
       "longitude": null,
       "fact": "Luis Fernando Muriel Fruto (born 16 April 1991) is a Colombian professional footballer who plays as a forward or attacking midfielder for Categoría Primera A club Junior. Having started his professional career with Colombian side Deportivo Cali, Muriel joined Udinese.",
@@ -4188,13 +4159,13 @@
       "knownBy": 49,
       "creator": null,
       "creatorDied": null,
-      "group": null,
       "latitude": null,
       "longitude": null,
       "fact": "Árpád Göncz (10 February 1922 – 6 October 2015) was a Hungarian writer, translator, lawyer and liberal politician who served as President of Hungary from 2 May 1990 to 4 August 2000. Göncz played a role in the Hungarian Revolution of 1956, for which he was imprisoned for six years.",
       "factSource": "https://en.wikipedia.org/wiki/%C3%81rp%C3%A1d_G%C3%B6ncz",
       "remoteKey": "packs/famous-faces/famous-faces-árpád-göncz-1.jpg",
-      "originalURL": "https://thumb.wikimedia.org/wikipedia/commons/thumb/b/b7/G%C3%B6ncz%C3%81rp%C3%A1d.jpg/1280px-G%C3%B6ncz%C3%81rp%C3%A1d.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+      "originalURL": "https://thumb.wikimedia.org/wikipedia/commons/thumb/b/b7/G%C3%B6ncz%C3%81rp%C3%A1d.jpg/1280px-G%C3%B6ncz%C3%81rp%C3%A1d.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "group": "a Hungarian writer"
     },
     {
       "id": "famous-faces-janica-kostelić-1",
@@ -4214,7 +4185,6 @@
       "knownBy": 48,
       "creator": null,
       "creatorDied": null,
-      "group": null,
       "latitude": null,
       "longitude": null,
       "fact": "Janica Kostelić (pronounced [janitsa kostelitɕ]; born 5 January 1982) is a Croatian former alpine ski racer. She is a four-time Olympic gold medalist.",
@@ -4240,7 +4210,6 @@
       "knownBy": 47,
       "creator": null,
       "creatorDied": null,
-      "group": null,
       "latitude": null,
       "longitude": null,
       "fact": "Tyson Luke Fury (born 12 August 1988) is a British professional boxer. He held multiple world heavyweight championships, including unified titles from 2015 to 2016, the Ring magazine title twice between 2015 and 2022, and the World Boxing Council (WBC) title from 2020 to 2024.",
@@ -4266,7 +4235,6 @@
       "knownBy": 46,
       "creator": null,
       "creatorDied": null,
-      "group": null,
       "latitude": null,
       "longitude": null,
       "fact": "Arend Martijn \"Arne\" Slot (Dutch pronunciation: [ˈaːrənt mɑrˈtɛin ˈɑrnə ˈslɔt]; born 17 September 1978) is a Dutch professional football manager and former player who was most recently the head coach of Premier League club Liverpool.",
@@ -4292,7 +4260,6 @@
       "knownBy": 45,
       "creator": null,
       "creatorDied": null,
-      "group": null,
       "latitude": null,
       "longitude": null,
       "fact": "Norman Quentin Cook (born Quentin Leo Cook, 31 July 1963), known professionally as Fatboy Slim, is an English musician and DJ who helped popularise the big beat genre in the 1990s. His music makes extensive use of samples from eclectic genres, combined with pop structures, processed rhythms and \"sloganistic\" vocals.",
@@ -4318,7 +4285,6 @@
       "knownBy": 44,
       "creator": null,
       "creatorDied": null,
-      "group": null,
       "latitude": null,
       "longitude": null,
       "fact": "Iñigo Martínez Berridi (Basque: [iɲiɣo maɾtines̻ beriði]; Spanish: [ˈiɲiɣo maɾˈtineθ βeˈriði]; born 17 May 1991) is a Spanish professional footballer who plays as a centre-back for Saudi Pro League club Al-Nassr.",
@@ -4344,13 +4310,13 @@
       "knownBy": 41,
       "creator": null,
       "creatorDied": null,
-      "group": null,
       "latitude": null,
       "longitude": null,
       "fact": "Christian Fürchtegott Gellert (4 July 1715 – 13 December 1769) was a German poet, novelist, and popular moralistic writer, one of the forerunners of the golden age of German literature that was ushered in by Lessing.",
       "factSource": "https://en.wikipedia.org/wiki/Christian_F%C3%BCrchtegott_Gellert",
       "remoteKey": "packs/famous-faces/famous-faces-christian-fürchtegott-gellert-1.jpg",
-      "originalURL": "https://thumb.wikimedia.org/wikipedia/commons/thumb/d/db/Adam_Friedrich_Oeser_-_Portrait_of_Christian_Gellert_%281760%29.jpg/1280px-Adam_Friedrich_Oeser_-_Portrait_of_Christian_Gellert_%281760%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+      "originalURL": "https://thumb.wikimedia.org/wikipedia/commons/thumb/d/db/Adam_Friedrich_Oeser_-_Portrait_of_Christian_Gellert_%281760%29.jpg/1280px-Adam_Friedrich_Oeser_-_Portrait_of_Christian_Gellert_%281760%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "group": "a German poet"
     },
     {
       "id": "famous-faces-laura-robson-1",
@@ -4370,7 +4336,6 @@
       "knownBy": 41,
       "creator": null,
       "creatorDied": null,
-      "group": null,
       "latitude": null,
       "longitude": null,
       "fact": "Laura Robson (born 21 January 1994) is a British former professional tennis player. She debuted on the ITF Junior Circuit in 2007, and a year later won the Junior Wimbledon championships at the age of 14.",
@@ -4396,13 +4361,13 @@
       "knownBy": 40,
       "creator": null,
       "creatorDied": null,
-      "group": null,
       "latitude": null,
       "longitude": null,
       "fact": "Naoko Yamazaki (山崎 直子, Yamazaki Naoko; born December 27, 1970) is a Japanese engineer and former astronaut at JAXA. She was the second Japanese woman to fly in space.",
       "factSource": "https://en.wikipedia.org/wiki/Naoko_Yamazaki",
       "remoteKey": "packs/famous-faces/famous-faces-naoko-yamazaki-1.jpg",
-      "originalURL": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/41/Naoko_yamazaki.jpg/1280px-Naoko_yamazaki.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+      "originalURL": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/41/Naoko_yamazaki.jpg/1280px-Naoko_yamazaki.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "group": "a second Japanese woman"
     },
     {
       "id": "famous-faces-baji-rao-i-1",
@@ -4422,7 +4387,6 @@
       "knownBy": 40,
       "creator": null,
       "creatorDied": null,
-      "group": null,
       "latitude": null,
       "longitude": null,
       "fact": "Bajirao I (born Visaji, Marathi: [ˈbaːdʑiɾaːʋ bəˈlːaːɭ̆]; 18 August 1700 – 28 April 1740) was the 7th Peshwa of the Maratha Empire. In the Deccan region, the Nizam of Hyderabad emerged as a significant threat.",

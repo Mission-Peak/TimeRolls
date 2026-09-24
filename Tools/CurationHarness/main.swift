@@ -151,6 +151,13 @@ do {
                 continue
             }
             check((3...5).contains(chrono.photos.count), "photo count \(chrono.photos.count)")
+            // A dated round comes from one pack, so the question it asks fits every
+            // photograph in it. Mixed, it asked "which occurred first" of a painting
+            // and three people.
+            let datedPacks = Set(chrono.photos.filter(\.dateIsAboutTheSubject)
+                                              .compactMap(\.packID))
+            check(datedPacks.count <= 1,
+                  "a Time round mixed \(datedPacks.sorted().joined(separator: " and "))")
             // Never two photographs of the same thing in one round — with several
             // photographs per subject in a pack, that would mark a right answer wrong.
             let subjects = chrono.photos.compactMap(\.subjectID)

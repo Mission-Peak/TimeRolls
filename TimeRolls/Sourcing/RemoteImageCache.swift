@@ -165,7 +165,18 @@ final class RemoteImageCache {
     /// pictures nobody asked to keep, on an iPad that may not have it to spare.
     ///
     /// Generous enough that a day's rotation never evicts itself mid-session.
-    static let budget = 120 * 1024 * 1024
+    /// How much of the device's storage the pack photographs may use.
+    ///
+    /// Four hundred megabytes, not one hundred and twenty. The old figure was set when
+    /// three packs showed two thirds of themselves a day; five packs now deal a hundred
+    /// and fifty each, which at the average of four hundred kilobytes is close to three
+    /// hundred megabytes in play on any given day. A cache holding a third of that does
+    /// not hold a day — it evicts photographs that are still in the rotation and fetches
+    /// them again, which is felt as the game pausing between rounds.
+    ///
+    /// These are ordinary cache files: iOS may purge them when the device is short of
+    /// space, and nothing is lost when it does beyond fetching them once more.
+    static let budget = 400 * 1024 * 1024
 
     /// Drop the least recently used photographs until the cache is inside its budget.
     ///

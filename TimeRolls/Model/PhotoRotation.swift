@@ -35,7 +35,18 @@ enum PhotoRotation {
     /// needs locations far apart, Things needs a subject with clean distractors. Much
     /// larger and the days stop being distinguishable; much smaller and a curator runs out
     /// of material and declines to build a round at all.
-    static let inPlayEachDay = 150
+    /// Eighty, not a hundred and fifty.
+    ///
+    /// Five packs dealing a hundred and fifty each put three hundred megabytes of
+    /// photographs in play on a single day, against a cache that held far less — so
+    /// pictures still in the rotation were evicted and fetched again, felt as the game
+    /// pausing between rounds. Eighty a pack is a hundred and fifty-seven megabytes,
+    /// which a cache can actually hold.
+    ///
+    /// It costs variety, and the trade is worth naming: eighty is still twice what a long
+    /// session uses, and a pack of a thousand takes twelve days to come round rather than
+    /// six. Nobody notices a slower cycle. Everybody notices waiting for a photograph.
+    static let inPlayEachDay = 80
 
     /// The fewest a day, however small the pack. Below about forty a curator runs out of
     /// material and starts declining to build rounds, which is worse than a repeat.

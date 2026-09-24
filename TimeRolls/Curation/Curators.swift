@@ -419,8 +419,22 @@ enum ChronologyCurator {
                                  birthDatedPacks: Set<String>) -> Level? {
         // Only packs whose years are facts about their subjects. This is the "who was
         // born first" round; a pack of photographs dated by upload has no eras to pick.
-        let eligible = dated.filter { !$0.isPersonal && $0.dateIsAboutTheSubject }
-        guard eligible.count >= count else { return nil }
+        let subjectDated = dated.filter { !$0.isPersonal && $0.dateIsAboutTheSubject }
+        guard subjectDated.count >= count else { return nil }
+
+        // One pack, and the question follows from it.
+        //
+        // Mixing them produced a round of three portraits and a painting, which no single
+        // question fits: "who was born first" is wrong for the painting and "which was
+        // painted first" is wrong for the people, so it fell back to "which occurred
+        // first" — a question about nothing anybody could see. Each pack asks its own
+        // question because each pack knows what its dates mean.
+        let byPack = Dictionary(grouping: subjectDated) { packID(of: $0) ?? "" }
+        guard let eligible = byPack.values
+            .filter({ $0.count >= count })
+            .shuffled()
+            .max(by: { $0.count < $1.count })
+        else { return nil }
 
         // No photograph of the player's in this round, and that is the point rather than
         // an omission.
@@ -880,7 +894,10 @@ enum ObjectsCurator {
             $0.id != answer.id && $0.subjectKind?.caseInsensitiveCompare(kind) == .orderedSame
         }
         guard !shared else { return nil }
-        return "It's \(kind)."
+        // "It's a French mime" is the wrong word for a person. A pack dated by birth is a
+        // pack of people, and "they" is the honest pronoun when the app does not know
+        // anybody's — it is right for one person and reads naturally for a group.
+        return answer.dateIsBirth ? "They were \(kind)." : "It's \(kind)."
     }
 
 
