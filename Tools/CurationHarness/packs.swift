@@ -68,6 +68,7 @@ func photos(from pack: PackOnDisk) -> [GamePhoto] {
         }
         photo.scientificName = item["scientificName"] as? String
         photo.fact = item["fact"] as? String
+        photo.creator = item["creator"] as? String
         photo.objectTags = Set(item["objectTags"] as? [String] ?? [])
         photo.possibleObjectTags = photo.objectTags
         photo.conceptID = photo.objectTags.first
@@ -86,6 +87,10 @@ func photos(from pack: PackOnDisk) -> [GamePhoto] {
         // was taken, and the spacing rule does not apply to it.
         photo.subjectID = item["subjectID"] as? String
         photo.subjectKind = item["group"] as? String
+        // Same rule as the app: a pack dated by birth names each person's role.
+        if pack.chronologyBasis == "birth" {
+            photo.subject = PersonRole.role(from: photo.subjectKind)
+        }
         photo.dateIsAboutTheSubject = ["birth", "created", "event"].contains(pack.chronologyBasis ?? "")
         photo.wasExamined = true
         return photo

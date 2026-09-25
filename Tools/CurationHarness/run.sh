@@ -23,6 +23,7 @@ swiftc -O -default-isolation MainActor -o "$OUT/harness" main.swift \
     "$SRC/Sourcing/PackStore.swift" \
     "$SRC/Sourcing/ObjectCatalog.swift" \
     "$SRC/Model/PhotoRotation.swift" \
+    "$SRC/Sourcing/SeenPhotos.swift" \
     "$SRC/Model/Supporting.swift"
 "$OUT/harness"
 

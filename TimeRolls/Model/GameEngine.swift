@@ -67,6 +67,9 @@ final class GameEngine {
     private var levelStarted = Date()
     private var levelCounter = 0
     private var lastTheme: GameTheme?
+    /// The connection the pools were last built for. Walking out of the house changes
+    /// which photographs may be fetched, and the pools have to follow.
+    private var pooledForExpensiveLink: Bool?
     private var sessionLevelTotal = 0
 
     init() {
@@ -174,11 +177,26 @@ final class GameEngine {
         RemoteImageCache.shared.pruneToBudget()
         let readable = library.photos.filter { !images.unavailablePersonalIDs.contains($0.id) }
         generator.personal = objects.annotate(places.annotate(readable))
+        // The caregiver's choice reaches the fetcher here, so a change takes effect on
+        // the next photograph rather than the next launch.
+        RemoteImageCache.shared.allowsCellular = settings.packsOnCellular
+
+        // Photo sets cost data. Where they may not be fetched and are not already on the
+        // device, they are left out of the pool entirely rather than offered and then
+        // failing: a round built from four photographs that cannot load is thrown away
+        // three times over and the game stalls with nothing to show. Their own photographs
+        // cost nothing, so the game carries on with those.
         let unavailable = RemoteImageCache.shared.unavailable
+        let mayFetchPacks = settings.packsOnCellular || !NetworkReach.shared.isExpensive
         generator.pack = PublicPackLibrary.photos(enabledPackIDs: settings.enabledPackIDs)
             .filter { photo in
-                guard case let .pack(_, itemID) = photo.origin else { return true }
-                return !unavailable.contains(itemID)
+                guard case let .pack(packID, itemID) = photo.origin else { return true }
+                if unavailable.contains(itemID) { return false }
+                if mayFetchPacks { return true }
+                // Already downloaded is already paid for.
+                guard let item = PublicPackLibrary.item(packID: packID, itemID: itemID)
+                else { return false }
+                return RemoteImageCache.shared.isAvailableOffline(item)
             }
         // Local Trivia joins the pool like any other pack once it has arrived.
         if settings.localTriviaEnabled, let local = localTrivia.pack {
@@ -328,6 +346,18 @@ final class GameEngine {
         attempts = 0
         wrongIDs = []
         answeredCorrectly = false
+
+        // Wi-Fi to mobile data, or back, between one round and the next. Rebuilding the
+        // pools is cheap and doing it here means the change is picked up by the round
+        // being asked for rather than at the next launch.
+        let expensive = NetworkReach.shared.isExpensive
+        if pooledForExpensiveLink != expensive {
+            pooledForExpensiveLink = expensive
+            if !settings.packsOnCellular {
+                discardPreparedLevel()
+                refreshPools()
+            }
+        }
 
         // A level prepared during the last round is ready to go now.
         if let ready = pendingLevel {
@@ -549,8 +579,24 @@ final class GameEngine {
     private var recentCategoryOrder: [String] = []
 
     private var recentPlaceOrder: [String] = []
+    /// The kinds of question asked lately, most recent first.
+    private var recentAskOrder: [String] = []
+    /// The wordings used lately, most recent first.
+    private var recentWordingOrder: [String] = []
 
     private func remember(_ level: Level) {
+        // Which kind of question this was and how it was worded, so the next round can
+        // be a different kind in different words. Through `Recency`, which keeps the list
+        // newest-first — the order the rotation reads it in. It was kept oldest-first
+        // here, so the rotation tried the most recent kind first and repeated it.
+        if let ask = level.ask {
+            recentAskOrder = Recency.remembering(ask, in: recentAskOrder)
+            generator.recentAsks = recentAskOrder
+        }
+        if let wording = level.wording {
+            recentWordingOrder = Recency.remembering(wording, in: recentWordingOrder)
+            generator.recentWordings = recentWordingOrder
+        }
         if let tag = level.focusTag {
             // Each theme remembers its own questions. They were sharing one list, which
             // was harmless only because Places never wrote to it.
@@ -594,6 +640,17 @@ final class GameEngine {
 
     private func rememberPhotos(_ level: Level) {
         lastLevelPhotos = level.photos
+        // Shown once, and not again until the whole pack has been through. Recorded here
+        // rather than when a round is built, because a round that was prepared and then
+        // thrown away was never seen by anybody.
+        var shownByPack: [String: [String]] = [:]
+        for photo in level.photos {
+            guard case let .pack(packID, itemID) = photo.origin else { continue }
+            shownByPack[packID, default: []].append(itemID)
+        }
+        for (packID, itemIDs) in shownByPack {
+            SeenPhotos.shared.markShown(packID: packID, itemIDs: itemIDs)
+        }
         for photo in level.photos where photo.isPersonal {
             ownPhotosThisSession.removeAll { $0.id == photo.id }
             ownPhotosThisSession.insert(photo, at: 0)

@@ -377,44 +377,61 @@ let photoRepeatShare = Double(repeatsWithinTen) / Double(max(comparisons, 1))
 check(photoRepeatShare < 0.05,
       "\(Int(photoRepeatShare * 100))% of photos came round again inside the last forty")
 
-// --- The daily rotation: steady all day, different tomorrow, and nothing left
-// permanently on the shelf.
-let catalogue = Array(0..<120)
-let today = PhotoRotation.dayIndex()
-let slice = PhotoRotation.selection(from: catalogue, packID: "faces", day: today)
-check(slice == PhotoRotation.selection(from: catalogue, packID: "faces", day: today),
-      "the same day gave two different selections")
-check(slice.count == PhotoRotation.inPlay(from: catalogue.count),
-      "daily slice is \(slice.count) of \(catalogue.count), not the expected share")
-// Never more than half, whatever the pack holds — that is what leaves a second day's
-// worth to deal and keeps consecutive days from overlapping. A flat slice did not: a
-// pack of 192 showing 150 left 42 unseen and repeated four photographs in five.
-check(slice.count * 2 <= catalogue.count,
-      "a day's slice is more than half the pack, so days must overlap")
-let nextDay = PhotoRotation.selection(from: catalogue, packID: "faces", day: today + 1)
-let sharedWithNextDay = Set(slice).intersection(Set(nextDay)).count
-check(sharedWithNextDay == 0,
-      "\(sharedWithNextDay) photographs appear both today and tomorrow")
-check(Set(slice).count == slice.count, "the daily slice repeats a photograph")
+// --- Nothing comes round again until the whole pack has been through.
+//
+// The rotation used to deal each pack out by the calendar: a slice a day, changing at
+// midnight. That bounded what a day cost to fetch, back when the cache could hold a
+// fraction of the library — but it was never what anybody wanted from it. A photograph
+// shown on Tuesday could come back on Friday while hundreds had never been shown at all,
+// because the deal knew what day it was and not what you had seen.
+//
+// What is checked here is the promise that replaced it: play a pack from the start and
+// every photograph in it appears once before any appears twice.
 
-let tomorrow = PhotoRotation.selection(from: catalogue, packID: "faces", day: today + 1)
-check(slice != tomorrow, "tomorrow's selection is identical to today's")
-let otherPack = PhotoRotation.selection(from: catalogue, packID: "sports", day: today)
-check(slice != otherPack, "two packs rotate in lockstep")
+var passesChecked = 0
+for packSize in [120, 500, 983] {
+    let pack = Array(0..<packSize)
+    var seen: Set<String> = []
+    var shownInThisPass: [Int] = []
+    var passes = 0
+    var shown = 0
 
-// Over a month, every photograph should get its turn.
-var everSeen: Set<Int> = []
-for offset in 0..<30 {
-    everSeen.formUnion(PhotoRotation.selection(from: catalogue, packID: "faces",
-                                                day: today + offset))
+    // Long enough to go round more than twice, whatever the pack holds.
+    while shown < packSize * 3 {
+        let chosen = SeenPhotos.choose(from: pack, packID: "pack-\(packSize)",
+                                       seen: seen, id: { String($0) })
+        if chosen.startedAgain {
+            // A pass has finished: nothing in it may have been shown twice, and hardly
+            // anything left unshown — at most the round's worth that could not be built.
+            let unique = Set(shownInThisPass)
+            check(unique.count == shownInThisPass.count,
+                  "a pack of \(packSize) showed a photograph twice inside one pass")
+            if passes > 0 {
+                check(packSize - unique.count < DifficultyKnob.photoCount * 2,
+                      "a pack of \(packSize) started again with "
+                    + "\(packSize - unique.count) photographs never shown")
+            }
+            seen = []
+            shownInThisPass = []
+            passes += 1
+        }
+        check(!chosen.inPlay.isEmpty, "a pack of \(packSize) had nothing in play")
+        check(chosen.inPlay.count <= SeenPhotos.inPlayEachPack,
+              "a pack of \(packSize) put \(chosen.inPlay.count) in play at once")
+        if !chosen.startedAgain {
+            let offeredAgain = chosen.inPlay.filter { seen.contains(String($0)) }
+            check(offeredAgain.isEmpty,
+                  "a pack of \(packSize) offered \(offeredAgain.count) it had already shown")
+        }
+        for item in chosen.inPlay.prefix(DifficultyKnob.photoCount) {
+            seen.insert(String(item))
+            shownInThisPass.append(item)
+        }
+        shown += DifficultyKnob.photoCount
+    }
+    check(passes >= 2, "a pack of \(packSize) never went round twice")
+    passesChecked += passes
 }
-check(everSeen.count == catalogue.count,
-      "\(catalogue.count - everSeen.count) photographs never appear in a month")
-
-// A pack at or under the floor keeps all of its photographs.
-let small = Array(0..<PhotoRotation.floor)
-check(PhotoRotation.selection(from: small, packID: "a-pack", day: today).count
-      == small.count, "a small pack was thinned below the floor")
 
 // --- The Things game should not ask the same question twice in a row.
 var thingsRun = LevelGenerator()
@@ -1715,7 +1732,7 @@ check(readingRounds > 0, "no rounds were built from the themes model's reading")
 print("theme rotation over 30k picks — " + allThemes.map { "\($0.title) \(Int(Double(picked[$0] ?? 0) / 300))%" }.joined(separator: ", ") + ", repeats \(Int(repeatShare * 100))%")
 print("subject-aware prompts — \(namedTheSubject) of \(subjectLevels) pack-only levels named their subject")
 print("things subjects — \(thingsLevels) rounds, no subject asked twice running")
-print("daily rotation — \(slice.count) of \(catalogue.count) in play each day, all seen within 30 days")
+print("no repeats until a pack is through — 120, 500 and 983 photographs, \(passesChecked) passes, nothing twice inside one")
 print("repeats inside the last forty photographs — \(repeatsWithinTen) of \(comparisons)")
 print("pack-only chronology gap — smallest \(Int((packGaps.min() ?? 0) / .year))y over \(packGaps.count) levels (floor is 50y)")
 print("questions from the reading — \(readingRounds) rounds, tags all wrong, answers all right")
@@ -1903,7 +1920,11 @@ for pack in shippedPacks {
                       "\(pack.id): a named round mixed \(packs.sorted().joined(separator: " and "))")
             }
             // Named rounds may not put two creatures nobody could tell apart together.
-            let names = level.photos.compactMap { $0.title?.lowercased() }
+            // Named rounds only: a round asking which one is a bird can hold a kangaroo
+            // rat and a naked mole rat, because neither is the answer and nobody is being
+            // asked to tell them apart.
+            let names = level.ask == "named"
+                ? level.photos.compactMap { $0.title?.lowercased() } : []
             for (index, one) in names.enumerated() {
                 for other in names.dropFirst(index + 1) {
                     check(ObjectCatalog.canStandTogether(one, other),
@@ -2053,6 +2074,297 @@ for pack in shippedPacks {
 
 print("names people use — \(latinRounds) rounds, none asked by a binomial; "
     + "\(latinShipped) shipped subjects known only in Latin, all left out of the asking")
+
+// --- Two new questions, and no question allowed to take over.
+//
+// "Which one was painted by Leonardo da Vinci?" and "Which photo is from your album?"
+// join the two that were already there. The second is only possible because rounds are
+// three parts public to one part personal: exactly one of the player's own photographs is
+// in the row, and picking it out is a question in itself. It must never be asked when the
+// row holds two of theirs — then it has two answers — nor when it holds none.
+//
+// The dispersal check is the point of this section. `namedSubjectLevel` used to be tried
+// first and unconditionally, so a pack that names its photographs was only ever asked
+// about by name; the other questions existed and never came up. A rotation that quietly
+// settles on one kind is the same bug wearing a different hat.
+
+var asking = LevelGenerator()
+asking.personal = (0..<80).map { number in
+    var photo = GamePhoto(id: "mine\(number)",
+                          origin: .personal(localIdentifier: "mine\(number)"),
+                          creationDate: Date(timeIntervalSinceNow: -Double(number) * 20 * .day))
+    photo.conceptID = ["cake", "dog", "flower", "bicycle"][number % 4]
+    photo.objectTags = [photo.conceptID!]
+    photo.possibleObjectTags = photo.objectTags
+    photo.wasExamined = true
+    return photo
+}
+let painters = ["Leonardo da Vinci", "Caravaggio", "Johannes Vermeer",
+                "Vincent van Gogh", "Raphael", "Rembrandt"]
+asking.pack = (0..<90).map { number in
+    var photo = GamePhoto(id: "pack:famous-artworks:art\(number)",
+                          origin: .pack(packID: "famous-artworks", itemID: "art\(number)"),
+                          creationDate: Date(timeIntervalSinceNow: -Double(number) * 400 * .day))
+    photo.title = "Painting \(number)"
+    photo.creator = painters[number % painters.count]
+    photo.namedSubjectPrompt = "Which one shows {name}?"
+    photo.conceptID = ["cake", "dog", "flower", "bicycle"][number % 4]
+    photo.objectTags = [photo.conceptID!]
+    photo.possibleObjectTags = photo.objectTags
+    photo.wasExamined = true
+    return photo
+}
+
+var askTally: [String: Int] = [:]
+var askRounds = 0
+var recentAsks: [String] = []
+var recentWordings: [String] = []
+for _ in 0..<600 {
+    asking.recentAsks = recentAsks
+    asking.recentWordings = recentWordings
+    guard let level = asking.makeLevel(theme: .objects) else { continue }
+    askRounds += 1
+    // The kind the round says it is, not one guessed back from its sentence: the
+    // sentence varies now. And remembered through `Recency`, exactly as the engine does
+    // — this section used to keep its own list, the other way round from the engine's,
+    // and passed while the device repeated the same kind of question.
+    guard let kind = level.ask else {
+        failures.append("a Things round did not say what kind of question it was")
+        continue
+    }
+    askTally[kind, default: 0] += 1
+    recentAsks = Recency.remembering(kind, in: recentAsks)
+    if let wording = level.wording { recentWordings = Recency.remembering(wording, in: recentWordings) }
+
+    let mine = level.photos.filter(\.isPersonal)
+    if kind == "mine" {
+        // Exactly one of theirs, and it is the answer. Anything else and the question
+        // either has two answers or none.
+        check(mine.count == 1,
+              "\"from your album\" was asked with \(mine.count) of the player's own photos")
+        check(mine.first?.id == level.correctPhotoID,
+              "\"from your album\" was answered by a photograph the player did not take")
+    }
+    if kind == "artist" {
+        guard let answer = level.photos.first(where: { $0.id == level.correctPhotoID }),
+              let painter = answer.creator else {
+            failures.append("an artist round had no artist on its answer")
+            continue
+        }
+        check(level.prompt.contains(painter),
+              "a round asked for one painter and was answered by another")
+        let alsoTheirs = level.photos.count { $0.id != answer.id && $0.creator == painter }
+        check(alsoTheirs == 0,
+              "a round asked which was painted by \(painter) and held \(alsoTheirs) more by them")
+    }
+}
+check(askRounds > 0, "no rounds at all were built from the mixed library")
+check(askTally.count == 4,
+      "only \(askTally.count) of the four kinds of question were ever asked: "
+    + askTally.keys.sorted().joined(separator: ", "))
+for (kind, count) in askTally {
+    let share = Double(count) / Double(askRounds)
+    // None starved and none taking over. A quarter each is the even split; the bounds are
+    // wide because a kind declines whenever it cannot build a fair round, and that is the
+    // curator doing its job rather than the rotation failing.
+    check(share > 0.08,
+          "the \(kind) question is asked in only \(Int(share * 100))% of rounds")
+    check(share < 0.55,
+          "the \(kind) question has taken over \(Int(share * 100))% of rounds")
+}
+
+// With none of the player's photographs in the pool the question cannot be asked at all.
+var packsOnly = LevelGenerator()
+packsOnly.pack = asking.pack
+var packOnlyRounds = 0
+for _ in 0..<200 {
+    guard let level = packsOnly.makeLevel(theme: .objects) else { continue }
+    packOnlyRounds += 1
+    check(level.ask != "mine",
+          "\"from your album\" was asked of somebody playing with no photographs of their own")
+}
+check(packOnlyRounds > 0, "no rounds could be built from packs alone")
+
+print("ways of asking — \(askRounds) rounds · "
+    + askTally.sorted { $0.key < $1.key }
+        .map { "\($0.key) \(Int(Double($0.value) / Double(askRounds) * 100))%" }
+        .joined(separator: " "))
+
+// --- Every shipped pack can be played to the end, and starts again.
+//
+// The seen record restarts a pack when fewer than a round's worth of its photographs are
+// unseen. A photograph no question can ask about is never shown, so it is never marked
+// seen — and 58 landmarks with no place, 10 animals and 8 plants known only in Latin were
+// each enough to hold that count up for ever. The pack would play through everything
+// else and then go quiet, weeks in, with nothing to say why.
+//
+// This plays each real pack from the start, marking each round's photographs seen, and
+// insists it comes round again. The same run without the filter is played alongside it,
+// so the check is known to be able to fail.
+
+var packsPlayedThrough = 0
+for pack in shippedPacks {
+    let themes = Set(pack.themes.compactMap(GameTheme.init(rawValue:)))
+    let all = photos(from: pack)
+    let askable = all.filter { $0.canBeAsked(inAnyOf: themes) }
+    let unaskable = all.count - askable.count
+    let id: (GamePhoto) -> String = { $0.origin.packItemID ?? $0.id }
+
+    func playsThrough(_ pool: [GamePhoto], marking canShow: (GamePhoto) -> Bool) -> Bool {
+        var seen: Set<String> = []
+        // Twice as many rounds as a full pass needs, which is ample.
+        for _ in 0..<(pool.count / DifficultyKnob.photoCount + 20) * 2 {
+            let chosen = SeenPhotos.choose(from: pool, packID: pack.id, seen: seen, id: id)
+            if chosen.startedAgain && !seen.isEmpty { return true }
+            // A round shows up to four photographs from what is in play — but only ones
+            // some question could actually be asked about.
+            let shown = chosen.inPlay.filter(canShow).prefix(DifficultyKnob.photoCount)
+            if shown.isEmpty { return false }
+            for photo in shown { seen.insert(id(photo)) }
+        }
+        return false
+    }
+
+    let showable: (GamePhoto) -> Bool = { $0.canBeAsked(inAnyOf: themes) }
+    check(playsThrough(askable, marking: showable),
+          "\(pack.id): played through \(askable.count) photographs and never started again")
+    if unaskable >= DifficultyKnob.photoCount * 2 {
+        // Without the filter this pack should stall — proof the check above can fail.
+        check(!playsThrough(all, marking: showable),
+              "\(pack.id): the stall this check exists to catch did not happen without the filter")
+    }
+    packsPlayedThrough += 1
+}
+print("packs played to the end — \(packsPlayedThrough) shipped packs each came round again")
+
+// --- The real packs, asked every way they can be, with memory fed as the device feeds it.
+//
+// Four new questions and several wordings for each old one. What has to hold: every kind
+// that can be built from the shipped packs is built; a round of one kind is right in the
+// way that kind promises; a hint never says what the question has just said; and — with
+// the round-by-round memory the engine keeps — the same wording is not asked twice running
+// and no one kind of question takes over.
+
+var wide = LevelGenerator()
+wide.personal = library
+wide.pack = shippedPacks.flatMap { pack -> [GamePhoto] in
+    let themes = Set(pack.themes.compactMap(GameTheme.init(rawValue:)))
+    let askable = photos(from: pack).filter { $0.canBeAsked(inAnyOf: themes) }
+    // As many as the device keeps in play, so the rounds are built from the same pool.
+    return SeenPhotos.choose(from: askable, packID: pack.id, seen: [],
+                             id: { $0.origin.packItemID ?? $0.id }).inPlay
+}
+wide.packThemeSupport = Dictionary(uniqueKeysWithValues: shippedPacks.map { pack in
+    (pack.id, Set(pack.themes.compactMap(GameTheme.init(rawValue:))))
+})
+wide.birthDatedPacks = Set(shippedPacks.filter { $0.chronologyBasis == "birth" }.map(\.id))
+wide.packChronologyPrompts = [
+    "famous-faces": "Who was born first?",
+    "famous-artworks": "Which one was painted first?",
+]
+
+var wideAsks: [String] = [], wideWordings: [String] = []
+var kindsByTheme: [GameTheme: [String: Int]] = [:]
+var wordingRepeats = 0, wordedRounds = 0
+var lastWording: [String: String] = [:]
+for round in 0..<180 {
+    let theme = GameTheme.allCases[round % GameTheme.allCases.count]
+    wide.recentAsks = wideAsks
+    wide.recentWordings = wideWordings
+    guard let level = wide.makeLevel(theme: theme) else { continue }
+    let ask = level.ask ?? "?"
+    kindsByTheme[theme, default: [:]][ask, default: 0] += 1
+    wideAsks = Recency.remembering(ask, in: wideAsks)
+    if let wording = level.wording {
+        // Only questions with more than one wording can be asked two ways. The album
+        // question has exactly one, on purpose, and an occasion's question is its own.
+        if !["mine", "occasion"].contains(ask) {
+            wordedRounds += 1
+            if lastWording[ask] == wording { wordingRepeats += 1 }
+            lastWording[ask] = wording
+        }
+        wideWordings = Recency.remembering(wording, in: wideWordings)
+    }
+    let answer = level.photos.first { $0.id == level.correctPhotoID }!
+
+    switch ask {
+    case "kind":
+        let kind = answer.subjectKind ?? ""
+        check(level.photos.count { $0.subjectKind == kind } == 1,
+              "a round asked \(level.prompt.debugDescription) with more than one \(kind) in it")
+        check(level.hint == nil, "a kind round carried a hint that repeats its question")
+        check(!level.photos.contains(where: \.isPersonal),
+              "a kind round held one of the player's own photos, which might be the same kind")
+    case "landmark":
+        let name = PlacesCurator.inSentence(answer.title ?? "\u{0}")
+        check(level.prompt.contains(name),
+              "a landmark round asked \(level.prompt.debugDescription) about \(name)")
+        let titles = level.photos.compactMap(\.title)
+        check(Set(titles).count == titles.count, "a landmark round showed one landmark twice")
+        if let here = answer.coordinate {
+            for photo in level.photos where photo.isPersonal {
+                check((photo.coordinate?.distance(to: here) ?? .infinity)
+                        > PlacesCurator.landmarkClearance,
+                      "a landmark round held the player's own photo taken beside the landmark")
+            }
+        }
+        if let hint = level.hint {
+            check(!hint.contains(name), "a landmark hint named the landmark")
+        }
+    case "role":
+        let roles = Set(level.photos.compactMap(\.subject))
+        check(roles.count == 1 && level.photos.allSatisfy { $0.subject != nil },
+              "a role round mixed \(roles.sorted().joined(separator: ", "))")
+        if let role = roles.first {
+            check(level.prompt.contains(role),
+                  "a round of \(PersonRole.plural(role)) asked \(level.prompt.debugDescription)")
+        }
+    default:
+        break
+    }
+    // A hint that says what the question says is no hint.
+    if let hint = level.hint?.lowercased() {
+        let asked = level.prompt.lowercased()
+        check(!asked.contains(hint.trimmingCharacters(in: CharacterSet(charactersIn: "."))),
+              "a hint repeated its question: \(level.prompt.debugDescription) / \(hint)")
+    }
+}
+
+// Each new kind comes up from the real packs, somewhere.
+let everyKind = kindsByTheme.values.reduce(into: Set<String>()) { $0.formUnion($1.keys) }
+for expected in ["landmark", "place", "role", "kind", "artist", "named", "era"] {
+    check(everyKind.contains(expected),
+          "no \(expected) round was built from the shipped packs: saw "
+        + everyKind.sorted().joined(separator: ", "))
+}
+// And none takes over its theme.
+for (theme, kinds) in kindsByTheme where kinds.count > 1 {
+    let total = kinds.values.reduce(0, +)
+    for (kind, count) in kinds {
+        check(Double(count) / Double(total) < 0.75,
+              "\(theme.title): \(kind) took \(count) of \(total) rounds")
+    }
+}
+// The same kind of question in the same words twice running should almost never happen.
+check(wordedRounds > 0, "no round said which wording it used")
+check(wordingRepeats == 0,
+      "\(wordingRepeats) of \(wordedRounds) rounds used the wording their kind used last time")
+
+// The memory's order is a contract: newest first, and the rotation reads it that way.
+let remembered = Recency.remembering("b", in: Recency.remembering("a", in: []))
+check(remembered == ["b", "a"], "Recency keeps its memory in the wrong order: \(remembered)")
+check(Recency.leastRecentFirst(["a", "b", "c"], key: { $0 }, recent: remembered).first == "c",
+      "the rotation did not put the never-asked kind first")
+check(Recency.leastRecentFirst(["a", "b"], key: { $0 }, recent: remembered).first == "a",
+      "the rotation put the most recent kind first — the same question would repeat")
+
+print("every way of asking — "
+    + kindsByTheme.sorted { $0.key.rawValue < $1.key.rawValue }
+        .map { theme, kinds in
+            theme.title + " " + kinds.sorted { $0.key < $1.key }
+                .map { "\($0.key) \($0.value)" }.joined(separator: "/")
+        }.joined(separator: " · ")
+    + " · wording repeats \(wordingRepeats)/\(wordedRounds)")
 
 print("shipped packs — \(shippedPacks.count) read from disk · "
     + packSummary.joined(separator: " · "))

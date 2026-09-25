@@ -42,6 +42,12 @@ struct LevelGenerator {
     private let duplicateDistance = 0.22
     /// Subjects the Things game has asked about lately, freshest last.
     var recentCategories: [String] = []
+    /// Which kinds of question have been asked lately, most recent first, so the objects
+    /// curator can move between them rather than settling on whichever it tries first.
+    var recentAsks: [String] = []
+    /// The wordings used lately, most recent first, so the same sentence is not asked
+    /// twice running.
+    var recentWordings: [String] = []
     /// Places and albums asked about lately, kept apart from Things so a place name can
     /// never silence a subject that happens to share its spelling.
     var recentPlaces: [String] = []
@@ -218,30 +224,42 @@ struct LevelGenerator {
                                                prompts: packChronologyPrompts,
                                                birthDatedPacks: birthDatedPacks,
                                                personalSpan: personalSpan,
+                                               recentAsks: recentAsks,
+                                               recentWordings: recentWordings,
                                                visualDistance: visualDistance)
                 ?? ChronologyCurator.makeLevel(
                     pool: self.pool(for: theme, forceBlend: true, widened: widened),
                     prompts: packChronologyPrompts,
                     birthDatedPacks: birthDatedPacks,
                     personalSpan: personalSpan,
+                    recentAsks: recentAsks,
+                    recentWordings: recentWordings,
                     visualDistance: visualDistance)
         case .places:
             return PlacesCurator.makeLevel(pool: pool,
                                            recentPlaces: recentPlaces,
+                                           recentAsks: recentAsks,
+                                           recentWordings: recentWordings,
                                            visualDistance: visualDistance)
                 ?? PlacesCurator.makeLevel(
                     pool: self.pool(for: theme, forceBlend: true, widened: widened),
                     recentPlaces: recentPlaces,
+                    recentAsks: recentAsks,
+                    recentWordings: recentWordings,
                     visualDistance: visualDistance)
         case .objects:
             return ObjectsCurator.makeLevel(pool: pool,
                                             recentCategories: recentCategories,
+                                            recentAsks: recentAsks,
+                                            recentWordings: recentWordings,
                                             visualDistance: visualDistance,
                                             conceptScore: conceptScore,
                                             bestConcept: bestConcept)
                 ?? ObjectsCurator.makeLevel(
                     pool: self.pool(for: theme, forceBlend: true, widened: widened),
                     recentCategories: recentCategories,
+                    recentAsks: recentAsks,
+                    recentWordings: recentWordings,
                     visualDistance: visualDistance,
                     conceptScore: conceptScore,
                     bestConcept: bestConcept)

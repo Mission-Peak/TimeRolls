@@ -55,6 +55,7 @@
 				8D7335B930532C5E00902078 /* Sources */,
 				8D7335BA30532C5E00902078 /* Frameworks */,
 				8D7335BB30532C5E00902078 /* Resources */,
+				8D7335C130532C5E00902099 /* Embed OneBucket settings */,
 			);
 			buildRules = (
 			);
@@ -113,6 +114,25 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		8D7335C130532C5E00902099 /* Embed OneBucket settings */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Embed OneBucket settings";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/onebucket-settings.stamp",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/bash;
+			shellScript = "# Write the OneBucket settings into the app bundle.\n#\n# They are declared as INFOPLIST_KEY_OneBucketHost and friends, fed from the git-ignored\n# Secrets.xcconfig, and `xcodebuild -showBuildSettings` resolves every one of them — yet\n# none reached the built app. Xcode's INFOPLIST_KEY_ mechanism only injects keys it\n# recognises and drops a custom name without a word. Every NS... and UI... key in the same\n# file arrived, which is what made it look as though it worked.\n#\n# With no credentials the app could not sign a URL, so OneBucket.source fell back to each\n# photograph's original Wikimedia address for every pack picture. That fallback works,\n# which is why nothing ever looked broken — it just fetches thousands of images from a\n# service that throttles them, instead of from the bucket they were mirrored into.\n#\n# A file of its own rather than Info.plist. Editing Info.plist means running after Xcode\n# writes it, and anything ordered that late runs after codesigning too, which invalidates\n# the signature. A resource written before signing is simply part of the bundle.\n#\n# Values come from the environment, where the xcconfig has already put them, so no\n# credential is written into the repository.\nset -euo pipefail\nDEST=\"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}\"\nmkdir -p \"$DEST\"\nPLIST=\"$DEST/OneBucket.plist\"\nrm -f \"$PLIST\"\n/usr/libexec/PlistBuddy -c \"Save\" \"$PLIST\" >/dev/null 2>&1 || echo \"{}\" > \"$PLIST\"\n/usr/libexec/PlistBuddy -c \"Clear dict\" \"$PLIST\"\nset_key() {\n  if [ -z \"${2:-}\" ]; then\n    echo \"warning: $1 is empty - pack photos will come from their original source\"\n    return\n  fi\n  /usr/libexec/PlistBuddy -c \"Add :$1 string $2\" \"$PLIST\"\n}\nset_key OneBucketHost \"${ONEBUCKET_HOST:-}\"\nset_key OneBucketName \"${ONEBUCKET_NAME:-}\"\nset_key OneBucketRegion \"${ONEBUCKET_REGION:-}\"\nset_key OneBucketAccessKeyID \"${ONEBUCKET_ACCESS_KEY_ID:-}\"\nset_key OneBucketSecretAccessKey \"${ONEBUCKET_SECRET_ACCESS_KEY:-}\"\nmkdir -p \"$DERIVED_FILE_DIR\"\ndate > \"$DERIVED_FILE_DIR/onebucket-settings.stamp\"\n";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		8D7335B930532C5E00902078 /* Sources */ = {

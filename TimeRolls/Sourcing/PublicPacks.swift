@@ -81,6 +81,8 @@ struct PackItem: Identifiable, Hashable {
     var subjectID: String?
     /// What kind of thing this is, in the words a hint would use: "a mammal", "a bird".
     var kind: String?
+    /// Who made it — the painter, for the artworks pack. See `PackManifest.Item`.
+    var creator: String?
     /// What this is called in English, where the title is Latin. See `PackManifest.Item`.
     var commonName: String?
     /// The Latin, for the back of the card. Nil where it is the common name again.
@@ -163,6 +165,10 @@ private struct PackManifest: Decodable {
         var subjectID: String?
         /// Written by the pack builder as the taxonomic group a creature belongs to.
         var group: String?
+        /// Who made it. The artworks pack records the painter here, beside `credit`,
+        /// which is whoever photographed or scanned the painting — for a public-domain
+        /// work those are often the same word and they are not the same fact.
+        var creator: String?
         /// What the thing is called in English.
         ///
         /// A plant or an animal is titled with whatever Wikidata calls it, and for a
@@ -243,14 +249,11 @@ enum PublicPackLibrary {
     }
 
     /// Metadata-only `GamePhoto` values for the enabled, playable packs.
-    static func photos(enabledPackIDs: Set<String>,
-                       day: Int = PhotoRotation.dayIndex()) -> [GamePhoto] {
+    static func photos(enabledPackIDs: Set<String>) -> [GamePhoto] {
         packs
             .filter { $0.isPlayable && enabledPackIDs.contains($0.id) }
-            .flatMap { pack in
-                // Only today's slice of each pack reaches the game.
-                PhotoRotation.selection(from: pack.items, packID: pack.id, day: day)
-                    .map { item in
+            .flatMap { pack -> [GamePhoto] in
+                let all = pack.items.map { item in
                     GamePhoto(id: "pack:\(pack.id):\(item.id)",
                               origin: .pack(packID: pack.id, itemID: item.id),
                               creationDate: item.date,
@@ -263,7 +266,10 @@ enum PublicPackLibrary {
                               dateIsBirth: pack.datesAreBirths,
                               dateIsAboutTheSubject: pack.datesAreAboutSubjects,
                               subjectKind: item.kind,
-                              subject: item.subject,
+                              // A person's role, read from their hint, where the pack
+                              // does not name a subject itself — see `PersonRole`.
+                              subject: item.subject
+                                  ?? (pack.datesAreBirths ? PersonRole.role(from: item.kind) : nil),
                               // A file name is not a name. Moments carries Wikimedia
                               // file names for the credits screen, and letting one
                               // through here would have curation asking which photograph
@@ -276,11 +282,28 @@ enum PublicPackLibrary {
                                   ? (item.commonName ?? item.credit?.title) : nil,
                               fact: item.fact,
                               namedSubjectPrompt: pack.namedSubjectPrompt,
+                              creator: item.creator,
                               scientificName: item.scientificName,
                               showsTitleWhilePlaying: pack.labelsWhilePlaying)
                         .carrying(themeID: item.themeID,
                                   plausible: item.plausibleThemeIDs,
                                   subjectID: item.subjectID)
+                }
+                // Only photographs some question this pack carries could actually ask
+                // about. The rest are left out before the seen record counts them.
+                //
+                // They used to be counted, and could never be shown, so they were never
+                // marked seen — which meant a pack could never finish. The record starts
+                // a pack again when fewer than a round's worth are unseen, and 58
+                // landmarks with no place, 10 animals and 8 plants known only in Latin
+                // were each enough on their own to keep that from happening. Once
+                // everything else had been shown, the window onto the pack held nothing
+                // but photographs no question could use, and the pack went quiet.
+                let askable = all.filter { $0.canBeAsked(inAnyOf: pack.themes) }
+                // Everything of this pack the player has not been shown yet, capped so
+                // one round is not built by sorting the whole library. See `SeenPhotos`.
+                return SeenPhotos.shared.inPlay(from: askable, packID: pack.id) { photo in
+                    photo.origin.packItemID ?? photo.id
                 }
             }
     }
@@ -390,6 +413,7 @@ enum PublicPackLibrary {
                     plausibleThemeIDs: Set(entry.themes ?? []),
                     subjectID: entry.subjectID,
                     kind: entry.group,
+                    creator: entry.creator?.nilIfBlank,
                     commonName: entry.commonName?.nilIfBlank,
                     scientificName: entry.scientificName?.nilIfBlank)
             }

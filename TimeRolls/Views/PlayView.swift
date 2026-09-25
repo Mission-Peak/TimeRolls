@@ -200,13 +200,20 @@ struct PlayView: View {
     private var header: some View {
         HStack {
             if let theme = engine.level?.theme {
-                // The chip says what you're playing, and is how you change it.
+                // The way into "what would you like?", and nothing else.
+                //
+                // It used to name the theme beside the icon — "Places", "Things". On a
+                // phone that has the theme chip, the gear and the sound switch sharing
+                // one row, the longest of those names wrapped onto a second line and the
+                // header grew to meet it. The name is not what the button is for: it says
+                // what you are playing now, and the reason to press it is to play
+                // something else. The icon and the chevron say that on their own, and the
+                // screen it opens names every theme in full.
                 Button {
                     isPickingCategory = true
                 } label: {
-                    HStack(spacing: 5) {
+                    HStack(spacing: 4) {
                         Image(systemName: theme.symbolName)
-                        Text(theme.title)
                         Image(systemName: "chevron.down")
                             .appFont(12, weight: .black)
                             .opacity(0.8)
@@ -215,8 +222,11 @@ struct PlayView: View {
                     // two things you can press up here look pressable.
                     .appFont(16, weight: .heavy)
                     .foregroundStyle(highContrast ? Palette.accent : Meadow.woodInk)
-                    .padding(.horizontal, 14)
-                    .padding(.vertical, 8)
+                    // A round-ish chip now there is no word in it, and wide enough that
+                    // it is still a comfortable target rather than a small icon.
+                    .frame(minWidth: 30)
+                    .padding(.horizontal, 12)
+                    .padding(.vertical, 9)
                     .background(highContrast ? AnyShapeStyle(Palette.accent.opacity(0.12))
                                              : AnyShapeStyle(Meadow.wood),
                                 in: Capsule())
@@ -821,22 +831,34 @@ struct SessionCompleteView: View {
             // Polaroids scattered into the corners, the way the reference has them.
             snapshots
 
-            ScrollView {
-                VStack(spacing: 18) {
-                    praiseBanner
-                    tallyCard
-                    challengeBar
-                    shareCard
-                    keepPlaying
-                    // The end of a session is when somebody thinks "that was too hard" or
-                    // "I should turn the reading-aloud on", so the way into setup has to be
-                    // here as well as on the play screen.
-                    SettingsGear(onOpen: onCaregiverGate)
-                        .padding(.top, 2)
+            // Centred down the screen, not stacked at the top of it.
+            //
+            // A plain ScrollView lays its content out from the top, so on a tall phone the
+            // congratulations sat up under the notch with a third of a screen of empty
+            // meadow beneath it. `minHeight` makes the stack at least as tall as the
+            // screen, and a spacer at each end then centres it — while anything too tall
+            // to fit still scrolls, which is what the ScrollView is for.
+            GeometryReader { proxy in
+                ScrollView {
+                    VStack(spacing: 18) {
+                        Spacer(minLength: 0)
+                        praiseBanner
+                        tallyCard
+                        challengeBar
+                        shareCard
+                        keepPlaying
+                        // The end of a session is when somebody thinks "that was too hard"
+                        // or "I should turn the reading-aloud on", so the way into setup
+                        // has to be here as well as on the play screen.
+                        SettingsGear(onOpen: onCaregiverGate)
+                            .padding(.top, 2)
+                        Spacer(minLength: 0)
+                    }
+                    .readableColumn(maxWidth: 620)
+                    .padding(.horizontal, 18)
+                    .padding(.vertical, 24)
+                    .frame(minHeight: proxy.size.height)
                 }
-                .readableColumn(maxWidth: 620)
-                .padding(.horizontal, 18)
-                .padding(.vertical, 24)
             }
 
             if isAskingForSupport {
@@ -939,17 +961,16 @@ struct SessionCompleteView: View {
                       tint: Meadow.sparkle,
                       heading: "Stars earned",
                       value: AnyView(starCount),
-                      // The grade still gets said, underneath, as a figure rather than
-                      // as three glyphs to be counted.
-                      footnote: rating >= 3 ? "All three today!" : "\(rating) out of 3 today",
-                      spoken: "\(engine.stats.starsToday) stars earned, "
-                            + "\(rating) out of three today")
+                      // No grade here. "2 out of 3" sat under "7 stars" and read as two
+                      // stars of three, contradicting the number above it — and because
+                      // this screen only appears once the challenge is finished, the
+                      // lowest it could ever say was 2, which looked like a middling
+                      // mark for what was really "you finished". The count is the
+                      // thing; the line under it just says well done, as the streak's does.
+                      footnote: "Nicely done!",
+                      spoken: "\(engine.stats.starsToday) stars earned")
             }
         }
-    }
-
-    private var rating: Int {
-        engine.stats.starRating(goal: engine.settings.dailyCardGoal)
     }
 
     /// The day's stars as a figure, in the same shape as the streak beside it.
@@ -1094,7 +1115,12 @@ struct SessionCompleteView: View {
             // on a phone — a decoration covering the one sentence the screen exists to
             // say. On a narrow screen they go below the words entirely rather than being
             // nudged: there is no room up there for both.
-            let narrow = size.width < 430
+            // Every phone, not just the small ones. This was 430, and an iPhone 17 Pro
+            // Max is 440 points wide — so the largest phone took the iPad layout and put
+            // two polaroids behind "Congratulations!", which is the one sentence the
+            // screen exists to say. The widest phone is 440 and the narrowest iPad is 744,
+            // so the line belongs between them and nowhere near either.
+            let narrow = size.width < 500
             let spots: [(x: CGFloat, y: CGFloat, angle: Double)] = narrow
                 ? [(0.12, 0.62, -9), (0.88, 0.66, 7), (0.14, 0.88, 6), (0.86, 0.90, -8)]
                 : [(0.10, 0.16, -9), (0.90, 0.20, 7), (0.11, 0.86, 6), (0.89, 0.84, -8)]
@@ -1225,14 +1251,6 @@ struct FactPopup: View {
                         Spacer(minLength: 0)
                     }
 
-                    if let name = photo.title {
-                        SubjectHeading(name: name,
-                                       scientificName: photo.scientificName,
-                                       size: 24 * textScale,
-                                       titleColour: highContrast ? Palette.ink(true)
-                                                                 : Meadow.title)
-                    }
-
                     FactText(fact: fact,
                              name: photo.title,
                              size: 20 * textScale,
@@ -1306,38 +1324,6 @@ struct FactPopup: View {
 /// Hoover" as a heading, then "Herbert Clark Hoover was the 31st president…". Saying it
 /// twice wastes the line and puts a gap where the eye expects to keep reading, so the
 /// heading is gone and the name is picked out where it already appears.
-/// The name of the thing on the card, and its Latin underneath where it has one.
-///
-/// The question asks by the English name — "which photo has a horse chestnut in it" —
-/// so the card has to say that name back in the same words, plainly, before the
-/// paragraph that explains it. The binomial goes here rather than in the question: it is
-/// a fact about the plant, the same as where it grows, and nobody is being asked to
-/// recognise it.
-struct SubjectHeading: View {
-
-    let name: String
-    var scientificName: String?
-    var size: CGFloat
-    var titleColour: Color = Meadow.title
-
-    var body: some View {
-        VStack(alignment: .leading, spacing: 2) {
-            Text(name)
-                .font(.system(size: size, weight: .heavy, design: .rounded))
-                .foregroundStyle(titleColour)
-            if let scientificName, scientificName.caseInsensitiveCompare(name) != .orderedSame {
-                Text(scientificName)
-                    .font(.system(size: size * 0.7, design: .rounded).italic())
-                    .foregroundStyle(Meadow.muted)
-            }
-        }
-        .fixedSize(horizontal: false, vertical: true)
-        .frame(maxWidth: .infinity, alignment: .leading)
-        .accessibilityElement(children: .combine)
-        .accessibilityLabel(name)
-    }
-}
-
 struct FactText: View {
 
     let fact: String

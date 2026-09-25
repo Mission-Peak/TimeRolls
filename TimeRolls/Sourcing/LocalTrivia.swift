@@ -273,7 +273,10 @@ final class LocalTrivia: NSObject, CLLocationManagerDelegate {
         var request = URLRequest(url: url)
         request.setValue("TimeRolls/1.0 (photo reminiscence prototype; hanna@attimis.co)",
                          forHTTPHeaderField: "User-Agent")
-        request.allowsCellularAccess = false
+        // Follows the same choice as the photo sets: a few kilobytes of place names is
+        // not what anybody's data plan is worried about, but it would be odd for the game
+        // to reach out over mobile data after being told not to.
+        request.allowsCellularAccess = RemoteImageCache.shared.allowsCellular
         let (data, _) = try await URLSession.shared.data(for: request)
         return (try JSONSerialization.jsonObject(with: data) as? [String: Any]) ?? [:]
     }

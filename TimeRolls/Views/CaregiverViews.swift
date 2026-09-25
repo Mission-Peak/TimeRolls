@@ -162,7 +162,7 @@ struct CaregiverHubView: View {
     private var paceCard: some View {
         StickerCard(fill: Meadow.cardCream) {
             VStack(alignment: .leading, spacing: 14) {
-                SectionBanner(symbol: "gamecontroller.fill", title: "Difficulty & pace",
+                SectionBanner(symbol: "gamecontroller.fill", title: "Pace",
                               tint: .hex(0x8B8BE8), band: .hex(0xFBEFC9))
 
                 HStack(spacing: 12) {
@@ -378,6 +378,7 @@ struct PhotoSourcesView: View {
                     ownPhotosCard
                     if !engine.library.albums.isEmpty { albumsCard }
                     packsCard
+                    mobileDataCard
                     labelsCard
                 }
                 .padding(.horizontal, 18)
@@ -393,6 +394,43 @@ struct PhotoSourcesView: View {
         .onChange(of: engine.settings) { engine.settings.save() }
         .onChange(of: engine.settings.photoSourceFingerprint) {
             Task { await engine.applySettingsChange() }
+        }
+    }
+
+    /// Whether the photo sets may come down over mobile data.
+    ///
+    /// The game used to refuse outright, and not as a setting: away from Wi-Fi every pack
+    /// photograph failed and the game looked broken. It is a choice now, and the card says
+    /// plainly what turning it off costs, because "Wi-Fi only" sounds free and is not.
+    private var mobileDataCard: some View {
+        StickerCard(fill: Meadow.cardCream) {
+            VStack(alignment: .leading, spacing: 12) {
+                SectionBanner(symbol: "antenna.radiowaves.left.and.right",
+                              title: "Mobile data", tint: .hex(0x7FB3E8),
+                              band: .hex(0xFBEFC9))
+
+                HStack(spacing: 12) {
+                    IconBadge(symbol: "arrow.down.circle.fill", tint: .hex(0x5FBF7F))
+                    Text("Download photo sets on mobile data")
+                        .font(.system(size: 18, weight: .bold, design: .rounded))
+                        .foregroundStyle(Meadow.title)
+                        .fixedSize(horizontal: false, vertical: true)
+                    Spacer(minLength: 0)
+                    Toggle("", isOn: $engine.settings.packsOnCellular)
+                        .labelsHidden().tint(Meadow.on)
+                }
+                .padding(12)
+                .background(Meadow.cardMint,
+                            in: RoundedRectangle(cornerRadius: 18, style: .continuous))
+
+                note(engine.settings.packsOnCellular
+                     ? "Photo sets download wherever there is a signal. Each photo is "
+                       + "fetched once and kept on this device, so the same picture never "
+                       + "costs twice."
+                     : "Photo sets only download on Wi-Fi. Away from Wi-Fi the game plays "
+                       + "on with this device's own photos, and with any photo set already "
+                       + "downloaded — those cost nothing to show again.")
+            }
         }
     }
 

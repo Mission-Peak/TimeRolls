@@ -45,18 +45,21 @@ struct FlippedCardView: View {
 
                 ScrollView {
                     VStack(alignment: .leading, spacing: 10) {
-                        if let name = photo.title {
-                            SubjectHeading(name: name,
-                                           scientificName: photo.scientificName,
-                                           size: 24 * textScale,
-                                           titleColour: highContrast ? Palette.ink(true)
-                                                                     : Meadow.title)
-                        }
+                        // No heading above the paragraph. The paragraph opens with the
+                        // name — "Raphanus raphanistrum, also known as wild radish…" — and
+                        // `FactText` already picks it out in bold where it appears, so a
+                        // heading said the same word twice and took a line to do it.
                         if let fact = photo.fact {
                             FactText(fact: fact, name: photo.title,
                                      size: 20 * textScale,
                                      bodyColour: highContrast ? Palette.ink(true) : Meadow.body)
-                        } else if photo.title == nil {
+                        } else if let title = photo.title {
+                            // Nothing written about it, so its name is all there is.
+                            Text(title)
+                                .font(.system(size: 24 * textScale, weight: .heavy,
+                                              design: .rounded))
+                                .foregroundStyle(Meadow.title)
+                        } else {
                             Text("Nothing is known about this one.")
                                 .font(.system(size: 18 * textScale, design: .rounded))
                                 .foregroundStyle(Meadow.muted)

@@ -53,6 +53,19 @@ struct CaregiverSettings: Codable, Equatable, Sendable {
     /// or one delivered over OneBucket — arrives switched on rather than hidden.
     var knownPackIDs: Set<String> = []
 
+    /// Whether the photo sets may be fetched over mobile data.
+    ///
+    /// They could not, ever, and it was not a setting: the image session was built with
+    /// `allowsCellularAccess = false` on the grounds that nobody's mobile data should go
+    /// on a photo game. The effect away from Wi-Fi was that every pack photograph failed
+    /// to load, every round built from one was thrown away, and the game looked broken
+    /// rather than thrifty — which is a worse outcome than the data it saved.
+    ///
+    /// On by default now, because a game that does not work on the bus is not a game. A
+    /// caregiver watching a data plan can turn it off, and when they do the game plays on
+    /// with the player's own photographs, which cost nothing to show.
+    var packsOnCellular = true
+
     /// Local Trivia: notable places near this iPad, looked up at play time.
     /// Off until somebody turns it on — it is the only feature that needs location.
     var localTriviaEnabled = false
@@ -162,6 +175,7 @@ struct CaregiverSettings: Codable, Equatable, Sendable {
         albumSelection = value(.albumSelection, defaults.albumSelection)
         enabledPackIDs = value(.enabledPackIDs, defaults.enabledPackIDs)
         knownPackIDs = value(.knownPackIDs, defaults.knownPackIDs)
+        packsOnCellular = value(.packsOnCellular, defaults.packsOnCellular)
         localTriviaEnabled = value(.localTriviaEnabled, defaults.localTriviaEnabled)
         dailyCardGoal = value(.dailyCardGoal, defaults.dailyCardGoal)
         lastCelebratedDay = value(.lastCelebratedDay, defaults.lastCelebratedDay)

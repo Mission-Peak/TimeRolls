@@ -75,6 +75,14 @@ struct GamePhoto: Identifiable, Hashable {
             if case let .pack(packID, _) = self { return packID }
             return nil
         }
+
+        /// The item's id within its pack, or nil for the player's own photographs. The
+        /// seen record is kept by this, not by the photo id, so it reads the same as the
+        /// ids a pack's manifest uses.
+        var packItemID: String? {
+            if case let .pack(_, itemID) = self { return itemID }
+            return nil
+        }
     }
 
 
@@ -242,6 +250,13 @@ struct GamePhoto: Identifiable, Hashable {
     /// Pack photos only: how this pack phrases a question about its own named subjects.
     /// "{name}" stands in for the photograph's title.
     var namedSubjectPrompt: String?
+    /// Pack photos only: who made this — the painter, for the artworks pack.
+    ///
+    /// Distinct from the credit, which names whoever photographed or scanned the work. For
+    /// a public-domain painting the two often carry the same name and they answer
+    /// different questions: one is a fact about the picture, the other is an attribution
+    /// we are obliged to print.
+    var creator: String?
     /// Pack photos only: the Latin, where the thing has one and it is not simply what it
     /// is called. Shown on the back of the card, never in the question.
     var scientificName: String?
@@ -306,6 +321,12 @@ struct Level: Identifiable {
     /// state the named place is in, which rules photographs out without pointing at the
     /// one that is left.
     var hint: String?
+    /// Which kind of question this is — "named", "artist", "landmark", "role" — so the
+    /// next round can be a different kind. Recorded rather than guessed back from the
+    /// wording, because the wording now varies too.
+    var ask: String?
+    /// Which wording was used, so the same sentence is not asked twice running.
+    var wording: String?
 
     var usesPackPhotos: Bool { photos.contains { !$0.isPersonal } }
 
@@ -545,6 +566,78 @@ extension TimeInterval {
 extension Comparable {
     func clamped(to range: ClosedRange<Self>) -> Self {
         min(max(self, range.lowerBound), range.upperBound)
+    }
+}
+
+/// What somebody was, in one word a question can use: "musician", "writer", "leader".
+///
+/// Famous Faces carries a line about each person — "a German composer", "an American
+/// novelist and editor" — written for the hint. That line already says what kind of
+/// person they were; this reads it, so a Time round can be four musicians and ask which
+/// musician was born first, rather than four strangers and "who was born first".
+///
+/// Earliest word wins, because the line leads with what somebody is best known for:
+/// "an American actor and filmmaker" is an actor. Nil where nothing matches, which keeps
+/// that person in the general round rather than guessing them into a group.
+nonisolated enum PersonRole {
+
+    private static let roles: [(role: String, words: [String])] = [
+        ("musician", ["singer", "songwriter", "composer", "musician", "pianist",
+                      "saxophonist", "guitarist", "trumpeter", "vocalist", "tenor",
+                      "conductor", "dj", "rapper"]),
+        ("writer", ["writer", "novelist", "author", "poet", "playwright", "journalist"]),
+        ("scientist", ["physicist", "chemist", "biochemist", "naturalist", "mathematician",
+                       "astronomer", "scientist", "biologist", "physician", "engineer",
+                       "inventor", "polymath"]),
+        ("artist", ["painter", "sculptor", "artist", "photographer"]),
+        ("actor", ["actor", "actress", "comedian", "mime", "filmmaker"]),
+        ("athlete", ["footballer", "boxer", "tennis", "swimmer", "athlete", "racer",
+                     "basketball", "cricketer", "golfer"]),
+        ("leader", ["politician", "president", "statesman", "leader", "queen", "king",
+                    "emperor", "revolutionary", "general", "founding", "activist",
+                    "abolitionist"]),
+        ("philosopher", ["philosopher"]),
+        ("explorer", ["explorer", "navigator", "astronaut", "cosmonaut", "aviator"]),
+    ]
+
+    static func role(from line: String?) -> String? {
+        guard let line = line?.lowercased(), !line.isBlank else { return nil }
+        // A martial artist is not an artist. Bruce Lee came out as one, and would have
+        // been asked about beside Vermeer.
+        if line.contains("martial art") { return "athlete" }
+        let words = line.split(whereSeparator: { !$0.isLetter }).map(String.init)
+        for word in words {
+            for entry in roles where entry.words.contains(where: { word == $0 || word == $0 + "s" }) {
+                return entry.role
+            }
+        }
+        return nil
+    }
+
+    /// "musician" -> "musicians". Every role above takes a plain s.
+    static func plural(_ role: String) -> String { role + "s" }
+}
+
+/// Whether any question could ever be asked with this photograph as its answer.
+///
+/// Mirrors what each curator requires before it will build a round around a photograph,
+/// and nothing more generous: Places needs a place name and a coordinate, Time needs a
+/// date, Things needs a name worth asking by or something the photograph is tagged as.
+/// Used to keep photographs that can never be shown out of the seen record, which
+/// otherwise waits for them for ever. See `PublicPackLibrary.photos(enabledPackIDs:)`.
+nonisolated extension GamePhoto {
+    func canBeAsked(inAnyOf themes: Set<GameTheme>) -> Bool {
+        for theme in themes {
+            switch theme {
+            case .places:
+                if !(placeName ?? "").isBlank, coordinate != nil { return true }
+            case .chronology:
+                if creationDate != nil { return true }
+            case .objects:
+                if askableName != nil || !objectTags.isEmpty || conceptID != nil { return true }
+            }
+        }
+        return false
     }
 }
 

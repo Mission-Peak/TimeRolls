@@ -20,18 +20,13 @@ struct HowsItGoingView: View {
                 VStack(alignment: .leading, spacing: 12) {
                     SectionBanner(symbol: "calendar", title: "Today's challenge",
                                   tint: .hex(0x5FA86B), band: .white.opacity(0.75))
-                    DailyChallengeRing(
-                        done: engine.stats.cardsToday,
-                        goal: engine.settings.dailyCardGoal,
-                        stars: engine.stats.starRating(goal: engine.settings.dailyCardGoal),
-                        starsToday: engine.stats.starsToday,
-                        goalDays: engine.stats.challengeDaysThisWeek(
-                            goal: engine.settings.dailyCardGoal))
-                    MeadowNote(text: "The challenge is \(engine.settings.dailyCardGoal) "
-                               + "photo cards, and it can be finished across the whole day. "
-                               + "Afterwards the game carries on for as long as anybody "
-                               + "wants to play, and does not interrupt again until "
-                               + "tomorrow. Change the number in Setup.")
+                    // One circle that says one thing: done, or how many are left. The
+                    // stars, the grade, the days "like this" and a paragraph about the
+                    // challenge all used to sit here, and the card read "23 of 8" once
+                    // somebody kept playing past the goal — a number over a hundred
+                    // percent that looked like a mistake.
+                    DailyChallengeRing(done: engine.stats.cardsToday,
+                                       goal: engine.settings.dailyCardGoal)
                 }
             }
 
@@ -213,137 +208,63 @@ struct HowsItGoingView: View {
 }
 
 
-/// Today's challenge: a ring that fills, and the day's stars as a number.
+/// Today's challenge, as one circle.
 ///
-/// The stars used to be drawn as stars — three glyphs for the day's rating, and one glyph
-/// per card finished. Both are numbers pretending not to be. A reader counting glyphs to
-/// find out they got two out of three has been made to do arithmetic by a picture, and
-/// the row of them broke outright once the challenge could be set by hand to twenty: a
-/// twenty-star row wraps, and past about eight nobody counts them anyway. The star stays
-/// as one small mark beside the figure, which is what a star is good at.
+/// It fills with green as rolls are played, and says "Complete!" once the challenge is
+/// done. Until then the middle says how many rolls are still to go — "3 rolls left" —
+/// which is the only thing worth knowing before it is done. It does not count past the goal: somebody who plays on after
+/// finishing has finished, and "23 of 8" said otherwise.
 ///
-/// It lives here and only here: the game itself never shows a score, so this is where a
-/// good afternoon is allowed to look like one. Nothing happens when the goal is met — no
-/// unlock, no nag when it isn't — because the moment a target starts pushing back, it
-/// stops being a kindness and starts being a test.
+/// It lives here and only here: the game itself never shows a score. Nothing happens when
+/// the goal is met — no unlock, no nag when it isn't — because the moment a target starts
+/// pushing back, it stops being a kindness and starts being a test.
 struct DailyChallengeRing: View {
 
     let done: Int
     let goal: Int
-    /// The day graded out of three, once the challenge is finished.
-    let stars: Int
-    /// Every star earned today, which is a different count entirely — two for a photo
-    /// found first time, one for one that took another look, plus the run bonus.
-    var starsToday: Int = 0
-    let goalDays: Int
 
-    private var progress: Double {
-        goal <= 0 ? 0 : min(Double(done) / Double(goal), 1)
-    }
-    private var met: Bool { goal > 0 && done >= goal }
+    private var met: Bool { goal <= 0 || done >= goal }
+    private var left: Int { max(goal - done, 0) }
+    /// How much of the circle is filled. Stops at full, however far past the goal.
+    private var progress: Double { goal <= 0 ? 1 : min(Double(done) / Double(goal), 1) }
+
+    private static let green = Color.hex(0x5FA86B)
+    private static let size: CGFloat = 176
 
     var body: some View {
-        VStack(spacing: 14) {
-            HStack(spacing: 18) {
-                ring
-                VStack(alignment: .leading, spacing: 4) {
-                    Text(met ? "Finished for today" : "\(done) of \(goal) photo cards")
-                        .font(.system(size: 17, weight: .bold, design: .rounded))
-                        .foregroundStyle(Meadow.title)
-                    Text(met
-                         ? "Done — and the game keeps going for as long as they like"
-                         : "\(goal - done) more to finish the day")
-                        .font(.system(size: 14, design: .rounded))
-                        .foregroundStyle(Meadow.muted)
-                        .fixedSize(horizontal: false, vertical: true)
-                    if met {
-                        HStack(spacing: 5) {
-                            Image(systemName: "star.fill")
-                                .font(.system(size: 14, weight: .black))
-                                .foregroundStyle(Meadow.sparkle)
-                            Text("\(stars) out of 3 for today")
-                                .font(.system(size: 15, weight: .heavy, design: .rounded))
-                                .monospacedDigit()
-                                .foregroundStyle(Meadow.title)
-                        }
-                        .accessibilityElement(children: .ignore)
-                        .accessibilityLabel("\(stars) out of three for today")
-                    }
-                    if goalDays > 0 {
-                        Text(goalDays == 1
-                             ? "One day like this in the last week"
-                             : "\(goalDays) days like this in the last week")
-                            .font(.system(size: 13, weight: .semibold, design: .rounded))
-                            .foregroundStyle(Color.hex(0x1F6B43))
-                            .padding(.top, 2)
-                    }
-                }
-                Spacer(minLength: 0)
-            }
-            starRow
-        }
-        .padding(14)
-        .background(.white.opacity(0.7),
-                    in: RoundedRectangle(cornerRadius: 18, style: .continuous))
-        .accessibilityElement(children: .ignore)
-        .accessibilityLabel(met
-                            ? "Today's challenge finished, \(done) photo cards, "
-                              + "\(stars) out of three, \(starsToday) stars earned."
-                            : "\(done) of \(goal) photo cards done today, "
-                              + "\(starsToday) stars earned.")
-    }
-
-    private var ring: some View {
         ZStack {
+            // The track, and the green filling round it roll by roll from the top.
             Circle()
-                .stroke(Color.hex(0xF3C765).opacity(0.25), lineWidth: 10)
+                .stroke(Meadow.muted.opacity(0.25), lineWidth: 14)
             Circle()
                 .trim(from: 0, to: progress)
-                .stroke(
-                    AngularGradient(colors: [.hex(0xF3C765), .hex(0xF3A05A), .hex(0xF3C765)],
-                                    center: .center),
-                    style: StrokeStyle(lineWidth: 10, lineCap: .round))
+                .stroke(Self.green, style: StrokeStyle(lineWidth: 14, lineCap: .round))
                 .rotationEffect(.degrees(-90))
                 .animation(.easeOut(duration: 0.6), value: progress)
-            VStack(spacing: 0) {
-                Image(systemName: met ? "checkmark.circle.fill" : "photo.stack")
-                    .font(.system(size: 17, weight: .bold))
-                    .foregroundStyle(met ? Color.hex(0x5FA86B) : Color.hex(0xE8A53C))
-                Text("\(done)")
-                    .font(.system(size: 21, weight: .heavy, design: .rounded))
-                    .foregroundStyle(Meadow.title)
-                    .monospacedDigit()
-                Text("of \(goal)")
-                    .font(.system(size: 11, weight: .semibold, design: .rounded))
-                    .foregroundStyle(Meadow.muted)
+            VStack(spacing: 2) {
+                if met {
+                    Image(systemName: "checkmark")
+                        .font(.system(size: 34, weight: .black))
+                    Text("Complete!")
+                        .font(.system(size: 26, weight: .heavy, design: .rounded))
+                } else {
+                    Text("\(left)")
+                        .font(.system(size: 52, weight: .heavy, design: .rounded))
+                        .monospacedDigit()
+                        .foregroundStyle(Meadow.title)
+                    Text(left == 1 ? "roll left" : "rolls left")
+                        .font(.system(size: 17, weight: .semibold, design: .rounded))
+                        .foregroundStyle(Meadow.muted)
+                }
             }
+            .foregroundStyle(Self.green)
         }
-        .frame(width: 92, height: 92)
-    }
-
-    /// The day's stars, as a figure.
-    ///
-    /// This row used to draw one star glyph per card finished — despite the name, it was
-    /// counting cards, which the ring beside it already shows twice. So it said nothing
-    /// new and it said it in a form that had to be counted. It now shows the one number
-    /// this screen was missing: how many stars the day has actually earned.
-    private var starRow: some View {
-        HStack(spacing: 6) {
-            Image(systemName: "star.fill")
-                .font(.system(size: 16, weight: .bold))
-                .foregroundStyle(Color.hex(0xE8A53C))
-            Text("\(starsToday)")
-                .font(.system(size: 20, weight: .heavy, design: .rounded))
-                .monospacedDigit()
-                .foregroundStyle(Meadow.title)
-                .contentTransition(.numericText())
-                .animation(.easeOut(duration: 0.3), value: starsToday)
-            Text(starsToday == 1 ? "star today" : "stars today")
-                .font(.system(size: 14, weight: .semibold, design: .rounded))
-                .foregroundStyle(Meadow.muted)
-            Spacer(minLength: 0)
-        }
+        .frame(width: Self.size, height: Self.size)
+        .animation(.easeOut(duration: 0.4), value: met)
+        .frame(maxWidth: .infinity)
+        .padding(.vertical, 10)
         .accessibilityElement(children: .ignore)
-        .accessibilityLabel(starsToday == 1 ? "One star today" : "\(starsToday) stars today")
+        .accessibilityLabel(met ? "Today's challenge is complete"
+                                : "\(left) \(left == 1 ? "roll" : "rolls") left in today's challenge")
     }
 }

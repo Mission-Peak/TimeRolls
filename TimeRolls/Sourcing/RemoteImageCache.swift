@@ -9,8 +9,14 @@
 //  This is what lets the catalogue be large. 350 photographs cost 171 KB as metadata;
 //  the same photographs bundled would be about 80 MB.
 //
-//  Wi-Fi only, deliberately. Commons allows this kind of linking but asks that reusers
-//  cache rather than re-fetch, and nobody's mobile data should go on a photo game.
+//  Wi-Fi only used to be the rule here, written into the session and not offered as a
+//  choice. Away from Wi-Fi that meant every pack photograph failed, every round built
+//  from one was discarded, and the game looked broken rather than thrifty. It is a
+//  setting now — `packsOnCellular`, on by default — and when it is off the game plays on
+//  with the player's own photographs rather than with nothing.
+//
+//  Commons still asks that reusers cache rather than re-fetch, which is what this whole
+//  file is for.
 //
 
 import CryptoKit
@@ -29,6 +35,10 @@ final class RemoteImageCache {
     /// Photographs that could not be fetched — a renamed or deleted source. Remembered
     /// for the session so curation can route around them instead of retrying forever.
     private(set) var unavailable: Set<String> = []
+
+    /// Whether pack photographs may be fetched over a connection somebody pays for.
+    /// Kept in step with `CaregiverSettings.packsOnCellular` by the engine.
+    var allowsCellular = true
     private var inFlight: [String: Task<UIImage?, Never>] = [:]
 
     private init() {
@@ -36,9 +46,12 @@ final class RemoteImageCache {
         directory = caches.appendingPathComponent("PackPhotos", isDirectory: true)
         try? FileManager.default.createDirectory(at: directory, withIntermediateDirectories: true)
 
+        // Permissive at the session, decided per request. A session's policy is fixed
+        // when it is built, and this one is a singleton built at launch — so a policy set
+        // here could never follow a setting the caregiver changes later.
         let configuration = URLSessionConfiguration.default
-        configuration.allowsCellularAccess = false
-        configuration.allowsExpensiveNetworkAccess = false
+        configuration.allowsCellularAccess = true
+        configuration.allowsExpensiveNetworkAccess = true
         configuration.waitsForConnectivity = false
         configuration.httpAdditionalHeaders = [
             // Commons asks that tools identify themselves.
@@ -68,8 +81,12 @@ final class RemoteImageCache {
         // Read through OneBucket where it is configured, and from the original source
         // until it is. The app never holds a credential either way (spec §10).
         guard !unavailable.contains(item.id),
-              let request = OneBucket.source(key: item.remoteKey, original: item.remoteURL)
+              var request = OneBucket.source(key: item.remoteKey, original: item.remoteURL)
         else { return nil }
+        // Per request, so the caregiver's choice applies to the next photograph fetched
+        // rather than to the next launch.
+        request.allowsCellularAccess = allowsCellular
+        request.allowsExpensiveNetworkAccess = allowsCellular
 
         if let existing = inFlight[item.id] { return await existing.value }
 
@@ -167,16 +184,25 @@ final class RemoteImageCache {
     /// Generous enough that a day's rotation never evicts itself mid-session.
     /// How much of the device's storage the pack photographs may use.
     ///
-    /// Four hundred megabytes, not one hundred and twenty. The old figure was set when
-    /// three packs showed two thirds of themselves a day; five packs now deal a hundred
-    /// and fifty each, which at the average of four hundred kilobytes is close to three
-    /// hundred megabytes in play on any given day. A cache holding a third of that does
-    /// not hold a day — it evicts photographs that are still in the rotation and fetches
-    /// them again, which is felt as the game pausing between rounds.
+    /// A gigabyte, which is the whole library and then some.
     ///
-    /// These are ordinary cache files: iOS may purge them when the device is short of
-    /// space, and nothing is lost when it does beyond fetching them once more.
-    static let budget = 400 * 1024 * 1024
+    /// Every photograph the five packs hold comes to 996 MB — 2,419 pictures averaging
+    /// 402 KB. So this is not a cache size chosen against a day's play; it is large
+    /// enough that, once somebody has played for a couple of weeks, nothing is ever
+    /// fetched twice and the game works with no signal at all.
+    ///
+    /// The figures it replaces were both reasoned from a daily slice and both went stale
+    /// the moment that slice changed. 120 MB was set when three packs showed two thirds
+    /// of themselves a day. 400 MB was set when five packs dealt 150 each — and the slice
+    /// dropped to 80 a few hours later to fix the lag, which left 400 MB sized for a day
+    /// twice as big as the one the game now plays. Sizing the cache to the content
+    /// instead of to the rotation is the thing that stops this happening a third time:
+    /// the packs are fixed, so the number only moves when the packs do.
+    ///
+    /// These are ordinary cache files. iOS may purge them when the device is short of
+    /// space, so this is a ceiling rather than a reservation, and nothing is lost when it
+    /// does beyond fetching a photograph once more.
+    static let budget = 1024 * 1024 * 1024
 
     /// Drop the least recently used photographs until the cache is inside its budget.
     ///

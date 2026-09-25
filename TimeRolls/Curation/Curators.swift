@@ -64,6 +64,68 @@ enum Resemblance {
     }
 }
 
+/// What has been asked lately, and how to choose something that has not.
+///
+/// One helper for the memory and one for reading it, so the two cannot disagree. They did:
+/// the engine appended each kind to the end of its list, and the rotation read the list as
+/// most-recent-first. So on a real device, once every kind had come up once, the rotation
+/// tried the *most* recent kind first and the same question came back round after round.
+/// The harness built its own list the other way round and passed. Both now go through
+/// `remembering`, and `Recency` is the only thing that reads the result.
+nonisolated enum Recency {
+
+    /// How many recent kinds or wordings are worth remembering. Enough to hold every
+    /// wording of every kind at once, so no kind's last wording falls out of memory
+    /// before that kind comes round again and gets asked the same way.
+    static let window = 64
+
+    /// `recent` with `tag` moved to the front. Most recent first, always.
+    static func remembering(_ tag: String, in recent: [String]) -> [String] {
+        Array(([tag] + recent.filter { $0 != tag }).prefix(window))
+    }
+
+    /// `options` ordered with the longest-unused first. Anything never used goes first;
+    /// ties keep their given order, so the choice is stable rather than random.
+    static func leastRecentFirst<T>(_ options: [T], key: (T) -> String,
+                                    recent: [String]) -> [T] {
+        options.enumerated().sorted { lhs, rhs in
+            let l = recent.firstIndex(of: key(lhs.element)) ?? Int.max
+            let r = recent.firstIndex(of: key(rhs.element)) ?? Int.max
+            if l != r { return l > r }
+            return lhs.offset < rhs.offset
+        }.map(\.element)
+    }
+
+    /// One of several ways of asking the same thing, the one used longest ago.
+    static func wording(_ variants: [String], recent: [String]) -> String {
+        leastRecentFirst(variants, key: { $0 }, recent: recent).first ?? variants[0]
+    }
+
+    /// A template chosen by how long ago it was used, and filled in.
+    ///
+    /// The memory holds templates — "Which one shows {x}?" — not finished sentences, so
+    /// "Which one shows a lion?" and "Which one shows Louis Pasteur?" count as the same
+    /// shape of question and are not asked back to back. Comparing finished sentences
+    /// against a memory of templates matches nothing, and quietly picks the first wording
+    /// every time.
+    ///
+    /// Remembered per kind of question. Kinds share sentences — "which of these is {x}?"
+    /// asks about a mammal and about Louis Pasteur — and when the memory was shared, one
+    /// kind using a wording could push another kind back onto the wording it used last
+    /// time. Keyed by kind, each kind goes round its own wordings in turn.
+    static func choose(_ templates: [String], kind: String, x: String = "",
+                       plural: String = "",
+                       recent: [String]) -> (text: String, wording: String) {
+        let key = { (template: String) in "\(kind)|\(template)" }
+        let template = leastRecentFirst(templates, key: key, recent: recent).first
+            ?? templates[0]
+        let text = template
+            .replacingOccurrences(of: "{xs}", with: plural)
+            .replacingOccurrences(of: "{x}", with: x)
+        return (text, key(template))
+    }
+}
+
 enum ChronologyCurator {
 
     /// Buckets the pool into time windows and samples inside one of them.
@@ -73,7 +135,30 @@ enum ChronologyCurator {
                           prompts: [String: String] = [:],
                           birthDatedPacks: Set<String> = [],
                           personalSpan: TimeInterval? = nil,
+                          recentAsks: [String] = [],
+                          recentWordings: [String] = [],
                           visualDistance: ((GamePhoto, GamePhoto) -> Double?)? = nil) -> Level? {
+        guard var level = assemble(pool: pool, prompts: prompts,
+                                   birthDatedPacks: birthDatedPacks,
+                                   personalSpan: personalSpan, recentAsks: recentAsks,
+                                   visualDistance: visualDistance) else { return nil }
+        // Worded here, once, from the photographs the round ended up with. The paths
+        // that build a round each wrote their own sentence; choosing among several
+        // wordings in one place is what stops any of them being asked the same way twice.
+        let phrase = phrasing(for: level.photos, prompts: prompts,
+                              birthDatedPacks: birthDatedPacks, recent: recentWordings)
+        level.prompt = phrase.text
+        level.wording = phrase.wording
+        if level.ask == nil { level.ask = phrase.ask }
+        return level
+    }
+
+    private static func assemble(pool: [GamePhoto],
+                                 prompts: [String: String],
+                                 birthDatedPacks: Set<String>,
+                                 personalSpan: TimeInterval?,
+                                 recentAsks: [String],
+                                 visualDistance: ((GamePhoto, GamePhoto) -> Double?)?) -> Level? {
         let dated = pool
             .filter { $0.creationDate != nil }
             .sorted { $0.creationDate! < $1.creationDate! }
@@ -87,7 +172,8 @@ enum ChronologyCurator {
         // the ends, and no window that tight contains them — so it simply failed, and
         // Time rounds stopped being built at all above four photographs.
         if let spread = eraLevel(dated: dated, count: count,
-                                 prompts: prompts, birthDatedPacks: birthDatedPacks) {
+                                 prompts: prompts, birthDatedPacks: birthDatedPacks,
+                                 recentAsks: recentAsks) {
             return spread
         }
 
@@ -318,9 +404,61 @@ enum ChronologyCurator {
 
     /// Ask about the subject, not the photograph. A row of presidents deserves "Who came
     /// first?"; a row of a family's own photographs is still "Which photo is older?".
+    /// The written question, in its first wording. Paths that build a round still call
+    /// this; `makeLevel` rewords the finished round through `phrasing` before it leaves.
     private static func prompt(for photos: [GamePhoto],
                                prompts: [String: String],
                                birthDatedPacks: Set<String>) -> String {
+        phrasing(for: photos, prompts: prompts, birthDatedPacks: birthDatedPacks,
+                 recent: []).text
+    }
+
+    /// A sentence, which kind of question it is, and which wording it came from.
+    struct Phrase: Sendable {
+        var text: String
+        var wording: String
+        var ask: String
+    }
+
+    /// The ways of asking each Time question.
+    ///
+    /// The first of each list is the sentence the game has always used, so a round with no
+    /// memory behind it reads exactly as before. The others say the same thing in other
+    /// words, so a session does not ask "who was born first?" nine times over. Every one
+    /// says what the dates mean — born, painted, taken — because "which is older" about a
+    /// row of portraits reads as a question about the photographs.
+    enum Wordings {
+        static let older = ["Which photo is older?",
+                            "Which of these photos was taken first?",
+                            "Which photo was taken earliest?"]
+        static let cameFirst = ["Which came first?",
+                                "Which of these came first?"]
+        static let bornFirst = ["Which {x} was born first?",
+                                "Which of these {xs} was born earliest?",
+                                "Of these {xs}, who was born first?"]
+        static let earliest = ["Which of these was the earliest {x}?",
+                               "Which {x} came first?"]
+        /// Keyed by the sentence a pack's manifest gives, so a pack that writes its own
+        /// question keeps it and only the packs listed here are reworded.
+        static let packQuestion: [String: [String]] = [
+            "Who was born first?": ["Who was born first?",
+                                    "Which of these people was born first?",
+                                    "Who was born earliest?"],
+            "Which one was painted first?": ["Which one was painted first?",
+                                             "Which of these was the earliest painting?",
+                                             "Which painting is the oldest?"],
+        ]
+    }
+
+    static func phrasing(for photos: [GamePhoto],
+                         prompts: [String: String],
+                         birthDatedPacks: Set<String>,
+                         recent: [String]) -> Phrase {
+        func pick(_ templates: [String], ask: String, x: String = "") -> Phrase {
+            let chosen = Recency.choose(templates, kind: ask, x: x,
+                                        plural: PersonRole.plural(x), recent: recent)
+            return Phrase(text: chosen.text, wording: chosen.wording, ask: ask)
+        }
         // Every photograph the player's own, and every one the same occasion: ask about
         // the occasion. "Which birthday came first?" is a question about their life
         // rather than about their photo library.
@@ -329,7 +467,7 @@ enum ChronologyCurator {
             if themes.count == 1,
                let question = photos.first?.themeQuestion,
                photos.allSatisfy({ $0.themeQuestion != nil }) {
-                return question
+                return Phrase(text: question, wording: question, ask: "occasion")
             }
         }
 
@@ -338,7 +476,9 @@ enum ChronologyCurator {
         for photo in photos {
             // One of the player's own photographs in the set and it is their photograph
             // being placed, so ask about the photograph.
-            guard case let .pack(packID, _) = photo.origin else { return "Which photo is older?" }
+            guard case let .pack(packID, _) = photo.origin else {
+                return pick(Wordings.older, ask: "older")
+            }
             if let prompt = prompts[packID] { found.insert(prompt) }
             if let subject = photo.subject { subjects.insert(subject) }
         }
@@ -350,13 +490,16 @@ enum ChronologyCurator {
             // When the dates are birthdays, say so: "which of these was the earliest
             // singer" sounds like a question about the photographs.
             if photos.allSatisfy({ isBirthDated($0, packs: birthDatedPacks) }) {
-                return "Which \(subject) was born first?"
+                return pick(Wordings.bornFirst, ask: "role", x: subject)
             }
-            return "Which of these was the earliest \(subject)?"
+            return pick(Wordings.earliest, ask: "role", x: subject)
         }
         // All public, but from different packs: still not "which photo", because nobody
         // is judging the photograph.
-        return found.count == 1 ? found.first! : "Which came first?"
+        if found.count == 1, let base = found.first {
+            return pick(Wordings.packQuestion[base] ?? [base], ask: "era")
+        }
+        return pick(Wordings.cameFirst, ask: "mixed")
     }
 
     /// "The earliest one here is from the 1900s." The same shape as the Places hint —
@@ -416,7 +559,8 @@ enum ChronologyCurator {
     private static func eraLevel(dated: [GamePhoto],
                                  count: Int,
                                  prompts: [String: String],
-                                 birthDatedPacks: Set<String>) -> Level? {
+                                 birthDatedPacks: Set<String>,
+                                 recentAsks: [String] = []) -> Level? {
         // Only packs whose years are facts about their subjects. This is the "who was
         // born first" round; a pack of photographs dated by upload has no eras to pick.
         let subjectDated = dated.filter { !$0.isPersonal && $0.dateIsAboutTheSubject }
@@ -451,6 +595,38 @@ enum ChronologyCurator {
         // where they were there and they remember.
         let wantedPublic = count
 
+        // Two ways of asking a pack of people: all four of one kind — "which musician was
+        // born first?" — or four from anywhere in the pack. Whichever was asked longer
+        // ago goes first. A kind needs a couple more members than a round holds, or every
+        // round of it would be the same four people.
+        // Roles are looked for across every pack of people, not only the pack this round
+        // happened to draw — or half the time it draws the paintings, which have no
+        // roles, and the question almost never comes up.
+        let people = byPack.values.flatMap { $0 }.filter { $0.subject != nil }
+        let byRole = Dictionary(grouping: people) { "\(packID(of: $0) ?? "")|\($0.subject!)" }
+            .filter { $0.value.count >= wantedPublic + 2 }
+        for kind in Recency.leastRecentFirst(["role", "era"], key: { $0 }, recent: recentAsks) {
+            let from: [GamePhoto]
+            if kind == "role" {
+                guard let group = byRole.values.shuffled().first else { continue }
+                from = group
+            } else {
+                from = eligible
+            }
+            if var level = spread(from, count: wantedPublic, prompts: prompts,
+                                  birthDatedPacks: birthDatedPacks) {
+                level.ask = kind
+                return level
+            }
+        }
+        return nil
+    }
+
+    /// Four photographs from `eligible`, each far enough in time from every other that
+    /// the answer can be read from the pictures.
+    private static func spread(_ eligible: [GamePhoto], count wantedPublic: Int,
+                               prompts: [String: String],
+                               birthDatedPacks: Set<String>) -> Level? {
         // Pick at random and keep whatever fits, rather than walking the list from a
         // starting point and taking the first photograph far enough along. Walking chose
         // nearly the same set every time — 85% of photographs came round again inside the
@@ -589,12 +765,126 @@ enum PlacesCurator {
     /// rather than about anywhere they remember being.
     static let minimumSeparation: CLLocationDistance = 120_000
 
-    /// Exactly one photo from the target place, plus plausible distractors from
-    /// elsewhere. Harder levels draw those distractors from nearby places (spec §5.2–5.3).
+    /// The ways of asking a Places question. The first of each is what the game has
+    /// always said.
+    enum Wordings {
+        static let place = ["Which photo is from {x}?",
+                            "Which one was taken in {x}?",
+                            "Which of these is in {x}?"]
+        static let landmark = ["Which photo is from {x}?",
+                               "Which one shows {x}?",
+                               "Which of these is {x}?"]
+    }
+
+    /// Two ways of asking about places — by where a photograph was taken, and by which
+    /// landmark it shows — tried longest-unasked first, then worded so the same sentence
+    /// is not asked twice running.
     static func makeLevel(pool: [GamePhoto],
                           prompts: [String: String] = [:],
                           recentPlaces: [String] = [],
+                          recentAsks: [String] = [],
+                          recentWordings: [String] = [],
                           visualDistance: ((GamePhoto, GamePhoto) -> Double?)? = nil) -> Level? {
+        for kind in Recency.leastRecentFirst(["place", "landmark"], key: { $0 },
+                                             recent: recentAsks) {
+            if kind == "landmark" {
+                if let level = landmarkLevel(pool: pool, recentPlaces: recentPlaces,
+                                             recentWordings: recentWordings) {
+                    return level
+                }
+                continue
+            }
+            guard var level = placeLevel(pool: pool, recentPlaces: recentPlaces,
+                                         visualDistance: visualDistance),
+                  let asked = level.focusTag else { continue }
+            let chosen = Recency.choose(Wordings.place, kind: "place", x: asked,
+                                        recent: recentWordings)
+            level.prompt = chosen.text
+            level.wording = chosen.wording
+            level.ask = "place"
+            return level
+        }
+        return nil
+    }
+
+    /// "Which photo is from the Eiffel Tower?"
+    ///
+    /// The landmarks pack names every photograph, and a place is recognised by what is in
+    /// it as often as by where it is: nobody needs to know that the tower is in the
+    /// seventh arrondissement to pick it out. So this asks for the landmark itself, beside
+    /// three other landmarks — and, where the round has room for one, a photograph of the
+    /// player's own that was taken nowhere near it.
+    ///
+    /// "Nowhere near" is the rule that keeps the question honest. Their own holiday
+    /// photograph taken under the Eiffel Tower is a second right answer, and nothing on
+    /// the screen would say which was meant.
+    private nonisolated static func landmarkLevel(pool: [GamePhoto], recentPlaces: [String],
+                                                  recentWordings: [String]) -> Level? {
+        let wanted = DifficultyKnob.photoCount
+        let landmarks = pool.filter {
+            !$0.isPersonal && !($0.title ?? "").isBlank && $0.coordinate != nil
+                && !($0.placeName ?? "").isBlank
+        }
+        guard landmarks.count >= wanted else { return nil }
+        let stale = Set(recentPlaces)
+        let targets = landmarks.shuffled().sorted { lhs, rhs in
+            (stale.contains(lhs.title!) ? 1 : 0) < (stale.contains(rhs.title!) ? 1 : 0)
+        }
+
+        for target in targets.prefix(12) {
+            guard let title = target.title, let here = target.coordinate else { continue }
+
+            // One of the player's own, far enough away that it cannot show the landmark.
+            let theirs = pool.filter(\.isPersonal).filter { photo in
+                guard let there = photo.coordinate else { return false }
+                return there.distance(to: here) > Self.landmarkClearance
+            }.randomElement()
+            let publicWanted = wanted - (theirs == nil ? 0 : 1)
+            let others = landmarks
+                .filter { $0.id != target.id && $0.title != title }
+                .shuffled()
+                .prefix(publicWanted - 1)
+            guard others.count == publicWanted - 1 else { continue }
+
+            let photos = ([target] + others + (theirs.map { [$0] } ?? [])).shuffled()
+            let chosen = Recency.choose(Wordings.landmark, kind: "landmark",
+                                        x: Self.inSentence(title), recent: recentWordings)
+
+            // A hint that narrows the field without naming the answer: its country, when
+            // no other photograph in the round is from there too.
+            let country = target.countryName?.nilIfBlank
+            let sharesCountry = photos.contains { $0.id != target.id && $0.countryName == country }
+            let hint = (country != nil && !sharesCountry) ? "It's in \(country!)." : nil
+
+            return Level(theme: .places,
+                         prompt: chosen.text,
+                         photos: photos,
+                         correctPhotoID: target.id,
+                         curationNote: "landmark · \(title) · "
+                            + "\(landmarks.count) landmarks in play",
+                         focusTag: title,
+                         hint: hint,
+                         ask: "landmark",
+                         wording: chosen.wording)
+        }
+        return nil
+    }
+
+    /// How far from a landmark one of the player's own photographs has to have been
+    /// taken before it cannot be of that landmark. A few kilometres takes in anything
+    /// with the landmark on the horizon.
+    static let landmarkClearance: CLLocationDistance = 5_000
+
+    /// "The Eiffel Tower" in the middle of a sentence: "the Eiffel Tower".
+    nonisolated static func inSentence(_ title: String) -> String {
+        title.hasPrefix("The ") ? "the " + title.dropFirst(4) : title
+    }
+
+    /// Exactly one photo from the target place, plus plausible distractors from
+    /// elsewhere. Harder levels draw those distractors from nearby places (spec §5.2–5.3).
+    private static func placeLevel(pool: [GamePhoto],
+                                   recentPlaces: [String],
+                                   visualDistance: ((GamePhoto, GamePhoto) -> Double?)?) -> Level? {
         // `placeName != nil` is not enough: a photograph whose place resolved to ""
         // passed that test, grouped itself under an empty key, and asked "Which photo is
         // from ?". A name has to say something before a question can be built on it.
@@ -939,19 +1229,205 @@ enum ObjectsCurator {
     /// editing a sentence. So it chooses the question now, and the classifier keeps the
     /// job it is good at: saying a photograph *might* contain the thing, which is all a
     /// distractor has to be cleared of.
+    /// The kinds of question a set of photographs can carry.
+    ///
+    /// Named here rather than left implicit in the order of a few `if let`s, because the
+    /// order is now a decision — see `order(leastRecent:)`.
+    enum Ask: String, CaseIterable, Sendable {
+        /// "Which one shows Louis Pasteur?"
+        case named
+        /// "Which one was painted by Leonardo da Vinci?"
+        case artist
+        /// "Which photo is from your album?"
+        case mine
+        /// "Which photo has a dog in it?"
+        case category
+        /// "Which one is a mammal?" — of the animals pack, by what kind of animal it is.
+        case kind
+
+        /// The kinds to try, the longest-unasked first.
+        ///
+        /// `recent` is most-recent-first, so a kind's position in it is how fresh it is.
+        /// Anything absent has not been asked in living memory and goes first.
+        static func order(leastRecent recent: [String]) -> [Ask] {
+            // Ties — kinds never asked — in alphabetical order, which is the order this
+            // rotation has always used when there is nothing to go on.
+            Recency.leastRecentFirst(allCases.sorted { $0.rawValue < $1.rawValue },
+                                     key: \.rawValue, recent: recent)
+        }
+    }
+
     static func makeLevel(pool: [GamePhoto],
                           prompts: [String: String] = [:],
                           recentCategories: [String] = [],
+                          recentAsks: [String] = [],
+                          recentWordings: [String] = [],
                           visualDistance: ((GamePhoto, GamePhoto) -> Double?)? = nil,
                           conceptScore: ((GamePhoto, String) -> Double?)? = nil,
                           bestConcept: ((GamePhoto) -> String?)? = nil) -> Level? {
         let wanted = DifficultyKnob.photoCount
 
-        // A pack that names its photographs is asked about by name.
-        if let named = namedSubjectLevel(pool: pool, wanted: wanted,
-                                         visualDistance: visualDistance) {
-            return named
+        // Four ways of asking about a set of photographs, tried in turn.
+        //
+        // `namedSubjectLevel` used to be tried first and unconditionally, which meant a
+        // pack that names its photographs was *only* ever asked about by name: the other
+        // questions existed and never came up. The order is rotated instead, by how long
+        // it has been since each kind was last asked, so a session moves between them
+        // rather than settling on one. Each still declines when it cannot build a fair
+        // round, and the next kind is tried.
+        for kind in Ask.order(leastRecent: recentAsks) {
+            let level: Level?
+            switch kind {
+            case .named:
+                level = namedSubjectLevel(pool: pool, wanted: wanted,
+                                          visualDistance: visualDistance)
+            case .artist:
+                level = artistLevel(pool: pool, wanted: wanted,
+                                    visualDistance: visualDistance)
+            case .mine:
+                level = ownPhotoLevel(pool: pool, wanted: wanted)
+            case .category:
+                level = categoryLevel(pool: pool, wanted: wanted, prompts: prompts,
+                                      recentCategories: recentCategories,
+                                      visualDistance: visualDistance,
+                                      conceptScore: conceptScore,
+                                      bestConcept: bestConcept)
+            case .kind:
+                level = kindLevel(pool: pool, wanted: wanted)
+            }
+            if var level {
+                level.ask = kind.rawValue
+                reword(&level, as: kind, recent: recentWordings)
+                return level
+            }
         }
+        return nil
+    }
+
+    /// The ways of asking a Things question. The first of each is what the game has
+    /// always said. `{x}` is the thing asked about.
+    enum Wordings {
+        /// A proper name: a person, a painting.
+        static let namedProper = ["Which one shows {x}?",
+                                  "Which of these is {x}?",
+                                  "Can you find {x}?"]
+        /// A common noun, with its article: "a lion", "a horse chestnut".
+        static let namedCommon = ["Which photo has {x} in it?",
+                                  "Which one shows {x}?",
+                                  "Which of these is {x}?"]
+        static let artist = ["Which one was painted by {x}?",
+                             "Which of these is by {x}?",
+                             "Which painting is by {x}?"]
+        static let album = ["Which photo is from your album?"]
+        static let category = ["Which photo has {x} in it?",
+                               "Which one shows {x}?",
+                               "Which of these has {x} in it?"]
+        /// Questions about what kind of thing something is — "which one is a mammal?".
+        /// They carry no hint: the only hint there is to give is the answer's kind, and
+        /// the question has just said it.
+        static let kind = ["Which one is {x}?",
+                           "Which of these is {x}?",
+                           "Can you spot {x}?"]
+    }
+
+    /// Puts the finished round into one of its kind's wordings.
+    ///
+    /// Done after the round is built rather than inside each builder, so every kind is
+    /// worded by the same rule: the wording used longest ago, across all the kinds, since
+    /// "which one shows …" reads the same whether it is about a lion or Louis Pasteur.
+    private nonisolated static func reword(_ level: inout Level, as kind: Ask,
+                                           recent: [String]) {
+        guard let answer = level.photos.first(where: { $0.id == level.correctPhotoID })
+        else { return }
+        let chosen: (text: String, wording: String)
+        switch kind {
+        case .named:
+            guard let name = answer.askableName else { return }
+            // A pack that asks "which photo has {name} in it?" names common nouns, which
+            // want their article — it was asking "which photo has lion in it?".
+            if answer.namedSubjectPrompt?.contains("in it") == true {
+                chosen = Recency.choose(Wordings.namedCommon, kind: "named",
+                                        x: "\(article(for: name)) \(name)", recent: recent)
+            } else {
+                chosen = Recency.choose(Wordings.namedProper, kind: "named", x: name, recent: recent)
+            }
+        case .artist:
+            guard let artist = answer.creator else { return }
+            chosen = Recency.choose(Wordings.artist, kind: "artist", x: artist, recent: recent)
+        case .mine:
+            chosen = Recency.choose(Wordings.album, kind: "mine", recent: recent)
+        case .category:
+            // A category with a question of its own keeps it, reworded only in the one
+            // way that cannot change its meaning.
+            let base = level.prompt
+            if base.hasPrefix("Which photo has "), base.hasSuffix(" in it?") {
+                let subject = String(base.dropFirst("Which photo has ".count)
+                                         .dropLast(" in it?".count))
+                chosen = Recency.choose(Wordings.category, kind: "category", x: subject, recent: recent)
+            } else {
+                let other = base.replacingOccurrences(of: "Which one is", with: "Which of these is")
+                chosen = Recency.choose(other == base ? [base] : [base, other], kind: "category",
+                                        recent: recent)
+            }
+        case .kind:
+            guard let group = level.focusTag else { return }
+            chosen = Recency.choose(Wordings.kind, kind: "kind", x: group, recent: recent)
+            level.hint = nil
+        }
+        level.prompt = chosen.text
+        level.wording = chosen.wording
+    }
+
+    /// "Which one is a mammal?"
+    ///
+    /// The animals pack records what kind of animal each photograph is — a mammal, a bird,
+    /// an insect, a reptile — and until now used it only for a hint. It is a question in
+    /// its own right, and a different one from naming the animal: somebody who cannot say
+    /// which is the pangolin can still say which one is not a bird.
+    ///
+    /// One of the kind asked about, three of other kinds, and nothing of the player's own:
+    /// one of their photographs might well have a dog in it, and then the round would have
+    /// two mammals and two answers. Every kind is equally likely to be asked, so the three
+    /// spiders get their turn beside the two hundred and sixty-five birds.
+    private nonisolated static func kindLevel(pool: [GamePhoto], wanted: Int) -> Level? {
+        // Only packs whose kinds are kinds of creature. Famous Faces keeps a sentence
+        // about each person in the same field, and "which one is an American novelist"
+        // is a different question with a different answer.
+        let creatures = pool.filter {
+            !$0.isPersonal && !$0.dateIsBirth && $0.subjectKind?.nilIfBlank != nil
+                && $0.title?.nilIfBlank != nil
+        }
+        let byKind = Dictionary(grouping: creatures) { $0.subjectKind! }
+        guard byKind.count >= 2 else { return nil }
+
+        for kind in byKind.keys.shuffled() {
+            guard let target = byKind[kind]?.randomElement() else { continue }
+            let others = creatures.filter { $0.subjectKind != kind }.shuffled()
+            guard others.count >= wanted - 1 else { continue }
+            let photos = ([target] + others.prefix(wanted - 1)).shuffled()
+            return Level(theme: .objects,
+                         prompt: "Which one is \(kind)?",
+                         photos: photos,
+                         correctPhotoID: target.id,
+                         curationNote: "kind · \(kind) · \(byKind.count) kinds in play",
+                         focusTag: kind,
+                         hint: nil)
+        }
+        return nil
+    }
+
+    /// "Which photo has a dog in it?" — the question about what is in the picture.
+    ///
+    /// Lifted out of `makeLevel` so every kind of question can be tried in whatever
+    /// order the rotation asks for. It used to be the tail of that function, which
+    /// meant it could only ever run last, and a rotation that reached it had nowhere
+    /// left to go: any kind ordered after it was skipped entirely.
+    private nonisolated static func categoryLevel(
+        pool: [GamePhoto], wanted: Int, prompts: [String: String],
+        recentCategories: [String],
+        visualDistance: ((GamePhoto, GamePhoto) -> Double?)?,
+        conceptScore: ((GamePhoto, String) -> Double?)?,
+        bestConcept: ((GamePhoto) -> String?)?) -> Level? {
 
         // Grouped by what the themes model says each photograph is, where it has
         // looked. A library it has not reached yet still plays, on the classifier's
@@ -1216,6 +1692,94 @@ enum ObjectsCurator {
                          hint: namedSubjectHint(for: target, among: photos))
         }
         return nil
+    }
+
+    /// "Which one was painted by Leonardo da Vinci?"
+    ///
+    /// The painter is a fact the pack has carried all along and curation could not see:
+    /// `creator` sat in the manifest beside `credit`, which names whoever photographed the
+    /// painting rather than whoever painted it. For a public-domain work the two usually
+    /// read the same and they answer different questions.
+    ///
+    /// One work by the artist asked about, three by other artists. The three are checked
+    /// against the answer's artist by name, not by pack: two Caravaggios in a round would
+    /// make the question have two answers.
+    private nonisolated static func artistLevel(
+        pool: [GamePhoto], wanted: Int,
+        visualDistance: ((GamePhoto, GamePhoto) -> Double?)?) -> Level? {
+
+        var byArtist: [String: [GamePhoto]] = [:]
+        for photo in pool {
+            guard !photo.isPersonal, let artist = photo.creator?.nilIfBlank,
+                  photo.title?.nilIfBlank != nil else { continue }
+            byArtist[artist, default: []].append(photo)
+        }
+        // Three other artists have to exist, or there is nothing to stand beside the
+        // answer that is not also by them.
+        guard byArtist.count >= wanted else { return nil }
+
+        for (artist, works) in byArtist.shuffled() {
+            guard let target = works.randomElement() else { continue }
+            let others = byArtist
+                .filter { $0.key != artist }
+                .compactMap { $0.value.randomElement() }
+            guard others.count >= wanted - 1 else { continue }
+
+            // Alike where the difficulty asks for it, as everywhere else.
+            let ordered = Resemblance.ranked(others, like: target,
+                                             distance: visualDistance)
+            let distractors = Array(ordered.prefix(wanted - 1))
+            guard distractors.count == wanted - 1,
+                  !distractors.contains(where: { $0.creator == artist }) else { continue }
+
+            let photos = ([target] + distractors).shuffled()
+            return Level(theme: .objects,
+                         prompt: "Which one was painted by \(artist)?",
+                         photos: photos,
+                         correctPhotoID: target.id,
+                         curationNote: "by artist · \(artist) · "
+                            + "\(byArtist.count) artists in play",
+                         focusTag: Ask.artist.rawValue,
+                         hint: nil)
+        }
+        return nil
+    }
+
+    /// "Which photo is from your album?"
+    ///
+    /// The three-to-one rule already puts exactly one of the player's own photographs in
+    /// most rounds, and that arrangement is itself a question worth asking: picking your
+    /// own picture out of a row is recognition of the easiest and most personal kind, and
+    /// it needs no date, no place and no classifier to have looked at anything.
+    ///
+    /// Exactly one, never more. Two of somebody's own photographs in the row makes the
+    /// question have two answers, and nothing about the round says which was meant. A pool
+    /// with none of their photographs in it — somebody playing on the packs alone — simply
+    /// cannot carry this question, and the curator declines.
+    private nonisolated static func ownPhotoLevel(pool: [GamePhoto], wanted: Int) -> Level? {
+        let mine = pool.filter(\.isPersonal)
+        let theirs = pool.filter { !$0.isPersonal }
+        guard !mine.isEmpty, theirs.count >= wanted - 1 else { return nil }
+
+        // A photograph of the player's that a pack could plausibly have shipped is a
+        // cruel question. Their own pictures of scenery and landmarks are exactly the
+        // ones a stock set is full of, so the question is asked about the rest: faces,
+        // rooms, meals, the things only they have.
+        let unmistakable = mine.filter { !$0.hidesSurroundings && !$0.looksLikeDocument }
+        guard let target = (unmistakable.isEmpty ? mine : unmistakable).randomElement()
+        else { return nil }
+
+        let distractors = Array(theirs.shuffled().prefix(wanted - 1))
+        guard distractors.count == wanted - 1 else { return nil }
+
+        let photos = ([target] + distractors).shuffled()
+        return Level(theme: .objects,
+                     prompt: "Which photo is from your album?",
+                     photos: photos,
+                     correctPhotoID: target.id,
+                     curationNote: "your own · 1 personal + \(distractors.count) pack",
+                     focusTag: Ask.mine.rawValue,
+                     hint: nil)
     }
 
     /// "A lion" → "lion". The packs write titles as a phrase; the question needs the noun.

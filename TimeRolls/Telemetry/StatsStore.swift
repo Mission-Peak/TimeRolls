@@ -205,45 +205,6 @@ final class StatsStore {
         goal <= 0 || cardsToday >= goal
     }
 
-    /// The day's challenge graded out of three.
-    ///
-    /// Out of three because that is what a person reads at a glance, and because a finer
-    /// grade would invite comparing one day against another — which is the opposite of
-    /// what this is for. Finishing at all is two; finishing with most rounds answered
-    /// first time is three. Nobody who completes the challenge is ever shown one star.
-    func starRating(goal: Int) -> Int {
-        guard hasMetChallenge(goal: goal), goal > 0 else { return 0 }
-        let clean = stats.firstTimeByDay[Self.today] ?? 0
-        return Double(clean) >= Double(goal) * 0.75 ? 3 : 2
-    }
-
-    /// How many stars make a day. Ten is three or four rounds played well — an evening's
-    /// worth, reachable on a day when someone isn't at their best, and not so low that
-    /// it is met before they have settled in. It is a target, never a quota: nothing in
-    /// the game changes when it is met or missed, and the player is never told either.
-    static let dailyStarGoal = 10
-
-    var metTodaysGoal: Bool { starsToday >= Self.dailyStarGoal }
-
-    /// Days in the last week whose challenge was finished.
-    func challengeDaysThisWeek(goal: Int) -> Int {
-        guard goal > 0 else { return 0 }
-        let calendar = Calendar.current
-        return (0..<7).reduce(into: 0) { count, back in
-            guard let day = calendar.date(byAdding: .day, value: -back, to: Date()) else { return }
-            if (stats.levelsByDay[Self.dayFormatter.string(from: day)] ?? 0) >= goal { count += 1 }
-        }
-    }
-
-    /// Days in the last week where the goal was reached.
-    var goalDaysThisWeek: Int {
-        let calendar = Calendar.current
-        return (0..<7).reduce(into: 0) { count, back in
-            guard let day = calendar.date(byAdding: .day, value: -back, to: Date()) else { return }
-            if (stats.starsByDay[Self.dayFormatter.string(from: day)] ?? 0) >= Self.dailyStarGoal { count += 1 }
-        }
-    }
-
     /// Consecutive days played, counting today or yesterday as the anchor so a streak
     /// isn't "lost" before the day is over.
     var dayStreak: Int {
