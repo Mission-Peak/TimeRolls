@@ -242,6 +242,27 @@ struct GamePhoto: Identifiable, Hashable {
     /// Pack photos only: how this pack phrases a question about its own named subjects.
     /// "{name}" stands in for the photograph's title.
     var namedSubjectPrompt: String?
+    /// Pack photos only: the Latin, where the thing has one and it is not simply what it
+    /// is called. Shown on the back of the card, never in the question.
+    var scientificName: String?
+
+    /// The name a question may ask by.
+    ///
+    /// Plants and animals are titled with whatever Wikidata calls them, and for a taxon
+    /// that is usually the binomial — "Which photo has Aesculus hippocastanum in it?" is
+    /// a spelling test, not a question. Where the only name a thing has is Latin, it has
+    /// no askable name at all and drops out of the identify rounds. Asking by a name
+    /// nobody knows is worse than not asking.
+    var askableName: String? {
+        guard let title = title?.nilIfBlank else { return nil }
+        // The title *is* the Latin — no English name was found for this one — so there
+        // is nothing to ask by. Every other case has a title worth saying out loud,
+        // including a plant whose Latin is recorded beside its English name for the card.
+        if let scientificName, scientificName.caseInsensitiveCompare(title) == .orderedSame {
+            return nil
+        }
+        return title
+    }
     /// Whether to show this photograph's name before the answer is given.
     var showsTitleWhilePlaying = false
 
@@ -378,6 +399,36 @@ enum ThemeRotation {
 
     static let alternateChance = 0.7
 
+    /// How often each theme comes up, relative to the others.
+    ///
+    /// The three themes used to share the rotation equally, and Time being a third of
+    /// every session was too much of it — because Time has only two questions to ask.
+    /// Things can ask about thirty object categories and more than fourteen hundred named
+    /// subjects; Places knows several hundred places and eighty-eight countries; Time asks
+    /// who was born first, or which was painted first, and that is the whole of it. An
+    /// equal share meant a third of the game was two sentences.
+    ///
+    /// The fix belongs here rather than in the curator. Time is not worse than the other
+    /// two — a round of it is as good as any — there is simply less of it, and a rotation
+    /// should visit a small room less often than a large one.
+    ///
+    /// If Time ever learns a third question — landmarks carry build dates, and "which of
+    /// these was built first" is the obvious one — this is the number to raise.
+    static func share(of theme: GameTheme) -> Int {
+        switch theme {
+        case .chronology: 2
+        case .places: 5
+        case .objects: 5
+        }
+    }
+
+    /// The themes available, each repeated as often as its share, so a uniform pick over
+    /// this array is a weighted pick over the themes. Keeping the weighting in the array
+    /// rather than inside `pick` leaves the injected picker exactly as simple as it was.
+    private static func weighted(_ themes: [GameTheme]) -> [GameTheme] {
+        themes.flatMap { Array(repeating: $0, count: share(of: $0)) }
+    }
+
     static func next(from available: [GameTheme],
                      last: GameTheme?,
                      roll: () -> Double = { Double.random(in: 0...1) },
@@ -386,9 +437,9 @@ enum ThemeRotation {
         guard available.count > 1 else { return available[0] }
         if let last, roll() < alternateChance {
             let others = available.filter { $0 != last }
-            return pick(others) ?? pick(available)
+            return pick(weighted(others)) ?? pick(weighted(available))
         }
-        return pick(available)
+        return pick(weighted(available))
     }
 }
 
@@ -495,4 +546,19 @@ extension Comparable {
     func clamped(to range: ClosedRange<Self>) -> Self {
         min(max(self, range.lowerBound), range.upperBound)
     }
+}
+
+/// Text that is present but says nothing.
+///
+/// An empty string is not nil, and every check in the curation layer asks whether a name
+/// is nil. That is how a round came to ask "Which photo is from ?" — a place name of ""
+/// passed `placeName != nil`, was grouped under its own empty key, survived `shortName`
+/// unchanged, and was interpolated straight into the question. Anywhere a name is optional
+/// because it might be missing, blank has to count as missing too.
+nonisolated extension String {
+
+    var isBlank: Bool { trimmingCharacters(in: .whitespacesAndNewlines).isEmpty }
+
+    /// The string, or nil where it holds nothing worth saying.
+    var nilIfBlank: String? { isBlank ? nil : self }
 }

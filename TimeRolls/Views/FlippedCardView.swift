@@ -45,16 +45,18 @@ struct FlippedCardView: View {
 
                 ScrollView {
                     VStack(alignment: .leading, spacing: 10) {
+                        if let name = photo.title {
+                            SubjectHeading(name: name,
+                                           scientificName: photo.scientificName,
+                                           size: 24 * textScale,
+                                           titleColour: highContrast ? Palette.ink(true)
+                                                                     : Meadow.title)
+                        }
                         if let fact = photo.fact {
                             FactText(fact: fact, name: photo.title,
                                      size: 20 * textScale,
                                      bodyColour: highContrast ? Palette.ink(true) : Meadow.body)
-                        } else if let title = photo.title {
-                            Text(title)
-                                .font(.system(size: 24 * textScale, weight: .heavy,
-                                              design: .rounded))
-                                .foregroundStyle(Meadow.title)
-                        } else {
+                        } else if photo.title == nil {
                             Text("Nothing is known about this one.")
                                 .font(.system(size: 18 * textScale, design: .rounded))
                                 .foregroundStyle(Meadow.muted)

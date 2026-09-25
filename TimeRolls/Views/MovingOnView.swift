@@ -124,7 +124,7 @@ struct MovingOnView: View {
         var out: [(symbol: String, title: String, detail: String)] = [
             ("hand.draw.fill", "Swipe across",
              "Slide a finger to the right, anywhere on the photos."),
-            ("forward.fill", "Or press Next photos",
+            ("forward.fill", "Or press Next roll",
              "The button at the bottom does the same thing."),
         ]
         if engine.settings.voiceAnswers {

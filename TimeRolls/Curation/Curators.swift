@@ -595,7 +595,10 @@ enum PlacesCurator {
                           prompts: [String: String] = [:],
                           recentPlaces: [String] = [],
                           visualDistance: ((GamePhoto, GamePhoto) -> Double?)? = nil) -> Level? {
-        let named = pool.filter { $0.placeName != nil && $0.coordinate != nil }
+        // `placeName != nil` is not enough: a photograph whose place resolved to ""
+        // passed that test, grouped itself under an empty key, and asked "Which photo is
+        // from ?". A name has to say something before a question can be built on it.
+        let named = pool.filter { !($0.placeName ?? "").isBlank && $0.coordinate != nil }
         let byPlace = Dictionary(grouping: named) { $0.placeName! }
         guard byPlace.count >= 3 else { return nil }
 
@@ -775,9 +778,9 @@ enum PlacesCurator {
         // States while holding three American landmarks. Packs now carry a country, and a
         // country nobody recorded still counts against asking — an unknown country is not
         // a different one.
-        if let country = photo.countryName, isAbroad(photo) {
+        if let country = photo.countryName, !country.isBlank, isAbroad(photo) {
             let fromSameCountry = rivals.count { $0.countryName == country }
-            let anyUnknown = rivals.contains { $0.countryName == nil }
+            let anyUnknown = rivals.contains { ($0.countryName ?? "").isBlank }
             if fromSameCountry == 0 && !anyUnknown { return country }
         }
 
@@ -785,11 +788,11 @@ enum PlacesCurator {
             // Nothing finer than one word — a city with no state or country beside it.
             // Asking by it is fine as long as no other photograph carries the same name.
             return names.contains(where: { $0 != place && shortName($0) == shortName(place) })
-                ? nil : shortName(place)
+                ? nil : shortName(place).nilIfBlank
         }
         let others = names.filter { $0 != place }
         guard !others.contains(where: { widerPart(of: $0) == region }) else {
-            return shortName(place)
+            return shortName(place).nilIfBlank
         }
         // The region might itself be a country. Reverse geocoding hands back "Charlotte,
         // United States" as readily as "Charlotte, NC", and then asking by the "region"
@@ -810,9 +813,9 @@ enum PlacesCurator {
                 .contains { $0 == region || spelledOut($0) == asked }
         }
         if rivals.contains(where: claims) {
-            return shortName(place)
+            return shortName(place).nilIfBlank
         }
-        return asked
+        return asked.nilIfBlank
     }
 
     /// Whether this photograph was taken outside the country the device is set to.
@@ -1148,10 +1151,15 @@ enum ObjectsCurator {
                                           visualDistance: ((GamePhoto, GamePhoto) -> Double?)?)
         -> Level? {
 
-        // Only photographs that carry a name of their own, one per name.
+        // Only photographs that carry a name worth asking by, one per name.
+        //
+        // `askableName` rather than `title`: a plant whose only name is its binomial has
+        // a title, and asking "Which photo has Cephalanthera damasonium in it?" is a
+        // spelling test rather than a question. Eight of the 540 plants and ten of the
+        // 532 animals have no English name, and they sit out the identify rounds.
         var byName: [String: GamePhoto] = [:]
         for photo in pool {
-            guard !photo.isPersonal, let title = photo.title else { continue }
+            guard !photo.isPersonal, let title = photo.askableName else { continue }
             let name = plainName(title)
             guard !name.isEmpty, byName[name] == nil else { continue }
             byName[name] = photo
@@ -1180,7 +1188,7 @@ enum ObjectsCurator {
 
             // Every pair, not just each against the answer: a round holding both a hare
             // and a rabbit is unfair even when the answer is a lion.
-            let names = ([target] + distractors).compactMap { $0.title.map(plainName) }
+            let names = ([target] + distractors).compactMap { $0.askableName.map(plainName) }
             guard names.count == wanted else { continue }
             var allStand = true
             for (index, one) in names.enumerated() {
@@ -1196,7 +1204,7 @@ enum ObjectsCurator {
             // it?" is what happens without this: the Mona Lisa is not *in* a photograph,
             // it is what the photograph shows.
             let asked = target.namedSubjectPrompt
-                .map { $0.replacingOccurrences(of: "{name}", with: target.title ?? name) }
+                .map { $0.replacingOccurrences(of: "{name}", with: target.askableName ?? name) }
                 ?? "Which photo has \(article(for: name)) \(name) in it?"
             return Level(theme: .objects,
                          prompt: asked,

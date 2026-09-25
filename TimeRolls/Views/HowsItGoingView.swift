@@ -24,6 +24,7 @@ struct HowsItGoingView: View {
                         done: engine.stats.cardsToday,
                         goal: engine.settings.dailyCardGoal,
                         stars: engine.stats.starRating(goal: engine.settings.dailyCardGoal),
+                        starsToday: engine.stats.starsToday,
                         goalDays: engine.stats.challengeDaysThisWeek(
                             goal: engine.settings.dailyCardGoal))
                     MeadowNote(text: "The challenge is \(engine.settings.dailyCardGoal) "
@@ -212,18 +213,28 @@ struct HowsItGoingView: View {
 }
 
 
-/// Today's stars, as something to look at rather than a number to read.
+/// Today's challenge: a ring that fills, and the day's stars as a number.
 ///
-/// A ring that fills, and a row of stars that light up one at a time. It lives here and
-/// only here: the game itself never shows a score, so this is where a good afternoon is
-/// allowed to look like one. Nothing happens when the goal is met — no unlock, no nag
-/// when it isn't — because the moment a target starts pushing back, it stops being a
-/// kindness and starts being a test.
+/// The stars used to be drawn as stars — three glyphs for the day's rating, and one glyph
+/// per card finished. Both are numbers pretending not to be. A reader counting glyphs to
+/// find out they got two out of three has been made to do arithmetic by a picture, and
+/// the row of them broke outright once the challenge could be set by hand to twenty: a
+/// twenty-star row wraps, and past about eight nobody counts them anyway. The star stays
+/// as one small mark beside the figure, which is what a star is good at.
+///
+/// It lives here and only here: the game itself never shows a score, so this is where a
+/// good afternoon is allowed to look like one. Nothing happens when the goal is met — no
+/// unlock, no nag when it isn't — because the moment a target starts pushing back, it
+/// stops being a kindness and starts being a test.
 struct DailyChallengeRing: View {
 
     let done: Int
     let goal: Int
+    /// The day graded out of three, once the challenge is finished.
     let stars: Int
+    /// Every star earned today, which is a different count entirely — two for a photo
+    /// found first time, one for one that took another look, plus the run bonus.
+    var starsToday: Int = 0
     let goalDays: Int
 
     private var progress: Double {
@@ -246,16 +257,17 @@ struct DailyChallengeRing: View {
                         .foregroundStyle(Meadow.muted)
                         .fixedSize(horizontal: false, vertical: true)
                     if met {
-                        HStack(spacing: 4) {
-                            ForEach(0..<3, id: \.self) { index in
-                                Image(systemName: index < stars ? "star.fill" : "star")
-                                    .font(.system(size: 15, weight: .black))
-                                    .foregroundStyle(index < stars
-                                                     ? Meadow.sparkle : Meadow.muted.opacity(0.35))
-                            }
+                        HStack(spacing: 5) {
+                            Image(systemName: "star.fill")
+                                .font(.system(size: 14, weight: .black))
+                                .foregroundStyle(Meadow.sparkle)
+                            Text("\(stars) out of 3 for today")
+                                .font(.system(size: 15, weight: .heavy, design: .rounded))
+                                .monospacedDigit()
+                                .foregroundStyle(Meadow.title)
                         }
                         .accessibilityElement(children: .ignore)
-                        .accessibilityLabel("\(stars) of three stars")
+                        .accessibilityLabel("\(stars) out of three for today")
                     }
                     if goalDays > 0 {
                         Text(goalDays == 1
@@ -276,8 +288,9 @@ struct DailyChallengeRing: View {
         .accessibilityElement(children: .ignore)
         .accessibilityLabel(met
                             ? "Today's challenge finished, \(done) photo cards, "
-                              + "\(stars) of three stars."
-                            : "\(done) of \(goal) photo cards done today.")
+                              + "\(stars) out of three, \(starsToday) stars earned."
+                            : "\(done) of \(goal) photo cards done today, "
+                              + "\(starsToday) stars earned.")
     }
 
     private var ring: some View {
@@ -308,27 +321,29 @@ struct DailyChallengeRing: View {
         .frame(width: 92, height: 92)
     }
 
-    /// One star per star, up to the goal, then a quiet "+n" for anything past it, so a
-    /// very good day doesn't wrap onto three lines.
+    /// The day's stars, as a figure.
+    ///
+    /// This row used to draw one star glyph per card finished — despite the name, it was
+    /// counting cards, which the ring beside it already shows twice. So it said nothing
+    /// new and it said it in a form that had to be counted. It now shows the one number
+    /// this screen was missing: how many stars the day has actually earned.
     private var starRow: some View {
         HStack(spacing: 6) {
-            ForEach(0..<goal, id: \.self) { index in
-                Image(systemName: index < done ? "star.fill" : "star")
-                    .font(.system(size: 15, weight: .bold))
-                    .foregroundStyle(index < done
-                                     ? Color.hex(0xE8A53C)
-                                     : Color.hex(0xE8A53C).opacity(0.28))
-                    .scaleEffect(index < done ? 1 : 0.88)
-                    .animation(.spring(response: 0.4, dampingFraction: 0.6)
-                        .delay(Double(index) * 0.03), value: done)
-            }
-            if done > goal {
-                Text("+\(done - goal)")
-                    .font(.system(size: 13, weight: .heavy, design: .rounded))
-                    .foregroundStyle(Color.hex(0xE8A53C))
-                    .padding(.leading, 2)
-            }
+            Image(systemName: "star.fill")
+                .font(.system(size: 16, weight: .bold))
+                .foregroundStyle(Color.hex(0xE8A53C))
+            Text("\(starsToday)")
+                .font(.system(size: 20, weight: .heavy, design: .rounded))
+                .monospacedDigit()
+                .foregroundStyle(Meadow.title)
+                .contentTransition(.numericText())
+                .animation(.easeOut(duration: 0.3), value: starsToday)
+            Text(starsToday == 1 ? "star today" : "stars today")
+                .font(.system(size: 14, weight: .semibold, design: .rounded))
+                .foregroundStyle(Meadow.muted)
             Spacer(minLength: 0)
         }
+        .accessibilityElement(children: .ignore)
+        .accessibilityLabel(starsToday == 1 ? "One star today" : "\(starsToday) stars today")
     }
 }

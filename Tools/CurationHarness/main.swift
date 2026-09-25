@@ -436,7 +436,14 @@ check(thingsLevels > 20, "too few Things levels to judge repetition")
 check(immediateRepeats == 0,
       "the Things game asked the same subject twice running \(immediateRepeats) times")
 
-// --- Theme rotation: no theme may be starved, and repeats stay occasional.
+// --- Theme rotation: each theme gets its intended share, and repeats stay occasional.
+//
+// The shares used to be equal, and Time being a third of every session was too much of
+// it: Time has two questions to ask — who was born first, which was painted first —
+// where Things has thirty categories and fourteen hundred named subjects, and Places
+// knows several hundred places. A third of the game was two sentences. What is checked
+// here is that each theme lands near the share `ThemeRotation` says it should have, and
+// that none of them is starved outright.
 var picked: [GameTheme: Int] = [:]
 var repeats = 0
 var previous: GameTheme?
@@ -450,10 +457,20 @@ for _ in 0..<30_000 {
     if next == previous { repeats += 1 }
     previous = next
 }
+let totalShare = allThemes.reduce(0) { $0 + ThemeRotation.share(of: $1) }
 for theme in allThemes {
     let observedShare = Double(picked[theme] ?? 0) / 30_000
-    check(abs(observedShare - 1.0 / Double(allThemes.count)) < 0.03,
-          "theme \(theme.title) is picked \(Int(observedShare * 100))% of the time, not an even share")
+    let intended = Double(ThemeRotation.share(of: theme)) / Double(totalShare)
+    // A wide tolerance on purpose. The rotation also avoids repeating the last theme
+    // seven times in ten, which pulls every share towards the middle — a small theme
+    // comes up a little more often than its weight alone would give it. What matters is
+    // that the shares are in the right order and nothing is starved, not that the
+    // arithmetic is exact.
+    check(abs(observedShare - intended) < 0.05,
+          "theme \(theme.title) is picked \(Int(observedShare * 100))% of the time, "
+          + "where its share says \(Int(intended * 100))%")
+    check(observedShare > 0.10,
+          "theme \(theme.title) is starved at \(Int(observedShare * 100))% of rounds")
 }
 let repeatShare = Double(repeats) / 30_000
 check(abs(repeatShare - (1 - ThemeRotation.alternateChance) / Double(allThemes.count)) < 0.02,
@@ -1900,6 +1917,143 @@ for pack in shippedPacks {
         packSummary.append("\(pack.id)/\(name): \(built)")
     }
 }
+// --- A question is never asked with a hole in it.
+//
+// A round shipped reading "Which photo is from ?". The place name was an empty string —
+// not nil, so it passed every `placeName != nil` check on the way, grouped itself under
+// its own empty key, came through `shortName` unchanged and was interpolated into the
+// question. The photograph had coordinates and no name, and was still chosen as the
+// answer. This builds rounds from a library salted with blank names and blank countries
+// and insists that nothing with a hole in it reaches a player.
+
+var blanks = LevelGenerator()
+blanks.personal = (0..<120).map { number in
+    var photo = GamePhoto(id: "b\(number)", origin: .personal(localIdentifier: "b\(number)"),
+                          creationDate: Date(timeIntervalSinceNow: -Double(number) * 31 * .day))
+    photo.coordinate = Coordinate(latitude: 20 + Double(number % 40) * 1.5,
+                                  longitude: -30 + Double(number % 37) * 3.1)
+    // Every fourth photograph resolved to nothing and was written down as nothing.
+    switch number % 4 {
+    case 0: photo.placeName = ""
+    case 1: photo.placeName = "   "
+    case 2: photo.placeName = "Rome, Italy"; photo.countryName = ""; photo.countryCode = "IT"
+    default: photo.placeName = ["Oslo, Norway", "Lima, Peru", "Kyoto, Japan",
+                                "Boston, MA", "Cairo, Egypt"][number % 5]
+    }
+    photo.wasExamined = true
+    return photo
+}
+blanks.pack = makePackPhotos(count: 60)
+
+var blankRounds = 0
+for theme in GameTheme.allCases {
+    for _ in 0..<400 {
+        guard let level = blanks.makeLevel(theme: theme) else { continue }
+        blankRounds += 1
+        let prompt = level.prompt
+        check(!prompt.isBlank, "a round was built with no question at all")
+        // The shapes a missing interpolation leaves behind: "from ?", "the  first",
+        // "shows ." — a gap before the punctuation, or a gap in the middle.
+        check(!prompt.contains(" ?") && !prompt.contains(" .") && !prompt.contains(" !"),
+              "a question has a gap before its punctuation: \"\(prompt)\"")
+        check(!prompt.contains("  "),
+              "a question has a gap in the middle of it: \"\(prompt)\"")
+        if let tag = level.focusTag {
+            check(!tag.isBlank, "a round was tagged with a blank: \"\(prompt)\"")
+        }
+        if let hint = level.hint {
+            check(!hint.isBlank, "a round carries a blank hint: \"\(prompt)\"")
+            check(!hint.contains("  ") && !hint.contains(" ."),
+                  "a hint has a gap in it: \"\(hint)\"")
+        }
+        // The photograph a Places round is about has to have a place worth naming.
+        if level.theme == .places,
+           let answer = level.photos.first(where: { $0.id == level.correctPhotoID }) {
+            check(!(answer.placeName ?? "").isBlank,
+                  "a Places round was answered by a photograph with no place name")
+        }
+    }
+}
+check(blankRounds > 0, "no rounds were built from the library with blank place names")
+
+print("questions with holes in them — \(blankRounds) rounds across every theme, "
+    + "none asked with a blank in it")
+
+// --- A question never asks by a name nobody uses.
+//
+// Plants and animals are titled with whatever Wikidata calls them, and for a taxon that
+// is usually the binomial: 500 of the 540 plants shipped as "Aesculus hippocastanum".
+// "Which photo has Aesculus hippocastanum in it?" is a spelling test. A subject whose
+// only name is its Latin one has no askable name and sits out the identify rounds.
+
+var latin = LevelGenerator()
+latin.pack = (0..<80).map { number in
+    var photo = GamePhoto(id: "l\(number)", origin: .pack(packID: "plants", itemID: "l\(number)"),
+                          creationDate: Date(timeIntervalSinceNow: -Double(number) * 400 * .day))
+    photo.namedSubjectPrompt = "Which photo has {name} in it?"
+    // A third of the library knows only its Latin.
+    if number % 3 == 0 {
+        photo.title = "Cephalanthera damasonium \(number)"
+        photo.scientificName = photo.title
+    } else {
+        photo.title = ["horse chestnut", "downy birch", "sweet vernalgrass",
+                       "common comfrey", "apple mint", "bog blueberry"][number % 6]
+            + " \(number)"
+        photo.scientificName = "Aesculus hippocastanum \(number)"
+    }
+    photo.conceptID = "plant"
+    photo.objectTags = ["plant"]
+    photo.possibleObjectTags = photo.objectTags
+    photo.wasExamined = true
+    return photo
+}
+
+// Every name the harness planted that is Latin-only, so a question can be checked
+// against it whatever the round turned out to be.
+let latinOnly = Set(latin.pack.compactMap { photo -> String? in
+    guard let title = photo.title, photo.scientificName == title else { return nil }
+    return title
+})
+check(!latinOnly.isEmpty, "the Latin-name fixture planted no Latin-only subjects")
+
+var latinRounds = 0
+for _ in 0..<600 {
+    guard let level = latin.makeLevel(theme: .objects) else { continue }
+    latinRounds += 1
+    for name in latinOnly {
+        check(!level.prompt.localizedCaseInsensitiveContains(name),
+              "a question asked by a name that exists only in Latin: \"\(level.prompt)\"")
+    }
+    // And the subject it is about still has a name the question could have used.
+    if let tag = level.focusTag {
+        check(!latinOnly.contains(where: { $0.localizedCaseInsensitiveContains(tag) }),
+              "a round was tagged with a Latin-only name: \(tag)")
+    }
+}
+check(latinRounds > 0, "no rounds were built once the Latin-only subjects were excluded")
+
+// The shipped packs, not a fixture: whatever names they carry have to be askable or
+// absent, because these are the ones a player will actually be shown.
+var latinShipped = 0
+for pack in shippedPacks {
+    for item in pack.items {
+        let common = (item["commonName"] as? String)?.nilIfBlank
+        let scientific = (item["scientificName"] as? String)?.nilIfBlank
+        guard common == nil, let scientific else { continue }
+        latinShipped += 1
+        // With no English name the title has to *be* the Latin, because that is what
+        // makes `askableName` nil and keeps the subject out of the questions. A title
+        // that differs would be asked about, and it would be asked about in Latin.
+        let title = (item["title"] as? String) ?? ""
+        check(scientific.caseInsensitiveCompare(title) == .orderedSame,
+              "\(pack.id): \(title) has no English name and a Latin name that is not "
+              + "its title (\(scientific)) — it would still be asked about")
+    }
+}
+
+print("names people use — \(latinRounds) rounds, none asked by a binomial; "
+    + "\(latinShipped) shipped subjects known only in Latin, all left out of the asking")
+
 print("shipped packs — \(shippedPacks.count) read from disk · "
     + packSummary.joined(separator: " · "))
 

@@ -243,11 +243,25 @@ struct PlayView: View {
                !engine.stats.hasMetChallenge(goal: engine.settings.dailyCardGoal) {
                 let goal = engine.settings.dailyCardGoal
                 let done = min(engine.stats.cardsToday, goal)
-                HStack(spacing: 6) {
-                    ForEach(0..<goal, id: \.self) { index in
-                        Circle()
-                            .fill(index < done ? Palette.accent : Palette.accent.opacity(0.20))
-                            .frame(width: 8, height: 8)
+                Group {
+                    // A dot each, while they fit. The challenge can now be set by hand
+                    // as high as twenty, and twenty dots is 280 points of header on a
+                    // phone that also holds the theme chip, the gear and the sound
+                    // switch. Past eight the same thing is said in two numbers.
+                    if goal <= 8 {
+                        HStack(spacing: 6) {
+                            ForEach(0..<goal, id: \.self) { index in
+                                Circle()
+                                    .fill(index < done ? Palette.accent
+                                                       : Palette.accent.opacity(0.20))
+                                    .frame(width: 8, height: 8)
+                            }
+                        }
+                    } else {
+                        Text("\(done) of \(goal)")
+                            .appFont(14, weight: .heavy)
+                            .monospacedDigit()
+                            .foregroundStyle(Palette.accent)
                     }
                 }
                 .accessibilityLabel("\(done) of \(goal) photo sets done today")
@@ -255,6 +269,14 @@ struct PlayView: View {
 
             Spacer()
 
+            // Setup and sound sit up here, not along the bottom. The bottom edge of a
+            // phone is where a thumb rests while you hold it, so the two things nobody
+            // means to press were the two easiest to press by accident — and the button
+            // that actually moves the game on had to share its row with them.
+            HStack(spacing: 10) {
+                SettingsGear(onOpen: onCaregiverGate, compact: true)
+                soundSwitch
+            }
         }
         .padding(.horizontal, 20)
         .padding(.top, 8)
@@ -391,15 +413,18 @@ struct PlayView: View {
             HStack(spacing: 8) {
                 Image(systemName: engine.settings.soundOn
                       ? "speaker.wave.2.fill" : "speaker.slash.fill")
-                    .appFont(20, weight: .black)
+                    .appFont(17, weight: .black)
+                // The word stays. A crossed-out speaker on its own is a symbol somebody
+                // has to already know, and this is the control that decides whether the
+                // game talks to you at all.
                 Text(engine.settings.soundOn ? "Sound on" : "Sound off")
-                    .appFont(15, weight: .heavy)
+                    .appFont(13, weight: .heavy)
                     .lineLimit(1)
                     .fixedSize()
             }
             .foregroundStyle(highContrast ? Palette.softInk(true) : Meadow.woodInk)
-            .padding(.horizontal, 16)
-            .frame(height: 56)
+            .padding(.horizontal, 13)
+            .frame(height: 44)
             .background(highContrast ? AnyShapeStyle(Palette.wash(true))
                                      : AnyShapeStyle(Meadow.wood),
                         in: Capsule())
@@ -418,27 +443,25 @@ struct PlayView: View {
 
     // MARK: - Footer
 
-    /// One row along the bottom: the way into setup, the way on, and the sound.
+    /// One button along the bottom, the width of the screen: the way on.
     ///
-    /// These were two rows — the middle button on one, the gear and the sound switch on
-    /// another — which put four things in the corner of the screen and made the two yellow
-    /// ones easy to confuse at a glance. One row of three, evenly spread, reads as three
-    /// choices rather than a pile of controls.
+    /// It used to be a row of three — setup, the way on, and the sound — and that put the
+    /// two controls nobody means to press exactly where a thumb rests when you hold a
+    /// phone. Setup and sound have moved into the header. What is left is the only thing
+    /// down here somebody is reaching for, and it now gets the whole width.
     ///
-    /// "Say it again" is gone from here. It was a fourth yellow button beside a nearly
+    /// "Say it again" is gone from here too. It was a fourth yellow button beside a nearly
     /// identical one, and the question now re-reads itself when tapped, which is where
     /// somebody looks anyway.
     private func footer(_ level: Level) -> some View {
         HStack(spacing: 12) {
-            SettingsGear(onOpen: onCaregiverGate)
-
             if engine.answeredCorrectly {
                 Button {
                     engine.advance()
                 } label: {
                     // The same countdown as the fact card, for rounds with no fact to
                     // show — otherwise those move on with no warning at all.
-                    Text("Next photos")
+                    Text("Next roll")
                         .appFont(18, weight: .heavy)
                         .lineLimit(1)
                         .minimumScaleFactor(0.75)
@@ -475,8 +498,6 @@ struct PlayView: View {
                 }
                 .buttonStyle(.plain)
             }
-
-            soundSwitch
         }
         .padding(.horizontal, 18)
         .padding(.bottom, 10)
@@ -760,15 +781,18 @@ struct PhotoTile: View {
 struct SettingsGear: View {
 
     let onOpen: () -> Void
+    /// The header size. Smaller than the one the end-of-session screen uses, because up
+    /// there it sits beside the sound switch rather than standing on its own.
+    var compact = false
 
     @Environment(\.photoHighContrast) private var highContrast
 
     var body: some View {
         Button(action: onOpen) {
             Image(systemName: "gearshape.fill")
-                .appFont(22, weight: .black)
+                .appFont(compact ? 18 : 22, weight: .black)
                 .foregroundStyle(highContrast ? Palette.softInk(true) : Meadow.woodInk)
-                .frame(width: 56, height: 56)
+                .frame(width: compact ? 44 : 56, height: compact ? 44 : 56)
                 .background(highContrast ? AnyShapeStyle(Palette.wash(true))
                                          : AnyShapeStyle(Meadow.wood),
                             in: Circle())
@@ -914,9 +938,12 @@ struct SessionCompleteView: View {
                 tally(symbol: "star.fill",
                       tint: Meadow.sparkle,
                       heading: "Stars earned",
-                      value: AnyView(starRow),
-                      footnote: rating >= 3 ? "Great performance!" : "Nicely done!",
-                      spoken: "\(rating) of three stars")
+                      value: AnyView(starCount),
+                      // The grade still gets said, underneath, as a figure rather than
+                      // as three glyphs to be counted.
+                      footnote: rating >= 3 ? "All three today!" : "\(rating) out of 3 today",
+                      spoken: "\(engine.stats.starsToday) stars earned, "
+                            + "\(rating) out of three today")
             }
         }
     }
@@ -925,15 +952,19 @@ struct SessionCompleteView: View {
         engine.stats.starRating(goal: engine.settings.dailyCardGoal)
     }
 
-    private var starRow: some View {
-        HStack(spacing: 6) {
-            ForEach(0..<3, id: \.self) { index in
-                Image(systemName: index < rating ? "star.fill" : "star")
-                    .font(.system(size: 28 * textScale, weight: .black))
-                    .foregroundStyle(index < rating
-                                     ? (highContrast ? Palette.accent : Meadow.sparkle)
-                                     : Meadow.muted.opacity(0.35))
-            }
+    /// The day's stars as a figure, in the same shape as the streak beside it.
+    ///
+    /// This was three glyphs of the day's grade under a heading reading "Stars earned",
+    /// which is not what the grade is: the grade is out of three, and the stars earned
+    /// are two a round plus the run bonus, so the two numbers are rarely the same and the
+    /// heading named the one that was not being shown. The figure is the one the heading
+    /// promises; the grade moved to the footnote.
+    private var starCount: some View {
+        HStack(alignment: .firstTextBaseline, spacing: 6) {
+            Text("\(engine.stats.starsToday)")
+                .font(.system(size: 40 * textScale, weight: .black, design: .rounded))
+            Text(engine.stats.starsToday == 1 ? "star" : "stars")
+                .font(.system(size: 18 * textScale, weight: .heavy, design: .rounded))
         }
     }
 
@@ -1194,6 +1225,14 @@ struct FactPopup: View {
                         Spacer(minLength: 0)
                     }
 
+                    if let name = photo.title {
+                        SubjectHeading(name: name,
+                                       scientificName: photo.scientificName,
+                                       size: 24 * textScale,
+                                       titleColour: highContrast ? Palette.ink(true)
+                                                                 : Meadow.title)
+                    }
+
                     FactText(fact: fact,
                              name: photo.title,
                              size: 20 * textScale,
@@ -1201,7 +1240,7 @@ struct FactPopup: View {
                         .frame(maxWidth: .infinity, alignment: .leading)
 
                     Button(action: onContinue) {
-                        Text("Next photos")
+                        Text("Next roll")
                             .font(.system(size: 22 * textScale, weight: .heavy,
                                           design: .rounded))
                             .foregroundStyle(Meadow.woodInk)
@@ -1267,6 +1306,38 @@ struct FactPopup: View {
 /// Hoover" as a heading, then "Herbert Clark Hoover was the 31st president…". Saying it
 /// twice wastes the line and puts a gap where the eye expects to keep reading, so the
 /// heading is gone and the name is picked out where it already appears.
+/// The name of the thing on the card, and its Latin underneath where it has one.
+///
+/// The question asks by the English name — "which photo has a horse chestnut in it" —
+/// so the card has to say that name back in the same words, plainly, before the
+/// paragraph that explains it. The binomial goes here rather than in the question: it is
+/// a fact about the plant, the same as where it grows, and nobody is being asked to
+/// recognise it.
+struct SubjectHeading: View {
+
+    let name: String
+    var scientificName: String?
+    var size: CGFloat
+    var titleColour: Color = Meadow.title
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 2) {
+            Text(name)
+                .font(.system(size: size, weight: .heavy, design: .rounded))
+                .foregroundStyle(titleColour)
+            if let scientificName, scientificName.caseInsensitiveCompare(name) != .orderedSame {
+                Text(scientificName)
+                    .font(.system(size: size * 0.7, design: .rounded).italic())
+                    .foregroundStyle(Meadow.muted)
+            }
+        }
+        .fixedSize(horizontal: false, vertical: true)
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .accessibilityElement(children: .combine)
+        .accessibilityLabel(name)
+    }
+}
+
 struct FactText: View {
 
     let fact: String

@@ -81,6 +81,10 @@ struct PackItem: Identifiable, Hashable {
     var subjectID: String?
     /// What kind of thing this is, in the words a hint would use: "a mammal", "a bird".
     var kind: String?
+    /// What this is called in English, where the title is Latin. See `PackManifest.Item`.
+    var commonName: String?
+    /// The Latin, for the back of the card. Nil where it is the common name again.
+    var scientificName: String?
 
     var objectTags: Set<String> { declaredTags.union(motif?.objectTags ?? []) }
 }
@@ -159,6 +163,17 @@ private struct PackManifest: Decodable {
         var subjectID: String?
         /// Written by the pack builder as the taxonomic group a creature belongs to.
         var group: String?
+        /// What the thing is called in English.
+        ///
+        /// A plant or an animal is titled with whatever Wikidata calls it, and for a
+        /// taxon that is usually the Latin: 500 of the 540 plants arrived as binomials.
+        /// "Which photo has Aesculus hippocastanum in it?" is not a question — it is a
+        /// spelling test. The question asks by this name, and a subject that has none is
+        /// left out of the asking rather than asked about in Latin.
+        var commonName: String?
+        /// The Latin, for the back of the card, where it is a fact about the thing rather
+        /// than the thing's name. Nil where it is simply the common name again.
+        var scientificName: String?
     }
 
     var formatVersion: Int
@@ -253,9 +268,15 @@ enum PublicPackLibrary {
                               // file names for the credits screen, and letting one
                               // through here would have curation asking which photograph
                               // shows "131003-D-BW835-2054".
-                              title: pack.titlesAreNames ? item.credit?.title : nil,
+                              // The English name wins over the title where the pack has
+                              // one, so the question, the card and the voice all say the
+                              // same word — "horse chestnut", not "Aesculus
+                              // hippocastanum".
+                              title: pack.titlesAreNames
+                                  ? (item.commonName ?? item.credit?.title) : nil,
                               fact: item.fact,
                               namedSubjectPrompt: pack.namedSubjectPrompt,
+                              scientificName: item.scientificName,
                               showsTitleWhilePlaying: pack.labelsWhilePlaying)
                         .carrying(themeID: item.themeID,
                                   plausible: item.plausibleThemeIDs,
@@ -346,7 +367,10 @@ enum PublicPackLibrary {
                     id: entry.id,
                     packID: manifest.id,
                     date: date,
-                    placeName: entry.place,
+                    // A pack entry with no place is written as null, but one written as
+                    // "" is not nil and would reach a question as a blank. 595 of the
+                    // landmark entries have no place at all; none of them may become one.
+                    placeName: entry.place?.nilIfBlank,
                     coordinate: coordinate,
                     imageResource: entry.file.map { ($0 as NSString).deletingPathExtension },
                     imageDirectory: entry.file == nil ? nil : imageDirectory,
@@ -365,7 +389,9 @@ enum PublicPackLibrary {
                     themeID: entry.themeID,
                     plausibleThemeIDs: Set(entry.themes ?? []),
                     subjectID: entry.subjectID,
-                    kind: entry.group)
+                    kind: entry.group,
+                    commonName: entry.commonName?.nilIfBlank,
+                    scientificName: entry.scientificName?.nilIfBlank)
             }
 
             let themes = manifest.themes.map { names in

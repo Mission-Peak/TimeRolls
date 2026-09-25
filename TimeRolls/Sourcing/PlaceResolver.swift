@@ -51,11 +51,16 @@ final class PlaceResolver {
                 // the United States, and a cache is exactly where a fixed bug goes on
                 // living: the name was wrong once and would be read back for ever. Each
                 // one costs a single reverse-geocoding call to put right.
-                cache = decoded.filter { $0.value.name != $0.value.countryName }
+                // A blank name is dropped for the same reason. An empty string is not
+                // nil, so it survived every `placeName != nil` check downstream and came
+                // out the far end as "Which photo is from ?".
+                cache = decoded.filter {
+                    $0.value.name != $0.value.countryName && !$0.value.name.isBlank
+                }
             } else if let old = try? JSONDecoder().decode([String: String].self, from: data) {
                 // The cache used to hold names alone. Keep them — they cost a network
                 // round trip each — and let the country fill in as places are re-asked.
-                cache = old.mapValues { Place(name: $0) }
+                cache = old.filter { !$0.value.isBlank }.mapValues { Place(name: $0) }
             }
         }
     }
@@ -73,7 +78,7 @@ final class PlaceResolver {
         photos.map { photo in
             var copy = photo
             if copy.placeName == nil, let coordinate = photo.coordinate,
-               let place = cachedPlace(for: coordinate) {
+               let place = cachedPlace(for: coordinate), !place.name.isBlank {
                 copy.placeName = place.name
                 copy.countryName = place.countryName
                 copy.countryCode = place.countryCode

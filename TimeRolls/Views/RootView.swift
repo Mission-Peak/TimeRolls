@@ -133,16 +133,17 @@ struct FirstRunView: View {
     /// and the wrong place entirely for the two that decide whether somebody can play at
     /// all. They are asked here instead, once, while the person setting the game up is
     /// still sitting with it.
-    private enum Stage { case intro, choosingPhotos, voice, challenge, movingOn }
+    ///
+    /// There used to be a screen here asking which sets of photographs to play with. It
+    /// is gone. Every pack is on to begin with, which is what nearly everybody would have
+    /// chosen anyway, and asking put a list of five things to weigh up in front of
+    /// somebody who had not yet seen a single round. Whoever wants fewer can turn them off
+    /// in setup, once they know what they are turning off.
+    private enum Stage { case intro, voice, challenge, movingOn }
     @State private var stage: Stage = .intro
 
     var body: some View {
         switch stage {
-        case .choosingPhotos:
-            CategoryChooserView(engine: engine) { packIDs in
-                engine.applyOnboardingChoice(packIDs: packIDs)
-                stage = .voice
-            }
         case .voice:
             VoiceSetupView(engine: engine) { stage = .challenge }
         case .challenge:
@@ -203,7 +204,11 @@ struct FirstRunView: View {
                     .disabled(isRequesting)
 
                     Button {
-                        stage = .choosingPhotos
+                        // Every pack, without asking. The only thing this choice decides
+                        // is whether the player's own photographs are used as well.
+                        engine.applyOnboardingChoice(
+                            packIDs: PublicPackLibrary.defaultEnabledPackIDs)
+                        stage = .voice
                     } label: {
                         Text("Play with the built-in photos instead")
                             .font(.system(size: 17, weight: .bold, design: .rounded))
@@ -472,16 +477,26 @@ struct DailyChallengeSetupView: View {
     @Bindable var engine: GameEngine
     let onDone: () -> Void
 
-    /// Three sizes of day. Not a slider: a slider invites somebody to optimise a number
-    /// that should be chosen once, by feel, and forgotten.
+    /// Three sizes of day, described by what they feel like rather than by how long they
+    /// take.
+    ///
+    /// They used to carry times — "about five minutes", "ten minutes or so", "twenty
+    /// minutes". That was a promise the game cannot keep. How long eight cards take
+    /// depends entirely on who is playing: somebody who studies each photograph and
+    /// somebody who answers straight away can take four times as long over the same
+    /// eight, and a caregiver who was told ten minutes and watched it run to half an hour
+    /// has been let down by the setup screen rather than by the person playing.
     private static let choices: [(cards: Int, name: String, detail: String)] = [
-        (5, "A short visit", "About five minutes. A good place to start, and enough on a "
-                           + "day when somebody is tired."),
-        (8, "A proper sit-down", "Ten minutes or so. Long enough to settle into, short "
-                               + "enough to finish."),
-        (12, "A good long session", "Twenty minutes. For somebody who would rather keep "
-                                  + "going than be asked to stop."),
+        (5, "A short visit", "A good place to start, and enough on a day when somebody "
+                           + "is tired."),
+        (8, "A proper sit-down", "Long enough to settle into, short enough to finish."),
+        (12, "A good long session", "For somebody who would rather keep going than be "
+                                  + "asked to stop."),
     ]
+
+    /// The range the number may be nudged to by hand.
+    private static let fewest = 3
+    private static let most = 20
 
     var body: some View {
         ScrollView {
@@ -529,6 +544,36 @@ struct DailyChallengeSetupView: View {
                                             ? [.isButton, .isSelected] : .isButton)
                 }
 
+                // The exact number, for anybody the three sizes do not fit. The named
+                // choices stay because most people want to pick a feeling rather than a
+                // number — this is here so that wanting seven is not a reason to settle
+                // for eight.
+                StickerCard(fill: Meadow.cardCream) {
+                    HStack(spacing: 14) {
+                        VStack(alignment: .leading, spacing: 2) {
+                            Text("Or set the number yourself")
+                                .font(.system(size: 17, weight: .heavy, design: .rounded))
+                                .foregroundStyle(Meadow.title)
+                            Text("\(engine.settings.dailyCardGoal) photo "
+                               + "\(engine.settings.dailyCardGoal == 1 ? "card" : "cards") a day")
+                                .font(.system(size: 15, design: .rounded))
+                                .foregroundStyle(Meadow.body)
+                        }
+                        Spacer(minLength: 0)
+                        Stepper(value: $engine.settings.dailyCardGoal,
+                                in: Self.fewest...Self.most) {
+                            EmptyView()
+                        }
+                        .labelsHidden()
+                        .onChange(of: engine.settings.dailyCardGoal) { _, _ in
+                            engine.settings.save()
+                        }
+                    }
+                }
+                .accessibilityElement(children: .combine)
+                .accessibilityLabel("Photo cards a day")
+                .accessibilityValue("\(engine.settings.dailyCardGoal)")
+
                 Text("Finishing the challenge is the only thing the game keeps score of, "
                    + "and it can be finished across the whole day. Afterwards the game "
                    + "carries on for as long as anybody wants to play.")
@@ -540,7 +585,10 @@ struct DailyChallengeSetupView: View {
                     engine.settings.save()
                     onDone()
                 } label: {
-                    MeadowButtonLabel(title: "Start playing", symbol: "play.fill")
+                    // Not "Start playing". The next screen is one more thing to read —
+                    // how to move on from a photograph — and a button that promises the
+                    // game and delivers another setup screen is a small lie.
+                    MeadowButtonLabel(title: "Next", symbol: "arrow.right")
                 }
                 .buttonStyle(.plain)
                 .frame(maxWidth: .infinity)

@@ -61,8 +61,12 @@ func photos(from pack: PackOnDisk) -> [GamePhoto] {
             photo.coordinate = Coordinate(latitude: latitude, longitude: longitude)
         }
         photo.placeName = item["place"] as? String
-        // Same rule the app applies: a pack whose titles are file names has none.
-        if pack.titlesAreNames { photo.title = item["title"] as? String }
+        // Same rule the app applies: a pack whose titles are file names has none, and
+        // the English name wins over the title where the pack carries one.
+        if pack.titlesAreNames {
+            photo.title = (item["commonName"] as? String) ?? (item["title"] as? String)
+        }
+        photo.scientificName = item["scientificName"] as? String
         photo.fact = item["fact"] as? String
         photo.objectTags = Set(item["objectTags"] as? [String] ?? [])
         photo.possibleObjectTags = photo.objectTags

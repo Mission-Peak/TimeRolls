@@ -163,8 +163,7 @@
       "fact": "Johann Sebastian Bach (31 March [O.S. 21 March] 1685 – 28 July 1750) was a German composer and musician of the late Baroque period.",
       "factSource": "https://en.wikipedia.org/wiki/Johann_Sebastian_Bach",
       "remoteKey": "packs/famous-faces/famous-faces-johann-sebastian-bach-1.jpg",
-      "originalURL": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/5e/Johann_Sebastian_Bach.png/1280px-Johann_Sebastian_Bach.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
-      "group": "a German composer"
+      "originalURL": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/5e/Johann_Sebastian_Bach.png/1280px-Johann_Sebastian_Bach.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
     },
     {
       "id": "famous-faces-benjamin-franklin-1",
@@ -215,8 +214,7 @@
       "fact": "George Washington (February 22, 1732 [O.S. February 11, 1731] – December 14, 1799) was a Founding Father and the first president of the United States, serving from 1789 to 1797.",
       "factSource": "https://en.wikipedia.org/wiki/George_Washington",
       "remoteKey": "packs/famous-faces/famous-faces-george-washington-1.jpg",
-      "originalURL": "https://thumb.wikimedia.org/wikipedia/commons/thumb/b/b6/Gilbert_Stuart_Williamstown_Portrait_of_George_Washington.jpg/1280px-Gilbert_Stuart_Williamstown_Portrait_of_George_Washington.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
-      "group": "a Founding Father"
+      "originalURL": "https://thumb.wikimedia.org/wikipedia/commons/thumb/b/b6/Gilbert_Stuart_Williamstown_Portrait_of_George_Washington.jpg/1280px-Gilbert_Stuart_Williamstown_Portrait_of_George_Washington.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
     },
     {
       "id": "famous-faces-wolfgang-amadeus-mozart-1",
@@ -242,7 +240,7 @@
       "factSource": "https://en.wikipedia.org/wiki/Wolfgang_Amadeus_Mozart",
       "remoteKey": "packs/famous-faces/famous-faces-wolfgang-amadeus-mozart-1.jpg",
       "originalURL": "https://thumb.wikimedia.org/wikipedia/commons/thumb/1/1e/Wolfgang-amadeus-mozart_1.jpg/1280px-Wolfgang-amadeus-mozart_1.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
-      "group": "a Classical composer"
+      "group": "a Classical composer and musician"
     },
     {
       "id": "famous-faces-ludwig-van-beethoven-1",
@@ -474,7 +472,7 @@
       "factSource": "https://en.wikipedia.org/wiki/Thomas_Edison",
       "remoteKey": "packs/famous-faces/famous-faces-thomas-edison-1.jpg",
       "originalURL": "https://upload.wikimedia.org/wikipedia/commons/4/40/Thomas_Edison2-crop.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled",
-      "group": "an American inventor"
+      "group": "an American inventor and businessman"
     },
     {
       "id": "famous-faces-vincent-van-gogh-1",
@@ -552,7 +550,7 @@
       "factSource": "https://en.wikipedia.org/wiki/Arthur_Conan_Doyle",
       "remoteKey": "packs/famous-faces/famous-faces-arthur-conan-doyle-1.jpg",
       "originalURL": "https://upload.wikimedia.org/wikipedia/commons/b/bd/Arthur_Conan_Doyle_by_Walter_Benington%2C_1914.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled",
-      "group": "a British writer"
+      "group": "a British writer and physician"
     },
     {
       "id": "famous-faces-marie-curie-1",
@@ -578,7 +576,7 @@
       "factSource": "https://en.wikipedia.org/wiki/Marie_Curie",
       "remoteKey": "packs/famous-faces/famous-faces-marie-curie-1.jpg",
       "originalURL": "https://upload.wikimedia.org/wikipedia/commons/7/72/Marie_Sklodowska_16_years_old.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled",
-      "group": "a Polish and naturalised-French physicist"
+      "group": "a Polish and naturalised-French physicist and chemist"
     },
     {
       "id": "famous-faces-orville-wright-1",
@@ -758,7 +756,7 @@
       "factSource": "https://en.wikipedia.org/wiki/Louis_Armstrong",
       "remoteKey": "packs/famous-faces/famous-faces-louis-armstrong-1.jpg",
       "originalURL": "https://thumb.wikimedia.org/wikipedia/commons/thumb/6/63/Louis_Armstrong%2C_by_Harry_Warnecke_and_Gus_Schoenbaechler%2C_1947.jpg/1280px-Louis_Armstrong%2C_by_Harry_Warnecke_and_Gus_Schoenbaechler%2C_1947.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
-      "group": "an American jazz and blues"
+      "group": "an American jazz and blues trumpeter and vocalist"
     },
     {
       "id": "famous-faces-john-steinbeck-1",
@@ -861,7 +859,8 @@
       "fact": "Katharine Houghton Hepburn (May 12, 1907 – June 29, 2003) was an American actress whose career as a leading lady on stage and screen spanned six decades.",
       "factSource": "https://en.wikipedia.org/wiki/Katharine_Hepburn",
       "remoteKey": "packs/famous-faces/famous-faces-katharine-hepburn-1.jpg",
-      "originalURL": "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/89/Katharine_Hepburn_publicity_photograph.jpg/1280px-Katharine_Hepburn_publicity_photograph.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+      "originalURL": "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/89/Katharine_Hepburn_publicity_photograph.jpg/1280px-Katharine_Hepburn_publicity_photograph.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "group": "an American actress"
     },
     {
       "id": "famous-faces-jacques-cousteau-1",
@@ -913,7 +912,7 @@
       "factSource": "https://en.wikipedia.org/wiki/Mother_Teresa",
       "remoteKey": "packs/famous-faces/famous-faces-mother-teresa-1.jpg",
       "originalURL": "https://upload.wikimedia.org/wikipedia/commons/8/8e/MotherTeresa_090.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled",
-      "group": "an Albanian-Indian Catholic"
+      "group": "an Albanian-Indian Catholic nun"
     },
     {
       "id": "famous-faces-jesse-owens-1",
@@ -939,7 +938,7 @@
       "factSource": "https://en.wikipedia.org/wiki/Jesse_Owens",
       "remoteKey": "packs/famous-faces/famous-faces-jesse-owens-1.jpg",
       "originalURL": "https://upload.wikimedia.org/wikipedia/commons/a/ac/Jesse_Owens_1936_%28cropped%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled",
-      "group": "an American track and field"
+      "group": "an American track and field athlete"
     },
     {
       "id": "famous-faces-frank-sinatra-1",
@@ -1043,7 +1042,7 @@
       "factSource": "https://en.wikipedia.org/wiki/Audrey_Hepburn",
       "remoteKey": "packs/famous-faces/famous-faces-audrey-hepburn-1.jpg",
       "originalURL": "https://thumb.wikimedia.org/wikipedia/commons/thumb/6/6e/Audrey_Hepburn_in_1966.jpg/1280px-Audrey_Hepburn_in_1966.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
-      "group": "a British actress"
+      "group": "a British actress and humanitarian"
     },
     {
       "id": "famous-faces-marilyn-monroe-1",
@@ -1095,7 +1094,7 @@
       "factSource": "https://en.wikipedia.org/wiki/Martin_Luther_King_Jr.",
       "remoteKey": "packs/famous-faces/famous-faces-martin-luther-king-jr-1.jpg",
       "originalURL": "https://upload.wikimedia.org/wikipedia/commons/1/1c/The_Rev._Dr._Martin_Luther_King_Jr._Color_Portrait_%28high_quality%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled",
-      "group": "an American civil rights activist"
+      "group": "an American civil rights activist and Baptist minister"
     },
     {
       "id": "famous-faces-johnny-cash-1",
@@ -1172,7 +1171,7 @@
       "factSource": "https://en.wikipedia.org/wiki/Muhammad_Ali",
       "remoteKey": "packs/famous-faces/famous-faces-muhammad-ali-1.jpg",
       "originalURL": "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/89/Muhammad_Ali_NYWTS.jpg/1280px-Muhammad_Ali_NYWTS.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
-      "group": "an American professional boxer"
+      "group": "an American professional boxer and activist"
     },
     {
       "id": "famous-faces-dolly-parton-1",
@@ -1351,7 +1350,8 @@
       "fact": "Michael Jeffrey Jordan (born February 17, 1963), also known by his initials MJ, is an American businessman, former professional basketball player, and former baseball player. He played 15 seasons in the National Basketball Association (NBA) between 1984 and 2003, winning six NBA championships with the Chicago Bulls.",
       "factSource": "https://en.wikipedia.org/wiki/Michael_Jordan",
       "remoteKey": "packs/famous-faces/famous-faces-michael-jordan-1.jpg",
-      "originalURL": "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/88/Michael_Jordan.jpg/1280px-Michael_Jordan.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+      "originalURL": "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/88/Michael_Jordan.jpg/1280px-Michael_Jordan.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "group": "an American businessman"
     },
     {
       "id": "famous-faces-serena-williams-1",
@@ -1376,7 +1376,8 @@
       "fact": "Serena Jameka Williams (born September 26, 1981) is an American professional tennis player. She was ranked as the world No.",
       "factSource": "https://en.wikipedia.org/wiki/Serena_Williams",
       "remoteKey": "packs/famous-faces/famous-faces-serena-williams-1.jpg",
-      "originalURL": "https://upload.wikimedia.org/wikipedia/commons/4/4b/Serena_Williams_at_2013_US_Open.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled"
+      "originalURL": "https://upload.wikimedia.org/wikipedia/commons/4/4b/Serena_Williams_at_2013_US_Open.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled",
+      "group": "an American professional tennis player"
     },
     {
       "id": "famous-faces-lionel-messi-1",
@@ -1401,7 +1402,8 @@
       "fact": "Lionel Andrés \"Leo\" Messi (born 24 June 1987) is an Argentine professional footballer who plays as a forward for the Major League Soccer club Inter Miami, which he captains, and the Argentina national team.",
       "factSource": "https://en.wikipedia.org/wiki/Lionel_Messi",
       "remoteKey": "packs/famous-faces/famous-faces-lionel-messi-1.jpg",
-      "originalURL": "https://thumb.wikimedia.org/wikipedia/commons/thumb/c/c8/Leo_Messi_Argentina_v_Egypt_7_July_2026-1.jpg/1280px-Leo_Messi_Argentina_v_Egypt_7_July_2026-1.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+      "originalURL": "https://thumb.wikimedia.org/wikipedia/commons/thumb/c/c8/Leo_Messi_Argentina_v_Egypt_7_July_2026-1.jpg/1280px-Leo_Messi_Argentina_v_Egypt_7_July_2026-1.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "group": "an Argentine professional footballer"
     },
     {
       "id": "famous-faces-katy-perry-1",
@@ -1426,7 +1428,8 @@
       "fact": "Katheryn Elizabeth Hudson (born October 25, 1984), known professionally as Katy Perry, is an American singer, songwriter, and television personality. Known for her influence on pop music and her camp style, she has been dubbed the \"Queen of Camp\" by Vogue and Rolling Stone.",
       "factSource": "https://en.wikipedia.org/wiki/Katy_Perry",
       "remoteKey": "packs/famous-faces/famous-faces-katy-perry-1.jpg",
-      "originalURL": "https://thumb.wikimedia.org/wikipedia/commons/thumb/e/ef/KatyPerryWestminst111224_%2881_of_95%29_%2854206733094%29_%28cropped_2%29.jpg/1280px-KatyPerryWestminst111224_%2881_of_95%29_%2854206733094%29_%28cropped_2%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+      "originalURL": "https://thumb.wikimedia.org/wikipedia/commons/thumb/e/ef/KatyPerryWestminst111224_%2881_of_95%29_%2854206733094%29_%28cropped_2%29.jpg/1280px-KatyPerryWestminst111224_%2881_of_95%29_%2854206733094%29_%28cropped_2%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "group": "an American singer"
     },
     {
       "id": "famous-faces-julius-caesar-1",
@@ -1529,8 +1532,7 @@
       "fact": "Miguel de Cervantes Saavedra ( sur-VAN-teez, -⁠tiz; Spanish: [miˈɣel de θeɾˈβantes sa(.a)ˈβeðɾa]; 29 September 1547 (assumed) – 22 April 1616) was a Spanish writer widely regarded as the greatest writer in the Spanish language and one of the world's pre-eminent novelists.",
       "factSource": "https://en.wikipedia.org/wiki/Miguel_de_Cervantes",
       "remoteKey": "packs/famous-faces/famous-faces-miguel-de-cervantes-1.jpg",
-      "originalURL": "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/09/Cervantes_J%C3%A1uregui.jpg/1280px-Cervantes_J%C3%A1uregui.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
-      "group": "a Spanish writer widely regarded"
+      "originalURL": "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/09/Cervantes_J%C3%A1uregui.jpg/1280px-Cervantes_J%C3%A1uregui.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
     },
     {
       "id": "famous-faces-antonio-vivaldi-1",
@@ -1607,8 +1609,7 @@
       "fact": "John Adams (October 30, 1735 – July 4, 1826) was a Founding Father and the second president of the United States from 1797 to 1801. Before his presidency, he was a leader of the American Revolution that achieved independence from Great Britain.",
       "factSource": "https://en.wikipedia.org/wiki/John_Adams",
       "remoteKey": "packs/famous-faces/famous-faces-john-adams-1.jpg",
-      "originalURL": "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/07/John_Adams_A18236.jpg/1280px-John_Adams_A18236.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
-      "group": "a Founding Father"
+      "originalURL": "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/07/John_Adams_A18236.jpg/1280px-John_Adams_A18236.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
     },
     {
       "id": "famous-faces-thomas-jefferson-1",
@@ -1633,8 +1634,7 @@
       "fact": "Thomas Jefferson (April 13 [O.S. April 2], 1743 – July 4, 1826) was a Founding Father and the third president of the United States, serving from 1801 to 1809.",
       "factSource": "https://en.wikipedia.org/wiki/Thomas_Jefferson",
       "remoteKey": "packs/famous-faces/famous-faces-thomas-jefferson-1.jpg",
-      "originalURL": "https://upload.wikimedia.org/wikipedia/commons/b/b1/Official_Presidential_portrait_of_Thomas_Jefferson_%28by_Rembrandt_Peale%2C_1800%29%28cropped%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled",
-      "group": "a Founding Father"
+      "originalURL": "https://upload.wikimedia.org/wikipedia/commons/b/b1/Official_Presidential_portrait_of_Thomas_Jefferson_%28by_Rembrandt_Peale%2C_1800%29%28cropped%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled"
     },
     {
       "id": "famous-faces-honoré-de-balzac-1",
@@ -1893,8 +1893,7 @@
       "fact": "Pierre-Auguste Renoir (; French: [pjɛʁ oɡyst ʁənwaʁ]; 25 February 1841 – 3 December 1919) was a leading French Impressionist artist.",
       "factSource": "https://en.wikipedia.org/wiki/Pierre-Auguste_Renoir",
       "remoteKey": "packs/famous-faces/famous-faces-pierre-auguste-renoir-1.jpg",
-      "originalURL": "https://upload.wikimedia.org/wikipedia/commons/6/67/Pierre_Auguste_Renoir%2C_uncropped_image.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled",
-      "group": "a leading French Impressionist artist"
+      "originalURL": "https://upload.wikimedia.org/wikipedia/commons/6/67/Pierre_Auguste_Renoir%2C_uncropped_image.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled"
     },
     {
       "id": "famous-faces-antoni-gaudí-1",
@@ -1945,8 +1944,7 @@
       "fact": "Sigmund Freud (born Sigismund Schlomo Freud; 6 May 1856 – 23 September 1939) was an Austrian neurologist and the founder of psychoanalysis, a clinical method for evaluating and treating pathologies arising from conflicts in the psyche through dialogue between patient and psychoanalyst, and the distinctive theory of mind and human agency derived from it.",
       "factSource": "https://en.wikipedia.org/wiki/Sigmund_Freud",
       "remoteKey": "packs/famous-faces/famous-faces-sigmund-freud-1.jpg",
-      "originalURL": "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/36/Sigmund_Freud%2C_by_Max_Halberstadt_%28cropped%29.jpg/1280px-Sigmund_Freud%2C_by_Max_Halberstadt_%28cropped%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
-      "group": "an Austrian neurologist"
+      "originalURL": "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/36/Sigmund_Freud%2C_by_Max_Halberstadt_%28cropped%29.jpg/1280px-Sigmund_Freud%2C_by_Max_Halberstadt_%28cropped%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
     },
     {
       "id": "famous-faces-joseph-conrad-1",
@@ -1972,7 +1970,7 @@
       "factSource": "https://en.wikipedia.org/wiki/Joseph_Conrad",
       "remoteKey": "packs/famous-faces/famous-faces-joseph-conrad-1.jpg",
       "originalURL": "https://upload.wikimedia.org/wikipedia/commons/e/e7/Joseph_Conrad-remastered_to_black_and_white.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled",
-      "group": "a Polish-British novelist and story"
+      "group": "a Polish-British novelist and story writer"
     },
     {
       "id": "famous-faces-henry-ford-1",
@@ -1998,7 +1996,7 @@
       "factSource": "https://en.wikipedia.org/wiki/Henry_Ford",
       "remoteKey": "packs/famous-faces/famous-faces-henry-ford-1.jpg",
       "originalURL": "https://thumb.wikimedia.org/wikipedia/commons/thumb/1/18/Henry_ford_1919.jpg/1280px-Henry_ford_1919.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
-      "group": "an American industrialist and business"
+      "group": "an American industrialist and business magnate"
     },
     {
       "id": "famous-faces-wassily-kandinsky-1",
@@ -2024,7 +2022,7 @@
       "factSource": "https://en.wikipedia.org/wiki/Wassily_Kandinsky",
       "remoteKey": "packs/famous-faces/famous-faces-wassily-kandinsky-1.jpg",
       "originalURL": "https://upload.wikimedia.org/wikipedia/commons/d/d6/Wassily_kandinsky.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled",
-      "group": "a Russian painter and art"
+      "group": "a Russian painter and art theorist active in Germany"
     },
     {
       "id": "famous-faces-frank-lloyd-wright-1",
@@ -2101,8 +2099,7 @@
       "fact": "Rosa Luxemburg ( LUK-səm-burg; Polish: Róża Luksemburg [ˈruʐa ˈluksɛmburk] ; German: [ˈʁoːza ˈlʊksm̩bʊʁk] ; 5 March 1871 – 15 January 1919) was a Polish and naturalised-German Marxist theorist and revolutionary.",
       "factSource": "https://en.wikipedia.org/wiki/Rosa_Luxemburg",
       "remoteKey": "packs/famous-faces/famous-faces-rosa-luxemburg-1.jpg",
-      "originalURL": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/52/Rosa_Luxemburg.jpg/1280px-Rosa_Luxemburg.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
-      "group": "a Polish and naturalised-German Marxist"
+      "originalURL": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/52/Rosa_Luxemburg.jpg/1280px-Rosa_Luxemburg.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
     },
     {
       "id": "famous-faces-bertrand-russell-1",
@@ -2336,7 +2333,7 @@
       "factSource": "https://en.wikipedia.org/wiki/J._R._R._Tolkien",
       "remoteKey": "packs/famous-faces/famous-faces-j-r-r-tolkien-1.jpg",
       "originalURL": "https://thumb.wikimedia.org/wikipedia/commons/thumb/d/d4/J._R._R._Tolkien%2C_ca._1925.jpg/1280px-J._R._R._Tolkien%2C_ca._1925.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
-      "group": "an English writer and academic"
+      "group": "an English writer and academic philologist"
     },
     {
       "id": "famous-faces-mao-zedong-1",
@@ -2518,7 +2515,7 @@
       "factSource": "https://en.wikipedia.org/wiki/Alan_Turing",
       "remoteKey": "packs/famous-faces/famous-faces-alan-turing-1.jpg",
       "originalURL": "https://upload.wikimedia.org/wikipedia/commons/6/66/Alan_Turing_%281951%29_%28crop%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled",
-      "group": "an English"
+      "group": "an English mathematician"
     },
     {
       "id": "famous-faces-julia-child-1",
@@ -2622,7 +2619,7 @@
       "factSource": "https://en.wikipedia.org/wiki/Billie_Holiday",
       "remoteKey": "packs/famous-faces/famous-faces-billie-holiday-1.jpg",
       "originalURL": "https://thumb.wikimedia.org/wikipedia/commons/thumb/d/d1/%28Portrait_of_Billie_Holiday%2C_Downbeat%2C_New_York%2C_N.Y.%2C_ca._Feb._1947%29_%28LOC%29_%284843765564%29.jpg/1280px-%28Portrait_of_Billie_Holiday%2C_Downbeat%2C_New_York%2C_N.Y.%2C_ca._Feb._1947%29_%28LOC%29_%284843765564%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
-      "group": "an American jazz and swing"
+      "group": "an American jazz and swing music singer"
     },
     {
       "id": "famous-faces-roald-dahl-1",
@@ -2647,8 +2644,7 @@
       "fact": "Roald Dahl (13 September 1916 – 23 November 1990) was a British author of popular children's literature and short stories, a poet, screenwriter and a wartime fighter ace. His books have sold more than 300 million copies worldwide.",
       "factSource": "https://en.wikipedia.org/wiki/Roald_Dahl",
       "remoteKey": "packs/famous-faces/famous-faces-roald-dahl-1.jpg",
-      "originalURL": "https://upload.wikimedia.org/wikipedia/commons/0/01/Roald_Dahl_%281982%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled",
-      "group": "a British author"
+      "originalURL": "https://upload.wikimedia.org/wikipedia/commons/0/01/Roald_Dahl_%281982%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled"
     },
     {
       "id": "famous-faces-ingrid-bergman-1",
@@ -2778,7 +2774,7 @@
       "factSource": "https://en.wikipedia.org/wiki/James_Baldwin",
       "remoteKey": "packs/famous-faces/famous-faces-james-baldwin-1.jpg",
       "originalURL": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/46/James_Baldwin_2_Allan_Warren.jpg/1280px-James_Baldwin_2_Allan_Warren.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
-      "group": "an American writer and civil"
+      "group": "an American writer and civil rights activist"
     },
     {
       "id": "famous-faces-chuck-berry-1",
@@ -2855,8 +2851,7 @@
       "fact": "Grace Patricia Kelly (November 12, 1929 – September 14, 1982) was an American actress and Princess of Monaco as the wife of Prince Rainier III from their marriage on April 18, 1956, until her death in 1982. Prior to her marriage, she achieved stardom in several significant Hollywood films in the early to mid-1950s.",
       "factSource": "https://en.wikipedia.org/wiki/Grace_Kelly",
       "remoteKey": "packs/famous-faces/famous-faces-grace-kelly-1.jpg",
-      "originalURL": "https://thumb.wikimedia.org/wikipedia/commons/thumb/f/f3/Gracia_van_Monaco_%281972%29.jpg/1280px-Gracia_van_Monaco_%281972%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
-      "group": "an American actress and Princess"
+      "originalURL": "https://thumb.wikimedia.org/wikipedia/commons/thumb/f/f3/Gracia_van_Monaco_%281972%29.jpg/1280px-Gracia_van_Monaco_%281972%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
     },
     {
       "id": "famous-faces-sean-connery-1",
@@ -2882,7 +2877,7 @@
       "factSource": "https://en.wikipedia.org/wiki/Sean_Connery",
       "remoteKey": "packs/famous-faces/famous-faces-sean-connery-1.jpg",
       "originalURL": "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/96/Sean_Connery_%281983%29.jpg/1280px-Sean_Connery_%281983%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
-      "group": "a Scottish actor and film"
+      "group": "a Scottish actor and film producer"
     },
     {
       "id": "famous-faces-ray-charles-1",
@@ -3115,7 +3110,8 @@
       "fact": "Harrison Ford (born July 13, 1942) is an American actor. Regarded as a cinematic cultural icon, Ford's accolades include nominations for an Academy Award, a British Academy Film Award, two Emmy Awards, five Golden Globes and two SAG-AFTRA's Actor Awards.",
       "factSource": "https://en.wikipedia.org/wiki/Harrison_Ford",
       "remoteKey": "packs/famous-faces/famous-faces-harrison-ford-1.jpg",
-      "originalURL": "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/81/Harrison_Ford_-_Televerse_2025-03.jpg/1280px-Harrison_Ford_-_Televerse_2025-03.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+      "originalURL": "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/81/Harrison_Ford_-_Televerse_2025-03.jpg/1280px-Harrison_Ford_-_Televerse_2025-03.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "group": "an American actor"
     },
     {
       "id": "famous-faces-bruce-lee-1",
@@ -3141,7 +3137,7 @@
       "factSource": "https://en.wikipedia.org/wiki/Bruce_Lee",
       "remoteKey": "packs/famous-faces/famous-faces-bruce-lee-1.jpg",
       "originalURL": "https://upload.wikimedia.org/wikipedia/commons/c/ca/Bruce_Lee_1973.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled",
-      "group": "a Hong Kong and American"
+      "group": "a Hong Kong and American martial artist"
     },
     {
       "id": "famous-faces-stephen-king-1",
@@ -3166,7 +3162,8 @@
       "fact": "Stephen Edwin King (born September 21, 1947) is an American author. Dubbed the \"King of Horror\", he is widely known for his horror fiction and has also explored other genres, among them suspense, crime, science-fiction, fantasy, and mystery.",
       "factSource": "https://en.wikipedia.org/wiki/Stephen_King",
       "remoteKey": "packs/famous-faces/famous-faces-stephen-king-1.jpg",
-      "originalURL": "https://thumb.wikimedia.org/wikipedia/commons/thumb/2/24/Stephen_King_at_the_2024_Toronto_International_Film_Festival_2_%28cropped%29.jpg/1280px-Stephen_King_at_the_2024_Toronto_International_Film_Festival_2_%28cropped%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+      "originalURL": "https://thumb.wikimedia.org/wikipedia/commons/thumb/2/24/Stephen_King_at_the_2024_Toronto_International_Film_Festival_2_%28cropped%29.jpg/1280px-Stephen_King_at_the_2024_Toronto_International_Film_Festival_2_%28cropped%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "group": "an American author"
     },
     {
       "id": "famous-faces-elton-john-1",
@@ -3191,7 +3188,8 @@
       "fact": "Sir Elton Hercules John (born Reginald Kenneth Dwight, 25 March 1947) is a British singer, composer and pianist. An influential figure in popular culture, he is known for his flamboyant fashion, showmanship and songwriting partnership with the lyricist Bernie Taupin.",
       "factSource": "https://en.wikipedia.org/wiki/Elton_John",
       "remoteKey": "packs/famous-faces/famous-faces-elton-john-1.jpg",
-      "originalURL": "https://thumb.wikimedia.org/wikipedia/commons/thumb/f/f3/Elton_John_2023.jpg/1280px-Elton_John_2023.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+      "originalURL": "https://thumb.wikimedia.org/wikipedia/commons/thumb/f/f3/Elton_John_2023.jpg/1280px-Elton_John_2023.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "group": "a British singer"
     },
     {
       "id": "famous-faces-meryl-streep-1",
@@ -3216,7 +3214,8 @@
       "fact": "Mary Louise \"Meryl\" Streep (born June 22, 1949) is an American actress.",
       "factSource": "https://en.wikipedia.org/wiki/Meryl_Streep",
       "remoteKey": "packs/famous-faces/famous-faces-meryl-streep-1.jpg",
-      "originalURL": "https://thumb.wikimedia.org/wikipedia/commons/thumb/e/e5/Meryl_Streep-_Press_conference_for_the_film_%22The_Devil_Wears_Prada_2%22_-_55194765350_%28cropped1%29.jpg/1280px-Meryl_Streep-_Press_conference_for_the_film_%22The_Devil_Wears_Prada_2%22_-_55194765350_%28cropped1%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+      "originalURL": "https://thumb.wikimedia.org/wikipedia/commons/thumb/e/e5/Meryl_Streep-_Press_conference_for_the_film_%22The_Devil_Wears_Prada_2%22_-_55194765350_%28cropped1%29.jpg/1280px-Meryl_Streep-_Press_conference_for_the_film_%22The_Devil_Wears_Prada_2%22_-_55194765350_%28cropped1%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "group": "an American actress"
     },
     {
       "id": "famous-faces-stevie-wonder-1",
@@ -3241,7 +3240,8 @@
       "fact": "Stevland Hardaway Morris ( STEEV-lənd; né Judkins; born May 13, 1950), known professionally as Stevie Wonder, is an American singer-songwriter, musician, and record producer.",
       "factSource": "https://en.wikipedia.org/wiki/Stevie_Wonder",
       "remoteKey": "packs/famous-faces/famous-faces-stevie-wonder-1.jpg",
-      "originalURL": "https://upload.wikimedia.org/wikipedia/commons/8/8f/Stevie_Wonder_1994.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled"
+      "originalURL": "https://upload.wikimedia.org/wikipedia/commons/8/8f/Stevie_Wonder_1994.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled",
+      "group": "an American singer-songwriter"
     },
     {
       "id": "famous-faces-bill-gates-1",
@@ -3266,7 +3266,8 @@
       "fact": "William Henry Gates III (born October 28, 1955) is an American businessman and philanthropist. A pioneer of the microcomputer revolution of the 1970s and 1980s, he co-founded the software company Microsoft in 1975 with his childhood friend Paul Allen.",
       "factSource": "https://en.wikipedia.org/wiki/Bill_Gates",
       "remoteKey": "packs/famous-faces/famous-faces-bill-gates-1.jpg",
-      "originalURL": "https://upload.wikimedia.org/wikipedia/commons/8/88/Bill_Gates_at_the_European_Commission_-_2025_-_P067383-987995_%28cropped%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled"
+      "originalURL": "https://upload.wikimedia.org/wikipedia/commons/8/88/Bill_Gates_at_the_European_Commission_-_2025_-_P067383-987995_%28cropped%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled",
+      "group": "an American businessman and philanthropist"
     },
     {
       "id": "famous-faces-steve-jobs-1",
@@ -3343,7 +3344,8 @@
       "fact": "Oprah Gail Winfrey (; born Orpah Gail Winfrey; January 29, 1954) is an American media mogul, actress, executive producer, author, and television personality. She is best known for her talk show, The Oprah Winfrey Show, broadcast from Chicago, which ran in national syndication for 25 years, from 1986 to 2011.",
       "factSource": "https://en.wikipedia.org/wiki/Oprah_Winfrey",
       "remoteKey": "packs/famous-faces/famous-faces-oprah-winfrey-1.jpg",
-      "originalURL": "https://upload.wikimedia.org/wikipedia/commons/f/f6/Pre_Inaugural_Reception_%2852639556983%29_%28cropped%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled"
+      "originalURL": "https://upload.wikimedia.org/wikipedia/commons/f/f6/Pre_Inaugural_Reception_%2852639556983%29_%28cropped%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled",
+      "group": "an American media mogul"
     },
     {
       "id": "famous-faces-diana-princess-of-wales-1",
@@ -3369,7 +3371,7 @@
       "factSource": "https://en.wikipedia.org/wiki/Diana%2C_Princess_of_Wales",
       "remoteKey": "packs/famous-faces/famous-faces-diana-princess-of-wales-1.jpg",
       "originalURL": "https://upload.wikimedia.org/wikipedia/commons/f/f3/Diana%2C_Princess_of_Wales_1997_%282%29_%28cropped%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled",
-      "group": "a member"
+      "group": "a member of the British royal family"
     },
     {
       "id": "famous-faces-barack-obama-1",
@@ -3395,7 +3397,7 @@
       "factSource": "https://en.wikipedia.org/wiki/Barack_Obama",
       "remoteKey": "packs/famous-faces/famous-faces-barack-obama-1.jpg",
       "originalURL": "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/8d/President_Barack_Obama.jpg/1280px-President_Barack_Obama.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
-      "group": "a first African American"
+      "group": "an American retired politician"
     },
     {
       "id": "famous-faces-mahatma-gandhi-1",
@@ -3447,7 +3449,7 @@
       "factSource": "https://en.wikipedia.org/wiki/George_Frideric_Handel",
       "remoteKey": "packs/famous-faces/famous-faces-george-frideric-handel-1.jpg",
       "originalURL": "https://thumb.wikimedia.org/wikipedia/commons/thumb/f/fa/George_Frideric_Handel_by_Balthasar_Denner.jpg/1280px-George_Frideric_Handel_by_Balthasar_Denner.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
-      "group": "a German-British Baroque composer well-known"
+      "group": "a German-British Baroque composer"
     },
     {
       "id": "famous-faces-johann-gottlieb-fichte-1",
@@ -3499,7 +3501,7 @@
       "factSource": "https://en.wikipedia.org/wiki/Harriet_Tubman",
       "remoteKey": "packs/famous-faces/famous-faces-harriet-tubman-1.jpg",
       "originalURL": "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/8e/%22Harriet_Tubman%22_-_NARA_-_559120.jpg/1280px-%22Harriet_Tubman%22_-_NARA_-_559120.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
-      "group": "an American abolitionist and social"
+      "group": "an American abolitionist and social activist"
     },
     {
       "id": "famous-faces-winona-ryder-1",
@@ -3524,7 +3526,8 @@
       "fact": "Winona Laura Horowitz ( wi-NOH-nə; born October 29, 1971), known professionally as Winona Ryder, is an American actress. Having come to attention playing \"quirky\" characters in the late 1980s, she achieved success with her more dramatic performances in the 1990s.",
       "factSource": "https://en.wikipedia.org/wiki/Winona_Ryder",
       "remoteKey": "packs/famous-faces/famous-faces-winona-ryder-1.jpg",
-      "originalURL": "https://thumb.wikimedia.org/wikipedia/commons/thumb/e/ee/Winona_Ryder-63849.jpg/1280px-Winona_Ryder-63849.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+      "originalURL": "https://thumb.wikimedia.org/wikipedia/commons/thumb/e/ee/Winona_Ryder-63849.jpg/1280px-Winona_Ryder-63849.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "group": "an American actress"
     },
     {
       "id": "famous-faces-ronald-ross-1",
@@ -3575,7 +3578,8 @@
       "fact": "Sir Andrew Barron Murray (born 15 May 1987) is a British professional tennis coach and former player. He was ranked as the world No.",
       "factSource": "https://en.wikipedia.org/wiki/Andy_Murray",
       "remoteKey": "packs/famous-faces/famous-faces-andy-murray-1.jpg",
-      "originalURL": "https://upload.wikimedia.org/wikipedia/commons/b/bf/2015_Australian_Open_-_Andy_Murray_12_%28cropped%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled"
+      "originalURL": "https://upload.wikimedia.org/wikipedia/commons/b/bf/2015_Australian_Open_-_Andy_Murray_12_%28cropped%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled",
+      "group": "a British professional tennis coach and former player"
     },
     {
       "id": "famous-faces-pius-ii-1",
@@ -3625,7 +3629,8 @@
       "fact": "Jennifer Lynn Connelly (born December 12, 1970) is an American actress. She began her career as a child model before making her acting debut in the 1984 crime film Once Upon a Time in America.",
       "factSource": "https://en.wikipedia.org/wiki/Jennifer_Connelly",
       "remoteKey": "packs/famous-faces/famous-faces-jennifer-connelly-1.jpg",
-      "originalURL": "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/35/Jennifer_Connelly_2010_TIFF.jpg/1280px-Jennifer_Connelly_2010_TIFF.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+      "originalURL": "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/35/Jennifer_Connelly_2010_TIFF.jpg/1280px-Jennifer_Connelly_2010_TIFF.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "group": "an American actress"
     },
     {
       "id": "famous-faces-michel-houellebecq-1",
@@ -3651,7 +3656,7 @@
       "factSource": "https://en.wikipedia.org/wiki/Michel_Houellebecq",
       "remoteKey": "packs/famous-faces/famous-faces-michel-houellebecq-1.jpg",
       "originalURL": "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/84/Michel_Houellebecq_no_Fronteiras_do_Pensamento_Porto_Alegre_2016_%2830895029365%29_%28cropped%29.jpg/1280px-Michel_Houellebecq_no_Fronteiras_do_Pensamento_Porto_Alegre_2016_%2830895029365%29_%28cropped%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
-      "group": "a monograph on the horror"
+      "group": "a French author of novels"
     },
     {
       "id": "famous-faces-alexander-viii-1",
@@ -3701,8 +3706,7 @@
       "fact": "Mikhail Tal (9 November 1936 – 28 June 1992) was a Soviet Latvian chess grandmaster and the eighth World Chess Champion. He is considered a creative genius and is widely regarded as one of the most influential players in chess history.",
       "factSource": "https://en.wikipedia.org/wiki/Mikhail_Tal",
       "remoteKey": "packs/famous-faces/famous-faces-mikhail-tal-1.jpg",
-      "originalURL": "https://thumb.wikimedia.org/wikipedia/commons/thumb/b/bf/Mikhail_Tal_1982.jpg/1280px-Mikhail_Tal_1982.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
-      "group": "a Soviet Latvian chess grandmaster"
+      "originalURL": "https://thumb.wikimedia.org/wikipedia/commons/thumb/b/bf/Mikhail_Tal_1982.jpg/1280px-Mikhail_Tal_1982.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
     },
     {
       "id": "famous-faces-farrah-fawcett-1",
@@ -3780,7 +3784,7 @@
       "factSource": "https://en.wikipedia.org/wiki/Gaetano_Donizetti",
       "remoteKey": "packs/famous-faces/famous-faces-gaetano-donizetti-1.jpg",
       "originalURL": "https://thumb.wikimedia.org/wikipedia/commons/thumb/c/c4/Fotoreproductie_van_Gaetano_Donizetti.png/1280px-Fotoreproductie_van_Gaetano_Donizetti.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
-      "group": "an Italian composer"
+      "group": "an Italian composer of the early Romantic era"
     },
     {
       "id": "famous-faces-ernest-borgnine-1",
@@ -3806,7 +3810,7 @@
       "factSource": "https://en.wikipedia.org/wiki/Ernest_Borgnine",
       "remoteKey": "packs/famous-faces/famous-faces-ernest-borgnine-1.jpg",
       "originalURL": "https://upload.wikimedia.org/wikipedia/commons/8/89/Ernest_Borgnine_McHale_McHale%27s_Navy_1962.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled",
-      "group": "an American actor whose career"
+      "group": "an American actor"
     },
     {
       "id": "famous-faces-kurt-russell-1",
@@ -3831,7 +3835,8 @@
       "fact": "Kurt Vogel Russell (born March 17, 1951) is an American actor. He began his career as a child actor before transitioning to leading roles as an adult in various genres such as action adventures, science-fiction, westerns, romance films, comedic films, and family dramas.",
       "factSource": "https://en.wikipedia.org/wiki/Kurt_Russell",
       "remoteKey": "packs/famous-faces/famous-faces-kurt-russell-1.jpg",
-      "originalURL": "https://thumb.wikimedia.org/wikipedia/commons/thumb/d/db/Kurt_Russell_by_Gage_Skidmore_2.jpg/1280px-Kurt_Russell_by_Gage_Skidmore_2.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+      "originalURL": "https://thumb.wikimedia.org/wikipedia/commons/thumb/d/db/Kurt_Russell_by_Gage_Skidmore_2.jpg/1280px-Kurt_Russell_by_Gage_Skidmore_2.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "group": "an American actor"
     },
     {
       "id": "famous-faces-ingrida-šimonytė-1",
@@ -3856,7 +3861,8 @@
       "fact": "Ingrida Šimonytė (Lithuanian: [ɪŋʲɡʲrʲɪˈdˠɐ ʃʲɪmˠoːˈnʲîːtʲeː]; born 15 November 1974) is a Lithuanian politician, public servant, and economist who served as the 17th prime minister of Lithuania from 2020 to 2024.",
       "factSource": "https://en.wikipedia.org/wiki/Ingrida_%C5%A0imonyt%C4%97",
       "remoteKey": "packs/famous-faces/famous-faces-ingrida-šimonytė-1.jpg",
-      "originalURL": "https://upload.wikimedia.org/wikipedia/commons/9/94/Ingrida_Simonyte_2019.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled"
+      "originalURL": "https://upload.wikimedia.org/wikipedia/commons/9/94/Ingrida_Simonyte_2019.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled",
+      "group": "a Lithuanian politician"
     },
     {
       "id": "famous-faces-yul-brynner-1",
@@ -3933,7 +3939,8 @@
       "fact": "Peter Courtland Agre (; born January 30, 1949) is a Nobel Laureate American physician, molecular biologist, Bloomberg Distinguished Professor at the Johns Hopkins Bloomberg School of Public Health and Johns Hopkins School of Medicine, and director of the Johns Hopkins Malaria Research Institute.",
       "factSource": "https://en.wikipedia.org/wiki/Peter_Agre",
       "remoteKey": "packs/famous-faces/famous-faces-peter-agre-1.jpg",
-      "originalURL": "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/8d/Peter_Agre.jpg/1280px-Peter_Agre.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+      "originalURL": "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/8d/Peter_Agre.jpg/1280px-Peter_Agre.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "group": "a Nobel Laureate American physician"
     },
     {
       "id": "famous-faces-christian-b-anfinsen-1",
@@ -4010,8 +4017,7 @@
       "fact": "Herbert Charles Brown (22 May 1912 – 19 December 2004) was an American chemist and recipient of the 1979 Nobel Prize in Chemistry for his work with organoboranes.",
       "factSource": "https://en.wikipedia.org/wiki/Herbert_C._Brown",
       "remoteKey": "packs/famous-faces/famous-faces-herbert-c-brown-1.jpg",
-      "originalURL": "https://upload.wikimedia.org/wikipedia/commons/1/11/33._Tagung_1983_Chemiker_Herbert_C._Brown_-_W134Nr.120809d_-_Willy_Pragher_%28cropped%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled",
-      "group": "an American chemist and recipient"
+      "originalURL": "https://upload.wikimedia.org/wikipedia/commons/1/11/33._Tagung_1983_Chemiker_Herbert_C._Brown_-_W134Nr.120809d_-_Willy_Pragher_%28cropped%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled"
     },
     {
       "id": "famous-faces-sergei-prokudin-gorskii-1",
@@ -4139,7 +4145,8 @@
       "fact": "Luis Fernando Muriel Fruto (born 16 April 1991) is a Colombian professional footballer who plays as a forward or attacking midfielder for Categoría Primera A club Junior. Having started his professional career with Colombian side Deportivo Cali, Muriel joined Udinese.",
       "factSource": "https://en.wikipedia.org/wiki/Luis_Muriel",
       "remoteKey": "packs/famous-faces/famous-faces-luis-muriel-1.jpg",
-      "originalURL": "https://thumb.wikimedia.org/wikipedia/commons/thumb/2/23/FWC_2018_-_Round_of_16_-_COL_v_ENG_-_Luis_Muriel.jpg/1280px-FWC_2018_-_Round_of_16_-_COL_v_ENG_-_Luis_Muriel.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+      "originalURL": "https://thumb.wikimedia.org/wikipedia/commons/thumb/2/23/FWC_2018_-_Round_of_16_-_COL_v_ENG_-_Luis_Muriel.jpg/1280px-FWC_2018_-_Round_of_16_-_COL_v_ENG_-_Luis_Muriel.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "group": "a Colombian professional footballer"
     },
     {
       "id": "famous-faces-árpád-göncz-1",
@@ -4190,7 +4197,8 @@
       "fact": "Janica Kostelić (pronounced [janitsa kostelitɕ]; born 5 January 1982) is a Croatian former alpine ski racer. She is a four-time Olympic gold medalist.",
       "factSource": "https://en.wikipedia.org/wiki/Janica_Kosteli%C4%87",
       "remoteKey": "packs/famous-faces/famous-faces-janica-kostelić-1.jpg",
-      "originalURL": "https://thumb.wikimedia.org/wikipedia/commons/thumb/7/78/Janica_Kosteli%C4%87.jpg/1280px-Janica_Kosteli%C4%87.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+      "originalURL": "https://thumb.wikimedia.org/wikipedia/commons/thumb/7/78/Janica_Kosteli%C4%87.jpg/1280px-Janica_Kosteli%C4%87.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "group": "a Croatian former alpine ski racer"
     },
     {
       "id": "famous-faces-tyson-fury-1",
@@ -4215,7 +4223,8 @@
       "fact": "Tyson Luke Fury (born 12 August 1988) is a British professional boxer. He held multiple world heavyweight championships, including unified titles from 2015 to 2016, the Ring magazine title twice between 2015 and 2022, and the World Boxing Council (WBC) title from 2020 to 2024.",
       "factSource": "https://en.wikipedia.org/wiki/Tyson_Fury",
       "remoteKey": "packs/famous-faces/famous-faces-tyson-fury-1.jpg",
-      "originalURL": "https://upload.wikimedia.org/wikipedia/commons/8/8d/Tyson_Fury_at_Place_Bell%2C_Laval_Quebec%2C_Canada_-_Dec_16_2017_%28cropped%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled"
+      "originalURL": "https://upload.wikimedia.org/wikipedia/commons/8/8d/Tyson_Fury_at_Place_Bell%2C_Laval_Quebec%2C_Canada_-_Dec_16_2017_%28cropped%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled",
+      "group": "a British professional boxer"
     },
     {
       "id": "famous-faces-arne-slot-1",
@@ -4265,7 +4274,8 @@
       "fact": "Norman Quentin Cook (born Quentin Leo Cook, 31 July 1963), known professionally as Fatboy Slim, is an English musician and DJ who helped popularise the big beat genre in the 1990s. His music makes extensive use of samples from eclectic genres, combined with pop structures, processed rhythms and \"sloganistic\" vocals.",
       "factSource": "https://en.wikipedia.org/wiki/Fatboy_Slim",
       "remoteKey": "packs/famous-faces/famous-faces-fatboy-slim-1.jpg",
-      "originalURL": "https://upload.wikimedia.org/wikipedia/commons/b/bc/Fatboy_Slim_%282006%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled"
+      "originalURL": "https://upload.wikimedia.org/wikipedia/commons/b/bc/Fatboy_Slim_%282006%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled",
+      "group": "an English musician and DJ"
     },
     {
       "id": "famous-faces-iñigo-martínez-1",
@@ -4290,7 +4300,8 @@
       "fact": "Iñigo Martínez Berridi (Basque: [iɲiɣo maɾtines̻ beriði]; Spanish: [ˈiɲiɣo maɾˈtineθ βeˈriði]; born 17 May 1991) is a Spanish professional footballer who plays as a centre-back for Saudi Pro League club Al-Nassr.",
       "factSource": "https://en.wikipedia.org/wiki/I%C3%B1igo_Mart%C3%ADnez",
       "remoteKey": "packs/famous-faces/famous-faces-iñigo-martínez-1.jpg",
-      "originalURL": "https://upload.wikimedia.org/wikipedia/commons/2/23/UEFA_EURO_qualifiers_Sweden_vs_Spain_20191015_Inigo_Martinez_%28cropped%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled"
+      "originalURL": "https://upload.wikimedia.org/wikipedia/commons/2/23/UEFA_EURO_qualifiers_Sweden_vs_Spain_20191015_Inigo_Martinez_%28cropped%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled",
+      "group": "a Spanish professional footballer"
     },
     {
       "id": "famous-faces-christian-fürchtegott-gellert-1",
@@ -4341,7 +4352,8 @@
       "fact": "Laura Robson (born 21 January 1994) is a British former professional tennis player. She debuted on the ITF Junior Circuit in 2007, and a year later won the Junior Wimbledon championships at the age of 14.",
       "factSource": "https://en.wikipedia.org/wiki/Laura_Robson",
       "remoteKey": "packs/famous-faces/famous-faces-laura-robson-1.jpg",
-      "originalURL": "https://upload.wikimedia.org/wikipedia/commons/7/71/Robson_WM17_%285%29_%2835793473560%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled"
+      "originalURL": "https://upload.wikimedia.org/wikipedia/commons/7/71/Robson_WM17_%285%29_%2835793473560%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled",
+      "group": "a British former professional tennis player"
     },
     {
       "id": "famous-faces-naoko-yamazaki-1",
@@ -4367,7 +4379,7 @@
       "factSource": "https://en.wikipedia.org/wiki/Naoko_Yamazaki",
       "remoteKey": "packs/famous-faces/famous-faces-naoko-yamazaki-1.jpg",
       "originalURL": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/41/Naoko_yamazaki.jpg/1280px-Naoko_yamazaki.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
-      "group": "a second Japanese woman"
+      "group": "a Japanese engineer and former astronaut"
     },
     {
       "id": "famous-faces-baji-rao-i-1",

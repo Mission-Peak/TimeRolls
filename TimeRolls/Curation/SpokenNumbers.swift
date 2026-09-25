@@ -34,7 +34,7 @@ nonisolated enum SpokenNumbers {
     static func asksForTheNextRound(_ text: String) -> Bool {
         let said = text.lowercased()
         let asks = ["next", "move on", "go on", "carry on", "keep going", "another one",
-                    "next one", "next photo", "next photos", "continue"]
+                    "next one", "next photo", "next photos", "next roll", "continue"]
         return asks.contains { said.contains($0) }
     }
 
