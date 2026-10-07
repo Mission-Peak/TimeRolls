@@ -16,7 +16,7 @@ at a time, reaches the kingdom in about a dozen rounds — plain lookups that do
   python3 Tools/PackBuilder/split_species.py
 """
 
-import json, os, time, urllib.parse, urllib.request
+import re, json, os, time, urllib.parse, urllib.request
 
 ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 AGENT = ("TimeRolls-PackBuilder/1.1 (photo game for older adults; hanna@mission-peak.com) "
@@ -27,9 +27,24 @@ ANIMALS, PLANTS, FUNGI = "Q729", "Q756", "Q764"
 # a hard question cold and a fair one as "it's a mammal".
 GROUPS = {
     "Q5113": "a bird", "Q152": "a fish", "Q1390": "an insect", "Q1358": "a spider",
-    "Q10811": "a reptile", "Q10908": "a frog or toad", "Q7377": "a mammal",
+    "Q10811": "a reptile", "Q10908": "an amphibian", "Q7377": "a mammal",
     "Q25326": "a shellfish", "Q2725857": "a starfish or urchin",
 }
+# Each entry above names a whole class, so its word has to fit everything in it. "A frog or
+# toad" was the word for every amphibian, and the axolotl and three newts were asked about
+# as frogs; "a spider" took in a tick; "a shellfish" took in garden snails and slugs.
+# Amphibians are now amphibians. The two below are settled per creature by `regroup`.
+
+
+def regroup(group, fact):
+    """The class word, narrowed where the class word would be wrong for this creature."""
+    text = (fact or "").lower()
+    if group == "a spider" and "spider" not in text:
+        return None                     # a tick or a mite: an arachnid, and left unasked
+    if group == "a shellfish" and not re.search(
+            r"\b(oyster|cockle|clam|mussel|whelk|scallop|bivalve)\b", text):
+        return "a snail or slug"
+    return group
 # Stop at the first recognisable animal group rather than climbing all the way to the
 # kingdom. A lion's chain runs Panthera leo -> Panthera -> Felinae -> Felidae -> ... and
 # then through a long run of unranked clades; forty rungs did not reach Animalia and the
@@ -148,7 +163,7 @@ def main():
         elif kingdom in PLANT_GROUPS:
             kingdom = PLANTS
         if kingdom == ANIMALS:
-            if group := group_of.get(entry["id"]):
+            if group := regroup(group_of.get(entry["id"]), entry.get("fact")):
                 entry["group"] = group
             out["animals"].append(entry)
         elif kingdom == PLANTS:
