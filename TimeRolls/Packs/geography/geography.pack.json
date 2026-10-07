@@ -206,7 +206,7 @@
           "NATO"
         ]
       },
-      "fact": "The United States of America (USA), also known as the United States (U.S.) or America, is a country primarily located in North America. It is a federal republic consisting of 50 states and a federal capital district, Washington, D.C.",
+      "fact": "The United States of America (USA), also known as the United States (U.S.) or America, is a country primarily located in North America.",
       "factSource": "https://en.wikipedia.org/wiki/United_States"
     },
     {
@@ -7031,7 +7031,7 @@
           "West Virginia"
         ]
       },
-      "fact": "Maryland is a state in the Mid-Atlantic and Southeastern regions of the United States. It borders Virginia to its south, West Virginia to its west, Pennsylvania to its north, and Delaware to its east, as well as with the Atlantic Ocean to its east, and the national capital and federal district of Washington, D.C.",
+      "fact": "Maryland is a state in the Mid-Atlantic and Southeastern regions of the United States. It borders Virginia to its south, West Virginia to its west, Pennsylvania to its north, and Delaware to its east, as well as with the Atlantic Ocean to its east, and the national capital and federal district of Washington, D.C. to the southwest.",
       "factSource": "https://en.wikipedia.org/wiki/Maryland"
     },
     {
@@ -7140,7 +7140,7 @@
           "Wisconsin"
         ]
       },
-      "fact": "Minnesota is a state in the Upper Midwestern region of the United States. It is bordered by the Canadian provinces of Manitoba and Ontario to the north and east and by the U.S.",
+      "fact": "Minnesota is a state in the Upper Midwestern region of the United States. It is bordered by the Canadian provinces of Manitoba and Ontario to the north and east and by the U.S. states of Wisconsin to the east, Iowa to the south, and North Dakota and South Dakota to the west.",
       "factSource": "https://en.wikipedia.org/wiki/Minnesota"
     },
     {
@@ -8051,7 +8051,7 @@
           "Oregon"
         ]
       },
-      "fact": "Washington is a state in the Pacific Northwest region of the United States. It is often referred to as Washington state to distinguish it from the national capital; both are named after George Washington, a U.S.",
+      "fact": "Washington is a state in the Pacific Northwest region of the United States. It is often referred to as Washington state to distinguish it from the national capital; both are named after George Washington, a U.S. Founding Father and the first U.S. president.",
       "factSource": "https://en.wikipedia.org/wiki/Washington_%28state%29"
     },
     {

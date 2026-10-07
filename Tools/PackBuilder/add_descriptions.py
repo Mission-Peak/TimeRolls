@@ -87,6 +87,48 @@ def tidy_pronunciation(text):
     return re.sub(r"\s{2,}", " ", text).strip()
 
 
+# Full stops that do not end a sentence. Splitting on every ". " cut St Paul's Church off
+# at "…replaced by St." and 120-odd other facts at an abbreviation or the initial of a
+# species name — "the American alligator (A." — mid-thought, on a card read aloud.
+ABBREVIATIONS = {
+    "st", "mt", "mts", "ft", "pt", "dr", "mr", "mrs", "ms", "jr", "sr", "gen", "col", "lt",
+    "sgt", "capt", "rev", "prof", "no", "nos", "co", "inc", "ltd", "corp", "vs", "ste",
+    "hon", "gov", "sen", "rep", "pres", "bros", "approx", "ca", "c", "fl", "b", "d", "est",
+    "ave", "blvd", "rd", "dept", "univ", "vol", "op", "syn", "var", "subsp", "sp", "spp",
+    "cf", "al", "etc", "jan", "feb", "mar", "apr", "jun", "jul", "aug", "sep", "sept",
+    "oct", "nov", "dec",
+}
+
+
+def ends_sentence(before, after):
+    """Whether the full stop between `before` and `after` ends a sentence."""
+    word = re.search(r"([A-Za-z.]+)$", before)
+    word = word.group(1) if word else ""
+    bare = word.rstrip(".").lower()
+    if bare in ABBREVIATIONS:
+        return False
+    # A lone initial — "B. taurus", "J. R. R. Tolkien", "U.S. Army" — or "e.g", "i.e".
+    if re.fullmatch(r"[A-Za-z]", word) or "." in word:
+        return False
+    # The next thing has to look like a sentence starting.
+    return bool(re.match(r"[A-Z0-9\"'“(]", after))
+
+
+def split_sentences(text):
+    out, start = [], 0
+    for match in re.finditer(r"[.!?](?=\s+)", text):
+        end = match.end()
+        rest = text[end:].lstrip()
+        if match.group() == "." and not ends_sentence(text[start:match.start()], rest):
+            continue
+        out.append(text[start:end].strip())
+        start = end
+    tail = text[start:].strip()
+    if tail:
+        out.append(tail)
+    return out
+
+
 def shorten(text, sentences=2, limit=340):
     """The first sentence or two, which is where an encyclopedia puts the answer."""
     text = " ".join((text or "").split())
@@ -101,12 +143,12 @@ def shorten(text, sentences=2, limit=340):
     # "The painting's novel…", which is worse than saying less: a card that stops mid-
     # thought reads as broken, and this one is meant to be read aloud.
     out = []
-    for part in text.replace("! ", ". ").replace("? ", ". ").split(". "):
-        candidate = ". ".join(out + [part]).strip()
+    for part in split_sentences(text):
+        candidate = " ".join(out + [part]).strip()
         if out and (len(candidate) > limit or len(out) >= sentences):
             break
         out.append(part)
-    joined = ". ".join(out).strip()
+    joined = " ".join(out).strip()
     if not joined:
         return None
     if not joined.endswith("."):
