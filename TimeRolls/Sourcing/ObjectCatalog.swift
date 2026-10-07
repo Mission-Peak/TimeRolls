@@ -224,17 +224,17 @@ nonisolated enum ObjectCatalog {
         // they are declared by hand on the Animals pack, where the answer is a fact about
         // the creature rather than a guess about the picture.
         ObjectCategory(id: "class-mammal", displayName: "mammal", article: "a", family: .animal,
-                       identifiers: [], confidence: 1, questionOverride: "Which one is a mammal?"),
+                       identifiers: [], confidence: 1, questionOverride: "Which animal is a mammal?"),
         ObjectCategory(id: "class-bird", displayName: "bird", article: "a", family: .animal,
-                       identifiers: [], confidence: 1, questionOverride: "Which one is a bird?"),
+                       identifiers: [], confidence: 1, questionOverride: "Which animal is a bird?"),
         ObjectCategory(id: "class-reptile", displayName: "reptile", article: "a", family: .animal,
-                       identifiers: [], confidence: 1, questionOverride: "Which one is a reptile?"),
+                       identifiers: [], confidence: 1, questionOverride: "Which animal is a reptile?"),
         ObjectCategory(id: "class-amphibian", displayName: "amphibian", article: "an", family: .animal,
-                       identifiers: [], confidence: 1, questionOverride: "Which one is an amphibian?"),
+                       identifiers: [], confidence: 1, questionOverride: "Which animal is an amphibian?"),
         ObjectCategory(id: "class-fish", displayName: "fish", article: "a", family: .animal,
-                       identifiers: [], confidence: 1, questionOverride: "Which one is a fish?"),
+                       identifiers: [], confidence: 1, questionOverride: "Which animal is a fish?"),
         ObjectCategory(id: "class-insect", displayName: "insect", article: "an", family: .animal,
-                       identifiers: [], confidence: 1, questionOverride: "Which one is an insect?"),
+                       identifiers: [], confidence: 1, questionOverride: "Which animal is an insect?"),
 
         // --- Everyday things and the world around them.
         //

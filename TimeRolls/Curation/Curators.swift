@@ -444,9 +444,9 @@ enum ChronologyCurator {
             "Who was born first?": ["Who was born first?",
                                     "Which of these people was born first?",
                                     "Who was born earliest?"],
-            "Which one was painted first?": ["Which one was painted first?",
-                                             "Which of these was the earliest painting?",
-                                             "Which painting is the oldest?"],
+            "Which one was painted first?": ["Which painting came first?",
+                                             "Which painting is the oldest?",
+                                             "What painting was painted first?"],
         ]
     }
 
@@ -768,11 +768,13 @@ enum PlacesCurator {
     /// always said.
     enum Wordings {
         static let place = ["Which photo is from {x}?",
-                            "Which one was taken in {x}?",
+                            "Which photo was taken in {x}?",
                             "Which of these is in {x}?"]
-        static let landmark = ["Which photo is from {x}?",
-                               "Which one shows {x}?",
-                               "Which of these is {x}?"]
+        /// A landmark is a thing in the picture, not a place it was taken: "Which photo
+        /// is from German Church?" read as though German Church were a town.
+        static let landmark = ["Which photo shows {x}?",
+                               "Which of these is {x}?",
+                               "Can you find {x}?"]
     }
 
     /// Two ways of asking about places — by where a photograph was taken, and by which
@@ -1309,25 +1311,30 @@ enum ObjectsCurator {
     /// always said. `{x}` is the thing asked about.
     enum Wordings {
         /// A proper name: a person, a painting.
-        static let namedProper = ["Which one shows {x}?",
+        static let namedProper = ["Which photo shows {x}?",
                                   "Which of these is {x}?",
                                   "Can you find {x}?"]
+        /// A named round from one pack says what the four are: "Which painting is the
+        /// Mona Lisa?", "Which animal is a lion?". `{n}` is the pack's noun.
+        static let namedOfAKind = ["Which {n} is {x}?",
+                                   "What {n} is {x}?",
+                                   "Can you find {x}?"]
         /// A common noun, with its article: "a lion", "a horse chestnut".
         static let namedCommon = ["Which photo has {x} in it?",
-                                  "Which one shows {x}?",
+                                  "Which photo shows {x}?",
                                   "Which of these is {x}?"]
-        static let artist = ["Which one was painted by {x}?",
-                             "Which of these is by {x}?",
-                             "Which painting is by {x}?"]
+        static let artist = ["Which painting is by {x}?",
+                             "What painting is by {x}?",
+                             "Which painting was painted by {x}?"]
         static let album = ["Which photo is from your album?"]
         static let category = ["Which photo has {x} in it?",
-                               "Which one shows {x}?",
+                               "Which photo shows {x}?",
                                "Which of these has {x} in it?"]
         /// Questions about what kind of thing something is — "which one is a mammal?".
         /// They carry no hint: the only hint there is to give is the answer's kind, and
         /// the question has just said it.
-        static let kind = ["Which one is {x}?",
-                           "Which of these is {x}?",
+        static let kind = ["Which animal is {x}?",
+                           "What animal is {x}?",
                            "Can you spot {x}?"]
     }
 
@@ -1354,9 +1361,15 @@ enum ObjectsCurator {
             }
             // A pack that asks "which photo has {name} in it?" names common nouns, which
             // want their article — it was asking "which photo has lion in it?".
-            if answer.namedSubjectPrompt?.contains("in it") == true {
-                chosen = Recency.choose(Wordings.namedCommon, kind: "named",
-                                        x: "\(article(for: name)) \(name)", recent: recent)
+            let common = answer.namedSubjectPrompt?.contains("in it") == true
+            let x = common ? "\(article(for: name)) \(name)" : name
+            if let noun = packNoun(of: level.photos) {
+                // Said what they are only when all four are the same kind of thing.
+                var templates = Wordings.namedOfAKind.map { $0.replacingOccurrences(of: "{n}", with: noun) }
+                if common { templates.insert("Which photo has {x} in it?", at: 0) }
+                chosen = Recency.choose(templates, kind: "named-\(noun)", x: x, recent: recent)
+            } else if common {
+                chosen = Recency.choose(Wordings.namedCommon, kind: "named", x: x, recent: recent)
             } else {
                 chosen = Recency.choose(Wordings.namedProper, kind: "named", x: name, recent: recent)
             }
@@ -1374,7 +1387,7 @@ enum ObjectsCurator {
                                          .dropLast(" in it?".count))
                 chosen = Recency.choose(Wordings.category, kind: "category", x: subject, recent: recent)
             } else {
-                let other = base.replacingOccurrences(of: "Which one is", with: "Which of these is")
+                let other = base.replacingOccurrences(of: "Which animal is", with: "What animal is")
                 chosen = Recency.choose(other == base ? [base] : [base, other], kind: "category",
                                         recent: recent)
             }
@@ -1415,7 +1428,7 @@ enum ObjectsCurator {
             guard others.count >= wanted - 1 else { continue }
             let photos = ([target] + others.prefix(wanted - 1)).shuffled()
             return Level(theme: .objects,
-                         prompt: "Which one is \(kind)?",
+                         prompt: "Which animal is \(kind)?",
                          photos: photos,
                          correctPhotoID: target.id,
                          curationNote: "kind · \(kind) · \(byKind.count) kinds in play",
@@ -1743,7 +1756,7 @@ enum ObjectsCurator {
 
             let photos = ([target] + distractors).shuffled()
             return Level(theme: .objects,
-                         prompt: "Which one was painted by \(artist)?",
+                         prompt: "Which painting is by \(artist)?",
                          photos: photos,
                          correctPhotoID: target.id,
                          curationNote: "by artist · \(artist) · "
@@ -1789,6 +1802,14 @@ enum ObjectsCurator {
                      curationNote: "your own · 1 personal + \(distractors.count) pack",
                      focusTag: Ask.mine.rawValue,
                      hint: nil)
+    }
+
+    /// What all four photographs are, when they come from one pack that says: "painting",
+    /// "animal", "plant". Nil for a mixed round, which is asked about as photos.
+    private nonisolated static func packNoun(of photos: [GamePhoto]) -> String? {
+        let packs = Set(photos.map { $0.packID ?? "" })
+        guard packs.count == 1, let pack = packs.first else { return nil }
+        return ["famous-artworks": "painting", "animals": "animal", "plants": "plant"][pack]
     }
 
     /// "A lion" → "lion". The packs write titles as a phrase; the question needs the noun.

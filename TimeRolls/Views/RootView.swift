@@ -214,7 +214,7 @@ struct FirstRunView: View {
     }
 
     private var intro: some View {
-        ScrollView {
+        OnboardingScroll {
             VStack(alignment: .leading, spacing: 22) {
                 VStack(alignment: .leading, spacing: 8) {
                     Wordmark()
@@ -415,7 +415,7 @@ struct VoiceSetupView: View {
     }
 
     var body: some View {
-        ScrollView {
+        OnboardingScroll {
             VStack(alignment: .leading, spacing: 20) {
                 VStack(alignment: .leading, spacing: 8) {
                     Text("One last thing")
@@ -553,7 +553,7 @@ struct DailyChallengeSetupView: View {
     private static let most = 20
 
     var body: some View {
-        ScrollView {
+        OnboardingScroll {
             VStack(alignment: .leading, spacing: 20) {
                 VStack(alignment: .leading, spacing: 8) {
                     Text("Today's challenge")

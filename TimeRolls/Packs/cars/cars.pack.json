@@ -6,13 +6,13 @@
   "themes": [
     "cars"
   ],
-  "namedSubjectPrompt": "Which car is a {name}?",
+  "namedSubjectPrompt": "Which {noun} is a {name}?",
   "questions": [
     {
       "id": "maker",
       "ask": "maker",
       "exclude": "maker",
-      "prompt": "Which car was made by {value}?"
+      "prompt": "Which {noun} was made by {value}?|What {noun} was made by {value}?"
     }
   ],
   "license": "Public domain, CC0, CC BY, CC BY-SA",
@@ -1703,7 +1703,7 @@
       "group": "a German sports car",
       "latitude": null,
       "longitude": null,
-      "fact": "The original Porsche 911 (pronounced nine eleven, German: Neunelfer) is a sports car made by Porsche AG of Stuttgart, Germany. A prototype of the design was shown to the public in autumn 1963.",
+      "fact": "The original Porsche 911 is a sports car made by Porsche AG of Stuttgart, Germany. A prototype of the design was shown to the public in autumn 1963.",
       "factSource": "https://en.wikipedia.org/wiki/Porsche_911_%28classic%29",
       "facts": {
         "maker": [
@@ -1740,7 +1740,7 @@
       "group": "a German sports car",
       "latitude": null,
       "longitude": null,
-      "fact": "The original Porsche 911 (pronounced nine eleven, German: Neunelfer) is a sports car made by Porsche AG of Stuttgart, Germany. A prototype of the design was shown to the public in autumn 1963.",
+      "fact": "The original Porsche 911 is a sports car made by Porsche AG of Stuttgart, Germany. A prototype of the design was shown to the public in autumn 1963.",
       "factSource": "https://en.wikipedia.org/wiki/Porsche_911_%28classic%29",
       "facts": {
         "maker": [
@@ -2223,7 +2223,7 @@
       "group": "a Japanese sports car",
       "latitude": null,
       "longitude": null,
-      "fact": "The Nissan Z, known in Japan and Indonesia as the Nissan Fairlady Z (Japanese: 日産・フェアレディZ, Hepburn: Nissan Fearedi Zetto), is the seventh generation of the Z-car line of sports cars manufactured by Nissan. The model succeeded the 370Z, using a modified and revised version of the previous generation's platform.",
+      "fact": "The Nissan Z, known in Japan and Indonesia as the Nissan Fairlady Z, is the seventh generation of the Z-car line of sports cars manufactured by Nissan. The model succeeded the 370Z, using a modified and revised version of the previous generation's platform.",
       "factSource": "https://en.wikipedia.org/wiki/Nissan_Z_%28RZ34%29",
       "facts": {
         "maker": [
@@ -2260,7 +2260,7 @@
       "group": "a Japanese sports car",
       "latitude": null,
       "longitude": null,
-      "fact": "The Toyota Supra (Japanese: トヨタ・スープラ, Hepburn: Toyota Sūpura) is a sports car and grand tourer manufactured and developed by the Toyota Motor Corporation beginning in 1978. The name \"supra\" is taken from the Latin prefix meaning \"above\", \"to surpass\" or \"go beyond\".",
+      "fact": "The Toyota Supra is a sports car and grand tourer manufactured and developed by the Toyota Motor Corporation beginning in 1978. The name \"supra\" is taken from the Latin prefix meaning \"above\", \"to surpass\" or \"go beyond\".",
       "factSource": "https://en.wikipedia.org/wiki/Toyota_Supra",
       "facts": {
         "maker": [
@@ -2297,7 +2297,7 @@
       "group": "a Japanese sports car",
       "latitude": null,
       "longitude": null,
-      "fact": "The Toyota Supra (Japanese: トヨタ・スープラ, Hepburn: Toyota Sūpura) is a sports car and grand tourer manufactured and developed by the Toyota Motor Corporation beginning in 1978. The name \"supra\" is taken from the Latin prefix meaning \"above\", \"to surpass\" or \"go beyond\".",
+      "fact": "The Toyota Supra is a sports car and grand tourer manufactured and developed by the Toyota Motor Corporation beginning in 1978. The name \"supra\" is taken from the Latin prefix meaning \"above\", \"to surpass\" or \"go beyond\".",
       "factSource": "https://en.wikipedia.org/wiki/Toyota_Supra",
       "facts": {
         "maker": [
@@ -2334,7 +2334,7 @@
       "group": "a Japanese sports car",
       "latitude": null,
       "longitude": null,
-      "fact": "The Toyota Supra (Japanese: トヨタ・スープラ, Hepburn: Toyota Sūpura) is a sports car and grand tourer manufactured and developed by the Toyota Motor Corporation beginning in 1978. The name \"supra\" is taken from the Latin prefix meaning \"above\", \"to surpass\" or \"go beyond\".",
+      "fact": "The Toyota Supra is a sports car and grand tourer manufactured and developed by the Toyota Motor Corporation beginning in 1978. The name \"supra\" is taken from the Latin prefix meaning \"above\", \"to surpass\" or \"go beyond\".",
       "factSource": "https://en.wikipedia.org/wiki/Toyota_Supra",
       "facts": {
         "maker": [
@@ -2371,7 +2371,7 @@
       "group": "a Japanese sports car",
       "latitude": null,
       "longitude": null,
-      "fact": "The Toyota Supra (Japanese: トヨタ・スープラ, Hepburn: Toyota Sūpura) is a sports car and grand tourer manufactured and developed by the Toyota Motor Corporation beginning in 1978. The name \"supra\" is taken from the Latin prefix meaning \"above\", \"to surpass\" or \"go beyond\".",
+      "fact": "The Toyota Supra is a sports car and grand tourer manufactured and developed by the Toyota Motor Corporation beginning in 1978. The name \"supra\" is taken from the Latin prefix meaning \"above\", \"to surpass\" or \"go beyond\".",
       "factSource": "https://en.wikipedia.org/wiki/Toyota_Supra",
       "facts": {
         "maker": [
@@ -2408,7 +2408,7 @@
       "group": "a Japanese sports car",
       "latitude": null,
       "longitude": null,
-      "fact": "The Toyota GR Supra (model code J29/DB or A90/A91 for marketing purposes) is a sports car manufactured by Magna Steyr for Toyota from 2019 to 2026. The fifth-generation Supra, the GR Supra was sold under and developed by Toyota Gazoo Racing (TGR) brand in collaboration with BMW.",
+      "fact": "The Toyota GR Supra is a sports car manufactured by Magna Steyr for Toyota from 2019 to 2026. The fifth-generation Supra, the GR Supra was sold under and developed by Toyota Gazoo Racing (TGR) brand in collaboration with BMW.",
       "factSource": "https://en.wikipedia.org/wiki/Toyota_GR_Supra",
       "facts": {
         "maker": [
@@ -4517,7 +4517,7 @@
       "group": "a German luxury car",
       "latitude": null,
       "longitude": null,
-      "fact": "The Mercedes-Benz W 116 is a series of flagship luxury sedans produced from September 1972 until 1980. The W 116 automobiles were the first Mercedes-Benz models to be officially called S-Class, although some earlier sedan models had already been designated unofficially with the letter S for \"special class\" (German: \"Sonderklasse\").",
+      "fact": "The Mercedes-Benz W 116 is a series of flagship luxury sedans produced from September 1972 until 1980. The W 116 automobiles were the first Mercedes-Benz models to be officially called S-Class, although some earlier sedan models had already been designated unofficially with the letter S for \"special class\".",
       "factSource": "https://en.wikipedia.org/wiki/Mercedes-Benz_W116",
       "facts": {
         "maker": [
@@ -5553,7 +5553,7 @@
       "group": "a Japanese luxury car",
       "latitude": null,
       "longitude": null,
-      "fact": "The Lexus LS (Japanese: レクサス・LS, Hepburn: Rekusasu LS) is a series of full-size luxury sedans that have served as the flagship model of Lexus, the luxury division of Toyota, since 1989. For the first four generations, all LS models featured V8 engines and were predominantly rear-wheel-drive.",
+      "fact": "The Lexus LS is a series of full-size luxury sedans that have served as the flagship model of Lexus, the luxury division of Toyota, since 1989. For the first four generations, all LS models featured V8 engines and were predominantly rear-wheel-drive.",
       "factSource": "https://en.wikipedia.org/wiki/Lexus_LS",
       "facts": {
         "maker": [
@@ -5627,7 +5627,7 @@
       "group": "a Japanese luxury car",
       "latitude": null,
       "longitude": null,
-      "fact": "The Lexus LS (Japanese: レクサス・LS, Hepburn: Rekusasu LS) is a series of full-size luxury sedans that have served as the flagship model of Lexus, the luxury division of Toyota, since 1989. For the first four generations, all LS models featured V8 engines and were predominantly rear-wheel-drive.",
+      "fact": "The Lexus LS is a series of full-size luxury sedans that have served as the flagship model of Lexus, the luxury division of Toyota, since 1989. For the first four generations, all LS models featured V8 engines and were predominantly rear-wheel-drive.",
       "factSource": "https://en.wikipedia.org/wiki/Lexus_LS",
       "facts": {
         "maker": [
@@ -5997,7 +5997,7 @@
       "group": "an American full-size car",
       "latitude": null,
       "longitude": null,
-      "fact": "The Chevrolet Impala () is a full-size car that was built by Chevrolet for model years 1958 to 1985, 1994 to 1996, and 2000 to 2020. The Impala was Chevrolet's popular flagship passenger car and was among the better-selling American-made automobiles in the United States.",
+      "fact": "The Chevrolet Impala is a full-size car that was built by Chevrolet for model years 1958 to 1985, 1994 to 1996, and 2000 to 2020. The Impala was Chevrolet's popular flagship passenger car and was among the better-selling American-made automobiles in the United States.",
       "factSource": "https://en.wikipedia.org/wiki/Chevrolet_Impala",
       "facts": {
         "maker": [
@@ -6034,7 +6034,7 @@
       "group": "an American full-size car",
       "latitude": null,
       "longitude": null,
-      "fact": "The Chevrolet Impala () is a full-size car that was built by Chevrolet for model years 1958 to 1985, 1994 to 1996, and 2000 to 2020. The Impala was Chevrolet's popular flagship passenger car and was among the better-selling American-made automobiles in the United States.",
+      "fact": "The Chevrolet Impala is a full-size car that was built by Chevrolet for model years 1958 to 1985, 1994 to 1996, and 2000 to 2020. The Impala was Chevrolet's popular flagship passenger car and was among the better-selling American-made automobiles in the United States.",
       "factSource": "https://en.wikipedia.org/wiki/Chevrolet_Impala",
       "facts": {
         "maker": [
@@ -6071,7 +6071,7 @@
       "group": "an American full-size car",
       "latitude": null,
       "longitude": null,
-      "fact": "The Chevrolet Impala () is a full-size car that was built by Chevrolet for model years 1958 to 1985, 1994 to 1996, and 2000 to 2020. The Impala was Chevrolet's popular flagship passenger car and was among the better-selling American-made automobiles in the United States.",
+      "fact": "The Chevrolet Impala is a full-size car that was built by Chevrolet for model years 1958 to 1985, 1994 to 1996, and 2000 to 2020. The Impala was Chevrolet's popular flagship passenger car and was among the better-selling American-made automobiles in the United States.",
       "factSource": "https://en.wikipedia.org/wiki/Chevrolet_Impala",
       "facts": {
         "maker": [
@@ -6182,7 +6182,7 @@
       "group": "an American full-size car",
       "latitude": null,
       "longitude": null,
-      "fact": "The Chevrolet Impala () is a full-size car that was built by Chevrolet for model years 1958 to 1985, 1994 to 1996, and 2000 to 2020. The Impala was Chevrolet's popular flagship passenger car and was among the better-selling American-made automobiles in the United States.",
+      "fact": "The Chevrolet Impala is a full-size car that was built by Chevrolet for model years 1958 to 1985, 1994 to 1996, and 2000 to 2020. The Impala was Chevrolet's popular flagship passenger car and was among the better-selling American-made automobiles in the United States.",
       "factSource": "https://en.wikipedia.org/wiki/Chevrolet_Impala",
       "facts": {
         "maker": [
@@ -6219,7 +6219,7 @@
       "group": "an American full-size car",
       "latitude": null,
       "longitude": null,
-      "fact": "The Chevrolet Impala () is a full-size car that was built by Chevrolet for model years 1958 to 1985, 1994 to 1996, and 2000 to 2020. The Impala was Chevrolet's popular flagship passenger car and was among the better-selling American-made automobiles in the United States.",
+      "fact": "The Chevrolet Impala is a full-size car that was built by Chevrolet for model years 1958 to 1985, 1994 to 1996, and 2000 to 2020. The Impala was Chevrolet's popular flagship passenger car and was among the better-selling American-made automobiles in the United States.",
       "factSource": "https://en.wikipedia.org/wiki/Chevrolet_Impala",
       "facts": {
         "maker": [
@@ -6256,7 +6256,7 @@
       "group": "an American full-size car",
       "latitude": null,
       "longitude": null,
-      "fact": "The Chevrolet Impala () is a full-size car that was built by Chevrolet for model years 1958 to 1985, 1994 to 1996, and 2000 to 2020. The Impala was Chevrolet's popular flagship passenger car and was among the better-selling American-made automobiles in the United States.",
+      "fact": "The Chevrolet Impala is a full-size car that was built by Chevrolet for model years 1958 to 1985, 1994 to 1996, and 2000 to 2020. The Impala was Chevrolet's popular flagship passenger car and was among the better-selling American-made automobiles in the United States.",
       "factSource": "https://en.wikipedia.org/wiki/Chevrolet_Impala",
       "facts": {
         "maker": [
@@ -6293,7 +6293,7 @@
       "group": "an American full-size car",
       "latitude": null,
       "longitude": null,
-      "fact": "The Chevrolet Impala () is a full-size car that was built by Chevrolet for model years 1958 to 1985, 1994 to 1996, and 2000 to 2020. The Impala was Chevrolet's popular flagship passenger car and was among the better-selling American-made automobiles in the United States.",
+      "fact": "The Chevrolet Impala is a full-size car that was built by Chevrolet for model years 1958 to 1985, 1994 to 1996, and 2000 to 2020. The Impala was Chevrolet's popular flagship passenger car and was among the better-selling American-made automobiles in the United States.",
       "factSource": "https://en.wikipedia.org/wiki/Chevrolet_Impala",
       "facts": {
         "maker": [
@@ -6330,7 +6330,7 @@
       "group": "an American full-size car",
       "latitude": null,
       "longitude": null,
-      "fact": "The Chevrolet Impala () is a full-size car that was built by Chevrolet for model years 1958 to 1985, 1994 to 1996, and 2000 to 2020. The Impala was Chevrolet's popular flagship passenger car and was among the better-selling American-made automobiles in the United States.",
+      "fact": "The Chevrolet Impala is a full-size car that was built by Chevrolet for model years 1958 to 1985, 1994 to 1996, and 2000 to 2020. The Impala was Chevrolet's popular flagship passenger car and was among the better-selling American-made automobiles in the United States.",
       "factSource": "https://en.wikipedia.org/wiki/Chevrolet_Impala",
       "facts": {
         "maker": [
@@ -7996,7 +7996,7 @@
       "group": "a Japanese pickup truck",
       "latitude": null,
       "longitude": null,
-      "fact": "The Toyota Hilux (; Japanese: トヨタ・ハイラックス, romanized: Toyota Hairakkusu), stylised as HiLux and historically as Hi-Lux, is a series of pickup trucks produced and marketed by the Japanese automobile manufacturer Toyota.",
+      "fact": "The Toyota Hilux, stylised as HiLux and historically as Hi-Lux, is a series of pickup trucks produced and marketed by the Japanese automobile manufacturer Toyota.",
       "factSource": "https://en.wikipedia.org/wiki/Toyota_Hilux",
       "facts": {
         "maker": [
@@ -8033,7 +8033,7 @@
       "group": "a Japanese pickup truck",
       "latitude": null,
       "longitude": null,
-      "fact": "The Toyota Hilux (; Japanese: トヨタ・ハイラックス, romanized: Toyota Hairakkusu), stylised as HiLux and historically as Hi-Lux, is a series of pickup trucks produced and marketed by the Japanese automobile manufacturer Toyota.",
+      "fact": "The Toyota Hilux, stylised as HiLux and historically as Hi-Lux, is a series of pickup trucks produced and marketed by the Japanese automobile manufacturer Toyota.",
       "factSource": "https://en.wikipedia.org/wiki/Toyota_Hilux",
       "facts": {
         "maker": [
@@ -8070,7 +8070,7 @@
       "group": "a Japanese pickup truck",
       "latitude": null,
       "longitude": null,
-      "fact": "The Toyota Hilux (; Japanese: トヨタ・ハイラックス, romanized: Toyota Hairakkusu), stylised as HiLux and historically as Hi-Lux, is a series of pickup trucks produced and marketed by the Japanese automobile manufacturer Toyota.",
+      "fact": "The Toyota Hilux, stylised as HiLux and historically as Hi-Lux, is a series of pickup trucks produced and marketed by the Japanese automobile manufacturer Toyota.",
       "factSource": "https://en.wikipedia.org/wiki/Toyota_Hilux",
       "facts": {
         "maker": [
@@ -8107,7 +8107,7 @@
       "group": "a Japanese pickup truck",
       "latitude": null,
       "longitude": null,
-      "fact": "The Toyota Hilux (; Japanese: トヨタ・ハイラックス, romanized: Toyota Hairakkusu), stylised as HiLux and historically as Hi-Lux, is a series of pickup trucks produced and marketed by the Japanese automobile manufacturer Toyota.",
+      "fact": "The Toyota Hilux, stylised as HiLux and historically as Hi-Lux, is a series of pickup trucks produced and marketed by the Japanese automobile manufacturer Toyota.",
       "factSource": "https://en.wikipedia.org/wiki/Toyota_Hilux",
       "facts": {
         "maker": [
@@ -8144,7 +8144,7 @@
       "group": "a Japanese pickup truck",
       "latitude": null,
       "longitude": null,
-      "fact": "The Toyota Hilux (; Japanese: トヨタ・ハイラックス, romanized: Toyota Hairakkusu), stylised as HiLux and historically as Hi-Lux, is a series of pickup trucks produced and marketed by the Japanese automobile manufacturer Toyota.",
+      "fact": "The Toyota Hilux, stylised as HiLux and historically as Hi-Lux, is a series of pickup trucks produced and marketed by the Japanese automobile manufacturer Toyota.",
       "factSource": "https://en.wikipedia.org/wiki/Toyota_Hilux",
       "facts": {
         "maker": [
@@ -8181,7 +8181,7 @@
       "group": "a Japanese pickup truck",
       "latitude": null,
       "longitude": null,
-      "fact": "The Toyota Hilux (; Japanese: トヨタ・ハイラックス, romanized: Toyota Hairakkusu), stylised as HiLux and historically as Hi-Lux, is a series of pickup trucks produced and marketed by the Japanese automobile manufacturer Toyota.",
+      "fact": "The Toyota Hilux, stylised as HiLux and historically as Hi-Lux, is a series of pickup trucks produced and marketed by the Japanese automobile manufacturer Toyota.",
       "factSource": "https://en.wikipedia.org/wiki/Toyota_Hilux",
       "facts": {
         "maker": [
@@ -8218,7 +8218,7 @@
       "group": "a Japanese pickup truck",
       "latitude": null,
       "longitude": null,
-      "fact": "The Toyota Hilux (; Japanese: トヨタ・ハイラックス, romanized: Toyota Hairakkusu), stylised as HiLux and historically as Hi-Lux, is a series of pickup trucks produced and marketed by the Japanese automobile manufacturer Toyota.",
+      "fact": "The Toyota Hilux, stylised as HiLux and historically as Hi-Lux, is a series of pickup trucks produced and marketed by the Japanese automobile manufacturer Toyota.",
       "factSource": "https://en.wikipedia.org/wiki/Toyota_Hilux",
       "facts": {
         "maker": [
@@ -8255,7 +8255,7 @@
       "group": "a Japanese pickup truck",
       "latitude": null,
       "longitude": null,
-      "fact": "The Toyota Hilux (; Japanese: トヨタ・ハイラックス, romanized: Toyota Hairakkusu), stylised as HiLux and historically as Hi-Lux, is a series of pickup trucks produced and marketed by the Japanese automobile manufacturer Toyota.",
+      "fact": "The Toyota Hilux, stylised as HiLux and historically as Hi-Lux, is a series of pickup trucks produced and marketed by the Japanese automobile manufacturer Toyota.",
       "factSource": "https://en.wikipedia.org/wiki/Toyota_Hilux",
       "facts": {
         "maker": [
@@ -8958,7 +8958,7 @@
       "group": "a Japanese four-wheel drive",
       "latitude": null,
       "longitude": null,
-      "fact": "The Toyota Land Cruiser (Japanese: トヨタ・ランドクルーザー, Hepburn: Toyota Rando-Kurūzā), also sometimes spelt as LandCruiser, is a series of four-wheel drive vehicles produced by the Japanese automobile manufacturer Toyota. It is Toyota's longest running series of models.",
+      "fact": "The Toyota Land Cruiser, also sometimes spelt as LandCruiser, is a series of four-wheel drive vehicles produced by the Japanese automobile manufacturer Toyota. It is Toyota's longest running series of models.",
       "factSource": "https://en.wikipedia.org/wiki/Toyota_Land_Cruiser",
       "facts": {
         "maker": [
@@ -9032,7 +9032,7 @@
       "group": "a Japanese four-wheel drive",
       "latitude": null,
       "longitude": null,
-      "fact": "The Toyota Land Cruiser (Japanese: トヨタ・ランドクルーザー, Hepburn: Toyota Rando-Kurūzā), also sometimes spelt as LandCruiser, is a series of four-wheel drive vehicles produced by the Japanese automobile manufacturer Toyota. It is Toyota's longest running series of models.",
+      "fact": "The Toyota Land Cruiser, also sometimes spelt as LandCruiser, is a series of four-wheel drive vehicles produced by the Japanese automobile manufacturer Toyota. It is Toyota's longest running series of models.",
       "factSource": "https://en.wikipedia.org/wiki/Toyota_Land_Cruiser",
       "facts": {
         "maker": [
@@ -9069,7 +9069,7 @@
       "group": "a Japanese four-wheel drive",
       "latitude": null,
       "longitude": null,
-      "fact": "The Toyota Land Cruiser (Japanese: トヨタ・ランドクルーザー, Hepburn: Toyota Rando-Kurūzā), also sometimes spelt as LandCruiser, is a series of four-wheel drive vehicles produced by the Japanese automobile manufacturer Toyota. It is Toyota's longest running series of models.",
+      "fact": "The Toyota Land Cruiser, also sometimes spelt as LandCruiser, is a series of four-wheel drive vehicles produced by the Japanese automobile manufacturer Toyota. It is Toyota's longest running series of models.",
       "factSource": "https://en.wikipedia.org/wiki/Toyota_Land_Cruiser",
       "facts": {
         "maker": [
@@ -9106,7 +9106,7 @@
       "group": "a Japanese four-wheel drive",
       "latitude": null,
       "longitude": null,
-      "fact": "The Toyota Land Cruiser (Japanese: トヨタ・ランドクルーザー, Hepburn: Toyota Rando-Kurūzā), also sometimes spelt as LandCruiser, is a series of four-wheel drive vehicles produced by the Japanese automobile manufacturer Toyota. It is Toyota's longest running series of models.",
+      "fact": "The Toyota Land Cruiser, also sometimes spelt as LandCruiser, is a series of four-wheel drive vehicles produced by the Japanese automobile manufacturer Toyota. It is Toyota's longest running series of models.",
       "factSource": "https://en.wikipedia.org/wiki/Toyota_Land_Cruiser",
       "facts": {
         "maker": [
@@ -9143,7 +9143,7 @@
       "group": "a Japanese four-wheel drive",
       "latitude": null,
       "longitude": null,
-      "fact": "The Toyota Land Cruiser (Japanese: トヨタ・ランドクルーザー, Hepburn: Toyota Rando-Kurūzā), also sometimes spelt as LandCruiser, is a series of four-wheel drive vehicles produced by the Japanese automobile manufacturer Toyota. It is Toyota's longest running series of models.",
+      "fact": "The Toyota Land Cruiser, also sometimes spelt as LandCruiser, is a series of four-wheel drive vehicles produced by the Japanese automobile manufacturer Toyota. It is Toyota's longest running series of models.",
       "factSource": "https://en.wikipedia.org/wiki/Toyota_Land_Cruiser",
       "facts": {
         "maker": [
@@ -9180,7 +9180,7 @@
       "group": "a Japanese four-wheel drive",
       "latitude": null,
       "longitude": null,
-      "fact": "The Toyota Land Cruiser (Japanese: トヨタ・ランドクルーザー, Hepburn: Toyota Rando-Kurūzā), also sometimes spelt as LandCruiser, is a series of four-wheel drive vehicles produced by the Japanese automobile manufacturer Toyota. It is Toyota's longest running series of models.",
+      "fact": "The Toyota Land Cruiser, also sometimes spelt as LandCruiser, is a series of four-wheel drive vehicles produced by the Japanese automobile manufacturer Toyota. It is Toyota's longest running series of models.",
       "factSource": "https://en.wikipedia.org/wiki/Toyota_Land_Cruiser",
       "facts": {
         "maker": [
@@ -9217,7 +9217,7 @@
       "group": "a Japanese four-wheel drive",
       "latitude": null,
       "longitude": null,
-      "fact": "The Toyota Land Cruiser (Japanese: トヨタ・ランドクルーザー, Hepburn: Toyota Rando-Kurūzā), also sometimes spelt as LandCruiser, is a series of four-wheel drive vehicles produced by the Japanese automobile manufacturer Toyota. It is Toyota's longest running series of models.",
+      "fact": "The Toyota Land Cruiser, also sometimes spelt as LandCruiser, is a series of four-wheel drive vehicles produced by the Japanese automobile manufacturer Toyota. It is Toyota's longest running series of models.",
       "factSource": "https://en.wikipedia.org/wiki/Toyota_Land_Cruiser",
       "facts": {
         "maker": [
@@ -9772,7 +9772,7 @@
       "group": "a Japanese SUV",
       "latitude": null,
       "longitude": null,
-      "fact": "The Toyota 4Runner is an SUV manufactured by the Japanese automaker Toyota and marketed globally since 1984, across six generations. In Japan, it was marketed as the Toyota Hilux Surf (Japanese: トヨタ・ハイラックスサーフ, Hepburn: Toyota Hairakkususāfu) and was withdrawn from the market in 2009.",
+      "fact": "The Toyota 4Runner is an SUV manufactured by the Japanese automaker Toyota and marketed globally since 1984, across six generations. In Japan, it was marketed as the Toyota Hilux Surf and was withdrawn from the market in 2009.",
       "factSource": "https://en.wikipedia.org/wiki/Toyota_4Runner",
       "facts": {
         "maker": [
@@ -9809,7 +9809,7 @@
       "group": "a Japanese SUV",
       "latitude": null,
       "longitude": null,
-      "fact": "The Toyota 4Runner is an SUV manufactured by the Japanese automaker Toyota and marketed globally since 1984, across six generations. In Japan, it was marketed as the Toyota Hilux Surf (Japanese: トヨタ・ハイラックスサーフ, Hepburn: Toyota Hairakkususāfu) and was withdrawn from the market in 2009.",
+      "fact": "The Toyota 4Runner is an SUV manufactured by the Japanese automaker Toyota and marketed globally since 1984, across six generations. In Japan, it was marketed as the Toyota Hilux Surf and was withdrawn from the market in 2009.",
       "factSource": "https://en.wikipedia.org/wiki/Toyota_4Runner",
       "facts": {
         "maker": [
@@ -9846,7 +9846,7 @@
       "group": "a Japanese SUV",
       "latitude": null,
       "longitude": null,
-      "fact": "The Toyota 4Runner is an SUV manufactured by the Japanese automaker Toyota and marketed globally since 1984, across six generations. In Japan, it was marketed as the Toyota Hilux Surf (Japanese: トヨタ・ハイラックスサーフ, Hepburn: Toyota Hairakkususāfu) and was withdrawn from the market in 2009.",
+      "fact": "The Toyota 4Runner is an SUV manufactured by the Japanese automaker Toyota and marketed globally since 1984, across six generations. In Japan, it was marketed as the Toyota Hilux Surf and was withdrawn from the market in 2009.",
       "factSource": "https://en.wikipedia.org/wiki/Toyota_4Runner",
       "facts": {
         "maker": [
@@ -9883,7 +9883,7 @@
       "group": "a Japanese SUV",
       "latitude": null,
       "longitude": null,
-      "fact": "The Toyota 4Runner is an SUV manufactured by the Japanese automaker Toyota and marketed globally since 1984, across six generations. In Japan, it was marketed as the Toyota Hilux Surf (Japanese: トヨタ・ハイラックスサーフ, Hepburn: Toyota Hairakkususāfu) and was withdrawn from the market in 2009.",
+      "fact": "The Toyota 4Runner is an SUV manufactured by the Japanese automaker Toyota and marketed globally since 1984, across six generations. In Japan, it was marketed as the Toyota Hilux Surf and was withdrawn from the market in 2009.",
       "factSource": "https://en.wikipedia.org/wiki/Toyota_4Runner",
       "facts": {
         "maker": [
@@ -9920,7 +9920,7 @@
       "group": "a Japanese SUV",
       "latitude": null,
       "longitude": null,
-      "fact": "The Toyota 4Runner is an SUV manufactured by the Japanese automaker Toyota and marketed globally since 1984, across six generations. In Japan, it was marketed as the Toyota Hilux Surf (Japanese: トヨタ・ハイラックスサーフ, Hepburn: Toyota Hairakkususāfu) and was withdrawn from the market in 2009.",
+      "fact": "The Toyota 4Runner is an SUV manufactured by the Japanese automaker Toyota and marketed globally since 1984, across six generations. In Japan, it was marketed as the Toyota Hilux Surf and was withdrawn from the market in 2009.",
       "factSource": "https://en.wikipedia.org/wiki/Toyota_4Runner",
       "facts": {
         "maker": [
@@ -9957,7 +9957,7 @@
       "group": "a Japanese SUV",
       "latitude": null,
       "longitude": null,
-      "fact": "The Toyota 4Runner is an SUV manufactured by the Japanese automaker Toyota and marketed globally since 1984, across six generations. In Japan, it was marketed as the Toyota Hilux Surf (Japanese: トヨタ・ハイラックスサーフ, Hepburn: Toyota Hairakkususāfu) and was withdrawn from the market in 2009.",
+      "fact": "The Toyota 4Runner is an SUV manufactured by the Japanese automaker Toyota and marketed globally since 1984, across six generations. In Japan, it was marketed as the Toyota Hilux Surf and was withdrawn from the market in 2009.",
       "factSource": "https://en.wikipedia.org/wiki/Toyota_4Runner",
       "facts": {
         "maker": [
@@ -10364,7 +10364,7 @@
       "group": "an American SUV",
       "latitude": null,
       "longitude": null,
-      "fact": "The Chevrolet Tahoe () is a line of full-size SUVs from Chevrolet, marketed since the 1995 model year. Marketed alongside the GMC Yukon for its entire production, the Tahoe is the successor to the Chevrolet K5 Blazer, while the Yukon replaced the full-sized GMC Jimmy.",
+      "fact": "The Chevrolet Tahoe is a line of full-size SUVs from Chevrolet, marketed since the 1995 model year. Marketed alongside the GMC Yukon for its entire production, the Tahoe is the successor to the Chevrolet K5 Blazer, while the Yukon replaced the full-sized GMC Jimmy.",
       "factSource": "https://en.wikipedia.org/wiki/Chevrolet_Tahoe",
       "facts": {
         "maker": [
@@ -10401,7 +10401,7 @@
       "group": "an American SUV",
       "latitude": null,
       "longitude": null,
-      "fact": "The Chevrolet Tahoe () is a line of full-size SUVs from Chevrolet, marketed since the 1995 model year. Marketed alongside the GMC Yukon for its entire production, the Tahoe is the successor to the Chevrolet K5 Blazer, while the Yukon replaced the full-sized GMC Jimmy.",
+      "fact": "The Chevrolet Tahoe is a line of full-size SUVs from Chevrolet, marketed since the 1995 model year. Marketed alongside the GMC Yukon for its entire production, the Tahoe is the successor to the Chevrolet K5 Blazer, while the Yukon replaced the full-sized GMC Jimmy.",
       "factSource": "https://en.wikipedia.org/wiki/Chevrolet_Tahoe",
       "facts": {
         "maker": [
@@ -10438,7 +10438,7 @@
       "group": "an American SUV",
       "latitude": null,
       "longitude": null,
-      "fact": "The Chevrolet Tahoe () is a line of full-size SUVs from Chevrolet, marketed since the 1995 model year. Marketed alongside the GMC Yukon for its entire production, the Tahoe is the successor to the Chevrolet K5 Blazer, while the Yukon replaced the full-sized GMC Jimmy.",
+      "fact": "The Chevrolet Tahoe is a line of full-size SUVs from Chevrolet, marketed since the 1995 model year. Marketed alongside the GMC Yukon for its entire production, the Tahoe is the successor to the Chevrolet K5 Blazer, while the Yukon replaced the full-sized GMC Jimmy.",
       "factSource": "https://en.wikipedia.org/wiki/Chevrolet_Tahoe",
       "facts": {
         "maker": [
@@ -10475,7 +10475,7 @@
       "group": "an American SUV",
       "latitude": null,
       "longitude": null,
-      "fact": "The Chevrolet Tahoe () is a line of full-size SUVs from Chevrolet, marketed since the 1995 model year. Marketed alongside the GMC Yukon for its entire production, the Tahoe is the successor to the Chevrolet K5 Blazer, while the Yukon replaced the full-sized GMC Jimmy.",
+      "fact": "The Chevrolet Tahoe is a line of full-size SUVs from Chevrolet, marketed since the 1995 model year. Marketed alongside the GMC Yukon for its entire production, the Tahoe is the successor to the Chevrolet K5 Blazer, while the Yukon replaced the full-sized GMC Jimmy.",
       "factSource": "https://en.wikipedia.org/wiki/Chevrolet_Tahoe",
       "facts": {
         "maker": [
@@ -10512,7 +10512,7 @@
       "group": "an American SUV",
       "latitude": null,
       "longitude": null,
-      "fact": "The Chevrolet Tahoe () is a line of full-size SUVs from Chevrolet, marketed since the 1995 model year. Marketed alongside the GMC Yukon for its entire production, the Tahoe is the successor to the Chevrolet K5 Blazer, while the Yukon replaced the full-sized GMC Jimmy.",
+      "fact": "The Chevrolet Tahoe is a line of full-size SUVs from Chevrolet, marketed since the 1995 model year. Marketed alongside the GMC Yukon for its entire production, the Tahoe is the successor to the Chevrolet K5 Blazer, while the Yukon replaced the full-sized GMC Jimmy.",
       "factSource": "https://en.wikipedia.org/wiki/Chevrolet_Tahoe",
       "facts": {
         "maker": [
@@ -12438,7 +12438,7 @@
       "group": "an Italian small car",
       "latitude": null,
       "longitude": null,
-      "fact": "The Fiat 500, commonly known as \"Topolino\" (pronounced [topoˈliːno]), is an Italian city car produced and manufactured by Fiat from 1936 to 1955. The name Topolino is Italian for 'little mouse', and is also the Italian name for Mickey Mouse.",
+      "fact": "The Fiat 500, commonly known as \"Topolino\", is an Italian city car produced and manufactured by Fiat from 1936 to 1955. The name Topolino is Italian for 'little mouse', and is also the Italian name for Mickey Mouse.",
       "factSource": "https://en.wikipedia.org/wiki/Fiat_500_%22Topolino%22",
       "facts": {
         "maker": [
@@ -12475,7 +12475,7 @@
       "group": "an Italian small car",
       "latitude": null,
       "longitude": null,
-      "fact": "The Fiat 500 (Italian: Cinquecento, pronounced [ˌtʃiŋkweˈtʃɛnto]) is an economy / city car that was manufactured and marketed by Fiat Automobiles from 1957 until 1975. It was sold as a two-door semi-convertible or saloon car and as a three-door panel van or estate car.",
+      "fact": "The Fiat 500 is an economy / city car that was manufactured and marketed by Fiat Automobiles from 1957 until 1975. It was sold as a two-door semi-convertible or saloon car and as a three-door panel van or estate car.",
       "factSource": "https://en.wikipedia.org/wiki/Fiat_500",
       "facts": {
         "maker": [
@@ -12734,7 +12734,7 @@
       "group": "a small car",
       "latitude": null,
       "longitude": null,
-      "fact": "The Ford Fiesta Mk6/Mark VI (Mk7 in the United Kingdom, model code WS/WT/WZ in Australia) is the sixth generation of the Ford Fiesta supermini.",
+      "fact": "The Ford Fiesta Mk6/Mark VI is the sixth generation of the Ford Fiesta supermini.",
       "factSource": "https://en.wikipedia.org/wiki/Ford_Fiesta_%28sixth_generation%29",
       "facts": {
         "maker": [
@@ -12919,7 +12919,7 @@
       "group": "a Japanese family sedan",
       "latitude": null,
       "longitude": null,
-      "fact": "The Toyota Camry (; Japanese: トヨタ・カムリ Toyota Kamuri) is an automobile sold internationally by the Japanese auto manufacturer Toyota since 1982, spanning multiple generations.",
+      "fact": "The Toyota Camry is an automobile sold internationally by the Japanese auto manufacturer Toyota since 1982, spanning multiple generations.",
       "factSource": "https://en.wikipedia.org/wiki/Toyota_Camry",
       "facts": {
         "maker": [
@@ -13215,7 +13215,7 @@
       "group": "a Japanese family sedan",
       "latitude": null,
       "longitude": null,
-      "fact": "The Honda Accord (Japanese: ホンダ・アコード, Hepburn: Honda Akōdo; ), also known as the Honda Inspire (Japanese: ホンダ・インスパイア, Hepburn: Honda Insupaia) in Japan and China for certain generations, is a series of automobiles manufactured by Honda since 1976, best known for its four-door sedan variant, which has been one of the best-selling cars in the United States since 1989.",
+      "fact": "The Honda Accord, also known as the Honda Inspire in Japan and China for certain generations, is a series of automobiles manufactured by Honda since 1976, best known for its four-door sedan variant, which has been one of the best-selling cars in the United States since 1989.",
       "factSource": "https://en.wikipedia.org/wiki/Honda_Accord",
       "facts": {
         "maker": [
@@ -13252,7 +13252,7 @@
       "group": "a Japanese family sedan",
       "latitude": null,
       "longitude": null,
-      "fact": "The Honda Accord (Japanese: ホンダ・アコード, Hepburn: Honda Akōdo; ), also known as the Honda Inspire (Japanese: ホンダ・インスパイア, Hepburn: Honda Insupaia) in Japan and China for certain generations, is a series of automobiles manufactured by Honda since 1976, best known for its four-door sedan variant, which has been one of the best-selling cars in the United States since 1989.",
+      "fact": "The Honda Accord, also known as the Honda Inspire in Japan and China for certain generations, is a series of automobiles manufactured by Honda since 1976, best known for its four-door sedan variant, which has been one of the best-selling cars in the United States since 1989.",
       "factSource": "https://en.wikipedia.org/wiki/Honda_Accord",
       "facts": {
         "maker": [
@@ -13289,7 +13289,7 @@
       "group": "a Japanese family sedan",
       "latitude": null,
       "longitude": null,
-      "fact": "The Honda Accord (Japanese: ホンダ・アコード, Hepburn: Honda Akōdo; ), also known as the Honda Inspire (Japanese: ホンダ・インスパイア, Hepburn: Honda Insupaia) in Japan and China for certain generations, is a series of automobiles manufactured by Honda since 1976, best known for its four-door sedan variant, which has been one of the best-selling cars in the United States since 1989.",
+      "fact": "The Honda Accord, also known as the Honda Inspire in Japan and China for certain generations, is a series of automobiles manufactured by Honda since 1976, best known for its four-door sedan variant, which has been one of the best-selling cars in the United States since 1989.",
       "factSource": "https://en.wikipedia.org/wiki/Honda_Accord",
       "facts": {
         "maker": [
@@ -13437,7 +13437,7 @@
       "group": "a Japanese family sedan",
       "latitude": null,
       "longitude": null,
-      "fact": "The Honda Accord (Japanese: ホンダ・アコード, Hepburn: Honda Akōdo; ), also known as the Honda Inspire (Japanese: ホンダ・インスパイア, Hepburn: Honda Insupaia) in Japan and China for certain generations, is a series of automobiles manufactured by Honda since 1976, best known for its four-door sedan variant, which has been one of the best-selling cars in the United States since 1989.",
+      "fact": "The Honda Accord, also known as the Honda Inspire in Japan and China for certain generations, is a series of automobiles manufactured by Honda since 1976, best known for its four-door sedan variant, which has been one of the best-selling cars in the United States since 1989.",
       "factSource": "https://en.wikipedia.org/wiki/Honda_Accord",
       "facts": {
         "maker": [
@@ -13474,7 +13474,7 @@
       "group": "a Japanese family sedan",
       "latitude": null,
       "longitude": null,
-      "fact": "The Honda Accord (Japanese: ホンダ・アコード, Hepburn: Honda Akōdo; ), also known as the Honda Inspire (Japanese: ホンダ・インスパイア, Hepburn: Honda Insupaia) in Japan and China for certain generations, is a series of automobiles manufactured by Honda since 1976, best known for its four-door sedan variant, which has been one of the best-selling cars in the United States since 1989.",
+      "fact": "The Honda Accord, also known as the Honda Inspire in Japan and China for certain generations, is a series of automobiles manufactured by Honda since 1976, best known for its four-door sedan variant, which has been one of the best-selling cars in the United States since 1989.",
       "factSource": "https://en.wikipedia.org/wiki/Honda_Accord",
       "facts": {
         "maker": [

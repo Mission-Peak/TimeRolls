@@ -78,41 +78,41 @@ final class RemoteImageCache {
     /// which the caller should treat as "use a different photograph".
     func image(for item: PackItem) async -> UIImage? {
         if let cached = cachedImage(for: item) { return cached }
-        // Read through OneBucket where it is configured, and from the original source
-        // until it is. The app never holds a credential either way (spec §10).
-        guard !unavailable.contains(item.id),
-              var request = OneBucket.source(key: item.remoteKey, original: item.remoteURL)
-        else { return nil }
-        // Per request, so the caregiver's choice applies to the next photograph fetched
-        // rather than to the next launch.
-        request.allowsCellularAccess = allowsCellular
-        request.allowsExpensiveNetworkAccess = allowsCellular
+        // OneBucket first, then the original source — see `OneBucket.sources(for:)`.
+        guard !unavailable.contains(item.id) else { return nil }
+        let requests = OneBucket.sources(for: item).map { source -> URLRequest in
+            var request = source
+            // Per request, so the caregiver's choice applies to the next photograph
+            // fetched rather than to the next launch.
+            request.allowsCellularAccess = allowsCellular
+            request.allowsExpensiveNetworkAccess = allowsCellular
+            return request
+        }
+        guard !requests.isEmpty else {
+            unavailable.insert(item.id)
+            return nil
+        }
 
         if let existing = inFlight[item.id] { return await existing.value }
 
         let task = Task<UIImage?, Never> { [weak self] in
             guard let self else { return nil }
             defer { inFlight[item.id] = nil }
-            do {
-                let (data, response) = try await session.data(for: request)
+            for request in requests {
+                guard let (data, response) = try? await session.data(for: request) else {
+                    continue  // offline, or this source moved: try the next
+                }
                 if let http = response as? HTTPURLResponse,
-                   !(200...299).contains(http.statusCode) {
-                    unavailable.insert(item.id)
-                    return nil
-                }
-                guard let image = UIImage(data: data) else {
-                    unavailable.insert(item.id)
-                    return nil
-                }
+                   !(200...299).contains(http.statusCode) { continue }
+                guard let image = UIImage(data: data) else { continue }
                 if let file = localFile(for: item) {
                     try? data.write(to: file, options: .atomic)
                 }
                 return image
-            } catch {
-                // Offline, or the source moved. Either way, not this photograph.
-                unavailable.insert(item.id)
-                return nil
             }
+            // No source could serve it. Not this photograph.
+            unavailable.insert(item.id)
+            return nil
         }
         inFlight[item.id] = task
         return await task.value

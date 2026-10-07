@@ -40,10 +40,10 @@ META = {
     "title": "Cars",
     "blurb": "Classic and modern cars, from the showroom to the open road.",
     "themes": ["cars"],
-    "namedSubjectPrompt": "Which car is a {name}?",
+    "namedSubjectPrompt": "Which {noun} is a {name}?",
     "questions": [
         {"id": "maker", "ask": "maker", "exclude": "maker",
-         "prompt": "Which car was made by {value}?"},
+         "prompt": "Which {noun} was made by {value}?|What {noun} was made by {value}?"},
     ],
 }
 

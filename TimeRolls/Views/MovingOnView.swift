@@ -30,7 +30,7 @@ struct MovingOnView: View {
     @State private var fading = false
 
     var body: some View {
-        ScrollView {
+        OnboardingScroll {
             VStack(alignment: .leading, spacing: 20) {
                 VStack(alignment: .leading, spacing: 8) {
                     Text("Moving on")

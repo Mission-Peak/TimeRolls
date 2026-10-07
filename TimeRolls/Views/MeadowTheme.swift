@@ -2,8 +2,7 @@
 //  MeadowTheme.swift
 //  Time Rolls
 //
-//  The illustrated "meadow" look: a painted sky-and-hills page with a film strip running
-//  through it, sticker cards on warm off-white with soft shadows, rounded-heavy headings
+//  The illustrated "meadow" look: a painted sky-and-hills page, sticker cards on warm off-white with soft shadows, rounded-heavy headings
 //  in deep sage, and badge icons that sit on the card like stickers.
 //
 //  Muted on purpose. The first meadow was sky blue, grass green and orange — bright enough
@@ -31,7 +30,6 @@ enum Meadow {
     static let hillFar = Color.hex(0xC9D1BA)
     static let hillMid = Color.hex(0x8E9F7E)
     static let hillNear = Color.hex(0x5E7353)
-    static let filmStrip = Color.hex(0x5E7353).opacity(0.5)
     static let tree = Color.hex(0x5E7353)
     static let treeDark = Color.hex(0x46593D)
 
@@ -96,7 +94,10 @@ enum Meadow {
 
 // MARK: - Backdrop
 
-/// Sky, a low sun, clouds, three ridges of hill, a film strip and a line of trees.
+/// Sky, a low sun, clouds, three ridges of hill and a line of trees.
+///
+/// There was a film strip across the hills too, from the app icon. It ran straight through
+/// the trees and read as a row of dots across every screen, so it lives on the icon only.
 struct MeadowBackdrop: View {
 
     var body: some View {
@@ -124,13 +125,6 @@ struct MeadowBackdrop: View {
                     context.fill(ridge(w: w, h: h, top: 0.30, crest: 0.30, lift: 0.055),
                                  with: .color(Meadow.hillFar))
 
-                    // The film strip from the icon, running behind the middle hill the
-                    // way the river used to.
-                    filmStrip(in: context,
-                              from: CGPoint(x: -w * 0.1, y: h * 0.40),
-                              control: CGPoint(x: w * 0.45, y: h * 0.18),
-                              to: CGPoint(x: w * 1.1, y: h * 0.33))
-
                     context.fill(ridge(w: w, h: h, top: 0.36, crest: 0.72, lift: 0.070),
                                  with: .color(Meadow.hillMid))
 
@@ -154,57 +148,6 @@ struct MeadowBackdrop: View {
         .ignoresSafeArea()
         .allowsHitTesting(false)
         .accessibilityHidden(true)
-    }
-
-    /// A band along a quadratic curve with a row of sprocket holes down each edge.
-    private func filmStrip(in context: GraphicsContext, from start: CGPoint,
-                           control: CGPoint, to end: CGPoint) {
-        let half: CGFloat = 16
-        func point(_ t: CGFloat) -> CGPoint {
-            let u = 1 - t
-            return CGPoint(x: u * u * start.x + 2 * u * t * control.x + t * t * end.x,
-                           y: u * u * start.y + 2 * u * t * control.y + t * t * end.y)
-        }
-        func normal(_ t: CGFloat) -> CGVector {
-            let dx = 2 * (1 - t) * (control.x - start.x) + 2 * t * (end.x - control.x)
-            let dy = 2 * (1 - t) * (control.y - start.y) + 2 * t * (end.y - control.y)
-            let length = max(hypot(dx, dy), 0.001)
-            return CGVector(dx: -dy / length, dy: dx / length)
-        }
-
-        let steps = 60
-        var band = Path()
-        for i in 0...steps {
-            let t = CGFloat(i) / CGFloat(steps)
-            let p = point(t), n = normal(t)
-            let edge = CGPoint(x: p.x + n.dx * half, y: p.y + n.dy * half)
-            if i == 0 { band.move(to: edge) } else { band.addLine(to: edge) }
-        }
-        for i in stride(from: steps, through: 0, by: -1) {
-            let t = CGFloat(i) / CGFloat(steps)
-            let p = point(t), n = normal(t)
-            band.addLine(to: CGPoint(x: p.x - n.dx * half, y: p.y - n.dy * half))
-        }
-        band.closeSubpath()
-        context.fill(band, with: .color(Meadow.filmStrip))
-
-        // Holes punched out of the band, evenly spaced by eye rather than by arc length;
-        // the curve is shallow enough that nobody can tell.
-        let holes = 34
-        for i in 0..<holes {
-            let t = (CGFloat(i) + 0.5) / CGFloat(holes)
-            let p = point(t), n = normal(t)
-            let angle = Angle(radians: atan2(n.dx, -n.dy))
-            for side in [-1.0, 1.0] as [CGFloat] {
-                var hole = context
-                hole.translateBy(x: p.x + n.dx * (half - 6) * side,
-                                 y: p.y + n.dy * (half - 6) * side)
-                hole.rotate(by: angle)
-                hole.fill(RoundedRectangle(cornerRadius: 1.5)
-                            .path(in: CGRect(x: -3.5, y: -2.5, width: 7, height: 5)),
-                          with: .color(Meadow.skyBottom.opacity(0.85)))
-            }
-        }
     }
 
     private func ridge(w: CGFloat, h: CGFloat, top: CGFloat,

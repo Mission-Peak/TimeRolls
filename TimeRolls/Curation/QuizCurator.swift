@@ -161,7 +161,8 @@ nonisolated enum QuizCurator {
                         $0.trimmingCharacters(in: .whitespaces)
                             .replacingOccurrences(of: "{name}", with: "{x}")
                     }
-            let chosen = Recency.choose(templates, kind: people ? "people-named" : "quiz-named",
+            let chosen = Recency.choose(templates.map { vehicleWording($0, for: photos) },
+                                        kind: people ? "people-named" : "quiz-named",
                                         x: spoken, recent: recentWordings)
             var level = Level(theme: theme,
                          prompt: chosen.text,
@@ -240,8 +241,8 @@ nonisolated enum QuizCurator {
                 // Several wordings, separated by "|", taken in turn — "Who played for the
                 // Packers?" and "Which player played for the Packers?".
                 let wordings = question.prompt.split(separator: "|").map {
-                    $0.trimmingCharacters(in: .whitespaces)
-                        .replacingOccurrences(of: "{value}", with: "{x}")
+                    vehicleWording($0.trimmingCharacters(in: .whitespaces)
+                        .replacingOccurrences(of: "{value}", with: "{x}"), for: photos)
                 }
                 let chosen = Recency.choose(wordings, kind: "fact-\(question.id)", x: value,
                                             recent: recentWordings)
@@ -291,7 +292,7 @@ nonisolated enum QuizCurator {
                 guard chosen.count == wanted, let target = chosen.randomElement(),
                       let year = target.askYear else { continue }
                 return Level(theme: theme,
-                             prompt: "Which car is a \(year) \(family)?",
+                             prompt: "Which \(vehicleNoun(for: chosen)) is a \(year) \(family)?",
                              photos: chosen.shuffled(),
                              correctPhotoID: target.id,
                              curationNote: "quiz generation · \(family) · "
@@ -302,6 +303,25 @@ nonisolated enum QuizCurator {
             }
         }
         return nil
+    }
+
+    /// "Which truck is a Ford F-Series?", "Which car is a Ford Mustang?" — what the four
+    /// are, in a word true of all of them: car, truck, van, and vehicle when they differ.
+    static func vehicleNoun(for photos: [GamePhoto]) -> String {
+        let nouns = Set(photos.map { photo -> String in
+            switch photo.cluster {
+            case "pickup truck": "truck"
+            case "van": "van"
+            case "SUV", "off-roader": "vehicle"
+            default: "car"
+            }
+        })
+        return nouns.count == 1 ? nouns.first! : "vehicle"
+    }
+
+    /// Fills `{noun}` in a car pack's wording. Every other pack passes straight through.
+    static func vehicleWording(_ template: String, for photos: [GamePhoto]) -> String {
+        template.replacingOccurrences(of: "{noun}", with: vehicleNoun(for: photos))
     }
 
     /// Twenty model years between the two named years, and the two generations never

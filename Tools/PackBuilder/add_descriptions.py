@@ -61,6 +61,32 @@ HATNOTE = re.compile(r"^(?:(?:See |For (?:other|the) |Not to be confused|This ar
                      r"|\"[^\"]+\" redirects here)[^.]*\.\s*)+")
 
 
+# A pronunciation is for reading, not for being read aloud: "(LOO-thər; German: [ˈmaʁtiːn
+# ˈlʊtɐ])" opened Martin Luther's card. Wikipedia's plain-text extracts often strip the IPA
+# and leave the brackets behind — "The osprey (; Pandion haliaetus)" — so both go.
+PRONUNCIATION = re.compile(
+    r"\s*\((?=[^()]*(?:\[[^\]]*\]|/[^/]+/|[ˈˌəɐʁɪʊæɛɔŋθðʃʒ]|\b[A-Z][a-z]+:\s))[^()]*\)")
+DEBRIS = re.compile(r"^\s*(?:[;,]|or\b|also\b|$)|\b(?:US|UK):\s*(?:[,;]|$)|[;,]\s*$")
+SPOKEN_ONLY = re.compile(r"(?:or|also|and|US:?|UK:?)(?:\s+(?:or|US:?|UK:?))*")
+
+
+def tidy_pronunciation(text):
+    text = PRONUNCIATION.sub("", text)
+
+    def keep_what_is_real(match):
+        parts = [p.strip() for p in re.split(r"[;,]", match.group(1))]
+        parts = [re.sub(r"^(?:or|also)\s+", "", p) for p in parts
+                 if p and not SPOKEN_ONLY.fullmatch(p)]
+        return f" ({'; '.join(parts)})" if parts else ""
+
+    for _ in range(3):
+        text = re.sub(r"\s*\(([^()]*)\)",
+                      lambda m: keep_what_is_real(m) if DEBRIS.search(m.group(1)) else m.group(0),
+                      text)
+    text = re.sub(r"\s+([,.;:])", r"\1", text)
+    return re.sub(r"\s{2,}", " ", text).strip()
+
+
 def shorten(text, sentences=2, limit=340):
     """The first sentence or two, which is where an encyclopedia puts the answer."""
     text = " ".join((text or "").split())
@@ -68,6 +94,7 @@ def shorten(text, sentences=2, limit=340):
     # cards opened "See Mercedes-Benz S-Class for a complete overview of all S-Class
     # models." — read aloud, as the first thing said about a 1955 Mercedes.
     text = HATNOTE.sub("", text)
+    text = tidy_pronunciation(text)
     if not text:
         return None
     # Whole sentences only. Cutting at a character count left the Mona Lisa's card ending

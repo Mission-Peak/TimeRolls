@@ -86,6 +86,14 @@ final class ObjectTagger {
     private(set) var unavailableReason: String?
 
     private var worker: Task<Void, Never>?
+    /// The last write of the tag store, and the one in flight, so writes never overlap
+    /// and never land out of order.
+    private var lastPersist = Date.distantPast
+    private var persistTask: Task<Void, Never>?
+    /// How often a running pass saves its progress. Saving after every chunk rewrote the
+    /// whole store — 34.5 MB on Hanna's iPhone — every twelve photographs, on the main
+    /// thread, and the game crawled for as long as the pass ran.
+    private static let persistInterval: TimeInterval = 20
     private let storeURL: URL
 
     init() {
@@ -117,14 +125,63 @@ final class ObjectTagger {
     /// What the themes model thinks this photograph is most a picture of, among the
     /// things the game can ask about.
     func bestConcept(_ id: String) -> String? {
+        if let known = bestConcepts[id] { return known }
         guard let embedding = embedding(for: id) else { return nil }
-        return PhotoThemeIndex.shared.bestConcept(embedding)
+        let best = PhotoThemeIndex.shared.bestConcept(embedding)
+        bestConcepts[id] = .some(best)
+        return best
     }
 
     /// Whether a photograph is of somewhere rather than of somebody.
     func showsAPlace(_ id: String) -> Bool? {
+        if let known = placeReadings[id] { return known }
         guard let embedding = embedding(for: id) else { return nil }
-        return PhotoThemeIndex.shared.showsAPlace(embedding)
+        let reading = PhotoThemeIndex.shared.showsAPlace(embedding)
+        placeReadings[id] = .some(reading)
+        return reading
+    }
+
+    /// The two readings above, worked out once per photograph.
+    ///
+    /// Each compares a 512-number embedding against every concept the game knows, and
+    /// the round builder asks both questions of every one of the player's photographs
+    /// every time the pools are rebuilt — several times over, once per game it checks.
+    /// Measured on Hanna's iPhone that was 7.2 seconds of the main thread in a 30-second
+    /// launch, in two solid freezes. The answer only changes when the photograph is
+    /// looked at again, which is when `forget(_:)` clears it.
+    private var bestConcepts: [String: String?] = [:]
+    private var placeReadings: [String: Bool?] = [:]
+
+    /// Works out both readings for every photograph already looked at, off the main
+    /// thread. Called once while the app is starting, so the first rebuild of the pools —
+    /// which needs every one — finds them waiting instead of computing them one by one on
+    /// the main thread: a three-second freeze on Hanna's iPhone, after the fix that cached
+    /// them, because the cache began empty.
+    /// Only for the photographs in `ids` — the ones the round builder will actually ask
+    /// about. Every photograph ever looked at was far more than that.
+    func warmReadings(for ids: Set<String>) async {
+        let pending: [(String, Data)] = ids.compactMap { id in
+            guard bestConcepts[id] == nil, let data = tags[id]?.themeEmbedding else { return nil }
+            return (id, data)
+        }
+        guard !pending.isEmpty else { return }
+        let results = await Task.detached(priority: .userInitiated) {
+            pending.compactMap { id, data -> (String, String?, Bool?)? in
+                guard let embedding = PhotoThemeIndex.unpack(data) else { return nil }
+                return (id, PhotoThemeIndex.shared.bestConcept(embedding),
+                        PhotoThemeIndex.shared.showsAPlace(embedding))
+            }
+        }.value
+        for (id, best, place) in results where bestConcepts[id] == nil {
+            bestConcepts[id] = .some(best)
+            placeReadings[id] = .some(place)
+        }
+    }
+
+    private func forget(_ id: String) {
+        bestConcepts.removeValue(forKey: id)
+        placeReadings.removeValue(forKey: id)
+        embeddings.removeValue(forKey: id)
     }
 
     private func embedding(for id: String) -> [Float]? {
@@ -248,6 +305,7 @@ final class ObjectTagger {
                     case let .tagged(result):
                         // An empty result is a real answer: nothing recognised here.
                         tags[id] = result
+                        forget(id)
                     case .unreadable:
                         // Per-photo problem. Remember it so we don't retry forever.
                         tags[id] = Tags()
@@ -259,10 +317,14 @@ final class ObjectTagger {
                     }
                 }
                 examinedThisPass += slice.count
-                persist()
+                if Date().timeIntervalSince(lastPersist) >= Self.persistInterval {
+                    persist()
+                }
                 onChunk()
                 if classifierGone { break }
             }
+            // Whatever the last periodic save missed.
+            self?.persist()
             self?.isWorking = false
         }
     }
@@ -472,14 +534,26 @@ final class ObjectTagger {
         return image
     }
 
+    /// Writes the tag store off the main thread. The dictionary is copied (cheaply — it is
+    /// copy-on-write) and encoded elsewhere, after any write still in flight.
     private func persist() {
-        guard let data = try? JSONEncoder().encode(tags) else { return }
-        try? data.write(to: storeURL, options: .atomic)
+        lastPersist = Date()
+        let snapshot = tags
+        let url = storeURL
+        let previous = persistTask
+        persistTask = Task.detached(priority: .utility) {
+            await previous?.value
+            guard let data = try? JSONEncoder().encode(snapshot) else { return }
+            try? data.write(to: url, options: .atomic)
+        }
     }
 
     func reset() {
         stop()
         tags = [:]
+        bestConcepts = [:]
+        placeReadings = [:]
+        embeddings = [:]
         unreadableCount = 0
         unavailableReason = nil
         try? FileManager.default.removeItem(at: storeURL)

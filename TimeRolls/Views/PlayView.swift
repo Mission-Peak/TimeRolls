@@ -545,6 +545,9 @@ struct PhotoTile: View {
     @Environment(\.photoHighContrast) private var highContrast
     @Environment(\.photoTextScale) private var textScale
     @SwiftUI.State private var image: UIImage?
+
+    /// The Geography pack's maps. See `front`.
+    private var isMap: Bool { photo.packID == "geography" }
     /// The photograph could not be fetched — almost always an iCloud photograph that is
     /// not on this device.
     @SwiftUI.State private var loadFailed = false
@@ -646,7 +649,10 @@ struct PhotoTile: View {
                     if let image {
                         Image(uiImage: image)
                             .resizable()
-                            .aspectRatio(contentMode: .fit)
+                            // A map fills the tile: it is drawn wider than any tile, with
+                            // everything that matters in its middle, so filling only ever
+                            // trims surrounding sea and land. A photograph is shown whole.
+                            .aspectRatio(contentMode: isMap ? .fill : .fit)
                     } else if loadFailed {
                         // Say so rather than spinning. A photograph that still lives in
                         // iCloud and will not come down is not a slow photograph, and a
@@ -831,6 +837,7 @@ struct HomeView: View {
     let onCaregiverGate: () -> Void
     let onPlay: () -> Void
 
+    @Environment(\.horizontalSizeClass) private var sizeClass
     private var goal: Int { engine.settings.dailyCardGoal }
     private var done: Int { engine.stats.cardsToday }
     private var left: Int { max(goal - done, 0) }
@@ -845,21 +852,23 @@ struct HomeView: View {
         ZStack {
             GeometryReader { proxy in
                 ScrollView {
-                    VStack(alignment: .leading, spacing: 22) {
+                    VStack(spacing: 22) {
                         welcome
-                            .padding(.top, 36)
                         dailyRoundCard
                         statsLine
                         shareCard
                         // The way into setup, as on the play screen.
                         SettingsGear(onOpen: onCaregiverGate)
-                            .frame(maxWidth: .infinity)
-                        Spacer(minLength: 0)
                     }
                     .readableColumn(maxWidth: 620)
                     .padding(.horizontal, 18)
-                    .padding(.bottom, 24)
-                    .frame(minHeight: proxy.size.height, alignment: .top)
+                    .padding(.vertical, 24)
+                    // On an iPad, larger: drawn at phone size it was a small block in a
+                    // lot of hill.
+                    .scaleEffect(sizeClass == .regular ? 1.3 : 1)
+                    // Centred down the screen, on a phone and an iPad alike; anything too
+                    // tall to fit still scrolls.
+                    .frame(maxWidth: .infinity, minHeight: proxy.size.height, alignment: .center)
                 }
             }
 
@@ -900,19 +909,34 @@ struct HomeView: View {
     // MARK: Welcome
 
     private var welcome: some View {
-        VStack(alignment: .leading, spacing: 8) {
+        VStack(spacing: 8) {
             Text(challengeMet ? "Congratulations!" : "Welcome back!")
                 .font(.system(size: 44 * textScale, weight: .black, design: .rounded))
                 .foregroundStyle(ink)
                 .minimumScaleFactor(0.6)
                 .lineLimit(1)
                 .accessibilityAddTraits(.isHeader)
-            Text(challengeMet ? "You completed today's challenge!"
-                 : done == 0 ? "Ready for a quick round?" : "Ready for another round?")
-                .font(.system(size: 21 * textScale, design: .rounded))
-                .foregroundStyle(ink.opacity(0.9))
-                .fixedSize(horizontal: false, vertical: true)
+            if challengeMet {
+                // Cream on deep sage: green on green was hard to read wherever the line
+                // landed on the hills, and cream alone vanished against the pale sky.
+                Text("You completed today's challenge!")
+                    .font(.system(size: 21 * textScale, weight: .semibold, design: .rounded))
+                    .foregroundStyle(highContrast ? Palette.ink(true) : Meadow.buttonInk)
+                    .multilineTextAlignment(.center)
+                    .fixedSize(horizontal: false, vertical: true)
+                    .padding(.horizontal, 16)
+                    .padding(.vertical, 8)
+                    .background(highContrast ? Palette.wash(true) : Meadow.button,
+                                in: Capsule())
+            } else {
+                Text(done == 0 ? "Ready for a quick round?" : "Ready for another round?")
+                    .font(.system(size: 21 * textScale, design: .rounded))
+                    .foregroundStyle(ink.opacity(0.9))
+                    .multilineTextAlignment(.center)
+                    .fixedSize(horizontal: false, vertical: true)
+            }
         }
+        .frame(maxWidth: .infinity)
         .padding(.horizontal, 4)
     }
 
@@ -971,7 +995,10 @@ struct HomeView: View {
     private var cardLine: String {
         if goal == 0 { return "Play for as long as you like." }
         if challengeMet { return "All done for today. Well played!" }
-        return done == 0 ? "Your challenge is ready." : "Keep going — you're nearly there."
+        if done == 0 { return "Your challenge is ready." }
+        // "Nearly there" only when it is true — it said so with seven of eight to go.
+        if left <= max(2, goal / 4) { return "Keep going — you're nearly there." }
+        return done == 1 ? "You've made a start." : "\(done) done, \(left) to go."
     }
 
     private var buttonTitle: String {
@@ -1321,9 +1348,22 @@ struct FactPopup: View {
     private var photograph: some View {
         Group {
             if let image {
-                Image(uiImage: image)
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
+                if photo.packID == "geography" {
+                    // A map fills the frame — its middle is what matters, and fitting it
+                    // left bars of card colour down each side.
+                    Color.clear
+                        .frame(height: 280)
+                        .overlay {
+                            Image(uiImage: image)
+                                .resizable()
+                                .aspectRatio(contentMode: .fill)
+                        }
+                        .clipped()
+                } else {
+                    Image(uiImage: image)
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                }
             } else {
                 ProgressView().frame(height: 140)
             }

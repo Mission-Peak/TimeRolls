@@ -111,6 +111,33 @@ private struct SageList: ViewModifier {
     }
 }
 
+/// A scroll view for the first-run pages: content centred down the screen on an iPad,
+/// where laid out from the top it filled a third of the screen and left the rest as
+/// empty meadow. A phone keeps it at the top, which is where the content already fills.
+struct OnboardingScroll<Content: View>: View {
+    @Environment(\.horizontalSizeClass) private var sizeClass
+    @ViewBuilder var content: Content
+
+    var body: some View {
+        GeometryReader { proxy in
+            ScrollView {
+                if sizeClass == .regular {
+                    // Larger, and centred a little above the middle: dead centre put the
+                    // title on the film strip, where dark ink on the hill is hard to read.
+                    content
+                        .scaleEffect(1.3, anchor: .top)
+                        .frame(maxWidth: .infinity)
+                        .padding(.top, proxy.size.height * 0.12)
+                        .frame(minHeight: proxy.size.height, alignment: .top)
+                } else {
+                    content
+                        .frame(maxWidth: .infinity, minHeight: proxy.size.height, alignment: .top)
+                }
+            }
+        }
+    }
+}
+
 /// Keeps content in a comfortable column on a big screen instead of letting it
 /// stretch the full width of an iPad.
 private struct ReadableColumn: ViewModifier {

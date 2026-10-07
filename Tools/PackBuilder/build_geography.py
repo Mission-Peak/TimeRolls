@@ -59,6 +59,11 @@ TARGET_EDGE = "#2E3B29"
 RING = "#A9744E"
 
 PIXELS = 800
+# 4:3, not square. An iPad tile is wider than tall, and a square map in it was padded
+# out with a blur of itself. The extra width is extra map; everything that matters —
+# the place, the ring, the labels — stays in the central square, which is exactly what
+# a phone's square tile shows when it fills from the middle.
+ASPECT = 4 / 3
 
 INK = "#4F5450"      # charcoal, for city names
 SEA_INK = "#6B7A78"  # slate, for seas
@@ -211,9 +216,13 @@ def draw(path, target, context, lakes, frame=None, centre=None, min_span=1400,
         cx, cy = (max(xs) + min(xs)) / 2, (max(ys) + min(ys)) / 2
         frame = (cx - span / 2, cx + span / 2, cy - span / 2, cy + span / 2)
     x0, x1, y0, y1 = frame
-    span = x1 - x0
+    span = y1 - y0
+    # Widen the square frame into 4:3 about its centre.
+    mid = (x0 + x1) / 2
+    x0, x1 = mid - span * ASPECT / 2, mid + span * ASPECT / 2
+    frame = (x0, x1, y0, y1)
 
-    figure = plt.figure(figsize=(PIXELS / 100, PIXELS / 100), dpi=100)
+    figure = plt.figure(figsize=(PIXELS * ASPECT / 100, PIXELS / 100), dpi=100)
     axes = figure.add_axes([0, 0, 1, 1])
     axes.set_xlim(x0, x1)
     axes.set_ylim(y0, y1)
@@ -274,8 +283,12 @@ def annotate(figure, axes, project, frame, target):
     on it, and the round would be reading, not geography. Nothing is written inside the
     highlighted place either, or "which one is France?" is answered by the word Paris.
     """
-    x0, x1, y0, y1 = frame
-    span = x1 - x0
+    fx0, fx1, y0, y1 = frame
+    span = y1 - y0
+    # Labels live in the central square, which every tile shows; the wings are only
+    # seen on an iPad.
+    mid = (fx0 + fx1) / 2
+    x0, x1 = mid - span / 2, mid + span / 2
     margin = span * 0.07
     inside = lambda px, py: x0 + margin < px < x1 - margin and y0 + margin < py < y1 - margin
 
@@ -290,9 +303,13 @@ def annotate(figure, axes, project, frame, target):
 
     # The tile puts its number badge in the top-left corner and the magnifying glass in
     # the bottom-left, both over the picture. A word under either is a word cut in half.
+    # The badge and the magnifying glass sit in the tile's left corners — the square's
+    # on a phone, the full width's on an iPad. Keep words out of both.
     corners = unary_union([
         Polygon.from_bounds(x0, y1 - span * 0.24, x0 + span * 0.26, y1),
         Polygon.from_bounds(x0, y0, x0 + span * 0.24, y0 + span * 0.22),
+        Polygon.from_bounds(fx0, y1 - span * 0.24, fx0 + span * 0.26, y1),
+        Polygon.from_bounds(fx0, y0, fx0 + span * 0.24, y0 + span * 0.22),
     ])
 
     renderer = figure.canvas.get_renderer()

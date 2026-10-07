@@ -40,7 +40,7 @@
     }
   ],
   "license": "Public domain, CC0, CC BY, CC BY-SA",
-  "builtAt": "2026-10-05",
+  "builtAt": "2026-10-07",
   "items": [
     {
       "id": "geography-china",
@@ -1421,6 +1421,7 @@
         ],
         "continentAny": [
           "Africa",
+          "Asia",
           "Europe"
         ],
         "borders": [
@@ -2943,7 +2944,7 @@
         ],
         "memberOf": []
       },
-      "fact": "Zambia (), officially the Republic of Zambia, is a landlocked country in Southern Africa.",
+      "fact": "Zambia, officially the Republic of Zambia, is a landlocked country in Southern Africa.",
       "factSource": "https://en.wikipedia.org/wiki/Zambia"
     },
     {
@@ -3635,7 +3636,7 @@
         ],
         "memberOf": []
       },
-      "fact": "South Sudan (), officially the Republic of South Sudan, is a landlocked country in East Africa. It is bordered by Sudan to the north, Ethiopia to the east, Kenya to the southeast, Uganda to the south, the Democratic Republic of the Congo to the southwest, and the Central African Republic to the west.",
+      "fact": "South Sudan, officially the Republic of South Sudan, is a landlocked country in East Africa. It is bordered by Sudan to the north, Ethiopia to the east, Kenya to the southeast, Uganda to the south, the Democratic Republic of the Congo to the southwest, and the Central African Republic to the west.",
       "factSource": "https://en.wikipedia.org/wiki/South_Sudan"
     },
     {
@@ -4181,7 +4182,7 @@
         ],
         "memberOf": []
       },
-      "fact": "Tajikistan, officially the Republic of Tajikistan, is a landlocked country located in Central Asia. Dushanbe is the largest city and the capital city of the country and it is most populous city, with a population of over 1.2 million.",
+      "fact": "Tajikistan, officially the Republic of Tajikistan, is a landlocked country in Central Asia. Dushanbe, its capital, is its largest and most populous city, with a population of over 1.2 million.",
       "factSource": "https://en.wikipedia.org/wiki/Tajikistan"
     },
     {
@@ -5206,7 +5207,7 @@
           "the European Union"
         ]
       },
-      "fact": "Ireland (Irish: Éire [ˈeːɾʲə] ), also known as the Republic of Ireland (Poblacht na hÉireann), is a country in Northwestern Europe. It consists of 26 of the 32 counties of the island of Ireland, with a population of about 5.4 million.",
+      "fact": "Ireland, also known as the Republic of Ireland (Poblacht na hÉireann), is a country in Northwestern Europe. It consists of 26 of the 32 counties of the island of Ireland, with a population of about 5.4 million.",
       "factSource": "https://en.wikipedia.org/wiki/Republic_of_Ireland"
     },
     {
@@ -5278,7 +5279,7 @@
         ],
         "memberOf": []
       },
-      "fact": "New Zealand (Māori: Aotearoa, pronounced [aɔˈtɛaɾɔa] ) is an island country in the southwestern Pacific Ocean. It comprises two main landmasses—the North Island (Te Ika-a-Māui) and the South Island (Te Waipounamu)—and over 700 smaller islands.",
+      "fact": "New Zealand is an island country in the southwestern Pacific Ocean. It comprises two main landmasses—the North Island (Te Ika-a-Māui) and the South Island (Te Waipounamu)—and over 700 smaller islands.",
       "factSource": "https://en.wikipedia.org/wiki/New_Zealand"
     },
     {
@@ -6318,7 +6319,7 @@
         "stateBorders": [],
         "stateBordersAny": []
       },
-      "fact": "Alaska ( , ə-LASS-kə) is a U.S. state located in the northwestern regions of North America.",
+      "fact": "Alaska is a U.S. state located in the northwestern regions of North America.",
       "factSource": "https://en.wikipedia.org/wiki/Alaska"
     },
     {
@@ -6355,7 +6356,7 @@
           "Tennessee"
         ]
       },
-      "fact": "Alabama ( , AL-ə-BAM-ə) is a state in the Southeastern and Deep Southern regions of the United States. It borders Tennessee to the north, Georgia to the east, Florida and the Gulf of Mexico to the south, and Mississippi to the west.",
+      "fact": "Alabama is a state in the Southeastern and Deep Southern regions of the United States. It borders Tennessee to the north, Georgia to the east, Florida and the Gulf of Mexico to the south, and Mississippi to the west.",
       "factSource": "https://en.wikipedia.org/wiki/Alabama"
     },
     {
@@ -6396,7 +6397,7 @@
           "Texas"
         ]
       },
-      "fact": "Arkansas ( , AR-kən-saw) is a landlocked state in the West South Central region of the Southern United States. It borders Missouri to the north, Tennessee and Mississippi to the east, Louisiana to the south, Texas to the southwest, and Oklahoma to the west.",
+      "fact": "Arkansas is a landlocked state in the West South Central region of the Southern United States. It borders Missouri to the north, Tennessee and Mississippi to the east, Louisiana to the south, Texas to the southwest, and Oklahoma to the west.",
       "factSource": "https://en.wikipedia.org/wiki/Arkansas"
     },
     {
@@ -6546,7 +6547,7 @@
           "Rhode Island"
         ]
       },
-      "fact": "Connecticut ( kə-NET-ih-kət) is a state in the New England region of the Northeastern United States. It borders Rhode Island to the east, Massachusetts to the north, New York to the west, and Long Island Sound to the south.",
+      "fact": "Connecticut is a state in the New England region of the Northeastern United States. It borders Rhode Island to the east, Massachusetts to the north, New York to the west, and Long Island Sound to the south.",
       "factSource": "https://en.wikipedia.org/wiki/Connecticut"
     },
     {
@@ -6580,7 +6581,7 @@
           "Pennsylvania"
         ]
       },
-      "fact": "Delaware ( DEL-ə-wair) is a state in the Mid-Atlantic and South Atlantic regions of the United States. It borders Maryland to its south and west, Pennsylvania to its north, New Jersey to its northeast, and the Atlantic Ocean to its east.",
+      "fact": "Delaware is a state in the Mid-Atlantic and South Atlantic regions of the United States. It borders Maryland to its south and west, Pennsylvania to its north, New Jersey to its northeast, and the Atlantic Ocean to its east.",
       "factSource": "https://en.wikipedia.org/wiki/Delaware"
     },
     {
@@ -6613,7 +6614,7 @@
           "Georgia"
         ]
       },
-      "fact": "Florida ( FLORR-id-ə; Spanish: [floˈɾiða] ) is a state in the Southeastern and South Atlantic regions of the United States. It borders the Gulf of Mexico to the west, Alabama to the northwest, Georgia to the north, the Atlantic Ocean to the east, the Straits of Florida to the south, and The Bahamas to the southeast.",
+      "fact": "Florida is a state in the Southeastern and South Atlantic regions of the United States. It borders the Gulf of Mexico to the west, Alabama to the northwest, Georgia to the north, the Atlantic Ocean to the east, the Straits of Florida to the south, and The Bahamas to the southeast.",
       "factSource": "https://en.wikipedia.org/wiki/Florida"
     },
     {
@@ -6652,7 +6653,7 @@
           "Tennessee"
         ]
       },
-      "fact": "Georgia ( JOR-jə) is a state in the Southeastern, South Atlantic, and Deep South regions of the United States. It borders Tennessee to the northwest, North Carolina and South Carolina to the northeast, the Atlantic Ocean to the east, Florida to the south, and Alabama to the west.",
+      "fact": "Georgia is a state in the Southeastern, South Atlantic, and Deep South regions of the United States. It borders Tennessee to the northwest, North Carolina and South Carolina to the northeast, the Atlantic Ocean to the east, Florida to the south, and Alabama to the west.",
       "factSource": "https://en.wikipedia.org/wiki/Georgia_%28U.S._state%29"
     },
     {
@@ -6679,7 +6680,7 @@
         "stateBorders": [],
         "stateBordersAny": []
       },
-      "fact": "Hawaii ( hə-WY-ee; Hawaiian: Hawaiʻi [həˈvɐjʔi, həˈwɐjʔi]) is an island state of the United States, in the Pacific Ocean about 2,000 miles (3,200 km) southwest of the U.S. mainland.",
+      "fact": "Hawaii is an island state of the United States, in the Pacific Ocean about 2,000 miles (3,200 km) southwest of the U.S. mainland.",
       "factSource": "https://en.wikipedia.org/wiki/Hawaii"
     },
     {
@@ -6720,7 +6721,7 @@
           "Wisconsin"
         ]
       },
-      "fact": "Iowa ( EYE-ə-wə) is a landlocked state in the upper Midwestern region of the United States.",
+      "fact": "Iowa is a landlocked state in the upper Midwestern region of the United States.",
       "factSource": "https://en.wikipedia.org/wiki/Iowa"
     },
     {
@@ -6761,7 +6762,7 @@
           "Wyoming"
         ]
       },
-      "fact": "Idaho ( , EYE-də-hoe) is a landlocked state in the Pacific Northwest and Mountain West subregions of the Western United States.",
+      "fact": "Idaho is a landlocked state in the Pacific Northwest and Mountain West subregions of the Western United States.",
       "factSource": "https://en.wikipedia.org/wiki/Idaho"
     },
     {
@@ -6839,7 +6840,7 @@
           "Ohio"
         ]
       },
-      "fact": "Indiana ( IN-dee-AN-ə) is a state in the Midwestern region of the United States. It borders Lake Michigan to the northwest, Michigan to the north and northeast, Ohio to the east, the Ohio River and Kentucky to the south and southeast, and the Wabash River and Illinois to the west.",
+      "fact": "Indiana is a state in the Midwestern region of the United States. It borders Lake Michigan to the northwest, Michigan to the north and northeast, Ohio to the east, the Ohio River and Kentucky to the south and southeast, and the Wabash River and Illinois to the west.",
       "factSource": "https://en.wikipedia.org/wiki/Indiana"
     },
     {
@@ -6876,7 +6877,7 @@
           "Oklahoma"
         ]
       },
-      "fact": "Kansas ( KAN-zəss) is a landlocked state in the Midwestern region of the United States. It borders Nebraska to the north, Colorado to the west, Oklahoma to the south, and Missouri to the east.",
+      "fact": "Kansas is a landlocked state in the Midwestern region of the United States. It borders Nebraska to the north, Colorado to the west, Oklahoma to the south, and Missouri to the east.",
       "factSource": "https://en.wikipedia.org/wiki/Kansas"
     },
     {
@@ -6919,7 +6920,7 @@
           "West Virginia"
         ]
       },
-      "fact": "Kentucky (US: , UK: ), officially the Commonwealth of Kentucky, is a landlocked state in the Southeastern region of the United States. It borders Illinois, Indiana, and Ohio to the north, West Virginia to the northeast, Virginia to the east, Tennessee to the south, and Missouri to the west.",
+      "fact": "Kentucky, officially the Commonwealth of Kentucky, is a landlocked state in the Southeastern region of the United States. It borders Illinois, Indiana, and Ohio to the north, West Virginia to the northeast, Virginia to the east, Tennessee to the south, and Missouri to the west.",
       "factSource": "https://en.wikipedia.org/wiki/Kentucky"
     },
     {
@@ -6954,7 +6955,7 @@
           "Texas"
         ]
       },
-      "fact": "Louisiana (French: Louisiane; Spanish: Luisiana [lwiˈsjana]; Louisiana Creole: Lwizyàn) is a state in the Deep South and South Central regions of the United States. It is bordered by Texas to the west, Arkansas to the north, and Mississippi to the east.",
+      "fact": "Louisiana is a state in the Deep South and South Central regions of the United States. It is bordered by Texas to the west, Arkansas to the north, and Mississippi to the east.",
       "factSource": "https://en.wikipedia.org/wiki/Louisiana"
     },
     {
@@ -6993,7 +6994,7 @@
           "Vermont"
         ]
       },
-      "fact": "Massachusetts ( MASS-ə-CHOO-sits, -⁠zits; Massachusett: Muhsachuweesut [məhswatʃəwiːsət]), officially the Commonwealth of Massachusetts, is a state in the New England region of the Northeastern United States.",
+      "fact": "Massachusetts, officially the Commonwealth of Massachusetts, is a state in the New England region of the Northeastern United States.",
       "factSource": "https://en.wikipedia.org/wiki/Massachusetts"
     },
     {
@@ -7030,7 +7031,7 @@
           "West Virginia"
         ]
       },
-      "fact": "Maryland (US: ) is a state in the Mid-Atlantic and Southeastern regions of the United States. It borders Virginia to its south, West Virginia to its west, Pennsylvania to its north, and Delaware to its east, as well as with the Atlantic Ocean to its east, and the national capital and federal district of Washington, D.C.",
+      "fact": "Maryland is a state in the Mid-Atlantic and Southeastern regions of the United States. It borders Virginia to its south, West Virginia to its west, Pennsylvania to its north, and Delaware to its east, as well as with the Atlantic Ocean to its east, and the national capital and federal district of Washington, D.C.",
       "factSource": "https://en.wikipedia.org/wiki/Maryland"
     },
     {
@@ -7100,7 +7101,7 @@
           "Wisconsin"
         ]
       },
-      "fact": "Michigan ( MISH-ig-ən) is a peninsular state in the Great Lakes region of the Upper Midwestern United States. It shares water and land boundaries with Minnesota to the northwest, Wisconsin to the west, Indiana and Illinois to the southwest, Ohio to the southeast, and the Canadian province of Ontario to the east, northeast and north.",
+      "fact": "Michigan is a peninsular state in the Great Lakes region of the Upper Midwestern United States. It shares water and land boundaries with Minnesota to the northwest, Wisconsin to the west, Indiana and Illinois to the southwest, Ohio to the southeast, and the Canadian province of Ontario to the east, northeast and north.",
       "factSource": "https://en.wikipedia.org/wiki/Michigan"
     },
     {
@@ -7258,7 +7259,7 @@
           "Wyoming"
         ]
       },
-      "fact": "Montana ( mon-TAN-ə) is a landlocked state in the Mountain West subregion of the Western United States. It is bordered by Idaho to the west, North Dakota to the east, South Dakota to the southeast, Wyoming to the south, and the Canadian provinces of Alberta, British Columbia, and Saskatchewan to the north.",
+      "fact": "Montana is a landlocked state in the Mountain West subregion of the Western United States. It is bordered by Idaho to the west, North Dakota to the east, South Dakota to the southeast, Wyoming to the south, and the Canadian provinces of Alberta, British Columbia, and Saskatchewan to the north.",
       "factSource": "https://en.wikipedia.org/wiki/Montana"
     },
     {
@@ -7295,7 +7296,7 @@
           "Virginia"
         ]
       },
-      "fact": "North Carolina ( KAYR-ə-LIE-nə) is a state in the Southeastern and South Atlantic regions of the United States. It is bordered by Virginia to the north, the Atlantic Ocean to the east, South Carolina to the south, Georgia to the southwest, and Tennessee to the west.",
+      "fact": "North Carolina is a state in the Southeastern and South Atlantic regions of the United States. It is bordered by Virginia to the north, the Atlantic Ocean to the east, South Carolina to the south, Georgia to the southwest, and Tennessee to the west.",
       "factSource": "https://en.wikipedia.org/wiki/North_Carolina"
     },
     {
@@ -7330,7 +7331,7 @@
           "South Dakota"
         ]
       },
-      "fact": "North Dakota ( də-KOH-tə) is a landlocked U.S. state in the Upper Midwest, named after the indigenous Dakota and Sioux peoples.",
+      "fact": "North Dakota is a landlocked U.S. state in the Upper Midwest, named after the indigenous Dakota and Sioux peoples.",
       "factSource": "https://en.wikipedia.org/wiki/North_Dakota"
     },
     {
@@ -7371,7 +7372,7 @@
           "Wyoming"
         ]
       },
-      "fact": "Nebraska ( nə-BRASK-ə) is a landlocked state in the Midwestern region of the United States. It borders South Dakota to the north; Wyoming to the west; Colorado to the southwest; Kansas to the south; and Missouri to the southeast and Iowa to the east, both across the Missouri River.",
+      "fact": "Nebraska is a landlocked state in the Midwestern region of the United States. It borders South Dakota to the north; Wyoming to the west; Colorado to the southwest; Kansas to the south; and Missouri to the southeast and Iowa to the east, both across the Missouri River.",
       "factSource": "https://en.wikipedia.org/wiki/Nebraska"
     },
     {
@@ -7406,7 +7407,7 @@
           "Vermont"
         ]
       },
-      "fact": "New Hampshire ( HAMP-shər) is a state in the New England region of the Northeastern United States. It borders Massachusetts to the south, Vermont to the west, Maine and the Gulf of Maine to the east, and the Canadian province of Quebec to the north.",
+      "fact": "New Hampshire is a state in the New England region of the Northeastern United States. It borders Massachusetts to the south, Vermont to the west, Maine and the Gulf of Maine to the east, and the Canadian province of Quebec to the north.",
       "factSource": "https://en.wikipedia.org/wiki/New_Hampshire"
     },
     {
@@ -7517,7 +7518,7 @@
           "Utah"
         ]
       },
-      "fact": "Nevada ( , nə-VAD-ə; Spanish: [ne.ˈβa.ða] ) is a landlocked state in the Western United States. It is also sometimes placed in the Mountain West and Southwestern United States.",
+      "fact": "Nevada is a landlocked state in the Western United States. It is also sometimes placed in the Mountain West and Southwestern United States.",
       "factSource": "https://en.wikipedia.org/wiki/Nevada"
     },
     {
@@ -7636,7 +7637,7 @@
           "Texas"
         ]
       },
-      "fact": "Oklahoma ( OH-klə-HOH-mə; Choctaw: Oklahumma, pronounced [oklahómma]), is a landlocked state in the South Central, Southern, and Southwestern regions of the United States. It borders Texas to the southwest, Kansas to the north, Missouri to the northeast, Arkansas to the southeast, New Mexico to the west, and Colorado to the northwest.",
+      "fact": "Oklahoma, is a landlocked state in the South Central, Southern, and Southwestern regions of the United States. It borders Texas to the southwest, Kansas to the north, Missouri to the northeast, Arkansas to the southeast, New Mexico to the west, and Colorado to the northwest.",
       "factSource": "https://en.wikipedia.org/wiki/Oklahoma"
     },
     {
@@ -7673,7 +7674,7 @@
           "Washington"
         ]
       },
-      "fact": "Oregon ( ORR-ih-ghən, -⁠gon) is a state in the Pacific Northwest region of the United States. It is a part of the Western United States, with the Columbia River delineating much of Oregon's northern boundary with Washington, while the Snake River delineates much of its eastern boundary with Idaho.",
+      "fact": "Oregon is a state in the Pacific Northwest region of the United States. It is a part of the Western United States, with the Columbia River delineating much of Oregon's northern boundary with Washington, while the Snake River delineates much of its eastern boundary with Idaho.",
       "factSource": "https://en.wikipedia.org/wiki/Oregon"
     },
     {
@@ -7780,7 +7781,7 @@
           "North Carolina"
         ]
       },
-      "fact": "South Carolina ( KARR-ə-LY-nə) is a state in the Southeastern, South Atlantic and Deep South regions of the United States. It borders North Carolina to the north and northeast, the Atlantic Ocean to the southeast, and Georgia to the west and south across the Savannah River.",
+      "fact": "South Carolina is a state in the Southeastern, South Atlantic and Deep South regions of the United States. It borders North Carolina to the north and northeast, the Atlantic Ocean to the southeast, and Georgia to the west and south across the Savannah River.",
       "factSource": "https://en.wikipedia.org/wiki/South_Carolina"
     },
     {
@@ -7821,7 +7822,7 @@
           "Wyoming"
         ]
       },
-      "fact": "South Dakota ( də-KOH-tə; Dakota: Dakȟóta itókaga, pronounced [daˈkˣota iˈtokaga]) is a landlocked state in the North Central region of the United States. It is also part of the Great Plains.",
+      "fact": "South Dakota is a landlocked state in the North Central region of the United States. It is also part of the Great Plains.",
       "factSource": "https://en.wikipedia.org/wiki/South_Dakota"
     },
     {
@@ -7866,7 +7867,7 @@
           "Virginia"
         ]
       },
-      "fact": "Tennessee ( , locally ), officially the State of Tennessee, is a landlocked state in the Southeastern region of the United States. It borders Kentucky to the north, Virginia to the northeast, North Carolina to the east, Georgia, Alabama, and Mississippi to the south, Arkansas to the southwest, and Missouri to the northwest.",
+      "fact": "Tennessee (locally), officially the State of Tennessee, is a landlocked state in the Southeastern region of the United States. It borders Kentucky to the north, Virginia to the northeast, North Carolina to the east, Georgia, Alabama, and Mississippi to the south, Arkansas to the southwest, and Missouri to the northwest.",
       "factSource": "https://en.wikipedia.org/wiki/Tennessee"
     },
     {
@@ -7903,7 +7904,7 @@
           "Oklahoma"
         ]
       },
-      "fact": "Texas ( TEK-səss) is a state in the United States. Located in the south-central part of the country, it borders Louisiana, Arkansas, Oklahoma, and New Mexico.",
+      "fact": "Texas is a state in the United States. Located in the south-central part of the country, it borders Louisiana, Arkansas, Oklahoma, and New Mexico.",
       "factSource": "https://en.wikipedia.org/wiki/Texas"
     },
     {
@@ -8017,7 +8018,7 @@
           "New York"
         ]
       },
-      "fact": "Vermont ( ) is a landlocked state in the New England region of the Northeastern United States. It borders Massachusetts to the south, New Hampshire to the east, New York to the west, and the Canadian province of Quebec to the north.",
+      "fact": "Vermont is a landlocked state in the New England region of the Northeastern United States. It borders Massachusetts to the south, New Hampshire to the east, New York to the west, and the Canadian province of Quebec to the north.",
       "factSource": "https://en.wikipedia.org/wiki/Vermont"
     },
     {

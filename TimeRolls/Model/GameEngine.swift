@@ -123,6 +123,10 @@ final class GameEngine {
             await library.requestAccess()
         }
         await library.reload(settings: settings)
+        // Before the first rebuild of the pools, for the photographs it asks about: those
+        // with a place name, which Places reads both of these for.
+        await objects.warmReadings(for: Set(places.annotate(library.photos)
+                                                .filter { $0.placeName != nil }.map(\.id)))
         refreshPools()
 
         // Geocoding happens in the background; Places simply gets better as it lands.
@@ -134,7 +138,7 @@ final class GameEngine {
             guard let self else { return }
             repeat {
                 await places.resolveClusters(in: library.photos, limit: 25)
-                refreshPools()
+                refreshPoolsSoon()
                 if case .playing = phase, level == nil { nextLevel() }
             } while places.hasUnresolvedClusters(in: library.photos) && !Task.isCancelled
         }
@@ -165,7 +169,37 @@ final class GameEngine {
         }
     }
 
+    private var lastPoolRefresh = Date.distantPast
+    private var poolRefreshScheduled = false
+    /// How often a background pass may rebuild the pools.
+    private static let backgroundRefreshInterval: TimeInterval = 4
+
+    /// `refreshPools`, for the background passes that report in many times a minute.
+    ///
+    /// Rebuilding the pools is not cheap — every pack photograph, every one of the
+    /// player's, a sweep of the image cache and a trial round for each game — and the
+    /// photo scan asked for it after every twelve photographs, on the main thread. With a
+    /// library of thousands that was the whole of the slowness on Hanna's iPhone; the iPad,
+    /// with no photo library in play, never ran it. Now at most once every few seconds,
+    /// with one trailing refresh so the last of a pass is never left out.
+    private func refreshPoolsSoon() {
+        let wait = Self.backgroundRefreshInterval - Date().timeIntervalSince(lastPoolRefresh)
+        if wait <= 0 {
+            refreshPools()
+            return
+        }
+        guard !poolRefreshScheduled else { return }
+        poolRefreshScheduled = true
+        Task { [weak self] in
+            try? await Task.sleep(for: .seconds(wait))
+            guard let self else { return }
+            poolRefreshScheduled = false
+            refreshPools()
+        }
+    }
+
     private func refreshPools() {
+        lastPoolRefresh = Date()
         // Photographs that could not be fetched last time are not offered again: an
         // iCloud photograph that will not come down is a blank card, and a blank card
         // is a question nobody can answer.
@@ -242,9 +276,13 @@ final class GameEngine {
         }
         objects.startTagging(library.photos) { [weak self] in
             guard let self else { return }
-            refreshPools()
-            if case .noContent = phase, !availableThemes.isEmpty {
-                beginSession()
+            // At once while there is nothing to play — this may be what unlocks a game —
+            // and otherwise at most every few seconds. See `refreshPoolsSoon`.
+            if case .noContent = phase {
+                refreshPools()
+                if !availableThemes.isEmpty { beginSession() }
+            } else {
+                refreshPoolsSoon()
             }
             // Describe a few more once the classifier has finished a chunk, so the two
             // passes take turns rather than competing for the device.

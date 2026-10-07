@@ -71,11 +71,21 @@ enum OneBucket {
         Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String ?? "0"
     }
 
-    /// Where to read a pack item from: OneBucket when it is configured and the manifest
-    /// says where the object lives, and otherwise wherever the photograph came from.
-    static func source(key: String?, original: URL?) -> URLRequest? {
-        if let key, let request = request(forKey: key) { return request }
-        guard let original else { return nil }
-        return URLRequest(url: original)
+    /// The one pack whose photographs come from where they were found: Places near you,
+    /// looked up live around the player and never mirrored into the bucket.
+    static let liveSourcePackID = "local-trivia"
+
+    /// Where to read a pack item from, in the order to try.
+    ///
+    /// OneBucket first, always. The original Wikimedia address comes second, and is used
+    /// only when the bucket cannot serve the photograph — no key, no signature, an error
+    /// status or a failed request — so a missing photograph is still a photograph rather
+    /// than a blank card. Places near you is found at play time and never mirrored, so it
+    /// has only its own source.
+    static func sources(for item: PackItem) -> [URLRequest] {
+        let original = item.remoteURL.map { URLRequest(url: $0) }
+        if item.packID == liveSourcePackID { return original.map { [$0] } ?? [] }
+        let bucket = item.remoteKey.flatMap(request(forKey:))
+        return [bucket, original].compactMap { $0 }
     }
 }

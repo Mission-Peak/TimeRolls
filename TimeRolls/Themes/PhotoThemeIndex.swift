@@ -15,6 +15,7 @@
 //  of the model never ships. No photograph and no label leaves the phone.
 //
 
+import Accelerate
 import CoreML
 import CoreVideo
 import Foundation
@@ -279,11 +280,12 @@ nonisolated final class PhotoThemeIndex: @unchecked Sendable {
         return values.map { $0 / length }
     }
 
+    /// Accelerate rather than a loop. This runs for every concept against every photograph
+    /// the game asks about, and the loop was the whole of a 27-second background pass on a
+    /// debug build — it is unoptimised there, where vDSP is the same speed in any build.
     private nonisolated static func dot(_ a: [Float], _ b: [Float]) -> Float {
         guard a.count == b.count else { return -1 }
-        var total: Float = 0
-        for index in a.indices { total += a[index] * b[index] }
-        return total
+        return vDSP.dot(a, b)
     }
 
     /// The encoder wants 224×224 RGB. Anything else is a crash rather than a bad answer,
