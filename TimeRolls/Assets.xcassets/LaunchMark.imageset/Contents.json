@@ -1,0 +1,28 @@
+{
+  "images": [
+    {
+      "filename": "launch-logo-iphone@2x.png",
+      "idiom": "iphone",
+      "scale": "2x"
+    },
+    {
+      "filename": "launch-logo-iphone@3x.png",
+      "idiom": "iphone",
+      "scale": "3x"
+    },
+    {
+      "filename": "launch-logo-ipad@1x.png",
+      "idiom": "ipad",
+      "scale": "1x"
+    },
+    {
+      "filename": "launch-logo-ipad@2x.png",
+      "idiom": "ipad",
+      "scale": "2x"
+    }
+  ],
+  "info": {
+    "author": "xcode",
+    "version": 1
+  }
+}

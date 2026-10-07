@@ -119,7 +119,7 @@ final class GameEngine {
         }
         // Only ask for the photo library if the player actually wants their own photos
         // in play. Someone who chose the built-in sets has already answered this.
-        if library.access == .notDetermined, settings.useAllPhotos {
+        if library.access == .notDetermined, settings.ownPhotosOn {
             await library.requestAccess()
         }
         await library.reload(settings: settings)
@@ -196,6 +196,8 @@ final class GameEngine {
                 // Already downloaded is already paid for.
                 guard let item = PublicPackLibrary.item(packID: packID, itemID: itemID)
                 else { return false }
+                // Shipped inside the app — the Geography maps — costs nothing anywhere.
+                if PublicPackLibrary.imageURL(for: item) != nil { return true }
                 return RemoteImageCache.shared.isAvailableOffline(item)
             }
         // Local Trivia joins the pool like any other pack once it has arrived.
@@ -213,6 +215,7 @@ final class GameEngine {
         }
         generator.packThemeSupport = PublicPackLibrary.packThemeSupport()
         generator.packChronologyPrompts = PublicPackLibrary.chronologyPrompts()
+        generator.quizQuestions = PublicPackLibrary.quizQuestions()
         generator.birthDatedPacks = PublicPackLibrary.birthDatedPackIDs()
         generator.examinesPhotos = objects.unavailableReason == nil
         generator.visualDistance = { [objects] first, second in
@@ -319,7 +322,7 @@ final class GameEngine {
     /// before the session starts, so it doesn't reload the library twice.
     /// Record the pack choice without finishing onboarding — the voice step comes after.
     func applyOnboardingChoice(packIDs: Set<String>) {
-        settings.useAllPhotos = false
+        settings.ownPhotosOn = false
         settings.enabledPackIDs = packIDs
         settings.knownPackIDs.formUnion(PublicPackLibrary.packs.map(\.id))
         settings.save()
@@ -332,7 +335,7 @@ final class GameEngine {
             if useOwnPhotos, library.access == .notDetermined {
                 await library.requestAccess()
             }
-            settings.useAllPhotos = useOwnPhotos && library.access.canRead
+            settings.ownPhotosOn = useOwnPhotos && library.access.canRead
             settings.enabledPackIDs = packIDs
             // Remember every pack we offered, so the new-pack migration doesn't switch
             // the ones they turned down back on at the next launch.
@@ -604,7 +607,7 @@ final class GameEngine {
             case .places:
                 recentPlaceOrder = Self.rememberAsked(tag, in: recentPlaceOrder)
                 generator.recentPlaces = recentPlaceOrder
-            case .objects, .chronology:
+            case .objects, .chronology, .geography, .cars, .film, .sports:
                 recentCategoryOrder = Self.rememberAsked(tag, in: recentCategoryOrder)
                 generator.recentCategories = recentCategoryOrder
             }

@@ -94,16 +94,16 @@ var generator = LevelGenerator()
 generator.personal = library
 generator.pack = makePackPhotos()
 
-// --- Three to one: one of the player's own photographs per round, the rest from packs.
+// --- The player's own photographs: only where they are the point.
 //
-// Measured rather than asserted per round, because the ratio is a target the generator
-// reaches by asking a curator again, not a rule it can enforce. What matters is that a
-// full library lands on it nearly always, and that a library with nothing to offer a
-// theme still gets a round instead of an empty screen.
+// A round of public photographs may hold one of theirs, and only as the answer. As a
+// distractor it is filler — there because a round needed a fourth — and rounds like that
+// are what this replaced. Exact, not measured: every round, every theme.
 var mixCounts: [Int: Int] = [:]
 var mixRounds = 0
 var mixByTheme: [GameTheme: (none: Int, one: Int, asked: Int)] = [:]
-for theme in GameTheme.allCases {
+var filler = 0
+for theme in GameTheme.allCases where !theme.isQuiz {
     for _ in 0..<300 {
         mixByTheme[theme, default: (0, 0, 0)].asked += 1
         guard let level = generator.makeLevel(theme: theme) else { continue }
@@ -112,26 +112,28 @@ for theme in GameTheme.allCases {
         mixCounts[mine, default: 0] += 1
         if mine == 0 { mixByTheme[theme, default: (0, 0, 0)].none += 1 }
         if mine == 1 { mixByTheme[theme, default: (0, 0, 0)].one += 1 }
+        if !generator.isPertinent(level) { filler += 1 }
     }
 }
-for theme in GameTheme.allCases {
+for theme in GameTheme.allCases where !theme.isQuiz {
     let entry = mixByTheme[theme] ?? (0, 0, 0)
-    print("   \(theme.title): \(entry.one) with one, \(entry.none) with none, "
-        + "of \(entry.asked) asked")
+    print("   \(theme.title): \(entry.one) with one of theirs as the answer, "
+        + "\(entry.none) all public, of \(entry.asked) asked")
 }
-let onTarget = mixCounts[LevelGenerator.personalPhotosWanted] ?? 0
 check(mixRounds > 0, "the balance check built no rounds at all")
-// Never more than one. This is the part that has to be exact, and it is exact because the
-// pool only ever holds one, not because the generator got lucky.
+check(filler == 0, "\(filler) rounds used the player's photograph as a distractor")
 let tooMany = mixCounts.filter { $0.key > LevelGenerator.personalPhotosWanted }
     .values.reduce(0, +)
-check(tooMany == 0,
-      "\(tooMany) rounds held more than \(LevelGenerator.personalPhotosWanted) "
-    + "of the player's own photographs")
-check(Double(onTarget) / Double(max(mixRounds, 1)) >= 0.70,
-      "only \(onTarget) of \(mixRounds) rounds had "
-    + "\(LevelGenerator.personalPhotosWanted) personal photograph")
-print("three to one — \(onTarget) of \(mixRounds) rounds had exactly one personal photo"
+check(tooMany == 0, "\(tooMany) rounds held more than one of the player's own photographs")
+// Still used, but not everywhere: a full library should get its say in some rounds, and
+// no theme should become a round about it every time.
+let withTheirs = mixCounts[1] ?? 0
+check(withTheirs > 0, "no round used one of the player's photographs")
+for (theme, entry) in mixByTheme where entry.asked > 0 {
+    check(Double(entry.one) / Double(entry.asked) <= 0.8,
+          "\(theme.title): \(entry.one) of \(entry.asked) rounds were about their photograph")
+}
+print("their photographs — \(withTheirs) of \(mixRounds) rounds had one, always as the answer"
     + " · spread \(mixCounts.sorted { $0.key < $1.key }.map { "\($0.key):\($0.value)" }.joined(separator: " "))")
 
 // --- Invariants across every round size, both themes.
@@ -486,7 +488,10 @@ for theme in allThemes {
     check(abs(observedShare - intended) < 0.05,
           "theme \(theme.title) is picked \(Int(observedShare * 100))% of the time, "
           + "where its share says \(Int(intended * 100))%")
-    check(observedShare > 0.10,
+    // Starved means well under an equal share. This was a flat 10% when there were three
+    // themes; with the four quiz categories an equal share is a seventh, and 10% would
+    // call Time starved for being exactly as rare as it was meant to be.
+    check(observedShare > 0.5 / Double(allThemes.count),
           "theme \(theme.title) is starved at \(Int(observedShare * 100))% of rounds")
 }
 let repeatShare = Double(repeats) / 30_000
@@ -534,10 +539,8 @@ for _ in 0..<200 {
     birthLevels += 1
     check(level.prompt.contains("born first"),
           "a birth-dated level asked \(level.prompt.debugDescription)")
-    if let hint = level.hint {
-        check(hint.contains("was born in"),
-              "a birth-dated level hinted \(hint.debugDescription)")
-    }
+    // People get no hints, in any game.
+    check(level.hint == nil, "a birth-dated level hinted \(level.hint?.debugDescription ?? "")")
 }
 check(birthLevels > 0, "no levels could be built from a birth-dated pack")
 
@@ -2368,6 +2371,151 @@ print("every way of asking — "
 
 print("shipped packs — \(shippedPacks.count) read from disk · "
     + packSummary.joined(separator: " · "))
+
+// MARK: - Quiz categories, against the shipped packs
+
+// Each category plays from its own pack and nothing else, and every round is fair by the
+// pack's own facts: the answer holds the value asked about, and every distractor is known
+// not to.
+var quizSummary: [String] = []
+var peopleShapes: [String: Int] = [:]
+for pack in shippedPacks {
+    let themes = pack.themes.compactMap(GameTheme.init(rawValue:)).filter(\.isQuiz)
+    guard let theme = themes.first else { continue }
+    check(themes.count == 1 && pack.themes.count == 1,
+          "\(pack.id) plays more than one category: \(pack.themes)")
+    let packPhotos = photos(from: pack)
+    check(packPhotos.allSatisfy { $0.fact?.isBlank == false },
+          "\(pack.id): an item has no fact to show after the answer")
+    var generator = LevelGenerator()
+    // Every shipped pack at once, so a category that leaked into another would show up.
+    generator.pack = shippedPacks.flatMap(photos(from:))
+    generator.packThemeSupport = Dictionary(uniqueKeysWithValues: shippedPacks.map {
+        ($0.id, Set($0.themes.compactMap(GameTheme.init(rawValue:))))
+    })
+    generator.quizQuestions = [pack.id: pack.questions]
+    generator.personal = makeLibrary()
+    let questions = Dictionary(uniqueKeysWithValues: pack.questions.map { ($0.id, $0) })
+    var kinds: [String: Int] = [:]
+    var factIDs: [String: Int] = [:]
+    var samples: [String] = []
+    var remembered: [String] = []
+    for _ in 0..<400 {
+        // The engine's memory of recent wordings, so the rotation is what a player sees.
+        generator.recentWordings = remembered
+        guard let level = generator.makeLevel(theme: theme) else {
+            check(false, "\(pack.id): no round could be built")
+            break
+        }
+        kinds[level.ask ?? "?", default: 0] += 1
+        if let wording = level.wording { remembered = Recency.remembering(wording, in: remembered) }
+        if samples.count < 6, !samples.contains(level.prompt) { samples.append(level.prompt) }
+        if PeopleWording.isAboutPeople(theme) {
+            let shape = level.prompt.replacingOccurrences(of: #"(is|in|for|named|played) .*\?"#,
+                                                          with: "$1 …?", options: .regularExpression)
+            peopleShapes[shape, default: 0] += 1
+        }
+        let photos = level.photos
+        check(photos.count == DifficultyKnob.photoCount, "\(pack.id): \(photos.count) photos")
+        check(photos.allSatisfy { $0.packID == pack.id },
+              "\(pack.id): a round mixed categories — \(Set(photos.compactMap(\.packID)))")
+        check(!photos.contains(where: \.isPersonal), "\(pack.id): a personal photo in a quiz")
+        // A generation round is four of one car by design, so it is held to four different
+        // generations instead; every other kind to four different things.
+        if level.ask == "quiz-generation" {
+            check(Set(photos.compactMap(\.subjectID)).count == photos.count,
+                  "\(pack.id): one generation twice — \(level.prompt)")
+        } else {
+            check(QuizCurator.canStandTogether(photos),
+                  "\(pack.id): two of one thing, or a pair kept apart — \(level.prompt)")
+        }
+        guard let answer = photos.first(where: { $0.id == level.correctPhotoID }) else {
+            check(false, "\(pack.id): the answer is not in the round")
+            continue
+        }
+        let others = photos.filter { $0.id != answer.id }
+        // People are asked about as people: never "which one", never a hint, and a word
+        // like "actress" or "golfer" only when it is true of all four.
+        if PeopleWording.isAboutPeople(theme) {
+            check(!level.prompt.lowercased().contains("which one"),
+                  "\(pack.id): asked \(level.prompt.debugDescription)")
+            check(level.hint == nil, "\(pack.id): a hint on a person — \(level.hint ?? "")")
+            if let noun = PeopleWording.sharedNoun(of: photos, theme: theme) {
+                _ = noun
+            } else {
+                for word in ["actress", "actor", "golfer", "boxer", "football player",
+                             "baseball player", "basketball player", "hockey player",
+                             "soccer player", "tennis player"]
+                where level.prompt.hasPrefix("Which \(word) is") {
+                    check(false, "\(pack.id): \(level.prompt) but not all four are \(word)s")
+                }
+            }
+        }
+        switch level.ask {
+        case "quiz-named":
+            let name = answer.family ?? answer.askableName ?? ""
+            check(level.prompt.contains(name), "\(pack.id): named round does not name \(name)")
+        case "quiz-generation":
+            check(Set(photos.compactMap(\.family)).count == 1,
+                  "\(pack.id): generation round mixes model lines")
+            for (i, a) in photos.enumerated() {
+                for b in photos.dropFirst(i + 1) {
+                    check(QuizCurator.farEnoughApart(a, b),
+                          "\(pack.id): \(a.askYear ?? 0) and \(b.askYear ?? 0) too close")
+                }
+            }
+            check(level.prompt.contains("\(answer.askYear ?? -1)"),
+                  "\(pack.id): generation prompt does not name the answer's year")
+        case "quiz-fact":
+            let parts = (level.focusTag ?? "").split(separator: ":", maxSplits: 2).map(String.init)
+            guard parts.count == 3, let question = questions[parts[1]] else {
+                check(false, "\(pack.id): fact round without its question")
+                continue
+            }
+            let value = parts[2]
+            factIDs[question.id, default: 0] += 1
+            check((answer.facts[question.ask] ?? []).contains(value),
+                  "\(pack.id): the answer does not hold \(value)")
+            for other in others {
+                guard let known = other.facts[question.exclude] else {
+                    check(false, "\(pack.id): a distractor with \(question.exclude) unknown")
+                    continue
+                }
+                check(!known.contains { $0.caseInsensitiveCompare(value) == .orderedSame },
+                      "\(pack.id): \(other.title ?? "?") also holds \(value) — \(level.prompt)")
+                check(other.title?.lowercased() != value.lowercased(),
+                      "\(pack.id): the thing asked about is in the round — \(level.prompt)")
+            }
+            if question.sameCluster {
+                check(Set(photos.map { $0.cluster ?? "" }).count == 1,
+                      "\(pack.id): \(question.id) mixed clusters")
+            }
+        default:
+            check(false, "\(pack.id): unknown kind \(level.ask ?? "nil")")
+        }
+    }
+    quizSummary.append("\(pack.title) " + kinds.sorted { $0.key < $1.key }
+        .map { "\($0.key.dropFirst(5)) \($0.value)" }.joined(separator: "/")
+        + (factIDs.isEmpty ? "" : " [" + factIDs.sorted { $0.key < $1.key }
+            .map { "\($0.key) \($0.value)" }.joined(separator: ", ") + "]"))
+    print("  \(pack.title): " + samples.joined(separator: " | "))
+}
+// The rewording may never take a people or map question back to "which one", and may
+// still loosen "Which photo…" that way.
+let anyLevel = Level(theme: .film, prompt: "Who is Audrey Hepburn?", photos: [],
+                     correctPhotoID: "", curationNote: "")
+check(QuestionGuardrail.reject("Which one is Audrey Hepburn?",
+                               rewordingOf: "Who is Audrey Hepburn?", in: anyLevel) != nil,
+      "a people question was allowed back to which one")
+check(QuestionGuardrail.reject("Which one is Audrey Hepburn?",
+                               rewordingOf: "Which actress is Audrey Hepburn?", in: anyLevel) != nil,
+      "\"Which actress\" was allowed back to which one")
+check(QuestionGuardrail.reject("What is Phil Jackson?",
+                               rewordingOf: "Who is Phil Jackson?", in: anyLevel) != nil,
+      "a person was allowed to become a what")
+print("quiz categories — " + quizSummary.joined(separator: " · "))
+print("people wordings — " + peopleShapes.sorted { $0.value > $1.value }
+    .map { "\($0.key) \($0.value)" }.joined(separator: " · "))
 
 if failures.isEmpty {
     print("✅ all curation invariants held over \(11 * 3 * 120 * 3) generated levels")

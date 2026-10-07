@@ -71,6 +71,36 @@ enum QuestionGuardrail {
             guard candidateNames else { return "stopped saying which photo" }
         }
 
+        // Never back to "which one". The written questions say what is being asked about —
+        // "Which actress is…", "Which map shows…" — and "which one" is the vaguer question
+        // they replaced.
+        // Only where the written question named something: "Which photo is older?" can
+        // fairly become "Which one is older?", because "photo" was never specific.
+        let opening = original.lowercased().split(separator: " ").prefix(2).map(String.init)
+        let namedSomething = opening.first == "who"
+            || (opening.first == "which" && opening.count == 2
+                && !waysToSayPhoto.contains(opening[1]) && opening[1] != "of")
+        if namedSomething, lowered.contains("which one") {
+            return "went back to which one"
+        }
+
+        // A person stays a "who". The rewording turned "Who is Phil Jackson?" into "What
+        // is Phil Jackson?" — every word allowed on its own, and it speaks of somebody as
+        // a thing.
+        if original.lowercased().hasPrefix("who"), !lowered.hasPrefix("who") {
+            return "stopped asking who"
+        }
+
+        // A question about the player's own pictures has to keep saying so. "Which photo is
+        // from your album?" came back as "Which photo is from the album?" — every word
+        // allowed, and a different question: "the album" is somebody else's, and the
+        // player was left asking which album was meant.
+        let ownership: Set<String> = ["your", "yours", "you"]
+        if !originalWords.isDisjoint(with: ownership),
+           Set(candidateWords).isDisjoint(with: ownership) {
+            return "stopped saying it was theirs"
+        }
+
         // And the question still has to be the question that was asked.
         guard keepsTheSubject(of: original, in: lowered, level: level) else {
             return "lost what was being asked"
@@ -89,7 +119,7 @@ enum QuestionGuardrail {
                 .contains { lowered.contains($0) }
         // The album's name is the question. A rewording that drops or bends it is asking
         // about a different album, so the same rule as Places and Things applies.
-        case .places, .objects:
+        case .places, .objects, .geography, .cars, .film, .sports:
             // The place or the thing has to be named, and named as it was given: these
             // are the words the player is matching the photographs against.
             let anchors = original

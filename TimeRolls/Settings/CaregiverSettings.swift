@@ -45,6 +45,10 @@ struct CaregiverSettings: Codable, Equatable, Sendable {
     }
 
     // Photo sources
+    /// Whether the player's own photographs are in the game at all — "My own photos" in
+    /// What would you like. Which of them, all or chosen albums, is `useAllPhotos`.
+    var ownPhotosOn = true
+    /// All of the player's photographs, or only the albums chosen in Setup → My photos.
     var useAllPhotos = true
     /// Album identifier → included. A `false` entry always wins over inclusion.
     var albumSelection: [String: Bool] = [:]
@@ -173,6 +177,17 @@ struct CaregiverSettings: Codable, Equatable, Sendable {
         let defaults = CaregiverSettings()
         useAllPhotos = value(.useAllPhotos, defaults.useAllPhotos)
         albumSelection = value(.albumSelection, defaults.albumSelection)
+        if container.contains(.ownPhotosOn) {
+            ownPhotosOn = value(.ownPhotosOn, defaults.ownPhotosOn)
+        } else {
+            // Before this setting, "own photos off" was written as "not all photos, and
+            // no album chosen". Read it back as off, with "all" restored for next time.
+            let chosesAnAlbum = albumSelection.values.contains(true)
+            if !useAllPhotos && !chosesAnAlbum {
+                ownPhotosOn = false
+                useAllPhotos = true
+            }
+        }
         enabledPackIDs = value(.enabledPackIDs, defaults.enabledPackIDs)
         knownPackIDs = value(.knownPackIDs, defaults.knownPackIDs)
         packsOnCellular = value(.packsOnCellular, defaults.packsOnCellular)
@@ -225,8 +240,11 @@ struct CaregiverSettings: Codable, Equatable, Sendable {
             .sorted { $0.key < $1.key }
             .map { "\($0.key)=\($0.value)" }
             .joined(separator: "|")
-        return "\(useAllPhotos)|\(albums)|\(enabledPackIDs.sorted().joined(separator: ","))"
+        return "\(ownPhotosOn)|\(useAllPhotos)|\(albums)|\(enabledPackIDs.sorted().joined(separator: ","))"
             + "|\(labelled)|\(excludedPhotoIDs.sorted().joined(separator: ","))"
+            // Which photo sets can be fetched right now depends on it, so a change has to
+            // rebuild the pools — otherwise "Wi-Fi only" took effect at the next launch.
+            + "|cellular=\(packsOnCellular)"
     }
 
     /// Recover if every pack these settings point at has gone away — a pack removed in a

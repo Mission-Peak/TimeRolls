@@ -75,6 +75,10 @@ nonisolated enum RoundAuditRules {
         case .chronology: false
         case .objects: true
         case .places: !usesPersonalPhotos
+        // The quiz categories, never. Who starred in a film, which country borders which,
+        // what year a car was built — none of it is in the picture, and a model that
+        // disagreed would be disagreeing with a fact it cannot see.
+        case .geography, .cars, .film, .sports: false
         // Occasions, never. The answer is which album somebody filed the photograph in,
         // which is not in the photograph — the model would be guessing at "Dad's 80th"
         // from a cake, and disagreeing with a fact.

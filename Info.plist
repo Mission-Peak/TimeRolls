@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!--
+  The part of Info.plist Xcode cannot generate from build settings.
+
+  Everything else is generated (GENERATE_INFOPLIST_FILE) and merged with this. The launch
+  screen lives here because INFOPLIST_KEY_UILaunchScreen_UIImageName and _UIColorName are
+  silently dropped — the built app got an empty UILaunchScreen and a blank screen — which
+  is the same thing INFOPLIST_KEY_ did to the OneBucket settings.
+
+  What iOS shows while the app loads: the logo on the icon's own blush sky. LaunchSplash then
+  draws the same logo in the same place and adds "by Mission Peak", so the two read as
+  one screen.
+
+  The asset names change whenever the launch art does (LaunchLogo → LaunchMark,
+  LaunchBackground → LaunchSky on 2026-10-06). iOS caches the launch screen by them, and a
+  reinstall alone kept showing the old blue one.
+-->
+<plist version="1.0">
+<dict>
+	<key>UILaunchScreen</key>
+	<dict>
+		<key>UIImageName</key>
+		<string>LaunchMark</string>
+		<key>UIColorName</key>
+		<string>LaunchSky</string>
+		<key>UIImageRespectsSafeAreaInsets</key>
+		<false/>
+	</dict>
+</dict>
+</plist>

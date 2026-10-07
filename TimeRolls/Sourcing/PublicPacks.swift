@@ -87,6 +87,13 @@ struct PackItem: Identifiable, Hashable {
     var commonName: String?
     /// The Latin, for the back of the card. Nil where it is the common name again.
     var scientificName: String?
+    /// Quiz packs only. See `GamePhoto.facts` and the fields after it.
+    var facts: [String: [String]] = [:]
+    var cluster: String?
+    var family: String?
+    var askYear: Int?
+    var generationYears: ClosedRange<Int>?
+    var keepApartFrom: Set<String> = []
 
     var objectTags: Set<String> { declaredTags.union(motif?.objectTags ?? []) }
 }
@@ -129,7 +136,9 @@ struct PhotoPack: Identifiable, Hashable {
     /// answer "which of these is older" — nothing in a 2019 kitchen tells you it isn't
     /// a 2022 one — so a pack says what it is good for rather than being used for
     /// everything it technically has metadata for.
-    var themes: Set<GameTheme> = Set(GameTheme.allCases)
+    var themes: Set<GameTheme> = GameTheme.photoGames
+    /// Quiz packs only: the fact questions this pack can ask. See `QuizQuestion`.
+    var questions: [QuizQuestion] = []
 
     var isPlayable: Bool { !items.isEmpty }
 }
@@ -180,6 +189,21 @@ private struct PackManifest: Decodable {
         /// The Latin, for the back of the card, where it is a fact about the thing rather
         /// than the thing's name. Nil where it is simply the common name again.
         var scientificName: String?
+        /// Quiz packs only — see `GamePhoto.facts`.
+        var facts: [String: [String]]?
+        var cluster: String?
+        var family: String?
+        var askYear: Int?
+        var years: [Int]?
+        var keepApartFrom: [String]?
+    }
+
+    struct Question: Decodable {
+        var id: String
+        var ask: String
+        var exclude: String
+        var prompt: String
+        var sameCluster: Bool?
     }
 
     var formatVersion: Int
@@ -201,6 +225,7 @@ private struct PackManifest: Decodable {
     /// asked which photograph showed "president reagan blowing out candles … - dpla -
     /// f34ce5e1e7a2", and the confusability rules, which compare subjects, compared prose.
     var titlesAreNames: Bool?
+    var questions: [Question]?
     var items: [Item]
 }
 
@@ -235,6 +260,13 @@ enum PublicPackLibrary {
     /// Which packs are willing to carry each game.
     static func packThemeSupport() -> [String: Set<GameTheme>] {
         Dictionary(uniqueKeysWithValues: packs.map { ($0.id, $0.themes) })
+    }
+
+    /// The fact questions each quiz pack can ask, by pack id.
+    static func quizQuestions() -> [String: [QuizQuestion]] {
+        Dictionary(uniqueKeysWithValues: packs.compactMap { pack in
+            pack.questions.isEmpty ? nil : (pack.id, pack.questions)
+        })
     }
 
     static func chronologyPrompts() -> [String: String] {
@@ -288,6 +320,7 @@ enum PublicPackLibrary {
                         .carrying(themeID: item.themeID,
                                   plausible: item.plausibleThemeIDs,
                                   subjectID: item.subjectID)
+                        .carryingQuiz(from: item)
                 }
                 // Only photographs some question this pack carries could actually ask
                 // about. The rest are left out before the seen record counts them.
@@ -415,12 +448,21 @@ enum PublicPackLibrary {
                     kind: entry.group,
                     creator: entry.creator?.nilIfBlank,
                     commonName: entry.commonName?.nilIfBlank,
-                    scientificName: entry.scientificName?.nilIfBlank)
+                    scientificName: entry.scientificName?.nilIfBlank,
+                    facts: entry.facts ?? [:],
+                    cluster: entry.cluster?.nilIfBlank,
+                    family: entry.family?.nilIfBlank,
+                    askYear: entry.askYear,
+                    generationYears: entry.years.flatMap { years in
+                        guard years.count == 2, years[0] <= years[1] else { return nil }
+                        return years[0]...years[1]
+                    },
+                    keepApartFrom: Set(entry.keepApartFrom ?? []))
             }
 
             let themes = manifest.themes.map { names in
                 Set(names.compactMap(GameTheme.init(rawValue:)))
-            } ?? Set(GameTheme.allCases)
+            } ?? GameTheme.photoGames
 
             return PhotoPack(id: manifest.id,
                              title: manifest.title,
@@ -434,6 +476,27 @@ enum PublicPackLibrary {
                              labelsWhilePlaying: manifest.labelWhilePlaying ?? false,
                              namedSubjectPrompt: manifest.namedSubjectPrompt,
                              titlesAreNames: manifest.titlesAreNames ?? true,
-                             themes: themes.isEmpty ? Set(GameTheme.allCases) : themes)
+                             themes: themes.isEmpty ? GameTheme.photoGames : themes,
+                             questions: (manifest.questions ?? []).map {
+                                 QuizQuestion(id: $0.id, ask: $0.ask, exclude: $0.exclude,
+                                              prompt: $0.prompt,
+                                              sameCluster: $0.sameCluster ?? false)
+                             })
+    }
+}
+
+extension GamePhoto {
+    /// Attach what a quiz pack knows about its subject. A no-op for every other pack.
+    func carryingQuiz(from item: PackItem) -> GamePhoto {
+        guard !item.facts.isEmpty || item.cluster != nil || item.family != nil
+                || !item.keepApartFrom.isEmpty else { return self }
+        var copy = self
+        copy.facts = item.facts
+        copy.cluster = item.cluster
+        copy.family = item.family
+        copy.askYear = item.askYear
+        copy.generationYears = item.generationYears
+        copy.keepApartFrom = item.keepApartFrom
+        return copy
     }
 }

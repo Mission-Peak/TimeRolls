@@ -2,14 +2,18 @@
 //  MeadowTheme.swift
 //  Time Rolls
 //
-//  The illustrated "meadow" look: a painted sky-and-hills page, sticker cards in pastel
-//  fills with soft shadows, rounded-heavy headings in deep navy, and badge icons that sit
-//  on the card like stickers.
+//  The illustrated "meadow" look: a painted sky-and-hills page with a film strip running
+//  through it, sticker cards on warm off-white with soft shadows, rounded-heavy headings
+//  in deep sage, and badge icons that sit on the card like stickers.
 //
-//  Drawn rather than shipped as art. The reference is painted — hand-lettered headings,
-//  illustrated camera and paw stickers, a wooden Done button — and none of that art
-//  exists in the project, so the scene here is built from SwiftUI shapes and SF Symbols.
-//  It gets the colour, the depth and the layout; it cannot get the brush.
+//  Muted on purpose. The first meadow was sky blue, grass green and orange — bright enough
+//  to tire the eyes over a long sitting, and loud enough to read as a children's game. This
+//  one is the app icon's palette: off-white tile, deep sage, petal blush, terracotta clay,
+//  walnut and charcoal. Softer glare, text that still clears contrast comfortably, and a
+//  page that sits behind old photographs instead of competing with them.
+//
+//  Drawn rather than shipped as art, so the scene here is built from SwiftUI shapes and
+//  SF Symbols. It gets the colour, the depth and the layout; it cannot get the brush.
 //
 
 import SwiftUI
@@ -18,46 +22,81 @@ enum Meadow {
 
     // MARK: Sky and land
 
-    static let skyTop = Color.hex(0x6FC2EC)
-    static let skyBottom = Color.hex(0xCFEAF8)
-    static let cloud = Color.white.opacity(0.92)
-    static let sun = Color.hex(0xFFD34E)
+    static let skyTop = Color.hex(0xE4E9DD)
+    static let skyBottom = Color.hex(0xF9F4E8)
+    static let cloud = Color.white.opacity(0.75)
+    /// The icon's clay sun, held well back so it is a glow rather than a light.
+    static let sun = Color.hex(0xC19A83).opacity(0.35)
 
-    static let hillFar = Color.hex(0x9FD98A)
-    static let hillMid = Color.hex(0x74C55A)
-    static let hillNear = Color.hex(0x53AC46)
-    static let river = Color.hex(0x6BC3E8)
-    static let tree = Color.hex(0x3F9A45)
-    static let treeDark = Color.hex(0x2F7D38)
+    static let hillFar = Color.hex(0xC9D1BA)
+    static let hillMid = Color.hex(0x8E9F7E)
+    static let hillNear = Color.hex(0x5E7353)
+    static let filmStrip = Color.hex(0x5E7353).opacity(0.5)
+    static let tree = Color.hex(0x5E7353)
+    static let treeDark = Color.hex(0x46593D)
 
     // MARK: Cards
 
-    static let cardCream = Color.hex(0xFDF7E8)
-    static let cardLavender = Color.hex(0xEFE9FC)
-    static let cardMint = Color.hex(0xE2F5E9)
-    static let cardSky = Color.hex(0xE2F0FC)
-    static let cardRim = Color.white.opacity(0.9)
+    static let cardCream = Color.hex(0xF9F4E8)
+    static let cardLavender = Color.hex(0xF4E8E5)   // petal blush, softened
+    static let cardMint = Color.hex(0xEAEFE2)       // sage, softened
+    static let cardSky = Color.hex(0xF2EEE4)        // warm stone
+    static let cardRim = Color.white.opacity(0.75)
 
     // MARK: Ink
 
-    static let title = Color.hex(0x1B3A6B)
-    static let body = Color.hex(0x35455C)
-    static let muted = Color.hex(0x6D7E95)
+    static let title = Color.hex(0x2E3B29)
+    static let body = Color.hex(0x4F5450)
+    static let muted = Color.hex(0x676B65)
+    /// Icons and button text on a light fill.
+    static let accentInk = Color.hex(0x46593D)
 
     // MARK: Controls
 
-    static let wood = Color.hex(0xF2C368)
-    static let woodEdge = Color.hex(0xC2903B)
-    static let woodInk = Color.hex(0x6A4718)
-    static let sparkle = Color.hex(0xFFC93C)
-    static let on = Color.hex(0x3DBE6E)
+    /// Everything pressable: deep sage with off-white lettering.
+    static let button = Color.hex(0x46593D)
+    static let buttonEdge = Color.hex(0x35452D)
+    static let buttonInk = Color.hex(0xF9F4E8)
+    static let buttonGradient = [Color.hex(0x55694C), Color.hex(0x46593D)]
+    static let sparkle = Color.hex(0xD4A24C)
+    /// The right answer, toggles, progress and ticks.
+    static let on = Color.hex(0x5E7353)
+    static let onInk = Color.hex(0x35452D)
+    static let onWash = Color.hex(0xDDE4D2)
+
+    // MARK: Earth accents
+
+    static let flame = Color.hex(0xC9714A)
+    static let clay = Color.hex(0xA9744E)
+    static let walnut = Color.hex(0x715B4A)
+    static let blush = Color.hex(0xE6CFCF)
+    static let hintWash = Color.hex(0xF1E6DC)
+
+    // MARK: Badges and bands
+    //
+    // The sticker badges carry a white glyph, so each tint is deep enough to hold one.
+    // One per family the old candy colours came in, so a screen keeps its variety.
+
+    static let badgeSage = Color.hex(0x5E7353)      // was green
+    static let badgeOlive = Color.hex(0x7D8A5E)     // was mint
+    static let badgeSlate = Color.hex(0x5F6B66)     // was sky blue
+    static let badgeCharcoal = Color.hex(0x4F5450)  // was blue
+    static let badgeWalnut = Color.hex(0x715B4A)    // was periwinkle
+    static let badgeMauve = Color.hex(0x8A6F6A)     // was lavender
+    static let badgeClay = Color.hex(0xA9744E)      // was orange
+    static let badgeOchre = Color.hex(0xAE8746)     // was yellow
+    static let badgeRose = Color.hex(0xA8737A)      // was pink
+
+    static let bandSand = Color.hex(0xF1E9D8)
+    static let bandSage = Color.hex(0xE6EBDD)
+    static let bandBlush = Color.hex(0xF2E3E1)
 
     static let radius: CGFloat = 26
 }
 
 // MARK: - Backdrop
 
-/// Sky, sun, clouds, three ridges of hill, a river and a line of trees.
+/// Sky, a low sun, clouds, three ridges of hill, a film strip and a line of trees.
 struct MeadowBackdrop: View {
 
     var body: some View {
@@ -71,20 +110,9 @@ struct MeadowBackdrop: View {
                     let w = canvas.width
                     let h = canvas.height
 
-                    context.fill(Circle().path(in: CGRect(x: w * 0.72, y: h * 0.055,
-                                                          width: 46, height: 46)),
+                    context.fill(Circle().path(in: CGRect(x: w * 0.70, y: h * 0.05,
+                                                          width: 78, height: 78)),
                                  with: .color(Meadow.sun))
-                    for ray in 0..<8 {
-                        let angle = Double(ray) / 8 * 2 * .pi
-                        let centre = CGPoint(x: w * 0.72 + 23, y: h * 0.055 + 23)
-                        var mark = Path()
-                        mark.move(to: CGPoint(x: centre.x + cos(angle) * 32,
-                                              y: centre.y + sin(angle) * 32))
-                        mark.addLine(to: CGPoint(x: centre.x + cos(angle) * 42,
-                                                 y: centre.y + sin(angle) * 42))
-                        context.stroke(mark, with: .color(Meadow.sun),
-                                       style: StrokeStyle(lineWidth: 4, lineCap: .round))
-                    }
 
                     for cloud in [(0.12, 0.05, 1.0), (0.46, 0.10, 0.7), (0.86, 0.15, 0.85)] {
                         context.fill(puff(at: CGPoint(x: w * cloud.0, y: h * cloud.1),
@@ -95,16 +123,16 @@ struct MeadowBackdrop: View {
                     // Three ridges, far to near, so the land has depth.
                     context.fill(ridge(w: w, h: h, top: 0.30, crest: 0.30, lift: 0.055),
                                  with: .color(Meadow.hillFar))
+
+                    // The film strip from the icon, running behind the middle hill the
+                    // way the river used to.
+                    filmStrip(in: context,
+                              from: CGPoint(x: -w * 0.1, y: h * 0.40),
+                              control: CGPoint(x: w * 0.45, y: h * 0.18),
+                              to: CGPoint(x: w * 1.1, y: h * 0.33))
+
                     context.fill(ridge(w: w, h: h, top: 0.36, crest: 0.72, lift: 0.070),
                                  with: .color(Meadow.hillMid))
-
-                    // The river runs down out of the far hills.
-                    var water = Path()
-                    water.move(to: CGPoint(x: w * 0.80, y: h * 0.33))
-                    water.addQuadCurve(to: CGPoint(x: w * 1.02, y: h * 0.48),
-                                       control: CGPoint(x: w * 0.86, y: h * 0.42))
-                    context.stroke(water, with: .color(Meadow.river),
-                                   style: StrokeStyle(lineWidth: 12, lineCap: .round))
 
                     context.fill(ridge(w: w, h: h, top: 0.86, crest: 0.42, lift: 0.055),
                                  with: .color(Meadow.hillNear))
@@ -126,6 +154,57 @@ struct MeadowBackdrop: View {
         .ignoresSafeArea()
         .allowsHitTesting(false)
         .accessibilityHidden(true)
+    }
+
+    /// A band along a quadratic curve with a row of sprocket holes down each edge.
+    private func filmStrip(in context: GraphicsContext, from start: CGPoint,
+                           control: CGPoint, to end: CGPoint) {
+        let half: CGFloat = 16
+        func point(_ t: CGFloat) -> CGPoint {
+            let u = 1 - t
+            return CGPoint(x: u * u * start.x + 2 * u * t * control.x + t * t * end.x,
+                           y: u * u * start.y + 2 * u * t * control.y + t * t * end.y)
+        }
+        func normal(_ t: CGFloat) -> CGVector {
+            let dx = 2 * (1 - t) * (control.x - start.x) + 2 * t * (end.x - control.x)
+            let dy = 2 * (1 - t) * (control.y - start.y) + 2 * t * (end.y - control.y)
+            let length = max(hypot(dx, dy), 0.001)
+            return CGVector(dx: -dy / length, dy: dx / length)
+        }
+
+        let steps = 60
+        var band = Path()
+        for i in 0...steps {
+            let t = CGFloat(i) / CGFloat(steps)
+            let p = point(t), n = normal(t)
+            let edge = CGPoint(x: p.x + n.dx * half, y: p.y + n.dy * half)
+            if i == 0 { band.move(to: edge) } else { band.addLine(to: edge) }
+        }
+        for i in stride(from: steps, through: 0, by: -1) {
+            let t = CGFloat(i) / CGFloat(steps)
+            let p = point(t), n = normal(t)
+            band.addLine(to: CGPoint(x: p.x - n.dx * half, y: p.y - n.dy * half))
+        }
+        band.closeSubpath()
+        context.fill(band, with: .color(Meadow.filmStrip))
+
+        // Holes punched out of the band, evenly spaced by eye rather than by arc length;
+        // the curve is shallow enough that nobody can tell.
+        let holes = 34
+        for i in 0..<holes {
+            let t = (CGFloat(i) + 0.5) / CGFloat(holes)
+            let p = point(t), n = normal(t)
+            let angle = Angle(radians: atan2(n.dx, -n.dy))
+            for side in [-1.0, 1.0] as [CGFloat] {
+                var hole = context
+                hole.translateBy(x: p.x + n.dx * (half - 6) * side,
+                                 y: p.y + n.dy * (half - 6) * side)
+                hole.rotate(by: angle)
+                hole.fill(RoundedRectangle(cornerRadius: 1.5)
+                            .path(in: CGRect(x: -3.5, y: -2.5, width: 7, height: 5)),
+                          with: .color(Meadow.skyBottom.opacity(0.85)))
+            }
+        }
     }
 
     private func ridge(w: CGFloat, h: CGFloat, top: CGFloat,
@@ -274,7 +353,7 @@ struct MeadowScreen<Content: View>: View {
     }
 }
 
-/// The big press-me button — the orange capsule from the end of a session, so the one
+/// The big press-me button — the deep sage capsule from the end of a session, so the one
 /// obvious action looks the same wherever it turns up.
 struct MeadowButtonLabel: View {
 
@@ -292,14 +371,14 @@ struct MeadowButtonLabel: View {
             Text(title)
                 .font(.system(size: 24 * textScale, weight: .heavy, design: .rounded))
         }
-        .foregroundStyle(.white)
+        .foregroundStyle(Meadow.buttonInk)
         .frame(maxWidth: .infinity)
         .padding(.vertical, 17)
         .background(
-            LinearGradient(colors: [Color.hex(0xFFC44D), Color.hex(0xF0A020)],
+            LinearGradient(colors: Meadow.buttonGradient,
                            startPoint: .top, endPoint: .bottom),
             in: Capsule())
-        .overlay { Capsule().strokeBorder(Meadow.woodEdge, lineWidth: 3) }
+        .overlay { Capsule().strokeBorder(Meadow.buttonEdge, lineWidth: 3) }
         .shadow(color: .black.opacity(0.22), radius: 8, y: 4)
     }
 }

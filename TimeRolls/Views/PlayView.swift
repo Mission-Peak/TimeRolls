@@ -79,11 +79,12 @@ struct PlayView: View {
                         HStack(spacing: 8) {
                             // A pin for a place, a clock for a year. The pin was on both.
                             Image(systemName: level.theme == .places
-                                  ? "mappin.and.ellipse" : "clock.fill")
+                                  ? "mappin.and.ellipse"
+                                  : level.theme.isQuiz ? "lightbulb.fill" : "clock.fill")
                                 .font(.system(size: 14, weight: .bold))
                                 .foregroundStyle(.white)
                                 .frame(width: 26, height: 26)
-                                .background(Color.hex(0x5AA9E6), in: Circle())
+                                .background(Meadow.walnut, in: Circle())
                             Text(hint)
                                 .font(.system(size: 16 * textScale, weight: .semibold,
                                               design: .rounded))
@@ -93,7 +94,7 @@ struct PlayView: View {
                         .padding(.horizontal, 12)
                         .padding(.vertical, 9)
                         .background(highContrast ? AnyShapeStyle(Palette.wash(true))
-                                                 : AnyShapeStyle(Color.hex(0xD3E9F9)),
+                                                 : AnyShapeStyle(Meadow.hintWash),
                                     in: RoundedRectangle(cornerRadius: 14, style: .continuous))
                         .padding(.bottom, 12)
                     }
@@ -221,18 +222,18 @@ struct PlayView: View {
                     // The same painted-wood yellow as the Done button in setup, so the
                     // two things you can press up here look pressable.
                     .appFont(16, weight: .heavy)
-                    .foregroundStyle(highContrast ? Palette.accent : Meadow.woodInk)
+                    .foregroundStyle(highContrast ? Palette.accent : Meadow.buttonInk)
                     // A round-ish chip now there is no word in it, and wide enough that
                     // it is still a comfortable target rather than a small icon.
                     .frame(minWidth: 30)
                     .padding(.horizontal, 12)
                     .padding(.vertical, 9)
                     .background(highContrast ? AnyShapeStyle(Palette.accent.opacity(0.12))
-                                             : AnyShapeStyle(Meadow.wood),
+                                             : AnyShapeStyle(Meadow.button),
                                 in: Capsule())
                     .overlay {
                         if !highContrast {
-                            Capsule().strokeBorder(Meadow.woodEdge, lineWidth: 3)
+                            Capsule().strokeBorder(Meadow.buttonEdge, lineWidth: 3)
                         }
                     }
                     .shadow(color: .black.opacity(highContrast ? 0 : 0.18), radius: 4, y: 2)
@@ -432,15 +433,15 @@ struct PlayView: View {
                     .lineLimit(1)
                     .fixedSize()
             }
-            .foregroundStyle(highContrast ? Palette.softInk(true) : Meadow.woodInk)
+            .foregroundStyle(highContrast ? Palette.softInk(true) : Meadow.buttonInk)
             .padding(.horizontal, 13)
             .frame(height: 44)
             .background(highContrast ? AnyShapeStyle(Palette.wash(true))
-                                     : AnyShapeStyle(Meadow.wood),
+                                     : AnyShapeStyle(Meadow.button),
                         in: Capsule())
             .overlay {
                 if !highContrast {
-                    Capsule().strokeBorder(Meadow.woodEdge, lineWidth: 3)
+                    Capsule().strokeBorder(Meadow.buttonEdge, lineWidth: 3)
                 }
             }
             .shadow(color: .black.opacity(highContrast ? 0 : 0.18), radius: 5, y: 2)
@@ -475,11 +476,11 @@ struct PlayView: View {
                         .appFont(18, weight: .heavy)
                         .lineLimit(1)
                         .minimumScaleFactor(0.75)
-                        .foregroundStyle(Meadow.woodInk)
+                        .foregroundStyle(Meadow.buttonInk)
                         .frame(maxWidth: .infinity)
                         .frame(height: 56)
-                        .background(Meadow.wood, in: Capsule())
-                        .overlay { Capsule().strokeBorder(Meadow.woodEdge, lineWidth: 3) }
+                        .background(Meadow.button, in: Capsule())
+                        .overlay { Capsule().strokeBorder(Meadow.buttonEdge, lineWidth: 3) }
                         .shadow(color: .black.opacity(0.18), radius: 5, y: 2)
                 }
                 .buttonStyle(.plain)
@@ -801,13 +802,13 @@ struct SettingsGear: View {
         Button(action: onOpen) {
             Image(systemName: "gearshape.fill")
                 .appFont(compact ? 18 : 22, weight: .black)
-                .foregroundStyle(highContrast ? Palette.softInk(true) : Meadow.woodInk)
+                .foregroundStyle(highContrast ? Palette.softInk(true) : Meadow.buttonInk)
                 .frame(width: compact ? 44 : 56, height: compact ? 44 : 56)
                 .background(highContrast ? AnyShapeStyle(Palette.wash(true))
-                                         : AnyShapeStyle(Meadow.wood),
+                                         : AnyShapeStyle(Meadow.button),
                             in: Circle())
                 .overlay {
-                    if !highContrast { Circle().strokeBorder(Meadow.woodEdge, lineWidth: 3) }
+                    if !highContrast { Circle().strokeBorder(Meadow.buttonEdge, lineWidth: 3) }
                 }
                 .shadow(color: .black.opacity(highContrast ? 0 : 0.18), radius: 5, y: 2)
                 .contentShape(Circle())
@@ -818,46 +819,47 @@ struct SettingsGear: View {
     }
 }
 
-struct SessionCompleteView: View {
+/// The Home tab: the first thing anybody sees, and where the game comes back to when the
+/// day's challenge is done.
+///
+/// Laid out after the design Hanna supplied: a welcome, one card for today's round with
+/// the one button that matters, and the streak and stars on a single line beneath it.
+/// Once the challenge is done the same card says so, and the button plays on.
+struct HomeView: View {
 
     let engine: GameEngine
     let onCaregiverGate: () -> Void
+    let onPlay: () -> Void
+
+    private var goal: Int { engine.settings.dailyCardGoal }
+    private var done: Int { engine.stats.cardsToday }
+    private var left: Int { max(goal - done, 0) }
+    private var challengeMet: Bool {
+        goal > 0 && engine.stats.hasMetChallenge(goal: goal)
+    }
 
     @Environment(\.photoHighContrast) private var highContrast
     @Environment(\.photoTextScale) private var textScale
 
     var body: some View {
         ZStack {
-            // Polaroids scattered into the corners, the way the reference has them.
-            snapshots
-
-            // Centred down the screen, not stacked at the top of it.
-            //
-            // A plain ScrollView lays its content out from the top, so on a tall phone the
-            // congratulations sat up under the notch with a third of a screen of empty
-            // meadow beneath it. `minHeight` makes the stack at least as tall as the
-            // screen, and a spacer at each end then centres it — while anything too tall
-            // to fit still scrolls, which is what the ScrollView is for.
             GeometryReader { proxy in
                 ScrollView {
-                    VStack(spacing: 18) {
-                        Spacer(minLength: 0)
-                        praiseBanner
-                        tallyCard
-                        challengeBar
+                    VStack(alignment: .leading, spacing: 22) {
+                        welcome
+                            .padding(.top, 36)
+                        dailyRoundCard
+                        statsLine
                         shareCard
-                        keepPlaying
-                        // The end of a session is when somebody thinks "that was too hard"
-                        // or "I should turn the reading-aloud on", so the way into setup
-                        // has to be here as well as on the play screen.
+                        // The way into setup, as on the play screen.
                         SettingsGear(onOpen: onCaregiverGate)
-                            .padding(.top, 2)
+                            .frame(maxWidth: .infinity)
                         Spacer(minLength: 0)
                     }
                     .readableColumn(maxWidth: 620)
                     .padding(.horizontal, 18)
-                    .padding(.vertical, 24)
-                    .frame(minHeight: proxy.size.height)
+                    .padding(.bottom, 24)
+                    .frame(minHeight: proxy.size.height, alignment: .top)
                 }
             }
 
@@ -876,8 +878,8 @@ struct SessionCompleteView: View {
             }
         }
         .task {
-            // End of a session, never during one.
-            guard Supporting.isAvailable,
+            // End of a session, never during one — and never on simply opening the app.
+            guard engine.phase == .sessionComplete, Supporting.isAvailable,
                   Supporting.shouldAsk(firstPlayed: engine.stats.stats.firstPlayed,
                                        sessions: engine.stats.stats.totalSessions,
                                        alreadyAsked: engine.settings.hasAskedAboutSupport)
@@ -893,162 +895,158 @@ struct SessionCompleteView: View {
     @SwiftUI.State private var isAskingForSupport = false
     @SwiftUI.State private var isPickingPhotoToShare = false
 
-    /// Sparkles, then the words on a painted-wood plaque.
-    ///
-    /// No subtitle any more. "Stop here, or keep going" was instructions for a screen
-    /// that already has one button and a way out, and it made the praise share the
-    /// screen with a sentence nobody needed to read. The white cloud behind it has gone
-    /// too: it sat in front of the sky's own clouds and read as a second, wronger one.
-    private var praiseBanner: some View {
-        VStack(spacing: 12) {
-            Text("Congratulations!")
-                .font(.system(size: 52 * textScale, weight: .black, design: .rounded))
-                .foregroundStyle(highContrast ? Palette.ink(true) : Meadow.woodInk)
-                .multilineTextAlignment(.center)
+    private var ink: Color { highContrast ? Palette.ink(true) : Meadow.title }
+
+    // MARK: Welcome
+
+    private var welcome: some View {
+        VStack(alignment: .leading, spacing: 8) {
+            Text(challengeMet ? "Congratulations!" : "Welcome back!")
+                .font(.system(size: 44 * textScale, weight: .black, design: .rounded))
+                .foregroundStyle(ink)
                 .minimumScaleFactor(0.6)
                 .lineLimit(1)
-                .padding(.horizontal, 30)
-                .padding(.vertical, 14)
-                .background(highContrast ? AnyShapeStyle(Palette.wash(true))
-                                         : AnyShapeStyle(Meadow.wood),
-                            in: Capsule())
-                .overlay {
-                    if !highContrast {
-                        Capsule().strokeBorder(Meadow.woodEdge, lineWidth: 4)
-                    }
-                }
-                .shadow(color: .black.opacity(highContrast ? 0 : 0.18), radius: 5, y: 3)
-
-            Text("You completed today's challenge!")
-                .font(.system(size: 22 * textScale, weight: .heavy, design: .rounded))
-                .foregroundStyle(highContrast ? Palette.ink(true) : Meadow.title)
-                .multilineTextAlignment(.center)
+                .accessibilityAddTraits(.isHeader)
+            Text(challengeMet ? "You completed today's challenge!"
+                 : done == 0 ? "Ready for a quick round?" : "Ready for another round?")
+                .font(.system(size: 21 * textScale, design: .rounded))
+                .foregroundStyle(ink.opacity(0.9))
                 .fixedSize(horizontal: false, vertical: true)
         }
-        .frame(maxWidth: .infinity)
-        .padding(.horizontal, 12)
+        .padding(.horizontal, 4)
     }
 
-    /// The streak and the day's grade, side by side.
-    ///
-    /// Two numbers and no more. A page that reports six things reports nothing, and the
-    /// two worth reporting are the one that says "you have been coming back" and the one
-    /// that says "today went well". Neither is a mark: the streak counts days turned up
-    /// to, and the stars stop at three so there is nothing to optimise.
-    private var tallyCard: some View {
-        StickerCard(fill: highContrast ? Palette.wash(true) : Meadow.cardCream) {
-            HStack(spacing: 0) {
-                tally(symbol: "flame.fill",
-                      tint: Color.hex(0xF3743A),
-                      heading: "Streak",
-                      value: AnyView(
-                        HStack(alignment: .firstTextBaseline, spacing: 6) {
-                            Text("\(engine.stats.dayStreak)")
-                                .font(.system(size: 40 * textScale, weight: .black, design: .rounded))
-                            Text(engine.stats.dayStreak == 1 ? "day" : "days")
-                                .font(.system(size: 18 * textScale, weight: .heavy, design: .rounded))
-                        }),
-                      footnote: "Keep it going!",
-                      spoken: "Streak, \(engine.stats.dayStreak) "
-                            + (engine.stats.dayStreak == 1 ? "day" : "days"))
+    // MARK: Daily round
 
-                Rectangle()
-                    .fill(Meadow.muted.opacity(0.25))
-                    .frame(width: 1)
-                    .padding(.vertical, 6)
-
-                tally(symbol: "star.fill",
-                      tint: Meadow.sparkle,
-                      heading: "Stars earned",
-                      value: AnyView(starCount),
-                      // No grade here. "2 out of 3" sat under "7 stars" and read as two
-                      // stars of three, contradicting the number above it — and because
-                      // this screen only appears once the challenge is finished, the
-                      // lowest it could ever say was 2, which looked like a middling
-                      // mark for what was really "you finished". The count is the
-                      // thing; the line under it just says well done, as the streak's does.
-                      footnote: "Nicely done!",
-                      spoken: "\(engine.stats.starsToday) stars earned")
-            }
-        }
-    }
-
-    /// The day's stars as a figure, in the same shape as the streak beside it.
-    ///
-    /// This was three glyphs of the day's grade under a heading reading "Stars earned",
-    /// which is not what the grade is: the grade is out of three, and the stars earned
-    /// are two a round plus the run bonus, so the two numbers are rarely the same and the
-    /// heading named the one that was not being shown. The figure is the one the heading
-    /// promises; the grade moved to the footnote.
-    private var starCount: some View {
-        HStack(alignment: .firstTextBaseline, spacing: 6) {
-            Text("\(engine.stats.starsToday)")
-                .font(.system(size: 40 * textScale, weight: .black, design: .rounded))
-            Text(engine.stats.starsToday == 1 ? "star" : "stars")
-                .font(.system(size: 18 * textScale, weight: .heavy, design: .rounded))
-        }
-    }
-
-    private func tally(symbol: String, tint: Color, heading: String,
-                       value: AnyView, footnote: String, spoken: String) -> some View {
-        VStack(spacing: 6) {
-            HStack(spacing: 8) {
-                Image(systemName: symbol)
-                    .font(.system(size: 26 * textScale, weight: .black))
-                    .foregroundStyle(highContrast ? Palette.ink(true) : tint)
-                Text(heading)
-                    .font(.system(size: 17 * textScale, weight: .heavy, design: .rounded))
-                    .foregroundStyle(highContrast ? Palette.ink(true) : Meadow.title)
-            }
-            value
-                .foregroundStyle(highContrast ? Palette.ink(true) : Meadow.title)
-            Text(footnote)
-                .font(.system(size: 14 * textScale, weight: .semibold, design: .rounded))
-                .foregroundStyle(Meadow.muted)
-        }
-        .frame(maxWidth: .infinity)
-        .padding(.vertical, 10)
-        .accessibilityElement(children: .ignore)
-        .accessibilityLabel(spoken)
-    }
-
-    /// The challenge itself, finished. A full bar rather than a number, because the thing
-    /// worth showing is that it is done.
-    private var challengeBar: some View {
-        StickerCard(fill: highContrast ? Palette.wash(true) : .white.opacity(0.92)) {
-            HStack(spacing: 12) {
-                Image(systemName: "calendar")
-                    .font(.system(size: 24 * textScale, weight: .black))
-                    .foregroundStyle(highContrast ? Palette.ink(true) : Color.hex(0x5FA86B))
-                VStack(alignment: .leading, spacing: 6) {
-                    Text("Today's challenge")
-                        .font(.system(size: 17 * textScale, weight: .heavy, design: .rounded))
-                        .foregroundStyle(highContrast ? Palette.ink(true) : Meadow.title)
-                    Capsule()
-                        .fill(Color.hex(0x5FA86B))
-                        .frame(height: 12)
-                        .frame(maxWidth: .infinity)
+    private var dailyRoundCard: some View {
+        HStack(alignment: .center, spacing: 14) {
+            PolaroidStack()
+                .frame(width: 118, height: 128)
+                .accessibilityHidden(true)
+            VStack(alignment: .leading, spacing: 10) {
+                // The pill sits above the title, at the card's top right, so the two
+                // never meet — laid over the corner it covered the end of "Round".
+                if goal > 0 {
+                    rollsPill.frame(maxWidth: .infinity, alignment: .trailing)
                 }
-                Image(systemName: "checkmark.circle.fill")
-                    .font(.system(size: 30 * textScale, weight: .black))
-                    .foregroundStyle(Color.hex(0x5FA86B))
+                // On two lines, as in the design: it is the card's name, and big.
+                Text("Daily\nRound")
+                    .font(.system(size: 36 * textScale, weight: .black, design: .rounded))
+                    .foregroundStyle(ink)
+                    .lineSpacing(-6)
+                    .minimumScaleFactor(0.7)
+                Text(cardLine)
+                    .font(.system(size: 17 * textScale, design: .rounded))
+                    .foregroundStyle(ink.opacity(0.9))
+                    .fixedSize(horizontal: false, vertical: true)
+                Button(action: onPlay) {
+                    HStack(spacing: 8) {
+                        Text(buttonTitle)
+                        Image(systemName: "arrow.right")
+                    }
+                    .font(.system(size: 20 * textScale, weight: .heavy, design: .rounded))
+                    .foregroundStyle(Meadow.buttonInk)
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.7)
+                    .frame(maxWidth: .infinity)
+                    .padding(.vertical, 15)
+                    .background(Meadow.button, in: Capsule())
+                    .shadow(color: .black.opacity(0.15), radius: 5, y: 3)
+                }
+                .buttonStyle(.plain)
+                .padding(.top, 4)
             }
-            .accessibilityElement(children: .ignore)
-            .accessibilityLabel("Today's challenge, finished — "
-                              + "\(engine.settings.dailyCardGoal) photo cards")
         }
+        .padding(18)
+        .frame(maxWidth: .infinity)
+        .background(highContrast ? Palette.surface(true) : Meadow.cardCream,
+                    in: RoundedRectangle(cornerRadius: 30, style: .continuous))
+        .overlay {
+            RoundedRectangle(cornerRadius: 30, style: .continuous)
+                .strokeBorder(.white.opacity(0.9), lineWidth: 2)
+        }
+        .shadow(color: .black.opacity(0.10), radius: 10, y: 5)
     }
 
-    /// Send a photograph to somebody, from the screen where it is still in front of them.
-    ///
-    /// The game's whole trick is bringing up a picture somebody had forgotten they owned.
-    /// Finding one again and then being told to go and look for it in Photos is how that
-    /// moment gets lost — by the time anybody has found it, they have forgotten who they
-    /// wanted to send it to.
-    ///
-    /// Their own photographs only. Half of what a round shows is a public-domain picture
-    /// of a stranger's wedding, and offering to send that to somebody's daughter would be
-    /// worse than offering nothing.
+    private var cardLine: String {
+        if goal == 0 { return "Play for as long as you like." }
+        if challengeMet { return "All done for today. Well played!" }
+        return done == 0 ? "Your challenge is ready." : "Keep going — you're nearly there."
+    }
+
+    private var buttonTitle: String {
+        if challengeMet { return "Play more" }
+        return done == 0 ? "Play today" : "Keep playing"
+    }
+
+    /// "8 rolls left" on a die, or a tick once the challenge is done.
+    private var rollsPill: some View {
+        HStack(spacing: 8) {
+            Image(systemName: challengeMet ? "checkmark.circle.fill" : "dice.fill")
+                .font(.system(size: 22 * textScale, weight: .bold))
+            VStack(alignment: .leading, spacing: -2) {
+                Text(challengeMet ? "Done" : "\(left)")
+                    .font(.system(size: 22 * textScale, weight: .black, design: .rounded))
+                Text(challengeMet ? "for today" : left == 1 ? "roll left" : "rolls left")
+                    .font(.system(size: 12 * textScale, design: .rounded))
+            }
+        }
+        .foregroundStyle(ink)
+        .padding(.horizontal, 14)
+        .padding(.vertical, 8)
+        .background(highContrast ? Palette.wash(true) : Meadow.onWash, in: Capsule())
+        .accessibilityElement(children: .ignore)
+        .accessibilityLabel(challengeMet ? "Today's challenge is done"
+                            : "\(left) \(left == 1 ? "roll" : "rolls") left today")
+    }
+
+    // MARK: Streak and stars
+
+    private var statsLine: some View {
+        HStack(spacing: 0) {
+            stat(symbol: "flame.fill", tint: Meadow.flame,
+                 value: engine.stats.dayStreak,
+                 label: engine.stats.dayStreak == 1 ? "day streak" : "days streak")
+            Rectangle()
+                .fill(Meadow.muted.opacity(0.3))
+                .frame(width: 1, height: 38)
+            stat(symbol: "star.fill", tint: Meadow.sparkle,
+                 value: engine.stats.starsToday,
+                 label: engine.stats.starsToday == 1 ? "star" : "stars")
+        }
+        .padding(.vertical, 16)
+        .frame(maxWidth: .infinity)
+        .background(highContrast ? Palette.surface(true) : Meadow.cardCream,
+                    in: RoundedRectangle(cornerRadius: 26, style: .continuous))
+        .overlay {
+            RoundedRectangle(cornerRadius: 26, style: .continuous)
+                .strokeBorder(.white.opacity(0.9), lineWidth: 2)
+        }
+        .shadow(color: .black.opacity(0.08), radius: 8, y: 4)
+    }
+
+    private func stat(symbol: String, tint: Color, value: Int, label: String) -> some View {
+        HStack(alignment: .center, spacing: 12) {
+            Image(systemName: symbol)
+                .font(.system(size: 26 * textScale, weight: .bold))
+                .foregroundStyle(highContrast ? Palette.ink(true) : tint)
+            Text("\(value)")
+                .font(.system(size: 38 * textScale, weight: .black, design: .rounded))
+                .foregroundStyle(ink)
+                .monospacedDigit()
+            Text(label)
+                .font(.system(size: 18 * textScale, design: .rounded))
+                .foregroundStyle(ink.opacity(0.85))
+                .lineLimit(1)
+                .minimumScaleFactor(0.7)
+        }
+        .frame(maxWidth: .infinity)
+        .accessibilityElement(children: .ignore)
+        .accessibilityLabel("\(value) \(label)")
+    }
+
+    // MARK: Share
+
     @ViewBuilder
     private var shareCard: some View {
         if !engine.ownPhotosThisSession.isEmpty {
@@ -1056,7 +1054,7 @@ struct SessionCompleteView: View {
                 HStack(spacing: 14) {
                     Image(systemName: "camera.fill")
                         .font(.system(size: 24 * textScale, weight: .black))
-                        .foregroundStyle(highContrast ? Palette.ink(true) : Color.hex(0x7B6BD6))
+                        .foregroundStyle(highContrast ? Palette.ink(true) : Meadow.clay)
                     VStack(alignment: .leading, spacing: 3) {
                         Text("Keep the moment")
                             .font(.system(size: 18 * textScale, weight: .heavy, design: .rounded))
@@ -1070,10 +1068,10 @@ struct SessionCompleteView: View {
                     Button { isPickingPhotoToShare = true } label: {
                         Text("Share")
                             .font(.system(size: 17 * textScale, weight: .heavy, design: .rounded))
-                            .foregroundStyle(.white)
+                            .foregroundStyle(Meadow.buttonInk)
                             .padding(.horizontal, 20)
                             .padding(.vertical, 12)
-                            .background(Color.hex(0x7B6BD6), in: Capsule())
+                            .background(Meadow.button, in: Capsule())
                     }
                     .buttonStyle(.plain)
                     .accessibilityLabel("Share a photo from today")
@@ -1082,57 +1080,82 @@ struct SessionCompleteView: View {
         }
     }
 
-    private var keepPlaying: some View {
-        Button {
-            engine.continueSession()
-        } label: {
-            HStack(spacing: 12) {
-                Image(systemName: "play.fill")
-                    .font(.system(size: 22 * textScale, weight: .black))
-                Text("Play another round")
-                    .font(.system(size: 26 * textScale, weight: .heavy, design: .rounded))
+}
+
+/// Two snapshots, one on top of the other, with a smiling sun in the front one — the
+/// picture on the Daily Round card.
+private struct PolaroidStack: View {
+
+    var body: some View {
+        ZStack {
+            print(sky: Meadow.cardMint)
+                .rotationEffect(.degrees(-12))
+                .offset(x: -12, y: 6)
+            print(sky: Color.hex(0xDCE6E6), front: true)
+                .rotationEffect(.degrees(4))
+                .offset(x: 8, y: 0)
+            // A few strokes of shine around the corner, as in the drawing.
+            ForEach(0..<3) { index in
+                Capsule()
+                    .fill(Meadow.badgeWalnut)
+                    .frame(width: 3, height: 11)
+                    .rotationEffect(.degrees([-40.0, -10, 25][index]))
+                    .offset(x: [-52.0, -36, -16][index], y: [-50.0, -60, -64][index])
             }
-            .foregroundStyle(.white)
-            .frame(maxWidth: .infinity)
-            .padding(.vertical, 18)
-            .background(
-                LinearGradient(colors: [Color.hex(0xFFC44D), Color.hex(0xF0A020)],
-                               startPoint: .top, endPoint: .bottom),
-                in: Capsule())
-            .overlay { Capsule().strokeBorder(Meadow.woodEdge, lineWidth: 3) }
-            .shadow(color: .black.opacity(0.22), radius: 8, y: 4)
+            ForEach(0..<2) { index in
+                Capsule()
+                    .fill(Meadow.badgeWalnut)
+                    .frame(width: 3, height: 11)
+                    .rotationEffect(.degrees([60.0, 30][index]))
+                    .offset(x: [-56.0, -48][index], y: [40.0, 54][index])
+            }
         }
-        .buttonStyle(.plain)
     }
 
-    /// Four photographs from the session just finished, tilted like snapshots dropped on
-    /// the grass. Real ones — the reference uses stock art, but the app has better.
-    private var snapshots: some View {
-        GeometryReader { proxy in
-            let size = proxy.size
-            // Further into the corners, and further down, than the reference has them.
-            // At 0.14 from the top the two upper polaroids sat behind "Congratulations!"
-            // on a phone — a decoration covering the one sentence the screen exists to
-            // say. On a narrow screen they go below the words entirely rather than being
-            // nudged: there is no room up there for both.
-            // Every phone, not just the small ones. This was 430, and an iPhone 17 Pro
-            // Max is 440 points wide — so the largest phone took the iPad layout and put
-            // two polaroids behind "Congratulations!", which is the one sentence the
-            // screen exists to say. The widest phone is 440 and the narrowest iPad is 744,
-            // so the line belongs between them and nowhere near either.
-            let narrow = size.width < 500
-            let spots: [(x: CGFloat, y: CGFloat, angle: Double)] = narrow
-                ? [(0.12, 0.62, -9), (0.88, 0.66, 7), (0.14, 0.88, 6), (0.86, 0.90, -8)]
-                : [(0.10, 0.16, -9), (0.90, 0.20, 7), (0.11, 0.86, 6), (0.89, 0.84, -8)]
-            ForEach(Array(engine.lastLevelPhotos.prefix(4).enumerated()), id: \.element.id) { index, photo in
-                let spot = spots[index % spots.count]
-                Snapshot(photo: photo, provider: engine.images)
-                    .rotationEffect(.degrees(spot.angle))
-                    .position(x: size.width * spot.x, y: size.height * spot.y)
+    private func print(sky: Color, front: Bool = false) -> some View {
+        RoundedRectangle(cornerRadius: 6, style: .continuous)
+            .fill(Color.hex(0xFDFBF5))
+            .frame(width: 82, height: 96)
+            .overlay(alignment: .top) {
+                ZStack(alignment: .bottom) {
+                    sky
+                    // Two soft hills.
+                    Ellipse().fill(Meadow.badgeOlive.opacity(0.8))
+                        .frame(width: 70, height: 34).offset(x: -18, y: 14)
+                    Ellipse().fill(Meadow.badgeSage.opacity(0.85))
+                        .frame(width: 80, height: 30).offset(x: 20, y: 16)
+                    if front { SunFace().offset(y: -26) }
+                }
+                .frame(width: 70, height: 70)
+                .clipShape(RoundedRectangle(cornerRadius: 3))
+                .padding(.top, 6)
             }
+            .shadow(color: .black.opacity(0.16), radius: 4, y: 2)
+    }
+}
+
+private struct SunFace: View {
+    var body: some View {
+        ZStack {
+            ForEach(0..<8) { ray in
+                Capsule()
+                    .fill(Meadow.sparkle)
+                    .frame(width: 2.5, height: 6)
+                    .offset(y: -16)
+                    .rotationEffect(.degrees(Double(ray) * 45))
+            }
+            Circle().fill(Meadow.sparkle.opacity(0.85)).frame(width: 22, height: 22)
+            HStack(spacing: 5) {
+                Circle().fill(Meadow.walnut).frame(width: 2.5, height: 2.5)
+                Circle().fill(Meadow.walnut).frame(width: 2.5, height: 2.5)
+            }
+            .offset(y: -2)
+            Circle()
+                .trim(from: 0.1, to: 0.4)
+                .stroke(Meadow.walnut, style: StrokeStyle(lineWidth: 1.4, lineCap: .round))
+                .frame(width: 9, height: 9)
+                .offset(y: 1)
         }
-        .allowsHitTesting(false)
-        .accessibilityHidden(true)
     }
 }
 
@@ -1261,14 +1284,14 @@ struct FactPopup: View {
                         Text("Next roll")
                             .font(.system(size: 22 * textScale, weight: .heavy,
                                           design: .rounded))
-                            .foregroundStyle(Meadow.woodInk)
+                            .foregroundStyle(Meadow.buttonInk)
                             .frame(maxWidth: .infinity)
                             .padding(.vertical, 15)
-                            .background(Meadow.wood,
+                            .background(Meadow.button,
                                         in: RoundedRectangle(cornerRadius: 18, style: .continuous))
                             .overlay {
                                 RoundedRectangle(cornerRadius: 18, style: .continuous)
-                                    .strokeBorder(Meadow.woodEdge, lineWidth: 3)
+                                    .strokeBorder(Meadow.buttonEdge, lineWidth: 3)
                             }
                     }
                     .buttonStyle(.plain)
@@ -1408,7 +1431,7 @@ private func zoomAction(_ title: String, symbol: String,
             Image(systemName: symbol).font(.system(size: 19, weight: .black))
             Text(title).font(.system(size: 19, weight: .heavy, design: .rounded))
         }
-        .foregroundStyle(Meadow.woodInk)
+        .foregroundStyle(Meadow.accentInk)
         .padding(.horizontal, 22)
         .frame(height: 54)
         .background(.white, in: Capsule())
@@ -1542,7 +1565,7 @@ struct SupportNote: View {
             StickerCard(fill: Meadow.cardCream) {
                 VStack(alignment: .leading, spacing: 14) {
                     HStack(spacing: 10) {
-                        IconBadge(symbol: "heart.fill", tint: .hex(0xD4708A))
+                        IconBadge(symbol: "heart.fill", tint: Meadow.badgeRose)
                         Text("Enjoying Time Rolls?")
                             .font(.system(size: 22, weight: .heavy, design: .rounded))
                             .foregroundStyle(Meadow.title)

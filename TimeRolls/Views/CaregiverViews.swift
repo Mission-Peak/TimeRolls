@@ -21,6 +21,7 @@ struct CaregiverHubView: View {
                         header
                         sourcesCard
                         paceCard
+                        connectionCard
                         accessibilityCard
                         privacyCard
                         Text("Sharing these numbers with a caregiver's own phone — a "
@@ -64,13 +65,13 @@ struct CaregiverHubView: View {
             Button { dismiss() } label: {
                 Text("Done")
                     .font(.system(size: 20, weight: .heavy, design: .rounded))
-                    .foregroundStyle(Meadow.woodInk)
+                    .foregroundStyle(Meadow.buttonInk)
                     .padding(.horizontal, 22)
                     .padding(.vertical, 12)
-                    .background(Meadow.wood, in: RoundedRectangle(cornerRadius: 16, style: .continuous))
+                    .background(Meadow.button, in: RoundedRectangle(cornerRadius: 16, style: .continuous))
                     .overlay {
                         RoundedRectangle(cornerRadius: 16, style: .continuous)
-                            .strokeBorder(Meadow.woodEdge, lineWidth: 3)
+                            .strokeBorder(Meadow.buttonEdge, lineWidth: 3)
                     }
                     .shadow(color: .black.opacity(0.2), radius: 4, y: 3)
             }
@@ -100,20 +101,20 @@ struct CaregiverHubView: View {
     private var sourcesCard: some View {
         StickerCard(fill: Meadow.cardCream) {
             VStack(spacing: 14) {
+                // Which of the player's own photos are used. What the game plays — the
+                // categories and photo sets — is chosen in What would you like.
                 NavigationLink {
-                    PhotoSourcesView(engine: engine)
+                    MyPhotosView(engine: engine)
                 } label: {
-                    MeadowRow(symbol: "camera.fill", tint: .hex(0x8B8BE8),
-                              title: "Photo sources", detail: sourceSummary, chevron: true)
+                    MeadowRow(symbol: "camera.fill", tint: Meadow.badgeWalnut,
+                              title: "My photos", detail: sourceSummary, chevron: true)
                 }
                 .buttonStyle(.plain)
-
-                packStrip
 
                 NavigationLink {
                     HowsItGoingView(engine: engine)
                 } label: {
-                    MeadowRow(symbol: "photo.stack.fill", tint: .hex(0x7FB3E8),
+                    MeadowRow(symbol: "photo.stack.fill", tint: Meadow.badgeSlate,
                               title: "How's it going", detail: sessionSummary, chevron: true)
                         .padding(12)
                         .background(Meadow.cardSky,
@@ -124,49 +125,15 @@ struct CaregiverHubView: View {
         }
     }
 
-    /// The pack thumbnails from the reference, as tinted tiles with a badge.
-    private var packStrip: some View {
-        HStack(spacing: 8) {
-            ForEach(Array(PublicPackLibrary.packs.filter(\.isPlayable).prefix(5).enumerated()),
-                    id: \.element.id) { index, pack in
-                let tints: [Color] = [.hex(0xF3C765), .hex(0x7FC98A), .hex(0x7FB3E8),
-                                      .hex(0xF2A0C0), .hex(0xA99BE8)]
-                RoundedRectangle(cornerRadius: 14, style: .continuous)
-                    .fill(tints[index % tints.count])
-                    .aspectRatio(0.92, contentMode: .fit)
-                    .overlay {
-                        Image(systemName: "photo.fill")
-                            .font(.system(size: 20, weight: .bold))
-                            .foregroundStyle(.white.opacity(0.95))
-                    }
-                    .overlay(alignment: .bottomTrailing) {
-                        Circle()
-                            .fill(.white)
-                            .frame(width: 20, height: 20)
-                            .overlay {
-                                Image(systemName: "checkmark")
-                                    .font(.system(size: 11, weight: .black))
-                                    .foregroundStyle(tints[index % tints.count])
-                            }
-                            .padding(4)
-                    }
-                    .overlay {
-                        RoundedRectangle(cornerRadius: 14, style: .continuous)
-                            .strokeBorder(.white, lineWidth: 3)
-                    }
-                    .accessibilityLabel(pack.title)
-            }
-        }
-    }
 
     private var paceCard: some View {
         StickerCard(fill: Meadow.cardCream) {
             VStack(alignment: .leading, spacing: 14) {
                 SectionBanner(symbol: "gamecontroller.fill", title: "Pace",
-                              tint: .hex(0x8B8BE8), band: .hex(0xFBEFC9))
+                              tint: Meadow.badgeWalnut, band: Meadow.bandSand)
 
                 HStack(spacing: 12) {
-                    IconBadge(symbol: "photo.on.rectangle.angled", tint: .hex(0xF3C765))
+                    IconBadge(symbol: "photo.on.rectangle.angled", tint: Meadow.badgeOchre)
                     VStack(alignment: .leading, spacing: 2) {
                         Text("Today's challenge")
                             .font(.system(size: 18, weight: .bold, design: .rounded))
@@ -213,27 +180,66 @@ struct CaregiverHubView: View {
                 .font(.system(size: 15, weight: .black))
                 .foregroundStyle(.white)
                 .frame(width: 30, height: 30)
-                .background(Color.hex(0x8B8BE8), in: Circle())
+                .background(Meadow.on, in: Circle())
         }
         .buttonStyle(.plain)
         .accessibilityLabel(symbol == "minus" ? "Fewer photo sets" : "More photo sets")
+    }
+
+    /// Wi-Fi only, or Wi-Fi and cellular, for fetching the photo sets.
+    ///
+    /// On the main page rather than three screens into Photo sources, where it used to
+    /// be: a game that stops showing pictures away from home is the first thing anybody
+    /// tries to fix, and a setting nobody can find is a setting that does not exist. Two
+    /// named choices rather than one switch, so neither reading of "on" is a guess.
+    private var connectionCard: some View {
+        StickerCard(fill: Meadow.cardCream) {
+            VStack(alignment: .leading, spacing: 12) {
+                SectionBanner(symbol: "antenna.radiowaves.left.and.right", title: "Connection",
+                              tint: Meadow.badgeSlate, band: Meadow.bandSage)
+
+                VStack(alignment: .leading, spacing: 10) {
+                    HStack(spacing: 12) {
+                        IconBadge(symbol: "arrow.down.circle.fill", tint: Meadow.badgeSage)
+                        Text("Download photo sets on")
+                            .font(.system(size: 17, weight: .semibold, design: .rounded))
+                            .foregroundStyle(Meadow.title)
+                    }
+                    Picker("Download photo sets on", selection: $engine.settings.packsOnCellular) {
+                        Text("Wi-Fi only").tag(false)
+                        Text("Wi-Fi or cellular").tag(true)
+                    }
+                    .pickerStyle(.segmented)
+                }
+                .padding(12)
+                .background(Meadow.cardMint,
+                            in: RoundedRectangle(cornerRadius: 18, style: .continuous))
+
+                MeadowNote(text: engine.settings.packsOnCellular
+                    ? "Photo sets download wherever there is a signal. Each photo is fetched "
+                      + "once and kept on this device, so the same picture never costs twice."
+                    : "Photo sets only download on Wi-Fi. Away from Wi-Fi the game plays on "
+                      + "with this device's own photos, the maps, and any photos already "
+                      + "downloaded.")
+            }
+        }
     }
 
     private var accessibilityCard: some View {
         StickerCard(fill: Meadow.cardSky) {
             VStack(alignment: .leading, spacing: 12) {
                 SectionBanner(symbol: "eye.fill", title: "Accessibility",
-                              tint: .hex(0x5AA9E6), band: .hex(0xD3E9F9))
+                              tint: Meadow.badgeCharcoal, band: Meadow.bandSage)
 
                 VStack(spacing: 0) {
-                    pickerRow(symbol: "textformat.size", tint: .hex(0xF3C765), title: "Text size",
+                    pickerRow(symbol: "textformat.size", tint: Meadow.badgeOchre, title: "Text size",
                               value: engine.settings.textScale.title) {
                         Picker("", selection: $engine.settings.textScale) {
                             ForEach(CaregiverSettings.TextScale.allCases) { Text($0.title).tag($0) }
                         }
                     }
                     Divider().padding(.leading, 52)
-                    toggleRow(symbol: "speaker.wave.2.fill", tint: .hex(0xD48BE0),
+                    toggleRow(symbol: "speaker.wave.2.fill", tint: Meadow.badgeMauve,
                               title: "Sound and touch cues", isOn: $engine.settings.audioCues)
                 }
                 .padding(.vertical, 4)
@@ -244,7 +250,7 @@ struct CaregiverHubView: View {
                     Button {
                         Supporting.open()
                     } label: {
-                        MeadowRow(symbol: "heart.fill", tint: .hex(0xD4708A),
+                        MeadowRow(symbol: "heart.fill", tint: Meadow.badgeRose,
                                   title: "Support Time Rolls",
                                   detail: "It's free, and it stays free", chevron: true)
                             .padding(12)
@@ -257,7 +263,7 @@ struct CaregiverHubView: View {
                 NavigationLink {
                     NarrationView(engine: engine)
                 } label: {
-                    MeadowRow(symbol: "speaker.wave.2.fill", tint: .hex(0x5AA9E6),
+                    MeadowRow(symbol: "speaker.wave.2.fill", tint: Meadow.badgeCharcoal,
                               title: "Reading aloud",
                               detail: engine.settings.narration ? "On" : "Off",
                               chevron: true)
@@ -274,7 +280,7 @@ struct CaregiverHubView: View {
     private var privacyCard: some View {
         StickerCard(fill: Meadow.cardLavender) {
             NavigationLink { AboutView() } label: {
-                MeadowRow(symbol: "lock.shield.fill", tint: .hex(0x7FC98A),
+                MeadowRow(symbol: "lock.shield.fill", tint: Meadow.badgeOlive,
                           title: "Privacy & what we claim", detail: nil, chevron: true)
             }
             .buttonStyle(.plain)
@@ -319,9 +325,10 @@ struct CaregiverHubView: View {
     }
 
     private var sourceSummary: String {
-        let packs = PublicPackLibrary.packs.count { engine.settings.enabledPackIDs.contains($0.id) }
-        let base = engine.settings.useAllPhotos ? "All photos" : "Chosen albums"
-        return "\(base) · \(packs) photo pack\(packs == 1 ? "" : "s")"
+        guard engine.settings.ownPhotosOn else { return "Not in the game" }
+        if engine.settings.useAllPhotos { return "All my photos" }
+        let count = engine.settings.albumSelection.values.count(where: { $0 })
+        return count == 1 ? "1 album" : "\(count) albums"
     }
 }
 
@@ -356,15 +363,20 @@ struct MeadowRow: View {
     }
 }
 
-// MARK: - Photo sources
+// MARK: - My photos
 
-struct PhotoSourcesView: View {
+/// Which of the player's own photographs the game uses: all of them, or only some albums.
+///
+/// This was "Photo sources", and held the photo sets as well — which are now chosen, with
+/// everything else there is to play, in What would you like. What is left here is the one
+/// question only Setup can answer: of somebody's own library, which part.
+struct MyPhotosView: View {
 
     @Bindable var engine: GameEngine
     @Environment(\.photoHighContrast) private var highContrast
 
-    private static let packTints: [Color] = [.hex(0xF3C765), .hex(0x7FC98A), .hex(0x7FB3E8),
-                                             .hex(0xF2A0C0), .hex(0xA99BE8)]
+    private static let albumTints: [Color] = [Meadow.badgeOchre, Meadow.badgeOlive, Meadow.badgeSlate,
+                                              Meadow.badgeRose, Meadow.badgeMauve]
 
     var body: some View {
         ZStack {
@@ -375,10 +387,10 @@ struct PhotoSourcesView: View {
             }
             ScrollView {
                 VStack(spacing: 20) {
-                    ownPhotosCard
-                    if !engine.library.albums.isEmpty { albumsCard }
-                    packsCard
-                    mobileDataCard
+                    choiceCard
+                    if engine.library.access.canRead, !engine.settings.useAllPhotos {
+                        albumsCard
+                    }
                     labelsCard
                 }
                 .padding(.horizontal, 18)
@@ -388,7 +400,7 @@ struct PhotoSourcesView: View {
             }
             .scrollContentBackground(.hidden)
         }
-        .navigationTitle("Photo sources")
+        .navigationTitle("My photos")
         .navigationBarTitleDisplayMode(.inline)
         .toolbarBackground(.hidden, for: .navigationBar)
         .onChange(of: engine.settings) { engine.settings.save() }
@@ -397,67 +409,37 @@ struct PhotoSourcesView: View {
         }
     }
 
-    /// Whether the photo sets may come down over mobile data.
-    ///
-    /// The game used to refuse outright, and not as a setting: away from Wi-Fi every pack
-    /// photograph failed and the game looked broken. It is a choice now, and the card says
-    /// plainly what turning it off costs, because "Wi-Fi only" sounds free and is not.
-    private var mobileDataCard: some View {
+    /// All my photos, or only some albums.
+    private var choiceCard: some View {
         StickerCard(fill: Meadow.cardCream) {
             VStack(alignment: .leading, spacing: 12) {
-                SectionBanner(symbol: "antenna.radiowaves.left.and.right",
-                              title: "Mobile data", tint: .hex(0x7FB3E8),
-                              band: .hex(0xFBEFC9))
+                SectionBanner(symbol: "camera.fill", title: "Which photos",
+                              tint: Meadow.badgeWalnut, band: Meadow.bandSand)
 
-                HStack(spacing: 12) {
-                    IconBadge(symbol: "arrow.down.circle.fill", tint: .hex(0x5FBF7F))
-                    Text("Download photo sets on mobile data")
-                        .font(.system(size: 18, weight: .bold, design: .rounded))
-                        .foregroundStyle(Meadow.title)
-                        .fixedSize(horizontal: false, vertical: true)
-                    Spacer(minLength: 0)
-                    Toggle("", isOn: $engine.settings.packsOnCellular)
-                        .labelsHidden().tint(Meadow.on)
-                }
-                .padding(12)
-                .background(Meadow.cardMint,
-                            in: RoundedRectangle(cornerRadius: 18, style: .continuous))
-
-                note(engine.settings.packsOnCellular
-                     ? "Photo sets download wherever there is a signal. Each photo is "
-                       + "fetched once and kept on this device, so the same picture never "
-                       + "costs twice."
-                     : "Photo sets only download on Wi-Fi. Away from Wi-Fi the game plays "
-                       + "on with this device's own photos, and with any photo set already "
-                       + "downloaded — those cost nothing to show again.")
-            }
-        }
-    }
-
-    private var ownPhotosCard: some View {
-        StickerCard(fill: Meadow.cardCream) {
-            VStack(alignment: .leading, spacing: 12) {
-                SectionBanner(symbol: "camera.fill", title: "My photos",
-                              tint: .hex(0x8B8BE8), band: .hex(0xFBEFC9))
-
-                HStack(spacing: 12) {
-                    IconBadge(symbol: "person.crop.square.fill", tint: .hex(0x5FBF7F))
-                    Text("Use all my photos")
-                        .font(.system(size: 18, weight: .bold, design: .rounded))
-                        .foregroundStyle(Meadow.title)
-                    Spacer()
-                    Toggle("", isOn: $engine.settings.useAllPhotos)
-                        .labelsHidden().tint(Meadow.on)
-                }
-                .padding(12)
-                .background(Meadow.cardMint,
-                            in: RoundedRectangle(cornerRadius: 18, style: .continuous))
-
-                note(engine.library.access.canRead
-                     ? "\(engine.library.photos.count) photos are in play right now."
-                     : "Photo access hasn't been granted, so only photo packs are in play.")
-
-                if !engine.library.access.canRead {
+                if engine.library.access.canRead {
+                    VStack(spacing: 10) {
+                        choiceRow(symbol: "photo.on.rectangle.angled", title: "All my photos",
+                                  detail: "Everything in the photo library",
+                                  isChosen: engine.settings.useAllPhotos) {
+                            engine.settings.useAllPhotos = true
+                            // "All" means all: drop any albums left out under the old
+                            // screen, which has no switch here to put them back.
+                            engine.settings.albumSelection = engine.settings.albumSelection
+                                .filter { $0.value }
+                        }
+                        choiceRow(symbol: "rectangle.stack.fill", title: "Only some albums",
+                                  detail: "Pick the albums to use below",
+                                  isChosen: !engine.settings.useAllPhotos) {
+                            engine.settings.useAllPhotos = false
+                        }
+                    }
+                    note(engine.settings.ownPhotosOn
+                         ? "\(engine.library.photos.count) of your photos are in play right now."
+                         : "Your photos are switched off in What would you like, so none are "
+                           + "in play. Switch \"My own photos\" on there to use them.")
+                } else {
+                    note("Time Rolls hasn't been given access to your photos, so only the "
+                         + "built-in photo sets are in play.")
                     Button {
                         Task {
                             await engine.requestPhotoAccess()
@@ -466,15 +448,11 @@ struct PhotoSourcesView: View {
                     } label: {
                         Text("Ask for photo access")
                             .font(.system(size: 18, weight: .heavy, design: .rounded))
-                            .foregroundStyle(Meadow.woodInk)
+                            .foregroundStyle(Meadow.buttonInk)
                             .frame(maxWidth: .infinity)
                             .padding(.vertical, 13)
-                            .background(Meadow.wood,
+                            .background(Meadow.button,
                                         in: RoundedRectangle(cornerRadius: 16, style: .continuous))
-                            .overlay {
-                                RoundedRectangle(cornerRadius: 16, style: .continuous)
-                                    .strokeBorder(Meadow.woodEdge, lineWidth: 3)
-                            }
                     }
                     .buttonStyle(.plain)
                 }
@@ -482,53 +460,70 @@ struct PhotoSourcesView: View {
         }
     }
 
+    /// The albums to use, when it is not all of them.
     private var albumsCard: some View {
         StickerCard(fill: Meadow.cardLavender) {
             VStack(alignment: .leading, spacing: 12) {
-                SectionBanner(symbol: "rectangle.stack.fill",
-                              title: engine.settings.useAllPhotos ? "Skip these albums"
-                                                                  : "Include these albums",
-                              tint: .hex(0xA99BE8), band: .hex(0xE3DCFA))
-
-                VStack(spacing: 8) {
-                    ForEach(Array(engine.library.albums.enumerated()), id: \.element.id) { index, album in
-                        toggleTile(symbol: "folder.fill",
-                                   tint: Self.packTints[index % Self.packTints.count],
-                                   title: album.title,
-                                   detail: "\(album.estimatedCount) photos",
-                                   isOn: albumBinding(album))
+                SectionBanner(symbol: "rectangle.stack.fill", title: "Use these albums",
+                              tint: Meadow.badgeMauve, band: Meadow.bandBlush)
+                if engine.library.albums.isEmpty {
+                    note("There are no albums in this photo library yet.")
+                } else {
+                    VStack(spacing: 8) {
+                        ForEach(Array(engine.library.albums.enumerated()), id: \.element.id) { index, album in
+                            choiceRow(symbol: "folder.fill",
+                                      title: album.title,
+                                      detail: "\(album.estimatedCount) photos",
+                                      tint: Self.albumTints[index % Self.albumTints.count],
+                                      isChosen: engine.settings.albumSelection[album.id] == true) {
+                                if engine.settings.albumSelection[album.id] == true {
+                                    engine.settings.albumSelection.removeValue(forKey: album.id)
+                                } else {
+                                    engine.settings.albumSelection[album.id] = true
+                                }
+                            }
+                        }
                     }
-                }
-
-                note(engine.settings.useAllPhotos
-                     ? "Screenshots and receipts are rarely worth showing. Turn one on here to leave it out."
-                     : "Only the albums you turn on will appear in the game.")
-            }
-        }
-    }
-
-    private var packsCard: some View {
-        StickerCard(fill: Meadow.cardSky) {
-            VStack(alignment: .leading, spacing: 12) {
-                SectionBanner(symbol: "photo.stack.fill", title: "Photo packs",
-                              tint: .hex(0x5AA9E6), band: .hex(0xD3E9F9))
-
-                VStack(spacing: 8) {
-                    ForEach(Array(PublicPackLibrary.packs.enumerated()), id: \.element.id) { index, pack in
-                        toggleTile(symbol: "photo.fill",
-                                   tint: Self.packTints[index % Self.packTints.count],
-                                   title: pack.title,
-                                   detail: pack.isPlayable
-                                       ? "\(pack.items.count) photos · \(pack.blurb)"
-                                       : pack.blurb,
-                                   isOn: packBinding(pack))
-                            .disabled(!pack.isPlayable)
-                    }
+                    note("Only the albums ticked here appear in the game.")
                 }
             }
         }
     }
 
+    /// A row with a round tick that fills in when chosen — the same as What would you like.
+    private func choiceRow(symbol: String, title: String, detail: String,
+                           tint: Color = Meadow.badgeSage, isChosen: Bool,
+                           action: @escaping () -> Void) -> some View {
+        Button(action: action) {
+            HStack(spacing: 12) {
+                IconBadge(symbol: symbol, tint: tint)
+                VStack(alignment: .leading, spacing: 2) {
+                    Text(title)
+                        .font(.system(size: 17, weight: .heavy, design: .rounded))
+                        .foregroundStyle(Meadow.title)
+                    Text(detail)
+                        .font(.system(size: 13, design: .rounded))
+                        .foregroundStyle(Meadow.muted)
+                        .fixedSize(horizontal: false, vertical: true)
+                }
+                Spacer(minLength: 4)
+                Circle()
+                    .fill(isChosen ? Meadow.on : .white.opacity(0.8))
+                    .frame(width: 28, height: 28)
+                    .overlay {
+                        Image(systemName: "checkmark")
+                            .font(.system(size: 14, weight: .black))
+                            .foregroundStyle(isChosen ? .white : Meadow.muted.opacity(0.45))
+                    }
+            }
+            .padding(12)
+            .background(.white.opacity(0.7),
+                        in: RoundedRectangle(cornerRadius: 18, style: .continuous))
+            .contentShape(RoundedRectangle(cornerRadius: 18, style: .continuous))
+        }
+        .buttonStyle(.plain)
+        .accessibilityAddTraits(isChosen ? [.isButton, .isSelected] : .isButton)
+    }
 
     private var localTriviaDetail: String {
         // CoreLocation tells its delegate the authorisation status the moment one is
@@ -552,7 +547,7 @@ struct PhotoSourcesView: View {
                 NavigationLink {
                     LabelsView(engine: engine)
                 } label: {
-                    MeadowRow(symbol: "tag.fill", tint: .hex(0xF2A0C0),
+                    MeadowRow(symbol: "tag.fill", tint: Meadow.badgeRose,
                               title: "Add plain labels", detail: nil, chevron: true)
                 }
                 .buttonStyle(.plain)
@@ -562,26 +557,6 @@ struct PhotoSourcesView: View {
         }
     }
 
-    private func toggleTile(symbol: String, tint: Color, title: String,
-                            detail: String, isOn: Binding<Bool>) -> some View {
-        HStack(spacing: 12) {
-            IconBadge(symbol: symbol, tint: tint)
-            VStack(alignment: .leading, spacing: 2) {
-                Text(title)
-                    .font(.system(size: 17, weight: .heavy, design: .rounded))
-                    .foregroundStyle(Meadow.title)
-                Text(detail)
-                    .font(.system(size: 13, design: .rounded))
-                    .foregroundStyle(Meadow.muted)
-                    .fixedSize(horizontal: false, vertical: true)
-            }
-            Spacer(minLength: 4)
-            Toggle("", isOn: isOn).labelsHidden().tint(Meadow.on)
-        }
-        .padding(12)
-        .background(.white.opacity(0.7),
-                    in: RoundedRectangle(cornerRadius: 18, style: .continuous))
-    }
 
     private func note(_ text: String) -> some View {
         HStack(alignment: .top, spacing: 8) {
@@ -598,39 +573,7 @@ struct PhotoSourcesView: View {
                     in: RoundedRectangle(cornerRadius: 14, style: .continuous))
     }
 
-    /// When "use all photos" is on, the toggle means *skip*; otherwise it means *include*.
-    private func albumBinding(_ album: AlbumInfo) -> Binding<Bool> {
-        Binding {
-            let selection = engine.settings.albumSelection[album.id]
-            return engine.settings.useAllPhotos ? (selection == false) : (selection == true)
-        } set: { isOn in
-            if engine.settings.useAllPhotos {
-                if isOn {
-                    engine.settings.albumSelection[album.id] = false
-                } else {
-                    engine.settings.albumSelection.removeValue(forKey: album.id)
-                }
-            } else {
-                if isOn {
-                    engine.settings.albumSelection[album.id] = true
-                } else {
-                    engine.settings.albumSelection.removeValue(forKey: album.id)
-                }
-            }
-        }
-    }
 
-    private func packBinding(_ pack: PhotoPack) -> Binding<Bool> {
-        Binding {
-            engine.settings.enabledPackIDs.contains(pack.id)
-        } set: { isOn in
-            if isOn {
-                engine.settings.enabledPackIDs.insert(pack.id)
-            } else {
-                engine.settings.enabledPackIDs.remove(pack.id)
-            }
-        }
-    }
 }
 
 // MARK: - Labels
@@ -717,7 +660,7 @@ struct NarrationView: View {
                             .font(.system(size: 17, weight: .bold, design: .rounded))
                             .foregroundStyle(Meadow.title)
                     }
-                    .tint(Color.hex(0x5FA86B))
+                    .tint(Meadow.on)
                     Text("The photographs are never described — only the question is "
                        + "read, once, as the round opens. There is a “Say it again” "
                        + "button under it.")
@@ -730,7 +673,7 @@ struct NarrationView: View {
                 StickerCard(fill: Meadow.cardSky) {
                     VStack(alignment: .leading, spacing: 10) {
                         SectionBanner(symbol: "waveform", title: "Voice",
-                                      tint: .hex(0x5AA9E6), band: .white.opacity(0.75))
+                                      tint: Meadow.badgeCharcoal, band: .white.opacity(0.75))
                         if narrator.available.isEmpty {
                             Text("No voices are installed for your language yet — the "
                                + "steps below will add one.")
@@ -746,7 +689,7 @@ struct NarrationView: View {
                 StickerCard(fill: Meadow.cardSky) {
                     VStack(alignment: .leading, spacing: 10) {
                         SectionBanner(symbol: "globe", title: "Other languages",
-                                      tint: .hex(0x8B8BE8), band: .white.opacity(0.75))
+                                      tint: Meadow.badgeWalnut, band: .white.opacity(0.75))
                         Text("The questions themselves stay in English — only the voice "
                            + "changes. For somebody whose first language isn't English, a "
                            + "familiar accent can still be easier to follow.")
@@ -762,7 +705,7 @@ struct NarrationView: View {
             StickerCard(fill: Meadow.cardMint) {
                 VStack(alignment: .leading, spacing: 10) {
                     SectionBanner(symbol: "mic.fill", title: "Answering out loud",
-                                  tint: .hex(0x5FA86B), band: .white.opacity(0.75))
+                                  tint: Meadow.on, band: .white.opacity(0.75))
                     Text("Every photo is numbered. With this on, saying \"two\" picks the "
                        + "second one — the same as tapping it. Tapping always works too.")
                         .font(.system(size: 15, design: .rounded))
@@ -774,7 +717,7 @@ struct NarrationView: View {
                                 .font(.system(size: 17, weight: .bold, design: .rounded))
                                 .foregroundStyle(Meadow.title)
                         }
-                        .tint(Color.hex(0x5FA86B))
+                        .tint(Meadow.on)
                     case .notAsked:
                         Button {
                             Task { await engine.voiceAnswers.requestPermission() }
@@ -814,7 +757,7 @@ struct NarrationView: View {
                 VStack(alignment: .leading, spacing: 10) {
                     SectionBanner(symbol: "person.wave.2.fill",
                                   title: "A voice you recorded",
-                                  tint: .hex(0x8B8BE8), band: .white.opacity(0.75))
+                                  tint: Meadow.badgeWalnut, band: .white.opacity(0.75))
                     switch narrator.personalVoice {
                     case .notAsked:
                         Text("If someone has recorded a Personal Voice on this device, "
@@ -860,7 +803,7 @@ struct NarrationView: View {
                 VStack(alignment: .leading, spacing: 10) {
                     SectionBanner(symbol: "arrow.down.circle.fill",
                                   title: "For a warmer voice",
-                                  tint: .hex(0x5FA86B), band: .white.opacity(0.75))
+                                  tint: Meadow.on, band: .white.opacity(0.75))
                     Text("Apple's better voices are a free download, but only the Settings "
                        + "app can fetch them — this app has no way to do it for you.")
                         .font(.system(size: 15, design: .rounded))
@@ -871,7 +814,7 @@ struct NarrationView: View {
                                 .font(.system(size: 14, weight: .heavy, design: .rounded))
                                 .foregroundStyle(.white)
                                 .frame(width: 24, height: 24)
-                                .background(Color.hex(0x5FA86B), in: Circle())
+                                .background(Meadow.on, in: Circle())
                             Text(step)
                                 .font(.system(size: 15, design: .rounded))
                                 .foregroundStyle(Meadow.body)
@@ -922,7 +865,7 @@ struct NarrationView: View {
                 HStack(spacing: 10) {
                     Image(systemName: isChosen ? "checkmark.circle.fill" : "circle")
                         .font(.system(size: 20, weight: .bold))
-                        .foregroundStyle(isChosen ? Color.hex(0x1F6B43) : Meadow.muted)
+                        .foregroundStyle(isChosen ? Meadow.onInk : Meadow.muted)
                     VStack(alignment: .leading, spacing: 2) {
                         Text(choice.name)
                             .font(.system(size: 16, weight: .bold, design: .rounded))
@@ -930,7 +873,7 @@ struct NarrationView: View {
                         Text(voiceNote(for: choice))
                             .font(.system(size: 13, design: .rounded))
                             .foregroundStyle(choice.quality == "Standard"
-                                             ? Meadow.muted : Color.hex(0x1F6B43))
+                                             ? Meadow.muted : Meadow.onInk)
                     }
                     Spacer(minLength: 0)
                 }
@@ -943,7 +886,7 @@ struct NarrationView: View {
             } label: {
                 Image(systemName: "play.circle.fill")
                     .font(.system(size: 26))
-                    .foregroundStyle(Color.hex(0x5AA9E6))
+                    .foregroundStyle(Meadow.walnut)
             }
             .buttonStyle(.plain)
             .accessibilityLabel("Hear \(choice.name)")

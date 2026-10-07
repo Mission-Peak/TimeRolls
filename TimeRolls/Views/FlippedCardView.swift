@@ -79,7 +79,7 @@ struct FlippedCardView: View {
                         Text("Back to the photos")
                             .font(.system(size: 19, weight: .heavy, design: .rounded))
                     }
-                    .foregroundStyle(Meadow.woodInk)
+                    .foregroundStyle(Meadow.accentInk)
                     .padding(.horizontal, 22)
                     .frame(height: 54)
                     .background(.white, in: Capsule())

@@ -16,6 +16,10 @@ enum GameTheme: String, CaseIterable, Identifiable, Codable {
     case chronology
     case places
     case objects
+    case geography
+    case cars
+    case film
+    case sports
 
     var id: String { rawValue }
 
@@ -24,6 +28,10 @@ enum GameTheme: String, CaseIterable, Identifiable, Codable {
         case .chronology: "Time"
         case .places: "Places"
         case .objects: "Things"
+        case .geography: "Geography"
+        case .cars: "Cars"
+        case .film: "Film Stars"
+        case .sports: "Sports Stars"
         }
     }
 
@@ -32,11 +40,45 @@ enum GameTheme: String, CaseIterable, Identifiable, Codable {
         case .chronology: "clock"
         case .places: "map"
         case .objects: "tag"
+        case .geography: "globe.americas"
+        case .cars: "car"
+        case .film: "film"
+        case .sports: "sportscourt"
         }
     }
 
     /// True for themes that need to look at the photo itself rather than its metadata.
     var readsPhotoContent: Bool { self == .objects }
+
+    /// The games a pack plays when it does not say: the three photo games, never a quiz.
+    /// A quiz category has to be asked for by name, or Local Trivia and any pack without
+    /// a themes list would turn up in "Which country borders Germany?".
+    static let photoGames: Set<GameTheme> = [.chronology, .places, .objects]
+
+    /// The four quiz categories. Each is played from its own pack and nothing else — no
+    /// photograph of the player's, and never one from another category — because every
+    /// question is a fact about a named thing, and somebody's own photograph of a car
+    /// cannot be known not to be a Mustang. See `QuizCurator`.
+    var isQuiz: Bool {
+        switch self {
+        case .chronology, .places, .objects: false
+        case .geography, .cars, .film, .sports: true
+        }
+    }
+}
+
+/// One kind of fact question a quiz pack can carry: ask about a value from `facts[ask]`,
+/// and rule out any distractor whose `facts[exclude]` holds it. Written into the pack by
+/// its builder (see Tools/PackBuilder/quiz_common.py), never here.
+struct QuizQuestion: Hashable, Sendable {
+    var id: String
+    var ask: String
+    var exclude: String
+    /// "Who starred in {value}?"
+    var prompt: String
+    /// All four photographs from one cluster — one sport — because "which one played
+    /// quarterback?" beside a tennis player is not a question.
+    var sameCluster: Bool
 }
 
 // MARK: - Photos
@@ -281,6 +323,24 @@ struct GamePhoto: Identifiable, Hashable {
     /// Whether to show this photograph's name before the answer is given.
     var showsTitleWhilePlaying = false
 
+    /// Quiz packs only: what is known about the subject, by fact name. A key that is
+    /// present is known even when its list is empty — "won no Oscar" is a fact. A key
+    /// that is absent is unknown, and the photograph is never a distractor for a question
+    /// about it.
+    var facts: [String: [String]] = [:]
+    /// Quiz packs only: what a fair distractor shares with this one — "US state",
+    /// "pony car", "baseball".
+    var cluster: String?
+    /// Cars only: the model line, "Ford Mustang", shared by every generation of it.
+    var family: String?
+    /// Cars only: the model year a question names — "Which one is a 1965 Ford Mustang?"
+    var askYear: Int?
+    /// Cars only: the first and last model years of the generation shown.
+    var generationYears: ClosedRange<Int>?
+    /// Quiz packs only: titles this photograph must never share a round with. A map of
+    /// the Soviet Union beside a map of Russia is a spot-the-difference.
+    var keepApartFrom: Set<String> = []
+
     var isPersonal: Bool { origin.isPersonal }
     /// Which pack this photograph came from, or nil when it is the player's own.
     var packID: String? { origin.packID }
@@ -389,6 +449,17 @@ struct Level: Identifiable {
             }
             // Named-subject rounds carry the creature's own name rather than a category.
             return photo.title ?? focusTag?.capitalized ?? ""
+        case .geography, .cars, .film, .sports:
+            // Every photograph, not only the answer. The Things rule exists because a
+            // stranger's camera roll has names for some pictures and not others; in a
+            // quiz pack every one is named, and "so *that* was Belgium" is half of what
+            // the round is for.
+            guard let title = photo.title?.nilIfBlank else { return "" }
+            let named = title.prefix(1).uppercased() + title.dropFirst()
+            // A car is not a model line, it is a year of one — and in a generation round
+            // the years are the whole question.
+            if let year = photo.askYear { return "\(year) \(named)" }
+            return named
         }
     }
 
@@ -440,6 +511,9 @@ enum ThemeRotation {
         case .chronology: 2
         case .places: 5
         case .objects: 5
+        // Four categories of their own. Each a little less often than Places or Things,
+        // so a mix still feels like a photo game rather than a pub quiz.
+        case .geography, .cars, .film, .sports: 3
         }
     }
 
@@ -635,6 +709,8 @@ nonisolated extension GamePhoto {
                 if creationDate != nil { return true }
             case .objects:
                 if askableName != nil || !objectTags.isEmpty || conceptID != nil { return true }
+            case .geography, .cars, .film, .sports:
+                if askableName != nil { return true }
             }
         }
         return false

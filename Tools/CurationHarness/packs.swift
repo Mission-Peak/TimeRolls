@@ -19,8 +19,11 @@ struct PackOnDisk {
     let themes: [String]
     /// Whether an item's title names what the photograph shows, or is only the file's name.
     let titlesAreNames: Bool
+    let namedSubjectPrompt: String?
     /// "birth", "created" or "event" when the years are facts about the subjects.
     let chronologyBasis: String?
+    /// Quiz packs only: the fact questions the pack can ask.
+    let questions: [QuizQuestion]
     let items: [[String: Any]]
 }
 
@@ -38,7 +41,16 @@ func loadPacks(from root: String) -> [PackOnDisk] {
                           title: json["title"] as? String ?? name,
                           themes: json["themes"] as? [String] ?? [],
                           titlesAreNames: json["titlesAreNames"] as? Bool ?? true,
+                          namedSubjectPrompt: json["namedSubjectPrompt"] as? String,
                           chronologyBasis: json["chronologyBasis"] as? String,
+                          questions: (json["questions"] as? [[String: Any]] ?? []).compactMap { q in
+                              guard let id = q["id"] as? String, let ask = q["ask"] as? String,
+                                    let exclude = q["exclude"] as? String,
+                                    let prompt = q["prompt"] as? String else { return nil }
+                              return QuizQuestion(id: id, ask: ask, exclude: exclude,
+                                                  prompt: prompt,
+                                                  sameCluster: q["sameCluster"] as? Bool ?? false)
+                          },
                           items: items)
     }
 }
@@ -93,6 +105,16 @@ func photos(from pack: PackOnDisk) -> [GamePhoto] {
         }
         photo.dateIsAboutTheSubject = ["birth", "created", "event"].contains(pack.chronologyBasis ?? "")
         photo.wasExamined = true
+        // Quiz packs: the same fields the app reads in `carryingQuiz(from:)`.
+        photo.facts = item["facts"] as? [String: [String]] ?? [:]
+        photo.cluster = item["cluster"] as? String
+        photo.family = item["family"] as? String
+        photo.askYear = item["askYear"] as? Int
+        if let years = item["years"] as? [Int], years.count == 2, years[0] <= years[1] {
+            photo.generationYears = years[0]...years[1]
+        }
+        photo.keepApartFrom = Set(item["keepApartFrom"] as? [String] ?? [])
+        photo.namedSubjectPrompt = pack.namedSubjectPrompt
         return photo
     }
 }

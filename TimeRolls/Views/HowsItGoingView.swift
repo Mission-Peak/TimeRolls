@@ -19,7 +19,7 @@ struct HowsItGoingView: View {
             StickerCard(fill: Meadow.cardMint) {
                 VStack(alignment: .leading, spacing: 12) {
                     SectionBanner(symbol: "calendar", title: "Today's challenge",
-                                  tint: .hex(0x5FA86B), band: .white.opacity(0.75))
+                                  tint: Meadow.on, band: .white.opacity(0.75))
                     // One circle that says one thing: done, or how many are left. The
                     // stars, the grade, the days "like this" and a paragraph about the
                     // challenge all used to sit here, and the card read "23 of 8" once
@@ -36,15 +36,15 @@ struct HowsItGoingView: View {
                         StatCard(value: "\(engine.stats.sessionsThisWeek)",
                                  label: engine.stats.sessionsThisWeek == 1
                                     ? "session\nthis week" : "sessions\nthis week",
-                                 symbol: "calendar", tint: .hex(0x8B8BE8))
+                                 symbol: "calendar", tint: Meadow.badgeWalnut)
                         StatCard(value: "\(engine.stats.dayStreak)",
                                  label: engine.stats.dayStreak == 1
                                     ? "day\nin a row" : "days\nin a row",
-                                 symbol: "flame.fill", tint: .hex(0xF3A05A))
+                                 symbol: "flame.fill", tint: Meadow.badgeClay)
                         StatCard(value: "\(engine.stats.stats.totalLevels)",
                                  label: engine.stats.stats.totalLevels == 1
                                     ? "photo set\naltogether" : "photo sets\naltogether",
-                                 symbol: "square.stack.fill", tint: .hex(0x7FB3E8))
+                                 symbol: "square.stack.fill", tint: Meadow.badgeSlate)
                     }
 
                     // The best week there has been. Only shown once there is more than
@@ -55,7 +55,7 @@ struct HowsItGoingView: View {
                             StatCard(value: "\(best.sessions)",
                                      label: best.isThisWeek
                                         ? "best week\nso far—this one" : "sessions in\nyour best week",
-                                     symbol: "trophy.fill", tint: .hex(0xE8B04B))
+                                     symbol: "trophy.fill", tint: Meadow.badgeOchre)
                         }
                     }
                 }
@@ -64,20 +64,20 @@ struct HowsItGoingView: View {
             StickerCard(fill: Meadow.cardCream) {
                 VStack(alignment: .leading, spacing: 12) {
                     SectionBanner(symbol: "star.fill", title: "Stars",
-                                  tint: .hex(0xF3C765), band: .hex(0xFBEFC9))
+                                  tint: Meadow.badgeOchre, band: Meadow.bandSand)
                     HStack(spacing: 10) {
                         StatCard(value: "\(engine.stats.stats.totalStars)",
                                  label: "stars\naltogether",
-                                 symbol: "star.fill", tint: .hex(0xF3C765))
+                                 symbol: "star.fill", tint: Meadow.badgeOchre)
                         StatCard(value: "\(engine.stats.starsThisWeek)",
                                  label: "stars\nthis week",
-                                 symbol: "sparkles", tint: .hex(0x8B8BE8))
+                                 symbol: "sparkles", tint: Meadow.badgeWalnut)
                         StatCard(value: "\(engine.stats.stats.bestRun)",
                                  // "in a row, best run" never said what was in a row, and
                                  // the singular read as "best run of one", which is an odd
                                  // thing to tell somebody about their own playing.
                                  label: "found first\ntime, best run",
-                                 symbol: "flame.fill", tint: .hex(0xF3A05A))
+                                 symbol: "flame.fill", tint: Meadow.badgeClay)
                     }
                     if engine.stats.stats.currentRun > 0 {
                         FactRow(title: "Running now",
@@ -94,10 +94,10 @@ struct HowsItGoingView: View {
             StickerCard(fill: Meadow.cardSky) {
                 VStack(alignment: .leading, spacing: 14) {
                     SectionBanner(symbol: "chart.bar.fill", title: "This week",
-                                  tint: .hex(0x5AA9E6), band: .white.opacity(0.75))
+                                  tint: Meadow.badgeCharcoal, band: .white.opacity(0.75))
                     WeekChart(days: engine.stats.levelsPerDayLastWeek)
                     HStack(spacing: 10) {
-                        IconBadge(symbol: engine.stats.trend.symbolName, tint: .hex(0x5FBF7F))
+                        IconBadge(symbol: engine.stats.trend.symbolName, tint: Meadow.badgeSage)
                         Text(engine.stats.trend.label)
                             .font(.system(size: 17, weight: .bold, design: .rounded))
                             .foregroundStyle(Meadow.title)
@@ -228,7 +228,7 @@ struct DailyChallengeRing: View {
     /// How much of the circle is filled. Stops at full, however far past the goal.
     private var progress: Double { goal <= 0 ? 1 : min(Double(done) / Double(goal), 1) }
 
-    private static let green = Color.hex(0x5FA86B)
+    private static let green = Meadow.on
     private static let size: CGFloat = 176
 
     var body: some View {

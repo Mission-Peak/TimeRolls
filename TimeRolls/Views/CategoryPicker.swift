@@ -17,22 +17,22 @@ import SwiftUI
 
 // MARK: - Mid-session: change what I'm playing
 
-/// Opened from the chip on the play screen. Covers both halves of "what am I playing":
-/// the kind of question, and which photos it draws on.
+/// Opened from the chip on the play screen: one list of categories — Animals, Geography,
+/// Famous Faces, the player's own photos — each switched on or off.
+///
+/// It used to be two cards, a list of question types (Time, Places, Things, with "A mix")
+/// and a list of photo sets, and the two had become the same choice made twice. A category
+/// already mixes its own questions, so the categories are the only choice there is.
 struct PlayPickerView: View {
 
     @Bindable var engine: GameEngine
     @Environment(\.dismiss) private var dismiss
     @Environment(\.photoHighContrast) private var highContrast
 
-    private var packs: [PhotoPack] {
-        PublicPackLibrary.packs.filter(\.isPlayable)
-    }
-
     /// The tile colours run in the same order as the pack strip in caregiver setup, so a
     /// pack keeps its colour wherever you meet it.
-    private static let packTints: [Color] = [.hex(0xF3C765), .hex(0x7FC98A), .hex(0x7FB3E8),
-                                             .hex(0xF2A0C0), .hex(0xA99BE8)]
+    private static let packTints: [Color] = [Meadow.badgeOchre, Meadow.badgeOlive, Meadow.badgeSlate,
+                                             Meadow.badgeRose, Meadow.badgeMauve]
 
     var body: some View {
         ZStack {
@@ -44,8 +44,7 @@ struct PlayPickerView: View {
             ScrollView {
                 VStack(spacing: 20) {
                     header
-                    lookForCard
-                    photosCard
+                    categoriesCard
                 }
                 .padding(.horizontal, 18)
                 .padding(.bottom, 40)
@@ -54,6 +53,9 @@ struct PlayPickerView: View {
             .scrollContentBackground(.hidden)
         }
         .presentationDetents([.large])
+        // A question type pinned before the picker changed would hide most categories
+        // with no way left to unpin it.
+        .onAppear { if engine.pinnedTheme != nil { engine.choose(theme: nil) } }
     }
 
     private var header: some View {
@@ -66,14 +68,14 @@ struct PlayPickerView: View {
             Button { dismiss() } label: {
                 Text("Done")
                     .font(.system(size: 20, weight: .heavy, design: .rounded))
-                    .foregroundStyle(Meadow.woodInk)
+                    .foregroundStyle(Meadow.buttonInk)
                     .padding(.horizontal, 22)
                     .padding(.vertical, 12)
-                    .background(Meadow.wood,
+                    .background(Meadow.button,
                                 in: RoundedRectangle(cornerRadius: 16, style: .continuous))
                     .overlay {
                         RoundedRectangle(cornerRadius: 16, style: .continuous)
-                            .strokeBorder(Meadow.woodEdge, lineWidth: 3)
+                            .strokeBorder(Meadow.buttonEdge, lineWidth: 3)
                     }
                     .shadow(color: .black.opacity(0.2), radius: 4, y: 3)
             }
@@ -82,93 +84,80 @@ struct PlayPickerView: View {
         .padding(.top, 18)
     }
 
-    private var lookForCard: some View {
+    /// Every category, each one switched on or off. Each already mixes its own kinds of
+    /// question — Famous Faces asks who was born first and which one is Einstein, Travel
+    /// Landmarks asks where — so there is no separate "mix" to choose, and no list of
+    /// question types: what somebody picks is what the pictures are of.
+    private var categoriesCard: some View {
         StickerCard(fill: Meadow.cardCream) {
             VStack(alignment: .leading, spacing: 12) {
-                SectionBanner(symbol: "sparkle.magnifyingglass", title: "What to look for",
-                              tint: .hex(0x8B8BE8), band: .hex(0xFBEFC9))
+                SectionBanner(symbol: "sparkle.magnifyingglass", title: "What to play",
+                              tint: Meadow.badgeWalnut, band: Meadow.bandSand)
 
                 VStack(spacing: 10) {
-                    pickRow(symbol: "square.grid.2x2.fill", tint: .hex(0xF3C765),
-                            title: "A mix", detail: "Change between them as you go",
-                            fill: Meadow.cardLavender,
-                            isChosen: engine.pinnedTheme == nil) {
-                        engine.choose(theme: nil)
-                    }
-                    ForEach(Array(GameTheme.allCases.enumerated()), id: \.element) { index, theme in
-                        if engine.availableThemes.contains(theme) {
-                            pickRow(symbol: theme.symbolName,
-                                    tint: Self.packTints[(index + 1) % Self.packTints.count],
-                                    title: theme.title, detail: question(for: theme),
-                                    fill: Meadow.cardSky,
-                                    isChosen: engine.pinnedTheme == theme) {
-                                engine.choose(theme: theme)
-                            }
+                    if engine.library.access != .denied {
+                        pickRow(symbol: "person.crop.square.fill", tint: Meadow.badgeSage,
+                                title: "My own photos",
+                                detail: engine.library.access.canRead
+                                    ? "Your pictures, in the order you took them"
+                                    : "Ask for permission to use them",
+                                fill: Meadow.cardMint,
+                                isChosen: engine.settings.ownPhotosOn) {
+                            choose(ownPhotos: !engine.settings.ownPhotosOn,
+                                   packs: engine.settings.enabledPackIDs)
                         }
+                    }
+                    ForEach(Array(packs.enumerated()), id: \.element.id) { index, pack in
+                        pickRow(symbol: Self.symbol(for: pack.id),
+                                tint: Self.packTints[index % Self.packTints.count],
+                                title: pack.title, detail: pack.blurb,
+                                fill: Meadow.cardSky,
+                                isChosen: engine.settings.enabledPackIDs.contains(pack.id)) {
+                            var chosen = engine.settings.enabledPackIDs
+                            if chosen.contains(pack.id) { chosen.remove(pack.id) } else { chosen.insert(pack.id) }
+                            choose(ownPhotos: engine.settings.ownPhotosOn, packs: chosen)
+                        }
+                    }
+                    // Notable places close by — looked up live, so it is a category like
+                    // the others but lives at the end.
+                    pickRow(symbol: "mappin.and.ellipse", tint: Meadow.badgeClay,
+                            title: "Places near you",
+                            detail: "Notable places close by",
+                            fill: Meadow.cardSky,
+                            isChosen: engine.settings.localTriviaEnabled) {
+                        engine.settings.localTriviaEnabled.toggle()
+                        engine.settings.save()
+                        if engine.settings.localTriviaEnabled { engine.startLocalTriviaIfWanted() }
                     }
                 }
 
-                footnote("Just for now — next time you play it starts on a mix again.")
+                footnote("Pick as many as you like. Each one mixes its own questions.")
             }
         }
     }
 
-    private var photosCard: some View {
-        StickerCard(fill: Meadow.cardSky) {
-            VStack(alignment: .leading, spacing: 12) {
-                SectionBanner(symbol: "camera.fill", title: "Photos",
-                              tint: .hex(0x5AA9E6), band: .hex(0xD3E9F9))
+    private var packs: [PhotoPack] {
+        PublicPackLibrary.packs.filter(\.isPlayable)
+    }
 
-                VStack(spacing: 10) {
-                    if engine.library.access != .denied {
-                        pickRow(symbol: "person.crop.square.fill", tint: .hex(0x5FBF7F),
-                                title: "My own photos",
-                                detail: engine.library.access.canRead
-                                    ? "\(engine.library.photos.count) photos on this device"
-                                    : "Ask for permission to use them",
-                                fill: Meadow.cardMint,
-                                isChosen: engine.settings.useAllPhotos) {
-                            engine.chooseSources(useOwnPhotos: !engine.settings.useAllPhotos,
-                                                 packIDs: engine.settings.enabledPackIDs)
-                        }
-                    }
-                    // Notable places near the player, listed with the photo sources
-                    // because that is what it is — another place the game draws pictures
-                    // and questions from. It used to be a chip on the play screen and a
-                    // card three screens into setup, neither of which is where somebody
-                    // looks when deciding what to play with.
-                    pickRow(symbol: "mappin.and.ellipse", tint: .hex(0xE8A33D),
-                            title: "Places near you",
-                            detail: engine.settings.localTriviaEnabled
-                                ? "Notable places close by" : "Add notable places close by",
-                            fill: .white.opacity(0.7),
-                            isChosen: engine.settings.localTriviaEnabled) {
-                        engine.settings.localTriviaEnabled.toggle()
-                        engine.settings.save()
-                        if engine.settings.localTriviaEnabled {
-                            engine.startLocalTriviaIfWanted()
-                        }
-                    }
-                    ForEach(Array(packs.enumerated()), id: \.element.id) { index, pack in
-                        pickRow(symbol: "photo.fill",
-                                tint: Self.packTints[index % Self.packTints.count],
-                                title: pack.title, detail: "\(pack.items.count) photos",
-                                fill: .white.opacity(0.7),
-                                isChosen: engine.settings.enabledPackIDs.contains(pack.id)) {
-                            var chosen = engine.settings.enabledPackIDs
-                            if chosen.contains(pack.id) {
-                                chosen.remove(pack.id)
-                            } else {
-                                chosen.insert(pack.id)
-                            }
-                            engine.chooseSources(useOwnPhotos: engine.settings.useAllPhotos,
-                                                 packIDs: chosen)
-                        }
-                    }
-                }
+    /// Switch categories, but never down to nothing: the last one on stays on.
+    private func choose(ownPhotos: Bool, packs: Set<String>) {
+        guard ownPhotos || !packs.isEmpty else { return }
+        engine.chooseSources(useOwnPhotos: ownPhotos, packIDs: packs)
+    }
 
-                footnote("Pick as many sets as you like.")
-            }
+    private static func symbol(for packID: String) -> String {
+        switch packID {
+        case "animals": "pawprint.fill"
+        case "plants": "leaf.fill"
+        case "travel-landmarks": "building.columns.fill"
+        case "famous-artworks": "paintpalette.fill"
+        case "famous-faces": "person.2.fill"
+        case "geography": "globe.americas.fill"
+        case "cars": "car.fill"
+        case "film-stars": "film.fill"
+        case "sports-stars": "sportscourt.fill"
+        default: "photo.fill"
         }
     }
 
@@ -223,12 +212,5 @@ struct PlayPickerView: View {
         .accessibilityAddTraits(isChosen ? [.isButton, .isSelected] : .isButton)
     }
 
-    private func question(for theme: GameTheme) -> String {
-        switch theme {
-        case .chronology: "Which photo is older?"
-        case .places: "Which photo was taken there?"
-        case .objects: "Which photo has it in it?"
-        }
-    }
 
 }

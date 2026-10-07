@@ -10,6 +10,7 @@ swiftc -O -default-isolation MainActor -o "$OUT/harness" main.swift \
     packs.swift \
     "$SRC/Model/GameModel.swift" \
     "$SRC/Curation/Curators.swift" \
+    "$SRC/Curation/QuizCurator.swift" \
     "$SRC/Curation/LevelGenerator.swift" \
     "$SRC/Curation/RoundAuditRules.swift" \
     "$SRC/Curation/AlbumNames.swift" \

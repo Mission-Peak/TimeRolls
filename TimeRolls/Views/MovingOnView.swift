@@ -51,7 +51,7 @@ struct MovingOnView: View {
                         HStack(alignment: .top, spacing: 14) {
                             Image(systemName: way.symbol)
                                 .font(.system(size: 24, weight: .black))
-                                .foregroundStyle(Meadow.woodInk)
+                                .foregroundStyle(Meadow.accentInk)
                                 .frame(width: 34)
                             VStack(alignment: .leading, spacing: 4) {
                                 Text(way.title)
@@ -102,14 +102,14 @@ struct MovingOnView: View {
                 .overlay {
                     Image(systemName: "photo.fill")
                         .font(.system(size: 40, weight: .black))
-                        .foregroundStyle(Meadow.woodInk.opacity(0.35))
+                        .foregroundStyle(Meadow.accentInk.opacity(0.35))
                 }
                 .offset(x: offset)
                 .opacity(fading ? 0 : 1)
 
             Image(systemName: "hand.point.up.left.fill")
                 .font(.system(size: 30, weight: .black))
-                .foregroundStyle(Meadow.woodInk)
+                .foregroundStyle(Meadow.accentInk)
                 .offset(x: offset - 10, y: 46)
                 .opacity(fading ? 0 : 0.9)
         }

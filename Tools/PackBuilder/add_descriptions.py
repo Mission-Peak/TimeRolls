@@ -14,7 +14,7 @@ that can be checked, and a sentence invented to fill a field is worse than an em
   python3 Tools/PackBuilder/add_descriptions.py --subjects landmarks
 """
 
-import argparse, json, os, time, urllib.parse, urllib.request
+import argparse, json, re, os, time, urllib.parse, urllib.request
 
 ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 AGENT = ("TimeRolls-PackBuilder/1.1 (photo game for older adults; hanna@mission-peak.com) "
@@ -57,9 +57,17 @@ def english_titles(ids):
     return out
 
 
+HATNOTE = re.compile(r"^(?:(?:See |For (?:other|the) |Not to be confused|This article is about"
+                     r"|\"[^\"]+\" redirects here)[^.]*\.\s*)+")
+
+
 def shorten(text, sentences=2, limit=340):
     """The first sentence or two, which is where an encyclopedia puts the answer."""
     text = " ".join((text or "").split())
+    # A hatnote is a signpost to another article, not a sentence about this one. Three car
+    # cards opened "See Mercedes-Benz S-Class for a complete overview of all S-Class
+    # models." — read aloud, as the first thing said about a 1955 Mercedes.
+    text = HATNOTE.sub("", text)
     if not text:
         return None
     # Whole sentences only. Cutting at a character count left the Mona Lisa's card ending

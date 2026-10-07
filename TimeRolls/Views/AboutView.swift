@@ -15,7 +15,7 @@ struct AboutView: View {
             StickerCard(fill: Meadow.cardCream) {
                 VStack(alignment: .leading, spacing: 12) {
                     SectionBanner(symbol: "sparkles", title: "What this is",
-                                  tint: .hex(0x8B8BE8), band: .hex(0xFBEFC9))
+                                  tint: Meadow.badgeWalnut, band: Meadow.bandSand)
                     Text(ClaimLanguage.safeSummary)
                         .font(.system(size: 15, design: .rounded))
                         .foregroundStyle(Meadow.body)
@@ -26,7 +26,7 @@ struct AboutView: View {
             StickerCard(fill: Meadow.cardSky) {
                 VStack(alignment: .leading, spacing: 12) {
                     SectionBanner(symbol: "lock.shield.fill", title: "Where photos go",
-                                  tint: .hex(0x5AA9E6), band: .white.opacity(0.75))
+                                  tint: Meadow.badgeCharcoal, band: .white.opacity(0.75))
                     // The lines themselves live in ClaimLanguage, which is the file to
                     // read against the written policy. This is only how they are drawn.
                     ForEach(ClaimLanguage.privacyLines) { line in
@@ -40,14 +40,14 @@ struct AboutView: View {
             StickerCard(fill: Meadow.cardCream) {
                 VStack(alignment: .leading, spacing: 12) {
                     SectionBanner(symbol: "doc.text.fill", title: "The full policy",
-                                  tint: .hex(0x5FBF7F), band: .hex(0xD8F0E2))
+                                  tint: Meadow.badgeSage, band: Meadow.onWash)
                     Text("The summary above is what the app actually does. The full written "
                        + "policy, which is the one that governs, lives on our website.")
                         .font(.system(size: 15, design: .rounded))
                         .foregroundStyle(Meadow.body)
                         .fixedSize(horizontal: false, vertical: true)
                     Link(destination: URL(string: ClaimLanguage.privacyPolicyURL)!) {
-                        MeadowRow(symbol: "safari.fill", tint: .hex(0x5FBF7F),
+                        MeadowRow(symbol: "safari.fill", tint: Meadow.badgeSage,
                                   title: "mission-peak.com",
                                   detail: "Read the privacy policy",
                                   chevron: true)
@@ -57,7 +57,7 @@ struct AboutView: View {
 
             StickerCard(fill: Meadow.cardMint) {
                 NavigationLink { PhotoCreditsView() } label: {
-                    MeadowRow(symbol: "camera.fill", tint: .hex(0x7FB3E8),
+                    MeadowRow(symbol: "camera.fill", tint: Meadow.badgeSlate,
                               title: "Photo credits",
                               detail: "Who took the photographs, and under which licence",
                               chevron: true)
@@ -68,7 +68,7 @@ struct AboutView: View {
             StickerCard(fill: Meadow.cardLavender) {
                 VStack(alignment: .leading, spacing: 12) {
                     SectionBanner(symbol: "exclamationmark.circle.fill", title: "Please read",
-                                  tint: .hex(0xE08B8B), band: .white.opacity(0.7))
+                                  tint: Meadow.badgeRose, band: .white.opacity(0.7))
                     Text(ClaimLanguage.standingDisclaimer)
                         .font(.system(size: 14, design: .rounded))
                         .foregroundStyle(Meadow.body)
@@ -96,11 +96,11 @@ struct AboutView: View {
                     Spacer(minLength: 8)
                     Text(leaves)
                         .font(.system(size: 13, weight: .bold, design: .rounded))
-                        .foregroundStyle(isKept ? Color.hex(0x1F6B43) : Meadow.woodInk)
+                        .foregroundStyle(isKept ? Meadow.onInk : Meadow.walnut)
                         .padding(.horizontal, 10)
                         .padding(.vertical, 5)
-                        .background(isKept ? AnyShapeStyle(Color.hex(0xCFEFD9))
-                                           : AnyShapeStyle(Meadow.wood.opacity(0.75)),
+                        .background(isKept ? AnyShapeStyle(Meadow.onWash)
+                                           : AnyShapeStyle(Meadow.blush.opacity(0.7)),
                                     in: Capsule())
                 }
                 Text(detail)
@@ -161,7 +161,7 @@ struct PhotoCreditsView: View {
                             HStack(spacing: 10) {
                                 SectionBanner(symbol: "photo.fill",
                                               title: entry.pack.title,
-                                              tint: .hex(0x7FB3E8), band: .hex(0xFBEFC9))
+                                              tint: Meadow.badgeSlate, band: Meadow.bandSand)
                                 Spacer(minLength: 0)
                                 Image(systemName: opened == entry.pack.id
                                       ? "chevron.up" : "chevron.down")

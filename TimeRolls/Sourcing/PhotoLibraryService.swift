@@ -86,7 +86,9 @@ final class PhotoLibraryService {
 
         albums = scan.albums
         skipped = scan.skipped
-        photos = scan.photos
+        // The albums are still listed with their photos switched off, so Setup → My
+        // photos can show what there is to choose from.
+        photos = settings.ownPhotosOn ? scan.photos : []
     }
 
     nonisolated private struct ScanResult {

@@ -19,6 +19,8 @@ struct LevelGenerator {
     var packChronologyPrompts: [String: String] = [:]
     /// Packs whose dates are birthdays rather than the dates of the photographs.
     var birthDatedPacks: Set<String> = []
+    /// The fact questions each quiz pack can ask, by pack id.
+    var quizQuestions: [String: [QuizQuestion]] = [:]
     /// Whether the on-device pass is running at all. It cannot load in the Simulator,
     /// and a rule that waits for it would leave Places empty there for ever.
     var examinesPhotos = true
@@ -70,27 +72,12 @@ struct LevelGenerator {
     /// applied anywhere else is a filter something eventually walks around.
     var excluded: Set<String> = []
 
-    /// How many of a round's photographs should be the player's own.
+    /// The most of the player's own photographs a round of public ones may hold.
     ///
-    /// One, with the rest from the packs — three to one at the usual four-photograph
-    /// round. This is a reversal of what the app did before, and worth saying why.
-    ///
-    /// The old rule treated a pack photograph as a garnish: blended in on a one-in-three
-    /// roll, at most two per round, and only for libraries under a hundred and twenty
-    /// photographs. That was right when a pack held twenty-four pictures and the player's
-    /// own library was all the content there was. It stopped being right once the packs
-    /// held thousands — a player with a full camera roll was seeing almost none of them,
-    /// three packs were effectively invisible, and the same personal photographs came
-    /// round again and again while a thousand public ones went unshown.
-    ///
-    /// One personal photograph per round is also what makes the game work for somebody
-    /// who has very few. A library of thirty pictures can carry a round a day for a long
-    /// time when it only has to supply one photograph of the four.
-    ///
-    /// It is a target, not a guarantee. A round is built by a curator working to its own
-    /// rules — dates, places, themes — and the ratio is reached by asking it a few times
-    /// and taking the closest answer, never by forcing a photograph into a round it does
-    /// not belong in.
+    /// One, and only as the answer — see `isPertinent`. The pool carries one of theirs at a
+    /// time so a round can never hold two, and `makeLevel` keeps the round only when that
+    /// one is what the question is about. It used to be a target every round aimed for,
+    /// which is how their photographs ended up as distractors in rounds about strangers.
     static let personalPhotosWanted = 1
 
     /// How many times to ask for a round before settling for the closest ratio so far.
@@ -127,6 +114,9 @@ struct LevelGenerator {
             // Needs a subject plus enough photos that plainly don't contain it.
             return ObjectsCurator.makeLevel(
                 pool: pool(for: theme, forceBlend: true)) != nil
+        case .geography, .cars, .film, .sports:
+            return QuizCurator.makeLevel(theme: theme, pool: pool(for: theme),
+                                         questions: quizQuestions) != nil
         }
     }
 
@@ -137,41 +127,69 @@ struct LevelGenerator {
     // MARK: - Generation
 
     func makeLevel(theme: GameTheme) -> Level? {
-        // Aim for one of the player's own and the rest from the packs. Curation is random,
-        // so asking a few times and keeping the closest gets there without ever putting a
-        // photograph into a round where it does not belong.
+        // A quiz category never holds the player's own photographs: the first fair round
+        // is the round.
+        if theme.isQuiz {
+            for _ in 0..<attemptsAtTheRatio {
+                if let level = freshQuestion(theme: theme), showsEachSubjectOnce(level) {
+                    return level
+                }
+            }
+            return nil
+        }
+
+        // One of the player's own photographs when it is the point of the round, and
+        // otherwise none. See `isPertinent`.
         //
-        // A library with nothing usable for this theme lands on zero and stays there, and
-        // that is the right answer rather than a failure: an all-pack round is a real
-        // round, and refusing to build one would leave a player with no photographs of
-        // their own staring at an empty screen.
-        var best: Level?
-        var bestDistance = Int.max
+        // This used to aim for one of theirs in every round, and reached it by putting one
+        // into every pool and asking the curator again until a round used it. The curator
+        // used it however it could — often as a distractor, a castle from somebody's
+        // holiday standing in a row of famous paintings for no reason the player could
+        // see. Their photograph is only worth a place when the question is about it.
+        //
+        // The first fair round is the round, theirs or not. Hunting for one that used
+        // their photograph made every Places and Things round about it — the rule is that
+        // it may be in a round when it is the point, not that it must be in every round.
         for _ in 0..<attemptsAtTheRatio {
             // `continue`, not `break`. Each attempt is offered a different photograph of
             // the player's, and some of them cannot make a round — a `break` here threw
-            // the whole round away on the first unlucky draw, and a library that could
-            // easily have answered was reported as having nothing to ask about.
+            // the whole round away on the first unlucky draw.
             guard let level = freshQuestion(theme: theme),
-                  showsEachSubjectOnce(level) else { continue }
-            let mine = level.photos.count(where: \.isPersonal)
-            let distance = abs(mine - Self.personalPhotosWanted)
-            if distance == 0 { return level }
-            if distance < bestDistance {
-                best = level
-                bestDistance = distance
-            }
+                  showsEachSubjectOnce(level), isPertinent(level) else { continue }
+            return level
         }
-        if let best { return best }
-        // Nothing at all could be built from a pool holding one of their photographs.
-        // Open it up and take whatever round can be made.
+        // Nothing pertinent came of their photographs. Four public ones, then.
         for _ in 0..<attemptsAtTheRatio {
-            if let level = freshQuestion(theme: theme, widened: true),
+            if let level = freshQuestion(theme: theme, publicOnly: true),
                showsEachSubjectOnce(level) {
                 return level
             }
         }
+        // Nothing at all could be built that way. Open it up and take whatever round can
+        // be made — still never with their photograph as a stranger's distractor.
+        for _ in 0..<attemptsAtTheRatio {
+            if let level = freshQuestion(theme: theme, widened: true),
+               showsEachSubjectOnce(level), isPertinent(level) {
+                return level
+            }
+        }
         return nil
+    }
+
+    /// Whether the player's own photographs in this round belong there.
+    ///
+    /// A round of public photographs may hold one of theirs only as the answer: "which
+    /// photo is from Italy?" with their own picture from Rome, "which photo is from your
+    /// album?". As a distractor it is filler — a picture of their kitchen beside three
+    /// famous paintings, there because the round needed a fourth and not because it says
+    /// anything about the question.
+    ///
+    /// A round of nothing but their photographs is theirs throughout, and is pertinent by
+    /// definition: it is how the game plays for somebody who has turned the photo sets off.
+    func isPertinent(_ level: Level) -> Bool {
+        let mine = level.photos.filter(\.isPersonal)
+        if mine.isEmpty || mine.count == level.photos.count { return true }
+        return mine.count == 1 && mine[0].id == level.correctPhotoID
     }
 
     /// No two photographs in a round may be of the same thing.
@@ -200,10 +218,11 @@ struct LevelGenerator {
     /// library whose every question has been missed from spinning here forever, and the
     /// round it settles for is one they have seen rather than no round at all.
     private func freshQuestion(theme: GameTheme,
-                               widened: Bool = false) -> Level? {
+                               widened: Bool = false,
+                               publicOnly: Bool = false) -> Level? {
         var fallback: Level?
         for _ in 0..<6 {
-            guard let level = curate(theme: theme, widened: widened)
+            guard let level = curate(theme: theme, widened: widened, publicOnly: publicOnly)
             else { return fallback }
             guard AlreadyMissed.wasMissed(subject: level.focusTag,
                                           answer: level.correctPhotoID,
@@ -214,9 +233,11 @@ struct LevelGenerator {
     }
 
     private func curate(theme: GameTheme,
-                        widened: Bool = false) -> Level? {
+                        widened: Bool = false,
+                        publicOnly: Bool = false) -> Level? {
         let pool = deduplicated(setAside(recentlyUsed,
-                                         from: pool(for: theme, widened: widened),
+                                         from: pool(for: theme, widened: widened,
+                                                    publicOnly: publicOnly),
                                          theme: theme))
         switch theme {
         case .chronology:
@@ -263,6 +284,18 @@ struct LevelGenerator {
                     visualDistance: visualDistance,
                     conceptScore: conceptScore,
                     bestConcept: bestConcept)
+        case .geography, .cars, .film, .sports:
+            return QuizCurator.makeLevel(theme: theme, pool: pool,
+                                         questions: quizQuestions,
+                                         recentFocus: recentCategories,
+                                         recentAsks: recentAsks,
+                                         recentWordings: recentWordings)
+                ?? QuizCurator.makeLevel(theme: theme,
+                                         pool: self.pool(for: theme, widened: widened),
+                                         questions: quizQuestions,
+                                         recentFocus: recentCategories,
+                                         recentAsks: recentAsks,
+                                         recentWordings: recentWordings)
         }
     }
 
@@ -320,6 +353,10 @@ struct LevelGenerator {
             // Untagged photos are still useful here: a photo the classifier found
             // nothing in is a perfectly clean distractor.
             personal
+        case .geography, .cars, .film, .sports:
+            // Never. Somebody's own photograph of a car cannot be known not to be a
+            // Mustang, and nobody has a map of Florida in their camera roll.
+            []
         }
     }
 
@@ -377,6 +414,9 @@ struct LevelGenerator {
                 ? fresh : photos
         case .objects:
             return Set(fresh.flatMap(\.objectTags)).count >= 2 ? fresh : photos
+        case .geography, .cars, .film, .sports:
+            // Room for the cluster rules to find four that belong together.
+            return fresh.count >= DifficultyKnob.photoCount * 6 ? fresh : photos
         }
     }
 
@@ -390,12 +430,15 @@ struct LevelGenerator {
             return Set(usable.compactMap(\.placeName)).count < 3
         case .objects:
             return Set(usable.flatMap(\.objectTags)).count < 2
+        case .geography, .cars, .film, .sports:
+            return true
         }
     }
 
     private func pool(for theme: GameTheme,
                       forceBlend: Bool = false,
-                      widened: Bool = false) -> [GamePhoto] {
+                      widened: Bool = false,
+                      publicOnly: Bool = false) -> [GamePhoto] {
         let usable = usablePersonal(for: theme)
             .filter { !excluded.contains($0.id) && !setAsideByDescription.contains($0.id) }
         // Only packs that can carry this game. A pack of undatable photographs must
@@ -403,9 +446,12 @@ struct LevelGenerator {
         let pack = pack.filter { photo in
             guard case let .pack(packID, _) = photo.origin else { return false }
             guard !excluded.contains(photo.id) else { return false }
-            return packThemeSupport[packID]?.contains(theme) ?? true
+            // A pack nobody registered — Local Trivia — plays the photo games only.
+            return packThemeSupport[packID]?.contains(theme) ?? !theme.isQuiz
         }
         guard !pack.isEmpty else { return usable }
+        // One category, one pack's worth of photographs, nothing of the player's.
+        if theme.isQuiz || publicOnly { return pack }
 
         // One of the player's own photographs in the pool, and no more.
         //

@@ -509,9 +509,8 @@ enum ChronologyCurator {
                                 birthDatedPacks: Set<String>) -> String? {
         guard !answer.isPersonal, let date = answer.creationDate else { return nil }
         let year = Calendar.current.component(.year, from: date)
-        if isBirthDated(answer, packs: birthDatedPacks) {
-            return "The earliest one here was born in the \(year / 10 * 10)s."
-        }
+        // None for people. A round about people carries no hint at all.
+        if isBirthDated(answer, packs: birthDatedPacks) { return nil }
         return "The earliest one here is from the \(year / 10 * 10)s."
     }
 
@@ -1177,6 +1176,8 @@ enum ObjectsCurator {
     /// nothing out is noise on a screen that should be quiet.
     private nonisolated static func namedSubjectHint(for answer: GamePhoto,
                                                      among photos: [GamePhoto]) -> String? {
+        // People get no hint — see `PeopleWording`.
+        guard !answer.dateIsBirth else { return nil }
         guard let kind = answer.subjectKind, !kind.isEmpty else { return nil }
         // Shown only when it points at one photograph. The test used to be whether
         // *every* other photograph shared the hint, which is far too lenient: "it's a
@@ -1343,6 +1344,14 @@ enum ObjectsCurator {
         switch kind {
         case .named:
             guard let name = answer.askableName else { return }
+            // A person is asked about as a person: "Who is Louis Pasteur?", "Which
+            // scientist is Louis Pasteur?" — never "which one shows" — and with no hint.
+            if answer.dateIsBirth {
+                chosen = Recency.choose(PeopleWording.named(among: level.photos),
+                                        kind: "people-named", x: name, recent: recent)
+                level.hint = nil
+                break
+            }
             // A pack that asks "which photo has {name} in it?" names common nouns, which
             // want their article — it was asking "which photo has lion in it?".
             if answer.namedSubjectPrompt?.contains("in it") == true {

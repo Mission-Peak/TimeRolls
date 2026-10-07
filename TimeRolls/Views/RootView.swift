@@ -15,6 +15,8 @@ struct RootView: View {
     /// Somebody asked to start before the first pass had finished. Remembered for the
     /// session so the screen does not come back between rounds.
     @State private var hasSkippedIndexing = false
+    /// Home or Play. The app opens on Home.
+    @State private var tab: RootTab = .home
     @Environment(\.scenePhase) private var scenePhase
     @Environment(\.horizontalSizeClass) private var sizeClass
 
@@ -36,18 +38,8 @@ struct RootView: View {
                 FirstRunView(engine: engine)
             case .preparing:
                 PreparingView()
-            case .playing:
-                // Only while there is genuinely a lot still to look at, and only until
-                // somebody says otherwise. A short wait is not worth a screen.
-                if !hasSkippedIndexing,
-                   let progress = engine.objects.progress,
-                   progress < 0.9, engine.objects.stillToExamine >= 200 {
-                    GettingReadyView(engine: engine) { hasSkippedIndexing = true }
-                } else {
-                    PlayView(engine: engine) { isShowingCaregiver = true }
-                }
-            case .sessionComplete:
-                SessionCompleteView(engine: engine) { isShowingCaregiver = true }
+            case .playing, .sessionComplete:
+                tabs(highContrast: highContrast)
             case let .noContent(reason):
                 NoContentView(engine: engine, reason: reason) { isShowingCaregiver = true }
             }
@@ -74,10 +66,72 @@ struct RootView: View {
         // Hold the session still while setup is open. Whoever opened it is not watching
         // the game, and the player is watching somebody else use the iPad.
         .onChange(of: isShowingCaregiver) { _, isOpen in
-            if isOpen { engine.pause() } else { engine.resume() }
+            if isOpen { engine.pause() } else if tab == .play { engine.resume() }
+        }
+        // Finishing the day's challenge goes Home, where the congratulations are.
+        .onChange(of: engine.phase) { old, phase in
+            if phase == .sessionComplete { tab = .home }
+            // "Start playing" at the end of first-run setup means play, not Home.
+            if old == .firstRun, phase != .firstRun { tab = .play }
+            if phase == .playing, tab == .home { engine.pause() }
+        }
+        .onChange(of: tab) { _, now in
+            switch now {
+            case .home:
+                engine.pause()
+            case .play:
+                if engine.phase == .sessionComplete {
+                    engine.continueSession()
+                } else {
+                    engine.resume()
+                    // Coming in from Home is starting to play, not being interrupted, so
+                    // the question is read out as it would be at the start of a round.
+                    if engine.settings.narration { engine.speakQuestion() }
+                }
+            }
+        }
+    }
+
+    /// Home and Play, as two tabs along the bottom.
+    private func tabs(highContrast: Bool) -> some View {
+        TabView(selection: $tab) {
+            Tab("Home", systemImage: "house.fill", value: RootTab.home) {
+                ZStack {
+                    backdrop(highContrast)
+                    HomeView(engine: engine,
+                             onCaregiverGate: { isShowingCaregiver = true },
+                             onPlay: { tab = .play })
+                }
+            }
+            Tab("Play", systemImage: "play.fill", value: RootTab.play) {
+                ZStack {
+                    backdrop(highContrast)
+                    // Only while there is genuinely a lot still to look at, and only until
+                    // somebody says otherwise. A short wait is not worth a screen.
+                    if !hasSkippedIndexing,
+                       let progress = engine.objects.progress,
+                       progress < 0.9, engine.objects.stillToExamine >= 200 {
+                        GettingReadyView(engine: engine) { hasSkippedIndexing = true }
+                    } else if engine.phase == .playing {
+                        PlayView(engine: engine) { isShowingCaregiver = true }
+                    }
+                }
+            }
+        }
+        .tint(Meadow.button)
+    }
+
+    @ViewBuilder
+    private func backdrop(_ highContrast: Bool) -> some View {
+        if highContrast {
+            Palette.background(true).ignoresSafeArea()
+        } else {
+            MeadowBackdrop()
         }
     }
 }
+
+enum RootTab: Hashable { case home, play }
 
 // MARK: - Preparing
 
@@ -116,7 +170,7 @@ struct Wordmark: View {
             .font(.system(size: size, weight: .bold, design: .default))
             .italic()
             .kerning(0.5)
-            .foregroundStyle(Color.hex(0x35452D))
+            .foregroundStyle(Meadow.onInk)
             .accessibilityAddTraits(.isHeader)
     }
 }
@@ -173,13 +227,13 @@ struct FirstRunView: View {
                 // rather than as a plain bulleted list.
                 StickerCard(fill: Meadow.cardCream) {
                     VStack(alignment: .leading, spacing: 14) {
-                        Bullet(symbol: "photo.on.rectangle.angled", tint: .hex(0x8B8BE8),
+                        Bullet(symbol: "photo.on.rectangle.angled", tint: Meadow.badgeWalnut,
                                title: "Your photos, a few at a time",
                                detail: "Each round shows a handful of photos and asks one easy question about them.")
-                        Bullet(symbol: "hand.tap.fill", tint: .hex(0xF3A05A),
+                        Bullet(symbol: "hand.tap.fill", tint: Meadow.badgeClay,
                                title: "Just tap a photo",
                                detail: "There's no score, no timer, and no wrong turn you can't take back.")
-                        Bullet(symbol: "lock.shield.fill", tint: .hex(0x7FC98A),
+                        Bullet(symbol: "lock.shield.fill", tint: Meadow.badgeOlive,
                                title: "Photos stay on this device",
                                detail: "Your photos never leave this device. To spot things like "
                                     + "a dog or a cake, it looks at them here, on the device "
@@ -269,7 +323,7 @@ struct NoContentView: View {
         VStack(spacing: 20) {
             StickerCard(fill: Meadow.cardCream) {
                 VStack(spacing: 12) {
-                    IconBadge(symbol: "photo.stack.fill", tint: .hex(0xF3A05A))
+                    IconBadge(symbol: "photo.stack.fill", tint: Meadow.badgeClay)
                     Text("Let's find some photos")
                         .font(.system(size: 28, weight: .black, design: .rounded))
                         .foregroundStyle(Meadow.title)
@@ -376,7 +430,7 @@ struct VoiceSetupView: View {
 
                 StickerCard(fill: Meadow.cardCream) {
                     VStack(alignment: .leading, spacing: 12) {
-                        Bullet(symbol: "speaker.wave.2.fill", tint: .hex(0x5AA9E6),
+                        Bullet(symbol: "speaker.wave.2.fill", tint: Meadow.badgeCharcoal,
                                title: "Read the question aloud",
                                detail: "Each round begins by reading its question out. "
                                     + "There's a big button to hear it again.")
@@ -385,7 +439,7 @@ struct VoiceSetupView: View {
                                 .font(.system(size: 17, weight: .bold, design: .rounded))
                                 .foregroundStyle(Meadow.title)
                         }
-                        .tint(Color.hex(0x5FA86B))
+                        .tint(Meadow.on)
                         if engine.settings.narration, let bestVoice {
                             Text("Using \(bestVoice). Setup has the other voices, and how "
                                + "to download a warmer one.")
@@ -397,7 +451,7 @@ struct VoiceSetupView: View {
 
                 StickerCard(fill: Meadow.cardMint) {
                     VStack(alignment: .leading, spacing: 12) {
-                        Bullet(symbol: "mic.fill", tint: .hex(0x5FA86B),
+                        Bullet(symbol: "mic.fill", tint: Meadow.on,
                                title: "Answer out loud",
                                detail: "Every photo is numbered. Saying \"two\" picks the "
                                     + "second one — useful for hands that find tapping "
@@ -410,7 +464,7 @@ struct VoiceSetupView: View {
                                     .font(.system(size: 17, weight: .bold, design: .rounded))
                                     .foregroundStyle(Meadow.title)
                             }
-                            .tint(Color.hex(0x5FA86B))
+                            .tint(Meadow.on)
                         case .notAsked:
                             Button {
                                 Task {
@@ -525,7 +579,7 @@ struct DailyChallengeSetupView: View {
                                       ? "checkmark.circle.fill" : "circle")
                                     .font(.system(size: 26, weight: .black))
                                     .foregroundStyle(engine.settings.dailyCardGoal == choice.cards
-                                                     ? Color.hex(0x5FA86B) : Meadow.muted)
+                                                     ? Meadow.on : Meadow.muted)
                                 VStack(alignment: .leading, spacing: 4) {
                                     Text("\(choice.name) · \(choice.cards) cards")
                                         .font(.system(size: 19, weight: .heavy, design: .rounded))
@@ -641,10 +695,10 @@ struct GettingReadyView: View {
                     VStack(spacing: 14) {
                         ZStack {
                             Circle()
-                                .stroke(Color.hex(0x5FA86B).opacity(0.22), lineWidth: 12)
+                                .stroke(Meadow.on.opacity(0.22), lineWidth: 12)
                             Circle()
                                 .trim(from: 0, to: engine.objects.progress ?? 0)
-                                .stroke(Color.hex(0x5FA86B),
+                                .stroke(Meadow.on,
                                         style: StrokeStyle(lineWidth: 12, lineCap: .round))
                                 .rotationEffect(.degrees(-90))
                                 .animation(.easeOut(duration: 0.4),
@@ -670,7 +724,7 @@ struct GettingReadyView: View {
 
                         Text("Your photos never leave this device.")
                             .font(.system(size: 14, weight: .semibold, design: .rounded))
-                            .foregroundStyle(Color.hex(0x1F6B43))
+                            .foregroundStyle(Meadow.onInk)
                     }
                 }
 
