@@ -224,7 +224,7 @@ struct FirstRunView: View {
             VStack(alignment: .leading, spacing: 22) {
                 VStack(alignment: .leading, spacing: 8) {
                     Wordmark()
-                    Text("A gentle photo game for all ages.")
+                    Text("A personalized photo trivia game for all ages.")
                         .font(.system(size: 21, weight: .semibold, design: .rounded))
                         .foregroundStyle(Meadow.title.opacity(0.85))
                 }
@@ -270,7 +270,7 @@ struct FirstRunView: View {
                             packIDs: PublicPackLibrary.defaultEnabledPackIDs)
                         stage = .voice
                     } label: {
-                        Text("Play with the built-in photos instead")
+                        Text("Play with the public photos instead")
                             .font(.system(size: 17, weight: .bold, design: .rounded))
                             .foregroundStyle(Meadow.title)
                             .padding(.horizontal, 18)

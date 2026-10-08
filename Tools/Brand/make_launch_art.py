@@ -154,7 +154,13 @@ def diffuse(a, iters, k, lam=0.2):
 
 
 def sharp_art(icon, out):
-    """The icon's picture at `out` pixels square, sharp, from a compressed 1024 source.
+    """The icon's picture at `out` pixels square, sharp. See `sharp`."""
+    # A few pixels off each edge: the source has a thin light line along its top.
+    return sharp(icon.crop((6, 6, 1018, 1018)), out, out, film=(84, 89, 84))
+
+
+def sharp(src, out_w, out_h, film):
+    """A flat-colour picture at `out_w` by `out_h`, sharp, from a small compressed source.
 
     Stretched as it is, the source goes soft and blotchy on a phone and worse on an iPad:
     it is 1024 pixels with compression noise. The picture is flat colours, so each colour
@@ -162,7 +168,6 @@ def sharp_art(icon, out):
     strip's sprocket holes and outlines are too small for that, so there the picture
     itself is used, cleaned and sharpened, and the two are blended along the strip.
     """
-    src = icon.crop((6, 6, 1018, 1018))
     a = diffuse(np.asarray(src, np.float32), 30, 6.0)
     px = a.reshape(-1, 3)
     K = 12
@@ -201,26 +206,50 @@ def sharp_art(icon, out):
     # Specks: any pixel whose 5x5 neighbourhood mostly disagrees takes the local majority.
     counts = np.stack([ndimage.uniform_filter((labels == k).astype(np.float32), 5) for k in range(K)])
     labels = np.where(counts.max(0) > 0.6, counts.argmax(0), labels)
-    ss = 2; big = out * ss
-    best = np.full((big, big), -1, np.float32); arg = np.zeros((big, big), np.uint8)
+    ss = 2; bw, bh = out_w * ss, out_h * ss
+    best = np.full((bh, bw), -1, np.float32); arg = np.zeros((bh, bw), np.uint8)
     for k in range(K):
-        m = np.asarray(Image.fromarray((labels == k).astype(np.float32)).resize((big, big), Image.BICUBIC))
-        m = ndimage.gaussian_filter(m, sigma=big / 1012 * 0.9)
+        m = np.asarray(Image.fromarray((labels == k).astype(np.float32)).resize((bw, bh), Image.BICUBIC))
+        m = ndimage.gaussian_filter(m, sigma=bw / src.width * 0.9)
         upd = m > best; best[upd] = m[upd]; arg[upd] = k
     rgb = cent.clip(0, 255).astype(np.uint8)[arg]
-    flat = Image.fromarray(rgb).resize((out, out), Image.LANCZOS)
+    flat = Image.fromarray(rgb).resize((out_w, out_h), Image.LANCZOS)
     # The film strip's sprocket holes and outlines are too small to rebuild from colour
     # areas: there, the photograph itself, cleaned of compression and sharpened.
-    film = int(group[int(np.argmin([abs(c - np.array([84, 89, 84])).max() for c in cent]))])
+    film = int(group[int(np.argmin([abs(c - np.array(film)).max() for c in cent]))])
     strip = np.isin(labels, [film, group[dark[0]]] if dark else [film])
     strip = ndimage.binary_closing(strip, iterations=4)
     strip = ndimage.binary_dilation(strip, iterations=2).astype(np.float32)
-    mask = Image.fromarray(ndimage.gaussian_filter(strip, 1.2)).resize((out, out), Image.BICUBIC)
+    mask = Image.fromarray(ndimage.gaussian_filter(strip, 1.2)).resize((out_w, out_h), Image.BICUBIC)
     mask = Image.fromarray((np.asarray(mask).clip(0, 1) * 255).astype(np.uint8))
-    photo = Image.fromarray(a.clip(0, 255).astype(np.uint8)).resize((out, out), Image.LANCZOS)
+    photo = Image.fromarray(a.clip(0, 255).astype(np.uint8)).resize((out_w, out_h), Image.LANCZOS)
     photo = Image.fromarray(diffuse(np.asarray(photo, np.float32), 10, 5.0).clip(0, 255).astype(np.uint8))
     photo = photo.filter(ImageFilter.UnsharpMask(radius=4, percent=80, threshold=1))
     return Image.composite(photo, flat, mask)
+
+
+def launch_wide(source_path, width=2752, height=2064):
+    """The launch screen for screens wider than they are tall, from Hanna's design.
+
+    The design (Tools/Brand/launch-wide-source.jpg) is a wide meadow — hills across the
+    whole width, the sun, two film strips, pines and round trees — with the name written
+    in the sky on the left. The name is taken out of the picture here and drawn by
+    LaunchSplash.swift instead, so it is crisp at any size; the picture is rebuilt sharp
+    at iPad resolution; and sky is added above it, because the design is 16:9 and an iPad
+    on its side is 4:3. Wider screens crop that added sky off the top.
+    """
+    art = Image.open(source_path).convert("RGB")
+    a = np.asarray(art).copy()
+    # Paint the sky back over the name, row by row, from a strip of plain sky beside it.
+    for y in range(195, 395):
+        a[y, 70:645] = np.median(a[y, 655:720], axis=0)
+    art = Image.fromarray(a)
+    scene_h = round(width * art.height / art.width)
+    picture = sharp(art, width, scene_h, film=(79, 86, 71))
+    sky = tuple(int(v) for v in np.asarray(picture)[2:8, :].reshape(-1, 3).mean(0))
+    canvas = Image.new("RGB", (width, height), sky)
+    canvas.paste(picture, (0, height - scene_h))
+    return canvas
 
 
 def launch_scene(icon, width=2400, height=5215):
@@ -257,6 +286,15 @@ def main():
     folder = os.path.join(ASSETS, "AppIcon.appiconset")
     for name in ("icon.png", "icon-dark.png", "icon-tinted.png"):
         icon.save(os.path.join(folder, name), optimize=True)
+
+    folder = os.path.join(ASSETS, "LaunchWide.imageset")
+    os.makedirs(folder, exist_ok=True)
+    launch_wide(os.path.join(os.path.dirname(os.path.abspath(__file__)), "launch-wide-source.jpg")
+                ).save(os.path.join(folder, "launch-wide.jpg"), quality=90, optimize=True)
+    with open(os.path.join(folder, "Contents.json"), "w") as f:
+        json.dump({"images": [{"filename": "launch-wide.jpg", "idiom": "universal"}],
+                   "info": {"author": "xcode", "version": 1}}, f, indent=2)
+        f.write("\n")
 
     launch_scene(icon).save(os.path.join(ASSETS, "LaunchScene.imageset", "launch-scene.jpg"),
                         quality=90, optimize=True)

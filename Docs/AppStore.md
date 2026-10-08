@@ -90,7 +90,7 @@ no contests, no unrestricted messaging.
 
 No account or sign-in — tap through onboarding and play. On first launch the app
 asks for photo library access; declining is fine, there is a "Play with the
-built-in photos instead" path that uses the curated packs alone. Microphone and
+public photos instead" path that uses the curated packs alone. Microphone and
 speech access are optional and only used while a round waits for an answer;
 recognition is on-device. Pack photographs are fetched from our storage provider
 (OneBucket) over signed, short-lived URLs; the request carries nothing about the
