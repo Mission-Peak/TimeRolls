@@ -90,29 +90,57 @@ def tree(draw, x, ground, h):
     draw.ellipse((x - w / 2, ground - h, x + w / 2, ground - h * 0.32), fill=TREE)
 
 
-def film_strip(draw, width, centre, half, holes):
-    """A band along `centre` (a y for every x) with sprocket holes down both edges."""
+def film_strip(draw, width, centre, half, frames):
+    """Film as on the icon: two sprocket rails with open frames between them.
+
+    It was a solid band with a row of light holes down each edge, which at launch-screen
+    size read as a road across the hills. The icon's film is open — the hills show
+    through each frame — so this draws the rails and the bars between frames, and leaves
+    the frames themselves empty.
+    """
     xs = np.arange(width)
     dy = np.gradient(centre)
     norm = np.sqrt(1 + dy ** 2)
     nx, ny = -dy / norm, 1 / norm
-    top = [(x + nx[x] * -half, centre[x] + ny[x] * -half) for x in xs]
-    bottom = [(x + nx[x] * half, centre[x] + ny[x] * half) for x in xs]
-    draw.polygon(top + bottom[::-1], fill=FILM)
-    step = width / holes
-    hole_w, hole_h = half * 0.30, half * 0.44
-    for i in range(holes + 1):
-        x = int(min(width - 1, i * step + step / 2))
-        angle = math.atan(dy[x])
-        for side in (-1, 1):
-            cx = x + nx[x] * side * half * 0.62
-            cy = centre[x] + ny[x] * side * half * 0.62
+
+    def offset(x, d):
+        return (x + nx[x] * d, centre[x] + ny[x] * d)
+
+    rail = half * 0.30
+    for inner, outer in ((-half + rail, -half), (half - rail, half)):
+        edge_a = [offset(x, outer) for x in xs]
+        edge_b = [offset(x, inner) for x in xs]
+        draw.polygon(edge_a + edge_b[::-1], fill=FILM)
+
+    # Sprocket holes down each rail.
+    step = rail * 1.6
+    hole_w, hole_h = rail * 0.55, rail * 0.50
+    x = step / 2
+    while x < width:
+        i = int(x)
+        angle = math.atan(dy[i])
+        for d in (-half + rail / 2, half - rail / 2):
+            cx, cy = offset(i, d)
             corners = []
             for px, py in ((-hole_w, -hole_h), (hole_w, -hole_h), (hole_w, hole_h), (-hole_w, hole_h)):
                 rx = px * math.cos(angle) - py * math.sin(angle)
                 ry = px * math.sin(angle) + py * math.cos(angle)
                 corners.append((cx + rx / 2, cy + ry / 2))
             draw.polygon(corners, fill=SKY_LOW)
+        x += step
+
+    # The bars between frames, square to the strip.
+    frame = width / frames
+    bar = rail * 0.55
+    x = frame * 0.35
+    while x < width:
+        i = int(x)
+        tx, ty = 1 / norm[i], dy[i] / norm[i]
+        a, b = offset(i, -half + rail * 0.9), offset(i, half - rail * 0.9)
+        draw.polygon([(a[0] - tx * bar, a[1] - ty * bar), (a[0] + tx * bar, a[1] + ty * bar),
+                      (b[0] + tx * bar, b[1] + ty * bar), (b[0] - tx * bar, b[1] - ty * bar)],
+                     fill=FILM)
+        x += frame
 
 
 def launch_scene(width=1290, height=2803):
@@ -141,12 +169,14 @@ def launch_scene(width=1290, height=2803):
     mid = curve(W, horizon + H * 0.055, [(H * 0.018, W * 1.1, 2.2), (H * 0.006, W * 0.5, 0.3)])
     fill_below(draw, mid, HILL_MID, H)
 
-    # The film strip, winding across the hills.
-    strip = curve(W, horizon + H * 0.085, [(H * 0.030, W * 1.05, 0.9), (H * 0.008, W * 0.5, 2.0)])
-    film_strip(draw, W, strip, H * 0.017, holes=38)
-
     near = curve(W, horizon + H * 0.145, [(H * 0.020, W * 1.2, 4.0), (H * 0.006, W * 0.55, 1.4)])
     fill_below(draw, near, HILL_NEAR, H)
+
+    # The film strip, winding across the hills on top of them, as on the icon — with
+    # the hills showing through its frames.
+    strip = curve(W, horizon + H * 0.105, [(H * 0.030, W * 1.05, 0.9), (H * 0.008, W * 0.5, 2.0)])
+    film_strip(draw, W, strip, H * 0.040, frames=4)
+
     tree(draw, W * 0.80, near[int(W * 0.80)] + H * 0.006, H * 0.085)
 
     front = curve(W, horizon + H * 0.215, [(H * 0.018, W * 1.4, 0.2)])

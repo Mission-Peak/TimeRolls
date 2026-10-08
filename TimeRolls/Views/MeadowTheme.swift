@@ -84,6 +84,9 @@ enum Meadow {
     static let badgeClay = Color.hex(0xA9744E)      // was orange
     static let badgeOchre = Color.hex(0xAE8746)     // was yellow
     static let badgeRose = Color.hex(0xA8737A)      // was pink
+    // The "What to play" tile, after the Home design: a quiet lavender beside the sage.
+    static let badgePlum = Color.hex(0x6E5F94)
+    static let tileLavender = Color.hex(0xECE8F3)
 
     static let bandSand = Color.hex(0xF1E9D8)
     static let bandSage = Color.hex(0xE6EBDD)

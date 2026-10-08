@@ -84,6 +84,18 @@ struct LaunchSplash: View {
             Image("LaunchMark")
                 .resizable()
                 .frame(width: canvas, height: canvas)
+                // The app's name above the logo. The logo alone said nothing to somebody
+                // who had not yet seen it, which on a first launch is everybody.
+                .overlay(alignment: .top) {
+                    Text("Time Rolls")
+                        .font(.system(size: logo * 0.22, weight: .black, design: .rounded))
+                        .foregroundStyle(Meadow.title)
+                        .fixedSize()
+                        // Above the logo itself, not above its shadow.
+                        .alignmentGuide(.top) {
+                            $0[.bottom] + (logo * 0.1 - logo * Self.shadowRoom)
+                        }
+                }
                 .overlay(alignment: .bottom) {
                     Text("by Mission Peak")
                         .font(.system(size: logo * 0.11, weight: .semibold, design: .rounded))

@@ -96,13 +96,6 @@ struct HowsItGoingView: View {
                     SectionBanner(symbol: "chart.bar.fill", title: "This week",
                                   tint: Meadow.badgeCharcoal, band: .white.opacity(0.75))
                     WeekChart(days: engine.stats.levelsPerDayLastWeek)
-                    HStack(spacing: 10) {
-                        IconBadge(symbol: engine.stats.trend.symbolName, tint: Meadow.badgeSage)
-                        Text(engine.stats.trend.label)
-                            .font(.system(size: 17, weight: .bold, design: .rounded))
-                            .foregroundStyle(Meadow.title)
-                        Spacer(minLength: 0)
-                    }
                 }
             }
 
@@ -117,10 +110,6 @@ struct HowsItGoingView: View {
                 }
             }
 
-            MeadowNote(text: "These are engagement numbers, not a memory assessment. "
-                       + "Time Rolls does not track which people or places were recognised, "
-                       + "and nothing here should be read as a sign of how someone is doing "
-                       + "medically.")
         }
     }
 

@@ -17,7 +17,6 @@ struct PlayView: View {
     @Environment(\.photoTextScale) private var textScale
     @Environment(\.horizontalSizeClass) private var sizeClass
     @State private var showFeedback = false
-    @State private var isPickingCategory = false
     /// Cards turned over to read the back. Cleared with every new round.
     /// The one card turned over, if any.
     ///
@@ -176,9 +175,6 @@ struct PlayView: View {
                     engine.advance()
                 }
         )
-        .sheet(isPresented: $isPickingCategory) {
-            PlayPickerView(engine: engine)
-        }
         .onChange(of: engine.level?.id) {
             flipped = nil
             factPutAside = false
@@ -200,50 +196,6 @@ struct PlayView: View {
 
     private var header: some View {
         HStack {
-            if let theme = engine.level?.theme {
-                // The way into "what would you like?", and nothing else.
-                //
-                // It used to name the theme beside the icon — "Places", "Things". On a
-                // phone that has the theme chip, the gear and the sound switch sharing
-                // one row, the longest of those names wrapped onto a second line and the
-                // header grew to meet it. The name is not what the button is for: it says
-                // what you are playing now, and the reason to press it is to play
-                // something else. The icon and the chevron say that on their own, and the
-                // screen it opens names every theme in full.
-                Button {
-                    isPickingCategory = true
-                } label: {
-                    HStack(spacing: 4) {
-                        Image(systemName: theme.symbolName)
-                        Image(systemName: "chevron.down")
-                            .appFont(12, weight: .black)
-                            .opacity(0.8)
-                    }
-                    // The same painted-wood yellow as the Done button in setup, so the
-                    // two things you can press up here look pressable.
-                    .appFont(16, weight: .heavy)
-                    .foregroundStyle(highContrast ? Palette.accent : Meadow.buttonInk)
-                    // A round-ish chip now there is no word in it, and wide enough that
-                    // it is still a comfortable target rather than a small icon.
-                    .frame(minWidth: 30)
-                    .padding(.horizontal, 12)
-                    .padding(.vertical, 9)
-                    .background(highContrast ? AnyShapeStyle(Palette.accent.opacity(0.12))
-                                             : AnyShapeStyle(Meadow.button),
-                                in: Capsule())
-                    .overlay {
-                        if !highContrast {
-                            Capsule().strokeBorder(Meadow.buttonEdge, lineWidth: 3)
-                        }
-                    }
-                    .shadow(color: .black.opacity(highContrast ? 0 : 0.18), radius: 4, y: 2)
-                }
-                .buttonStyle(.plain)
-                .accessibilityLabel("Playing \(theme.title)")
-                .accessibilityHint("Choose what to look for and which photos to use")
-
-            }
-
             Spacer()
 
             // Progress through today's challenge, not through this sitting. A row of dots
@@ -852,13 +804,18 @@ struct HomeView: View {
         ZStack {
             GeometryReader { proxy in
                 ScrollView {
-                    VStack(spacing: 22) {
+                    VStack(spacing: 24) {
                         welcome
                         dailyRoundCard
-                        statsLine
-                        shareCard
-                        // The way into setup, as on the play screen.
-                        SettingsGear(onOpen: onCaregiverGate)
+                        // What to play and how it is going, each one tap into its own
+                        // screen, so neither crowds the page somebody is about to play from.
+                        // The streak and the stars are on the How's it going screen; on Home
+                        // they were a third card saying the same thing again.
+                        HStack(alignment: .top, spacing: 14) {
+                            whatToPlayTile
+                            howsItGoingTile
+                        }
+                        .fixedSize(horizontal: false, vertical: true)
                     }
                     .readableColumn(maxWidth: 620)
                     .padding(.horizontal, 18)
@@ -896,13 +853,80 @@ struct HomeView: View {
             try? await Task.sleep(for: .seconds(1.2))
             isAskingForSupport = true
         }
-        .sheet(isPresented: $isPickingPhotoToShare) {
-            PhotoShareSheet(photos: engine.ownPhotosThisSession, provider: engine.images)
-        }
     }
 
     @SwiftUI.State private var isAskingForSupport = false
-    @SwiftUI.State private var isPickingPhotoToShare = false
+    @SwiftUI.State private var isShowingProgress = false
+    @SwiftUI.State private var isChoosingCategories = false
+
+    // MARK: Two tiles
+
+    private var whatToPlayTile: some View {
+        HomeTile(title: "What to play",
+                 hint: "Choose the categories you play",
+                 fill: highContrast ? Palette.surface(true) : Meadow.tileLavender,
+                 arrowWash: Meadow.badgePlum.opacity(0.14)) {
+            ZStack {
+                ForEach(0..<2) { index in
+                    RoundedRectangle(cornerRadius: 10, style: .continuous)
+                        .fill(Meadow.badgePlum.opacity(index == 0 ? 0.35 : 0.5))
+                        .frame(width: 44, height: 56)
+                        .rotationEffect(.degrees(index == 0 ? -22 : 18))
+                        .offset(x: index == 0 ? -26 : 26, y: 4)
+                }
+                TileBadge(symbol: "gamecontroller.fill", tint: Meadow.badgePlum)
+                Image(systemName: "sparkle")
+                    .font(.system(size: 16, weight: .bold))
+                    .foregroundStyle(Meadow.sparkle)
+                    .offset(x: 52, y: -26)
+                Image(systemName: "sparkle")
+                    .font(.system(size: 11, weight: .bold))
+                    .foregroundStyle(Meadow.sparkle)
+                    .offset(x: -50, y: 26)
+            }
+        } action: {
+            isChoosingCategories = true
+        }
+        .sheet(isPresented: $isChoosingCategories) {
+            NavigationStack {
+                // On the same meadow as How's it going, so the two screens Home opens
+                // look like they belong together.
+                MeadowScreen(title: "What to play") {
+                    CategoryGrid(engine: engine)
+                }
+                .toolbar { doneButton { isChoosingCategories = false } }
+            }
+        }
+    }
+
+    private var howsItGoingTile: some View {
+        HomeTile(title: "How's it going",
+                 hint: "Your progress this week",
+                 fill: highContrast ? Palette.surface(true) : Meadow.cardMint,
+                 arrowWash: Meadow.badgeSage.opacity(0.14)) {
+            ZStack {
+                BurstMarks(tint: Meadow.badgeSage)
+                    .frame(width: 112, height: 60)
+                TileBadge(symbol: "chart.bar.fill", tint: Meadow.badgeSage)
+            }
+        } action: {
+            isShowingProgress = true
+        }
+        .sheet(isPresented: $isShowingProgress) {
+            NavigationStack {
+                HowsItGoingView(engine: engine)
+                    .toolbar { doneButton { isShowingProgress = false } }
+            }
+        }
+    }
+
+    private func doneButton(_ close: @escaping () -> Void) -> some ToolbarContent {
+        ToolbarItem(placement: .confirmationAction) {
+            Button("Done", action: close)
+                .fontWeight(.heavy)
+                .tint(Meadow.button)
+        }
+    }
 
     private var ink: Color { highContrast ? Palette.ink(true) : Meadow.title }
 
@@ -916,18 +940,21 @@ struct HomeView: View {
                 .minimumScaleFactor(0.6)
                 .lineLimit(1)
                 .accessibilityAddTraits(.isHeader)
+                .padding(.horizontal, challengeMet ? 26 : 0)
+                .background {
+                    if challengeMet && !highContrast {
+                        BurstMarks(tint: ink).padding(.vertical, 6)
+                    }
+                }
             if challengeMet {
-                // Cream on deep sage: green on green was hard to read wherever the line
-                // landed on the hills, and cream alone vanished against the pale sky.
+                // The sun's yellow, on its own: a sage box around it looked like a form field. A soft
+                // dark edge keeps the gold readable against the pale sky.
                 Text("You completed today's challenge!")
-                    .font(.system(size: 21 * textScale, weight: .semibold, design: .rounded))
-                    .foregroundStyle(highContrast ? Palette.ink(true) : Meadow.buttonInk)
+                    .font(.system(size: 23 * textScale, weight: .heavy, design: .rounded))
+                    .foregroundStyle(highContrast ? Palette.ink(true) : Meadow.sparkle)
                     .multilineTextAlignment(.center)
                     .fixedSize(horizontal: false, vertical: true)
-                    .padding(.horizontal, 16)
-                    .padding(.vertical, 8)
-                    .background(highContrast ? Palette.wash(true) : Meadow.button,
-                                in: Capsule())
+                    .shadow(color: highContrast ? .clear : Meadow.title.opacity(0.45), radius: 0, y: 1.5)
             } else {
                 Text(done == 0 ? "Ready for a quick round?" : "Ready for another round?")
                     .font(.system(size: 21 * textScale, design: .rounded))
@@ -945,24 +972,35 @@ struct HomeView: View {
     private var dailyRoundCard: some View {
         HStack(alignment: .center, spacing: 14) {
             PolaroidStack()
-                .frame(width: 118, height: 128)
+                .scaleEffect(1.15)
+                .frame(width: 128, height: 150)
                 .accessibilityHidden(true)
             VStack(alignment: .leading, spacing: 10) {
-                // The pill sits above the title, at the card's top right, so the two
-                // never meet — laid over the corner it covered the end of "Round".
-                if goal > 0 {
-                    rollsPill.frame(maxWidth: .infinity, alignment: .trailing)
+                if challengeMet {
+                    // "Congratulations!" above already says it is done; the pill and the
+                    // "all done" line only said it twice more. The name takes the room.
+                    dailyTitle(size: 48)
+                        .frame(maxWidth: .infinity)
+                } else {
+                    // The pill beside the title, at the card's top right, as in the design.
+                    // Where the two will not fit side by side — large text, a narrow phone —
+                    // the pill goes above instead, never over the end of "Roll".
+                    ViewThatFits(in: .horizontal) {
+                        HStack(alignment: .top, spacing: 8) {
+                            dailyTitle()
+                            Spacer(minLength: 0)
+                            if goal > 0 { rollsPill }
+                        }
+                        VStack(alignment: .leading, spacing: 10) {
+                            if goal > 0 { rollsPill.frame(maxWidth: .infinity, alignment: .trailing) }
+                            dailyTitle()
+                        }
+                    }
+                    Text(cardLine)
+                        .font(.system(size: 17 * textScale, design: .rounded))
+                        .foregroundStyle(ink.opacity(0.9))
+                        .fixedSize(horizontal: false, vertical: true)
                 }
-                // On two lines, as in the design: it is the card's name, and big.
-                Text("Daily\nRound")
-                    .font(.system(size: 36 * textScale, weight: .black, design: .rounded))
-                    .foregroundStyle(ink)
-                    .lineSpacing(-6)
-                    .minimumScaleFactor(0.7)
-                Text(cardLine)
-                    .font(.system(size: 17 * textScale, design: .rounded))
-                    .foregroundStyle(ink.opacity(0.9))
-                    .fixedSize(horizontal: false, vertical: true)
                 Button(action: onPlay) {
                     HStack(spacing: 8) {
                         Text(buttonTitle)
@@ -973,7 +1011,7 @@ struct HomeView: View {
                     .lineLimit(1)
                     .minimumScaleFactor(0.7)
                     .frame(maxWidth: .infinity)
-                    .padding(.vertical, 15)
+                    .padding(.vertical, 18)
                     .background(Meadow.button, in: Capsule())
                     .shadow(color: .black.opacity(0.15), radius: 5, y: 3)
                 }
@@ -981,7 +1019,8 @@ struct HomeView: View {
                 .padding(.top, 4)
             }
         }
-        .padding(18)
+        .padding(.horizontal, 18)
+        .padding(.vertical, 28)
         .frame(maxWidth: .infinity)
         .background(highContrast ? Palette.surface(true) : Meadow.cardCream,
                     in: RoundedRectangle(cornerRadius: 30, style: .continuous))
@@ -992,9 +1031,18 @@ struct HomeView: View {
         .shadow(color: .black.opacity(0.10), radius: 10, y: 5)
     }
 
+    // On two lines, as in the design: it is the card's name, and big.
+    private func dailyTitle(size: CGFloat = 36) -> some View {
+        Text("Daily\nRoll")
+            .font(.system(size: size * textScale, weight: .black, design: .rounded))
+            .foregroundStyle(ink)
+            .multilineTextAlignment(challengeMet ? .center : .leading)
+            .lineSpacing(-6)
+            .fixedSize()
+    }
+
     private var cardLine: String {
         if goal == 0 { return "Play for as long as you like." }
-        if challengeMet { return "All done for today. Well played!" }
         if done == 0 { return "Your challenge is ready." }
         // "Nearly there" only when it is true — it said so with seven of eight to go.
         if left <= max(2, goal / 4) { return "Keep going — you're nearly there." }
@@ -1019,98 +1067,128 @@ struct HomeView: View {
             }
         }
         .foregroundStyle(ink)
-        .padding(.horizontal, 14)
+        .padding(.horizontal, 12)
         .padding(.vertical, 8)
         .background(highContrast ? Palette.wash(true) : Meadow.onWash, in: Capsule())
+        .fixedSize()
         .accessibilityElement(children: .ignore)
         .accessibilityLabel(challengeMet ? "Today's challenge is done"
                             : "\(left) \(left == 1 ? "roll" : "rolls") left today")
     }
 
-    // MARK: Streak and stars
+}
 
-    private var statsLine: some View {
-        HStack(spacing: 0) {
-            stat(symbol: "flame.fill", tint: Meadow.flame,
-                 value: engine.stats.dayStreak,
-                 label: engine.stats.dayStreak == 1 ? "day streak" : "days streak")
-            Rectangle()
-                .fill(Meadow.muted.opacity(0.3))
-                .frame(width: 1, height: 38)
-            stat(symbol: "star.fill", tint: Meadow.sparkle,
-                 value: engine.stats.starsToday,
-                 label: engine.stats.starsToday == 1 ? "star" : "stars")
-        }
-        .padding(.vertical, 16)
-        .frame(maxWidth: .infinity)
-        .background(highContrast ? Palette.surface(true) : Meadow.cardCream,
-                    in: RoundedRectangle(cornerRadius: 26, style: .continuous))
-        .overlay {
-            RoundedRectangle(cornerRadius: 26, style: .continuous)
-                .strokeBorder(.white.opacity(0.9), lineWidth: 2)
-        }
-        .shadow(color: .black.opacity(0.08), radius: 8, y: 4)
-    }
+/// One of the two tiles under the Daily Roll card: a drawing, a name, a line saying what is
+/// behind it, and an arrow to say there is something behind it.
+private struct HomeTile<Art: View>: View {
 
-    private func stat(symbol: String, tint: Color, value: Int, label: String) -> some View {
-        HStack(alignment: .center, spacing: 12) {
-            Image(systemName: symbol)
-                .font(.system(size: 26 * textScale, weight: .bold))
-                .foregroundStyle(highContrast ? Palette.ink(true) : tint)
-            Text("\(value)")
-                .font(.system(size: 38 * textScale, weight: .black, design: .rounded))
-                .foregroundStyle(ink)
-                .monospacedDigit()
-            Text(label)
-                .font(.system(size: 18 * textScale, design: .rounded))
-                .foregroundStyle(ink.opacity(0.85))
-                .lineLimit(1)
-                .minimumScaleFactor(0.7)
-        }
-        .frame(maxWidth: .infinity)
-        .accessibilityElement(children: .ignore)
-        .accessibilityLabel("\(value) \(label)")
-    }
+    let title: String
+    /// Said by VoiceOver only; on screen the title and the drawing are enough.
+    let hint: String
+    let fill: Color
+    let arrowWash: Color
+    @ViewBuilder let art: () -> Art
+    let action: () -> Void
 
-    // MARK: Share
+    @Environment(\.photoHighContrast) private var highContrast
+    @Environment(\.photoTextScale) private var textScale
 
-    @ViewBuilder
-    private var shareCard: some View {
-        if !engine.ownPhotosThisSession.isEmpty {
-            StickerCard(fill: highContrast ? Palette.wash(true) : Meadow.cardLavender) {
-                HStack(spacing: 14) {
-                    Image(systemName: "camera.fill")
-                        .font(.system(size: 24 * textScale, weight: .black))
-                        .foregroundStyle(highContrast ? Palette.ink(true) : Meadow.clay)
-                    VStack(alignment: .leading, spacing: 3) {
-                        Text("Keep the moment")
-                            .font(.system(size: 18 * textScale, weight: .heavy, design: .rounded))
-                            .foregroundStyle(highContrast ? Palette.ink(true) : Meadow.title)
-                        Text("Send one of today's photos to somebody.")
-                            .font(.system(size: 14 * textScale, design: .rounded))
-                            .foregroundStyle(Meadow.muted)
-                            .fixedSize(horizontal: false, vertical: true)
-                    }
-                    Spacer(minLength: 0)
-                    Button { isPickingPhotoToShare = true } label: {
-                        Text("Share")
-                            .font(.system(size: 17 * textScale, weight: .heavy, design: .rounded))
-                            .foregroundStyle(Meadow.buttonInk)
-                            .padding(.horizontal, 20)
-                            .padding(.vertical, 12)
-                            .background(Meadow.button, in: Capsule())
-                    }
-                    .buttonStyle(.plain)
-                    .accessibilityLabel("Share a photo from today")
-                }
+    private var ink: Color { highContrast ? Palette.ink(true) : Meadow.title }
+
+    var body: some View {
+        Button(action: action) {
+            VStack(alignment: .leading, spacing: 10) {
+                art()
+                    .scaleEffect(1.2)
+                    .frame(height: 120)
+                    .frame(maxWidth: .infinity)
+                    .accessibilityHidden(true)
+                    .padding(.top, 10)
+                    .padding(.bottom, 12)
+                Text(title)
+                    .font(.system(size: 25 * textScale, weight: .black, design: .rounded))
+                    .foregroundStyle(ink)
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.6)
+                Spacer(minLength: 8)
+                Image(systemName: "arrow.right")
+                    .font(.system(size: 17, weight: .bold))
+                    .foregroundStyle(ink)
+                    .frame(width: 40, height: 40)
+                    .background(arrowWash, in: Circle())
+                    .frame(maxWidth: .infinity, alignment: .trailing)
             }
+            .padding(18)
+            .frame(maxWidth: .infinity, minHeight: 270, maxHeight: .infinity, alignment: .topLeading)
+            .background(fill, in: RoundedRectangle(cornerRadius: 26, style: .continuous))
+            .overlay {
+                RoundedRectangle(cornerRadius: 26, style: .continuous)
+                    .strokeBorder(.white.opacity(0.9), lineWidth: 2)
+            }
+            .shadow(color: .black.opacity(0.08), radius: 8, y: 4)
+            .contentShape(RoundedRectangle(cornerRadius: 26, style: .continuous))
+        }
+        .buttonStyle(.plain)
+        .accessibilityElement(children: .ignore)
+        .accessibilityLabel(title)
+        .accessibilityHint(hint)
+        .accessibilityAddTraits(.isButton)
+    }
+}
+
+/// The big rounded square on a Home tile: a white symbol on a colour.
+private struct TileBadge: View {
+    let symbol: String
+    let tint: Color
+
+    var body: some View {
+        RoundedRectangle(cornerRadius: 18, style: .continuous)
+            .fill(tint)
+            .frame(width: 66, height: 66)
+            .overlay {
+                Image(systemName: symbol)
+                    .font(.system(size: 30, weight: .bold))
+                    .foregroundStyle(.white)
+            }
+            .overlay {
+                RoundedRectangle(cornerRadius: 18, style: .continuous)
+                    .strokeBorder(.white.opacity(0.85), lineWidth: 3)
+            }
+            .shadow(color: .black.opacity(0.18), radius: 4, y: 2)
+    }
+}
+
+/// Three short strokes either side of something, the way a drawing says "ta-da".
+private struct BurstMarks: View {
+    let tint: Color
+
+    var body: some View {
+        HStack {
+            side.scaleEffect(x: -1)
+            Spacer(minLength: 0)
+            side
+        }
+        .accessibilityHidden(true)
+    }
+
+    private var side: some View {
+        VStack(spacing: 7) {
+            stroke(-30)
+            stroke(0)
+            stroke(30)
         }
     }
 
+    private func stroke(_ angle: Double) -> some View {
+        Capsule()
+            .fill(tint)
+            .frame(width: 13, height: 3.5)
+            .rotationEffect(.degrees(angle))
+    }
 }
 
 /// Two snapshots, one on top of the other, with a smiling sun in the front one — the
-/// picture on the Daily Round card.
+/// picture on the Daily Roll card.
 private struct PolaroidStack: View {
 
     var body: some View {

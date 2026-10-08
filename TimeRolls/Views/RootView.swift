@@ -275,9 +275,6 @@ struct FirstRunView: View {
                 }
                 .frame(maxWidth: .infinity)
 
-                Text(ClaimLanguage.standingDisclaimer)
-                    .font(.system(size: 12, design: .rounded))
-                    .foregroundStyle(Meadow.body.opacity(0.85))
             }
             .padding(24)
             .readableColumn(maxWidth: 620)

@@ -203,15 +203,11 @@ enum ClaimLanguage {
     /// counts — so it is linked rather than paraphrased and left to drift.
     static let privacyPolicyURL = "https://mission-peak.com/privacy/time-rolls"
 
+    /// What the game is, said plainly. A trivia game — the player's own photographs and
+    /// the world's — and nothing more: no health framing, no claim about memory.
     static let safeSummary = """
-    Activities inspired by cognitive stimulation, spaced-retrieval memory practice, \
-    reminiscence, and coordination research used in dementia care.
-    """
-
-    static let standingDisclaimer = """
-    Wellness and engagement tool; not a medical device; does not diagnose, treat, cure, \
-    or prevent any condition; does not slow, stop, or reverse cognitive decline; consult \
-    a healthcare professional for medical advice.
+    A trivia game played with your own photos and the world's: places, faces, maps, \
+    cars, paintings, animals and more. Just for fun.
     """
 
     static let placesPrivacy = """
@@ -298,7 +294,7 @@ enum ClaimLanguage {
         PrivacyLine("Your score and streak",
                     leaves: "Never",
                     detail: "Days played, sets finished and stars are kept on this device only. Deleting the app deletes them."),
-        PrivacyLine("Photos a caregiver hides",
+        PrivacyLine("Photos you hide",
                     leaves: "Never",
                     detail: "A photograph struck off is remembered by its identifier on this device, so it is never shown again. The list does not leave the device and says nothing about what is in the picture."),
         PrivacyLine("Crash and usage analytics",

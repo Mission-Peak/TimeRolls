@@ -271,7 +271,7 @@ final class LocalTrivia: NSObject, CLLocationManagerDelegate {
 
     private func json(from url: URL) async throws -> [String: Any] {
         var request = URLRequest(url: url)
-        request.setValue("TimeRolls/1.0 (photo reminiscence prototype; hanna@attimis.co)",
+        request.setValue("TimeRolls/1.0 (photo trivia game; hanna@attimis.co)",
                          forHTTPHeaderField: "User-Agent")
         // Follows the same choice as the photo sets: a few kilobytes of place names is
         // not what anybody's data plan is worried about, but it would be odd for the game

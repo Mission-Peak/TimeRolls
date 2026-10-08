@@ -55,7 +55,7 @@ final class RemoteImageCache {
         configuration.waitsForConnectivity = false
         configuration.httpAdditionalHeaders = [
             // Commons asks that tools identify themselves.
-            "User-Agent": "TimeRolls/1.0 (photo reminiscence prototype; hanna@attimis.co)"
+            "User-Agent": "TimeRolls/1.0 (photo trivia game; hanna@attimis.co)"
         ]
         session = URLSession(configuration: configuration)
 

@@ -2520,6 +2520,75 @@ print("quiz categories — " + quizSummary.joined(separator: " · "))
 print("people wordings — " + peopleShapes.sorted { $0.value > $1.value }
     .map { "\($0.key) \($0.value)" }.joined(separator: " · "))
 
+// --- What a session is made of: rounds per hundred from each category, every one on.
+//
+// Dealt the way the engine deals: a category by `CategoryRotation`, then a kind of question
+// inside it by `ThemeRotation`, with the same memory of what has been shown. What has to
+// hold: every category comes up about as often as any other — Plants used to come up once
+// in a hundred rounds and Cars thirteen times; their own photographs are never a round of
+// four beside the sets, only ever the one answer among three of a set's, and only where
+// they belong in it; and nothing they own is shown twice in a session.
+var session = wide
+session.quizQuestions = Dictionary(uniqueKeysWithValues: shippedPacks.map { ($0.id, $0.questions) })
+let titles = Dictionary(uniqueKeysWithValues: shippedPacks.map { ($0.id, $0.title) })
+let sessionCategories = session.availableCategories()
+check(sessionCategories.count == shippedPacks.count,
+      "\(sessionCategories.count) categories for \(shippedPacks.count) photo sets: "
+      + "their own photographs should not be one beside them")
+var byCategory: [String: Int] = [:], sessionTheirs: [String: Int] = [:]
+var sessionAsks: [String] = [], sessionWordings: [String] = []
+var lastSessionTheme: GameTheme?, lastSessionCategory: PlayCategory?
+var sessionRounds = 0
+var shownInSession: Set<String> = []
+for _ in 0..<1000 {
+    guard let category = CategoryRotation.next(from: sessionCategories, last: lastSessionCategory),
+          let theme = ThemeRotation.next(from: sessionCategories[category] ?? [], last: lastSessionTheme),
+          case let .pack(packID) = category
+    else { break }
+    session.focus = category
+    session.recentAsks = sessionAsks
+    session.recentWordings = sessionWordings
+    session.recentlyUsed = shownInSession
+    guard let level = session.makeLevel(theme: theme) else {
+        failures.append("\(packID) could not make a \(theme.title) round it said it could")
+        continue
+    }
+    let theirs = level.photos.filter(\.isPersonal)
+    check(level.photos.allSatisfy { $0.isPersonal || $0.origin.packID == packID },
+          "a round dealt from \(packID) held another set's photograph")
+    check(theirs.count <= 1, "a \(packID) round held \(theirs.count) of their own photographs")
+    if let mine = theirs.first {
+        check(mine.id == level.correctPhotoID,
+              "their photograph was a stranger's distractor in a \(packID) round")
+        check(LevelGenerator.belongs(mine, in: packID, theme: theme),
+              "their photograph, tagged \(mine.objectTags.sorted()), was put in a \(packID) round")
+        check(!shownInSession.contains(mine.id), "their photograph \(mine.id) was shown twice")
+    }
+    // Their photographs are remembered for the whole run, as a session would; the sets'
+    // for the last hundred rounds, as the engine does.
+    shownInSession.formUnion(level.photos.map(\.id))
+    lastSessionTheme = theme
+    lastSessionCategory = category
+    sessionAsks = Recency.remembering(level.ask ?? "?", in: sessionAsks)
+    if let wording = level.wording { sessionWordings = Recency.remembering(wording, in: sessionWordings) }
+    let name = titles[packID] ?? packID
+    byCategory[name, default: 0] += 1
+    if !theirs.isEmpty { sessionTheirs[name, default: 0] += 1 }
+    sessionRounds += 1
+}
+session.focus = nil
+let equalShare = Double(sessionRounds) / Double(sessionCategories.count)
+for (name, count) in byCategory {
+    check(Double(count) > equalShare * 0.6,
+          "\(name) came up \(count) times in \(sessionRounds) rounds, well under an equal share")
+}
+let perHundred: [String] = byCategory.sorted { $0.value > $1.value }.map { entry in
+    let share = Int((Double(entry.value) * 100 / Double(max(sessionRounds, 1))).rounded())
+    guard let theirs = sessionTheirs[entry.key] else { return "\(entry.key) \(share)" }
+    return "\(entry.key) \(share) (\(theirs * 100 / entry.value)% with theirs)"
+}
+print("per 100 rounds — " + perHundred.joined(separator: " · "))
+
 if failures.isEmpty {
     print("✅ all curation invariants held over \(11 * 3 * 120 * 3) generated levels")
 } else {

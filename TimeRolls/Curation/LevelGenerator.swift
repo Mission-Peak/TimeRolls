@@ -21,6 +21,10 @@ struct LevelGenerator {
     var birthDatedPacks: Set<String> = []
     /// The fact questions each quiz pack can ask, by pack id.
     var quizQuestions: [String: [QuizQuestion]] = [:]
+    /// The one category the next round is drawn from, or nil for every photograph in play.
+    /// Set by whoever picks the category — `CategoryRotation` — around a call to
+    /// `makeLevel`.
+    var focus: PlayCategory?
     /// Whether the on-device pass is running at all. It cannot load in the Simulator,
     /// and a rule that waits for it would leave Places empty there for ever.
     var examinesPhotos = true
@@ -58,6 +62,9 @@ struct LevelGenerator {
     /// random sampling shows the same faces again and again, which is what makes a
     /// large catalogue feel small.
     var recentlyUsed: Set<String> = []
+    /// The subjects of those photographs, so another picture of the same thing is set
+    /// aside too.
+    var recentSubjects: Set<String> = []
 
     /// Photographs the on-device model described as notes to self rather than memories.
     /// Applied beside the caregiver's own list, and for the same reason: neither is a
@@ -124,6 +131,41 @@ struct LevelGenerator {
         GameTheme.allCases.filter { canPlay($0) }
     }
 
+    /// Every category that can make a round now, with the games each can play.
+    ///
+    /// One per pack in play, plus the player's own photographs. Asked category by
+    /// category rather than theme by theme, because the session is now dealt that way: a
+    /// pack that only plays Things used to share Things with three others and came up
+    /// once in fifty rounds.
+    func availableCategories() -> [PlayCategory: [GameTheme]] {
+        var categories: [PlayCategory] = []
+        if !personal.isEmpty { categories.append(.own) }
+        var seenPacks: Set<String> = []
+        for photo in pack {
+            guard case let .pack(packID, _) = photo.origin,
+                  seenPacks.insert(packID).inserted else { continue }
+            categories.append(.pack(packID))
+        }
+        // Their own photographs are a category of their own only when no photo set is on.
+        // Otherwise they come into a set's rounds one at a time, as the fourth picture,
+        // and only where they belong — a round of four of their own beside the sets was
+        // the obvious odd one out.
+        if categories.count > 1 { categories.removeAll { $0 == .own } }
+        var result: [PlayCategory: [GameTheme]] = [:]
+        for category in categories {
+            var focused = self
+            focused.focus = category
+            let themes = GameTheme.allCases.filter { theme in
+                if category == .own && theme.isQuiz { return false }
+                if case let .pack(packID) = category,
+                   !(packThemeSupport[packID]?.contains(theme) ?? !theme.isQuiz) { return false }
+                return focused.canPlay(theme)
+            }
+            if !themes.isEmpty { result[category] = themes }
+        }
+        return result
+    }
+
     // MARK: - Generation
 
     func makeLevel(theme: GameTheme) -> Level? {
@@ -132,6 +174,25 @@ struct LevelGenerator {
         if theme.isQuiz {
             for _ in 0..<attemptsAtTheRatio {
                 if let level = freshQuestion(theme: theme), showsEachSubjectOnce(level) {
+                    return level
+                }
+            }
+            return nil
+        }
+
+        // One category picked: three of the set's photographs and one of theirs that
+        // belongs with them — their dog among the Animals — when they have one not yet
+        // shown this session. Otherwise four of the set's.
+        if case .pack = focus {
+            for _ in 0..<attemptsAtTheRatio {
+                guard let level = freshQuestion(theme: theme),
+                      showsEachSubjectOnce(level), isPertinent(level),
+                      level.photos.contains(where: \.isPersonal) else { continue }
+                return level
+            }
+            for _ in 0..<attemptsAtTheRatio {
+                if let level = freshQuestion(theme: theme, publicOnly: true),
+                   showsEachSubjectOnce(level) {
                     return level
                 }
             }
@@ -403,7 +464,11 @@ struct LevelGenerator {
                           from photos: [GamePhoto],
                           theme: GameTheme) -> [GamePhoto] {
         guard !recent.isEmpty else { return photos }
-        let fresh = photos.filter { !recent.contains($0.id) }
+        // Not the same photograph, and not another photograph of the same thing: a second
+        // Mona Lisa in one session is the same question again.
+        let fresh = photos.filter { photo in
+            !recent.contains(photo.id) && !(photo.subjectID.map(recentSubjects.contains) ?? false)
+        }
         switch theme {
         case .chronology:
             // Room to pick a spread rather than simply everything that is left.
@@ -417,6 +482,32 @@ struct LevelGenerator {
         case .geography, .cars, .film, .sports:
             // Room for the cluster rules to find four that belong together.
             return fresh.count >= DifficultyKnob.photoCount * 6 ? fresh : photos
+        }
+    }
+
+    /// Whether one of the player's photographs belongs in a round from this photo set.
+    ///
+    /// A photograph of their dog belongs among the Animals; a photograph of their car does
+    /// not, however well a "which photo has a car" round could be built around it. Places
+    /// takes any photograph with a place, because the question is where it was taken. The
+    /// sets of famous people and paintings, and Time, take none: nobody's own photographs
+    /// are of either, and beside them theirs is always the odd one out.
+    static func belongs(_ photo: GamePhoto, in packID: String, theme: GameTheme) -> Bool {
+        switch theme {
+        case .places:
+            return photo.placeName != nil
+        case .objects:
+            let tags = photo.objectTags
+            switch packID {
+            case "animals":
+                return tags.contains { ObjectCatalog.category(id: $0)?.family == .animal }
+            case "plants":
+                return !tags.isDisjoint(with: ["flower", "tree", "garden", "forest"])
+            default:
+                return false
+            }
+        case .chronology, .geography, .cars, .film, .sports:
+            return false
         }
     }
 
@@ -441,17 +532,31 @@ struct LevelGenerator {
                       publicOnly: Bool = false) -> [GamePhoto] {
         let usable = usablePersonal(for: theme)
             .filter { !excluded.contains($0.id) && !setAsideByDescription.contains($0.id) }
+        // A round of the player's own photographs is theirs throughout.
+        if focus == .own { return theme.isQuiz ? [] : usable }
         // Only packs that can carry this game. A pack of undatable photographs must
         // never end up in "which one is older".
         let pack = pack.filter { photo in
             guard case let .pack(packID, _) = photo.origin else { return false }
             guard !excluded.contains(photo.id) else { return false }
+            // One category at a time, when one has been picked.
+            if case let .pack(focused) = focus, focused != packID { return false }
             // A pack nobody registered — Local Trivia — plays the photo games only.
             return packThemeSupport[packID]?.contains(theme) ?? !theme.isQuiz
         }
         guard !pack.isEmpty else { return usable }
         // One category, one pack's worth of photographs, nothing of the player's.
         if theme.isQuiz || publicOnly { return pack }
+
+        // A category picked: one of theirs that belongs in it, and not one already shown
+        // — the set's photographs can come round again when a set runs thin, theirs never
+        // do within a session.
+        if case let .pack(packID) = focus {
+            let fitting = usable.filter {
+                !recentlyUsed.contains($0.id) && Self.belongs($0, in: packID, theme: theme)
+            }
+            return pack + fitting.shuffled().prefix(Self.personalPhotosWanted)
+        }
 
         // One of the player's own photographs in the pool, and no more.
         //

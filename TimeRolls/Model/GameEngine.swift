@@ -67,6 +67,9 @@ final class GameEngine {
     private var levelStarted = Date()
     private var levelCounter = 0
     private var lastTheme: GameTheme?
+    /// The categories that can make a round, each with the games it can play.
+    private var availableCategories: [PlayCategory: [GameTheme]] = [:]
+    private var lastCategory: PlayCategory?
     /// The connection the pools were last built for. Walking out of the house changes
     /// which photographs may be fetched, and the pools have to follow.
     private var pooledForExpensiveLink: Bool?
@@ -264,7 +267,7 @@ final class GameEngine {
         generator.bestConcept = { [objects] photo in
             objects.bestConcept(photo.id)
         }
-        availableThemes = generator.availableThemes()
+        refreshCategories()
     }
 
     /// Classification is incremental: each chunk of photos that comes back can unlock
@@ -521,11 +524,15 @@ final class GameEngine {
         voiceAnswers.stop()
     }
 
-    /// How many photographs back the generator remembers. Long enough to cover a
-    /// session — eight rounds of four or five — so the same faces don't come round
-    /// again while somebody is still playing.
-    private static let recentWindow = 60
+    /// How many photographs back the generator remembers: a hundred rounds, which is
+    /// longer than anybody plays at a sitting, so no photograph — and no second photograph
+    /// of the same thing — comes round again in a session. It used to be sixty, fifteen
+    /// rounds, and "Play more" after the daily eight went past it.
+    private static let recentWindow = 400
     private var recentOrder: [String] = []
+    private var recentSubjectOrder: [String] = []
+    /// How many of those a caregiver is shown to strike off.
+    private static let shownWindow = 60
 
     /// The photographs lately shown, newest first, so a caregiver can strike one off
     /// without having to catch it during a round. Kept in memory only: it is a view of
@@ -705,16 +712,32 @@ final class GameEngine {
         for photo in level.photos where !recentlyShown.contains(where: { $0.id == photo.id }) {
             recentlyShown.insert(photo, at: 0)
         }
-        if recentlyShown.count > Self.recentWindow {
-            recentlyShown.removeLast(recentlyShown.count - Self.recentWindow)
+        if recentlyShown.count > Self.shownWindow {
+            recentlyShown.removeLast(recentlyShown.count - Self.shownWindow)
         }
         if recentOrder.count > Self.recentWindow {
             recentOrder.removeFirst(recentOrder.count - Self.recentWindow)
         }
         generator.recentlyUsed = Set(recentOrder)
+        for subject in level.photos.compactMap(\.subjectID) where !recentSubjectOrder.contains(subject) {
+            recentSubjectOrder.append(subject)
+        }
+        if recentSubjectOrder.count > Self.recentWindow {
+            recentSubjectOrder.removeFirst(recentSubjectOrder.count - Self.recentWindow)
+        }
+        generator.recentSubjects = Set(recentSubjectOrder)
+    }
+
+    private func refreshCategories() {
+        availableCategories = generator.availableCategories()
+        let themes = Set(availableCategories.values.flatMap { $0 })
+        availableThemes = GameTheme.allCases.filter(themes.contains)
     }
 
     private func generateLevel() -> Level? {
+        // A question type pinned by the player is dealt the old way, across everything.
+        if pinnedTheme == nil, let level = levelFromACategory() { return level }
+
         guard let theme = chooseTheme() else { return nil }
         if let level = generator.makeLevel(theme: theme) { return level }
 
@@ -722,6 +745,28 @@ final class GameEngine {
         availableThemes.removeAll { $0 == theme }
         for fallback in availableThemes {
             if let level = generator.makeLevel(theme: fallback) { return level }
+        }
+        return nil
+    }
+
+    /// A round from one category, picked so that every category switched on comes up as
+    /// often as any other (see `CategoryRotation`), and the kind of question picked inside
+    /// it the way the themes always were. A category that cannot make a round right now
+    /// is passed over for the rest.
+    private func levelFromACategory() -> Level? {
+        var remaining = availableCategories
+        defer { generator.focus = nil }
+        while let category = CategoryRotation.next(from: remaining, last: lastCategory) {
+            var themes = remaining[category] ?? []
+            generator.focus = category
+            while let theme = ThemeRotation.next(from: themes, last: lastTheme) {
+                if let level = generator.makeLevel(theme: theme) {
+                    lastCategory = category
+                    return level
+                }
+                themes.removeAll { $0 == theme }
+            }
+            remaining[category] = nil
         }
         return nil
     }
@@ -821,7 +866,7 @@ final class GameEngine {
                                          photoSetSize: level.photos.count,
                                          blendedPackPhotos: level.usesPackPhotos))
 
-        availableThemes = generator.availableThemes()
+        refreshCategories()
         return .correct
     }
 

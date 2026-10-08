@@ -11,7 +11,7 @@ struct AboutView: View {
 
     var body: some View {
         MeadowScreen(title: "Privacy",
-                     subtitle: "What stays here, what leaves, and what we don't claim.") {
+                     subtitle: "What stays on this device, and what leaves it.") {
             StickerCard(fill: Meadow.cardCream) {
                 VStack(alignment: .leading, spacing: 12) {
                     SectionBanner(symbol: "sparkles", title: "What this is",
@@ -65,16 +65,6 @@ struct AboutView: View {
                 .buttonStyle(.plain)
             }
 
-            StickerCard(fill: Meadow.cardLavender) {
-                VStack(alignment: .leading, spacing: 12) {
-                    SectionBanner(symbol: "exclamationmark.circle.fill", title: "Please read",
-                                  tint: Meadow.badgeRose, band: .white.opacity(0.7))
-                    Text(ClaimLanguage.standingDisclaimer)
-                        .font(.system(size: 14, design: .rounded))
-                        .foregroundStyle(Meadow.body)
-                        .fixedSize(horizontal: false, vertical: true)
-                }
-            }
         }
     }
 

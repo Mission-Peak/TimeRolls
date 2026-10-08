@@ -69,3 +69,15 @@ enum SharePhoto {
     }
 }
 
+
+/// iOS's own share sheet, opened from a zoomed photograph — any photograph, the player's
+/// own or a pack's. Nothing is chosen here and nothing is sent by the app.
+struct ShareSheet: UIViewControllerRepresentable {
+    let items: [Any]
+
+    func makeUIViewController(context: Context) -> UIActivityViewController {
+        UIActivityViewController(activityItems: items, applicationActivities: nil)
+    }
+
+    func updateUIViewController(_ controller: UIActivityViewController, context: Context) {}
+}

@@ -24,13 +24,6 @@ struct CaregiverHubView: View {
                         connectionCard
                         accessibilityCard
                         privacyCard
-                        Text("Sharing these numbers with a caregiver's own phone — a "
-                             + "one-time pairing code, still no account — is designed but "
-                             + "not built in this prototype.")
-                            .font(.system(size: 13, design: .rounded))
-                            .foregroundStyle(Meadow.body.opacity(0.75))
-                            .multilineTextAlignment(.center)
-                            .padding(.horizontal, 12)
                     }
                     .padding(.horizontal, 18)
                     .padding(.bottom, 40)
@@ -281,7 +274,7 @@ struct CaregiverHubView: View {
         StickerCard(fill: Meadow.cardLavender) {
             NavigationLink { AboutView() } label: {
                 MeadowRow(symbol: "lock.shield.fill", tint: Meadow.badgeOlive,
-                          title: "Privacy & what we claim", detail: nil, chevron: true)
+                          title: "Privacy", detail: nil, chevron: true)
             }
             .buttonStyle(.plain)
         }
@@ -311,9 +304,11 @@ struct CaregiverHubView: View {
                 .font(.system(size: 17, weight: .semibold, design: .rounded))
                 .foregroundStyle(Meadow.title)
             Spacer()
+            // On one line: "Standard" broke in two beside the title on a phone.
             picker()
                 .labelsHidden()
                 .tint(Meadow.title)
+                .fixedSize()
         }
         .padding(.horizontal, 12)
         .padding(.vertical, 8)

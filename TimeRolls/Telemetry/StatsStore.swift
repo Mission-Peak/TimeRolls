@@ -55,31 +55,6 @@ struct AggregateStats: Codable, Sendable {
     }
 }
 
-enum StatsTrend {
-    case notEnoughYet
-    case steady
-    case moreThanBefore
-    case lessThanBefore
-
-    var label: String {
-        switch self {
-        case .notEnoughYet: "Just getting started"
-        case .steady: "About the same as last week"
-        case .moreThanBefore: "A bit more than last week"
-        case .lessThanBefore: "A bit less than last week"
-        }
-    }
-
-    var symbolName: String {
-        switch self {
-        case .notEnoughYet: "sparkles"
-        case .steady: "equal.circle"
-        case .moreThanBefore: "arrow.up.circle"
-        case .lessThanBefore: "arrow.down.circle"
-        }
-    }
-}
-
 @Observable
 @MainActor
 final class StatsStore {
@@ -221,17 +196,6 @@ final class StatsStore {
             cursor = previous
         }
         return streak
-    }
-
-    var trend: StatsTrend {
-        let recent = countingBack(days: 7, in: stats.levelsByDay)
-        let previous = countingBack(days: 14, in: stats.levelsByDay) - recent
-        guard recent + previous >= 6 else { return .notEnoughYet }
-        if previous == 0 { return recent > 0 ? .moreThanBefore : .steady }
-        let ratio = Double(recent) / Double(previous)
-        if ratio > 1.25 { return .moreThanBefore }
-        if ratio < 0.75 { return .lessThanBefore }
-        return .steady
     }
 
     /// Last 7 days, oldest first — the sparkline on the "How's it going" screen.

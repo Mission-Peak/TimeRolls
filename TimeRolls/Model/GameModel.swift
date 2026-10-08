@@ -538,6 +538,48 @@ enum ThemeRotation {
     }
 }
 
+/// What a round is about, as the player chose it on Home: one photo set, or their own
+/// photographs.
+enum PlayCategory: Hashable {
+    case own
+    case pack(String)
+}
+
+/// Which category the next round comes from.
+///
+/// The session used to be dealt by kind of question — Time, Places, Things, and each quiz
+/// category — and that made the categories wildly unequal. Cars had a share of its own;
+/// Animals, Plants, Artworks and Famous Faces split one share of Things between them.
+/// Measured over a thousand rounds, Cars came up thirteen times in a hundred and Plants
+/// once. Every category switched on now gets an equal share, and the question type is
+/// chosen inside it.
+///
+/// The player's own photographs are not a category beside the sets unless no set is on:
+/// they come into each set's rounds as the fourth picture, where they belong in it. See
+/// `LevelGenerator.belongs`.
+enum CategoryRotation {
+
+    static func share(of category: PlayCategory, themes: [GameTheme]) -> Int { 1 }
+
+    static func next(from available: [PlayCategory: [GameTheme]],
+                     last: PlayCategory?,
+                     roll: () -> Double = { Double.random(in: 0...1) },
+                     pick: ([PlayCategory]) -> PlayCategory? = { $0.randomElement() }) -> PlayCategory? {
+        // Sorted, so an injected picker sees the same order every time.
+        let categories = available.keys.sorted { "\($0)" < "\($1)" }
+        func weighted(_ list: [PlayCategory]) -> [PlayCategory] {
+            list.flatMap { Array(repeating: $0, count: share(of: $0, themes: available[$0] ?? [])) }
+        }
+        guard !categories.isEmpty else { return nil }
+        guard categories.count > 1 else { return categories[0] }
+        if let last, roll() < ThemeRotation.alternateChance {
+            let others = categories.filter { $0 != last }
+            return pick(weighted(others)) ?? pick(weighted(categories))
+        }
+        return pick(weighted(categories))
+    }
+}
+
 // MARK: - The numbers curation is built from
 
 /// Every number a round is built from, and not one of them adjustable.
