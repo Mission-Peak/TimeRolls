@@ -339,8 +339,9 @@ nonisolated enum QuizCurator {
 /// How a question about a person is worded, wherever the person comes from — Famous Faces,
 /// Film Stars, Sports Stars.
 ///
-/// "Which one is Audrey Hepburn?" asks about a picture. These ask about the person: "Who is
-/// Audrey Hepburn?", "Which actress is Audrey Hepburn?". A word like "actress" or "golfer"
+/// "Which one is Audrey Hepburn?" asks about a picture. These ask about the person: "Which
+/// person is Audrey Hepburn?", "Which actress is Audrey Hepburn?". Never "Who is…": Hanna
+/// asked for "Which person is" in its place. A word like "actress" or "golfer"
 /// is used only when it is true of all four people in the round, so it never narrows the
 /// field — "which actress" beside three actors would be the answer, not the question.
 nonisolated enum PeopleWording {
@@ -351,7 +352,7 @@ nonisolated enum PeopleWording {
 
     /// The wordings for "which of these is {x}", most general first. `{x}` is the name.
     static func named(among photos: [GamePhoto], theme: GameTheme? = nil) -> [String] {
-        var templates = ["Who is {x}?", "Which person is {x}?"]
+        var templates = ["Which person is {x}?"]
         switch theme {
         case .film?: templates.append("Which film star is {x}?")
         case .sports?: templates.append("Which athlete is {x}?")

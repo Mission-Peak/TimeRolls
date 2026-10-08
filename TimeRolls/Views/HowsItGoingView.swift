@@ -13,7 +13,7 @@ struct HowsItGoingView: View {
     let engine: GameEngine
 
     var body: some View {
-        MeadowScreen(title: "How's it going") {
+        MeadowScreen(title: "Progress") {
             // The challenge first, because it is the only thing in the game that can be
             // finished, and the only number anybody is actually playing towards.
             StickerCard(fill: Meadow.cardMint) {

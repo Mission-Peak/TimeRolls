@@ -300,6 +300,33 @@ struct LevelGenerator {
                                          from: pool(for: theme, widened: widened,
                                                     publicOnly: publicOnly),
                                          theme: theme))
+        // One category picked and one of the player's photographs in the pool: the round
+        // is about that photograph. See `belongs`.
+        var anchor: GamePhoto?
+        var anchorTags: [String] = []
+        if case let .pack(packID) = focus, let theirs = pool.first(where: \.isPersonal) {
+            anchor = theirs
+            anchorTags = Self.fittingTags(of: theirs, in: packID)
+        }
+        if anchor != nil {
+            switch theme {
+            case .places:
+                return PlacesCurator.makeLevel(pool: pool, recentPlaces: recentPlaces,
+                                               recentWordings: recentWordings,
+                                               visualDistance: visualDistance,
+                                               anchor: anchor)
+            case .objects:
+                return ObjectsCurator.makeLevel(pool: pool,
+                                                recentCategories: recentCategories,
+                                                recentWordings: recentWordings,
+                                                visualDistance: visualDistance,
+                                                conceptScore: conceptScore,
+                                                bestConcept: bestConcept,
+                                                anchor: anchor, anchorTags: anchorTags)
+            default:
+                break
+            }
+        }
         switch theme {
         case .chronology:
             return ChronologyCurator.makeLevel(pool: pool,
@@ -492,23 +519,34 @@ struct LevelGenerator {
     /// takes any photograph with a place, because the question is where it was taken. The
     /// sets of famous people and paintings, and Time, take none: nobody's own photographs
     /// are of either, and beside them theirs is always the odd one out.
+    ///
+    /// Plants takes none either, for now. "Which photo has a tree in it?" needs three
+    /// plants known not to be trees, and the Plants pack does not say which of its plants
+    /// are trees, flowers or grasses — a round could have two right answers.
     static func belongs(_ photo: GamePhoto, in packID: String, theme: GameTheme) -> Bool {
         switch theme {
         case .places:
             return photo.placeName != nil
         case .objects:
-            let tags = photo.objectTags
-            switch packID {
-            case "animals":
-                return tags.contains { ObjectCatalog.category(id: $0)?.family == .animal }
-            case "plants":
-                return !tags.isDisjoint(with: ["flower", "tree", "garden", "forest"])
-            default:
-                return false
-            }
+            return !fittingTags(of: photo, in: packID).isEmpty
         case .chronology, .geography, .cars, .film, .sports:
             return false
         }
+    }
+
+    /// What in one of the player's photographs a round from this set can ask about: the
+    /// animals in it, for Animals. Its strongest reading first, when that is one of them.
+    static func fittingTags(of photo: GamePhoto, in packID: String) -> [String] {
+        let fits: (String) -> Bool = switch packID {
+        case "animals": { ObjectsCurator.animalGroup[$0] != nil }
+        default: { _ in false }
+        }
+        var tags = photo.objectTags.filter(fits).sorted()
+        if let concept = photo.conceptID, fits(concept) {
+            tags.removeAll { $0 == concept }
+            tags.insert(concept, at: 0)
+        }
+        return tags
     }
 
     /// Whether the personal library is too thin to carry this theme on its own.

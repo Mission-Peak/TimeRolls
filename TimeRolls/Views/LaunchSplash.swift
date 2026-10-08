@@ -2,12 +2,13 @@
 //  LaunchSplash.swift
 //  Time Rolls
 //
-//  The first thing anybody sees, on every launch: the logo, and under it "by Mission Peak".
+//  The first thing anybody sees, on every launch: the app icon's own picture — the hills,
+//  the sun, the film strip — across the bottom of the screen, and "Time Rolls, by Mission
+//  Peak" written in the sky above it.
 //
-//  iOS shows a static launch screen while the app loads — the logo alone on the icon's
-//  blush sky, from Info.plist — and cannot be told how long to show it. This draws the same
-//  logo in exactly the same place and adds the line beneath it, so the two read as one
-//  screen, then holds it for a moment before fading into the game.
+//  iOS shows a static launch screen while the app loads, and cannot be told how long to
+//  show it. That screen is the sky's colour alone (Info.plist), so the picture and the name
+//  fade in on the very sky that was already there, then hold for a moment before the game.
 //
 //  The game is not waiting on it. RootView sits underneath and starts loading straight
 //  away, so the splash is time the app was going to spend getting ready anyway.
@@ -21,95 +22,47 @@ struct LaunchSplash: View {
     /// How long the splash stays up once the app is running.
     static let duration: Duration = .seconds(1.5)
 
-    /// The logo's size on screen, in points. The launch image is made at exactly these
-    /// sizes — see `LaunchMark.imageset` — so the two must stay the same or the logo jumps
-    /// as one screen gives way to the other. A phone-sized logo on an iPad was a small
-    /// square in a lot of sky.
-    private static var logoSize: CGFloat {
-        UIDevice.current.userInterfaceIdiom == .pad ? 380 : 210
-    }
-    /// The launch image carries the logo's soft shadow, so it is this much bigger than
-    /// the logo on every side.
-    private static let shadowRoom: CGFloat = 0.14
+    @State private var shown = false
 
-    @State private var sceneShown = false
-
-    /// Where the tops of the hills are in the picture, as a share of its height, and where
-    /// they should sit on screen.
-    ///
-    /// The picture is drawn by Tools/Brand/make_launch_art.py from the app icon's own
-    /// colours, with its hilltops at exactly this height.
-    ///
-    /// The picture was painted for a phone. Stretched across an iPad it grew two and a
-    /// half times and the hills took the bottom half of the screen, with "by Mission Peak"
-    /// sitting on the film strip. So the horizon is held at the same height on every
-    /// screen, and whatever does not fit comes off the bottom — the nearest bushes —
-    /// rather than off the sky. On a phone that works out to no change at all.
-    private static let horizonInPicture: CGFloat = 0.698
-    private static let horizonOnScreen: CGFloat = 0.68
-
-    private var scene: some View {
+    var body: some View {
         GeometryReader { geo in
             let screen = geo.size
+            // Tools/Brand/make_launch_art.py draws the icon square across the full width
+            // at the bottom of a tall sky, so filling the width puts the icon's picture at
+            // the bottom of every screen; an iPad, being wider, shows less of the sky.
             let picture = UIImage(named: "LaunchScene")?.size ?? CGSize(width: 1290, height: 2803)
             let scale = max(screen.width / picture.width, screen.height / picture.height)
             let size = CGSize(width: picture.width * scale, height: picture.height * scale)
-            // How far below its bottom-aligned place the picture has to drop for its
-            // horizon to land where it should. Never upwards, which would leave a gap.
-            let drop = max(0, size.height * (1 - Self.horizonInPicture)
-                              - screen.height * (1 - Self.horizonOnScreen))
-            Image("LaunchScene")
-                .resizable()
-                .interpolation(.high)
-                .frame(width: size.width, height: size.height)
-                .position(x: screen.width / 2,
-                          y: screen.height - size.height / 2 + drop)
-        }
-        .clipped()
-    }
-
-    var body: some View {
-        let logo = Self.logoSize
-        let canvas = logo * (1 + 2 * Self.shadowRoom)
-        ZStack {
-            // What the static launch screen shows: the sky's colour behind the logo.
-            Color("LaunchSky")
-            // The sky and the hills fade in around a logo that has not moved.
-            scene
-                .opacity(sceneShown ? 1 : 0)
-            // Centred on the whole screen, safe areas ignored, because that is where the
-            // static launch screen puts it. The line hangs below the logo rather than
-            // sharing a stack with it; stacking them would move the logo up by half the
-            // line's height and it would visibly jump.
-            Image("LaunchMark")
-                .resizable()
-                .frame(width: canvas, height: canvas)
-                // The app's name above the logo. The logo alone said nothing to somebody
-                // who had not yet seen it, which on a first launch is everybody.
-                .overlay(alignment: .top) {
+            // The sky left above the icon's picture, where the name goes.
+            let sky = max(screen.height - picture.width * scale, screen.height * 0.3)
+            ZStack(alignment: .top) {
+                Color("LaunchSky")
+                Image("LaunchScene")
+                    .resizable()
+                    .interpolation(.high)
+                    .frame(width: size.width, height: size.height)
+                    .position(x: screen.width / 2, y: screen.height - size.height / 2)
+                    .opacity(shown ? 1 : 0)
+                VStack(spacing: screen.width * 0.02) {
                     Text("Time Rolls")
-                        .font(.system(size: logo * 0.22, weight: .black, design: .rounded))
+                        .font(.system(size: min(screen.width * 0.17, 120), weight: .black,
+                                      design: .rounded))
                         .foregroundStyle(Meadow.title)
-                        .fixedSize()
-                        // Above the logo itself, not above its shadow.
-                        .alignmentGuide(.top) {
-                            $0[.bottom] + (logo * 0.1 - logo * Self.shadowRoom)
-                        }
-                }
-                .overlay(alignment: .bottom) {
                     Text("by Mission Peak")
-                        .font(.system(size: logo * 0.11, weight: .semibold, design: .rounded))
+                        .font(.system(size: min(screen.width * 0.065, 46), weight: .semibold,
+                                      design: .rounded))
                         .foregroundStyle(Color.hex(0x35452D).opacity(0.9))
-                        .fixedSize()
-                        // Below the logo itself, not below its shadow.
-                        .alignmentGuide(.bottom) {
-                            $0[.top] - (logo * 0.1 - logo * Self.shadowRoom)
-                        }
                 }
+                .fixedSize()
+                .frame(width: screen.width, height: sky)
+                // A little above the middle of the sky, clear of the status bar.
+                .padding(.top, geo.safeAreaInsets.top * 0.5)
+                .opacity(shown ? 1 : 0)
+            }
         }
         .ignoresSafeArea()
         .onAppear {
-            withAnimation(.easeOut(duration: 0.4)) { sceneShown = true }
+            withAnimation(.easeOut(duration: 0.35)) { shown = true }
         }
         .accessibilityElement(children: .ignore)
         .accessibilityLabel("Time Rolls, by Mission Peak")

@@ -2413,6 +2413,8 @@ for pack in shippedPacks {
         kinds[level.ask ?? "?", default: 0] += 1
         if let wording = level.wording { remembered = Recency.remembering(wording, in: remembered) }
         if samples.count < 6, !samples.contains(level.prompt) { samples.append(level.prompt) }
+        check(!level.prompt.hasPrefix("Who is"),
+              "\(pack.id) asked \(level.prompt.debugDescription): a person is \"Which person is\"")
         if PeopleWording.isAboutPeople(theme) {
             let shape = level.prompt.replacingOccurrences(of: #"(is|in|for|named|played) .*\?"#,
                                                           with: "$1 …?", options: .regularExpression)
@@ -2516,6 +2518,9 @@ check(QuestionGuardrail.reject("Which one is Audrey Hepburn?",
 check(QuestionGuardrail.reject("What is Phil Jackson?",
                                rewordingOf: "Who is Phil Jackson?", in: anyLevel) != nil,
       "a person was allowed to become a what")
+check(QuestionGuardrail.reject("Who is Audrey Hepburn?",
+                               rewordingOf: "Which person is Audrey Hepburn?", in: anyLevel) != nil,
+      "the rewording was allowed to turn \"Which person is\" into \"Who is\"")
 print("quiz categories — " + quizSummary.joined(separator: " · "))
 print("people wordings — " + peopleShapes.sorted { $0.value > $1.value }
     .map { "\($0.key) \($0.value)" }.joined(separator: " · "))
@@ -2588,6 +2593,89 @@ let perHundred: [String] = byCategory.sorted { $0.value > $1.value }.map { entry
     return "\(entry.key) \(share) (\(theirs * 100 / entry.value)% with theirs)"
 }
 print("per 100 rounds — " + perHundred.joined(separator: " · "))
+
+// --- How often their own photographs come up, on a library like a real phone's.
+//
+// The synthetic library above is generous: every photograph examined, half of them
+// geotagged across fourteen places, subjects spread evenly. A real camera roll is mostly
+// people and dinners, mostly taken around home, and on a phone that has only been playing
+// for a few sessions most of it has not been examined yet — and an unexamined photograph
+// cannot be in a round, because nothing is known about it. This is the number to quote.
+func phoneLikeLibrary(count: Int, examined: Double) -> [GamePhoto] {
+    var rng = SystemRandomNumberGenerator()
+    let home = [("San Jose, California", 37.34, -121.89), ("Fremont, California", 37.55, -121.99),
+                ("Palo Alto, California", 37.44, -122.14)]
+    let away = [("South Lake Tahoe, California", 38.94, -119.98), ("Honolulu, Hawaii", 21.31, -157.86),
+                ("Paris, France", 48.86, 2.35), ("Cancún, Mexico", 21.16, -86.85)]
+    // What the photograph is of, as a share of the roll.
+    let kinds: [(String?, Double, Double)] = [   // (tag, share, face prominence)
+        (nil, 0.45, 0.3),                         // people
+        ("food", 0.12, 0), ("cake", 0.02, 0),
+        ("dog", 0.05, 0), ("cat", 0.03, 0), ("bird", 0.01, 0), ("horse", 0.005, 0),
+        ("beach", 0.04, 0), ("mountain", 0.03, 0), ("tree", 0.03, 0), ("flower", 0.03, 0),
+        ("sunset", 0.02, 0), ("water", 0.02, 0), ("building", 0.04, 0), ("car", 0.03, 0),
+        ("book", 0.015, 0), ("bridge", 0.01, 0),
+    ]
+    return (0..<count).map { index in
+        var roll = Double.random(in: 0...1, using: &rng)
+        var kind = kinds[0]
+        for candidate in kinds { if roll < candidate.1 { kind = candidate; break }; roll -= candidate.1 }
+        let placeRoll = Double.random(in: 0...1, using: &rng)
+        let place: (String, Double, Double)? = placeRoll < 0.55 ? home.randomElement(using: &rng)
+            : placeRoll < 0.75 ? away.randomElement(using: &rng) : nil
+        let looked = Double.random(in: 0...1, using: &rng) < examined
+        var photo = GamePhoto(
+            id: "real\(index)",
+            origin: .personal(localIdentifier: "real\(index)"),
+            creationDate: Date(timeIntervalSinceNow: -Double.random(in: 0...(12 * .year), using: &rng)),
+            coordinate: place.map { Coordinate(latitude: $0.1, longitude: $0.2) },
+            placeName: place?.0,
+            objectTags: looked ? Set(kind.0.map { [$0] } ?? []) : [],
+            possibleObjectTags: looked ? Set(kind.0.map { [$0] } ?? []) : [])
+        photo.wasExamined = looked
+        photo.conceptID = looked ? kind.0 : nil
+        photo.faceProminence = looked ? kind.2 : 0
+        photo.aesthetics = Double.random(in: 0.2...0.9, using: &rng)
+        return photo
+    }
+}
+
+var phoneSummary: [String] = []
+for (label, examined) in [("a few sessions in, 30% examined", 0.3), ("after a week, 90% examined", 0.9)] {
+    var phone = wide
+    phone.personal = phoneLikeLibrary(count: 3000, examined: examined)
+    phone.quizQuestions = session.quizQuestions
+    // As the device has it: a photograph shows a place when it has been looked at and is
+    // not of a face or of a thing in the foreground.
+    phone.showsAPlace = { $0.wasExamined && $0.faceProminence == 0 }
+    phone.bestConcept = { $0.conceptID }
+    let categories = phone.availableCategories()
+    var shown: Set<String> = []
+    var lastCategory: PlayCategory?, lastTheme: GameTheme?
+    var rounds = 0, theirs = 0
+    var theirsBy: [String: Int] = [:]
+    for _ in 0..<300 {
+        guard let category = CategoryRotation.next(from: categories, last: lastCategory),
+              let theme = ThemeRotation.next(from: categories[category] ?? [], last: lastTheme),
+              case let .pack(packID) = category else { break }
+        phone.focus = category
+        phone.recentlyUsed = shown
+        guard let level = phone.makeLevel(theme: theme) else { continue }
+        shown.formUnion(level.photos.map(\.id))
+        lastCategory = category; lastTheme = theme
+        rounds += 1
+        if let mine = level.photos.first(where: \.isPersonal) {
+            theirs += 1
+            theirsBy[titles[packID] ?? packID, default: 0] += 1
+            check(mine.id == level.correctPhotoID, "on the phone-like library, theirs was a distractor")
+        }
+    }
+    phone.focus = nil
+    phoneSummary.append("\(label): \(theirs * 100 / max(rounds, 1)) in 100 rounds ("
+        + theirsBy.sorted { $0.value > $1.value }.map { "\($0.key) \($0.value)" }.joined(separator: ", ")
+        + " of \(rounds))")
+}
+print("their photos on a phone-like library — " + phoneSummary.joined(separator: " · "))
 
 if failures.isEmpty {
     print("✅ all curation invariants held over \(11 * 3 * 120 * 3) generated levels")

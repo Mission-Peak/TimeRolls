@@ -6,7 +6,7 @@
   "themes": [
     "film"
   ],
-  "namedSubjectPrompt": "Who is {name}?|Which person is {name}?|Which film star is {name}?",
+  "namedSubjectPrompt": "Which person is {name}?|Which film star is {name}?",
   "questions": [
     {
       "id": "starred",

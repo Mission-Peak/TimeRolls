@@ -90,6 +90,15 @@ enum QuestionGuardrail {
         if original.lowercased().hasPrefix("who"), !lowered.hasPrefix("who") {
             return "stopped asking who"
         }
+        // And never "Who is…" where the written question did not say it: a person is
+        // "Which person is…", by Hanna's choice of wording.
+        if lowered.hasPrefix("who is"), !original.lowercased().hasPrefix("who is") {
+            return "asked who is"
+        }
+        if original.lowercased().hasPrefix("which person"),
+           !(lowered.contains("person") || lowered.contains("who")) {
+            return "stopped asking about a person"
+        }
 
         // A question about the player's own pictures has to keep saying so. "Which photo is
         // from your album?" came back as "Which photo is from the album?" — every word

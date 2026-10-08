@@ -780,14 +780,21 @@ enum PlacesCurator {
     /// Two ways of asking about places — by where a photograph was taken, and by which
     /// landmark it shows — tried longest-unasked first, then worded so the same sentence
     /// is not asked twice running.
+    ///
+    /// With an `anchor` — one of the player's own photographs — the round is about that
+    /// photograph: where it was taken, beside three landmarks from elsewhere. Left to the
+    /// rotation, the landmark question came up half the time and had no place for theirs.
     static func makeLevel(pool: [GamePhoto],
                           prompts: [String: String] = [:],
                           recentPlaces: [String] = [],
                           recentAsks: [String] = [],
                           recentWordings: [String] = [],
-                          visualDistance: ((GamePhoto, GamePhoto) -> Double?)? = nil) -> Level? {
-        for kind in Recency.leastRecentFirst(["place", "landmark"], key: { $0 },
-                                             recent: recentAsks) {
+                          visualDistance: ((GamePhoto, GamePhoto) -> Double?)? = nil,
+                          anchor: GamePhoto? = nil) -> Level? {
+        let kinds = anchor == nil
+            ? Recency.leastRecentFirst(["place", "landmark"], key: { $0 }, recent: recentAsks)
+            : ["place"]
+        for kind in kinds {
             if kind == "landmark" {
                 if let level = landmarkLevel(pool: pool, recentPlaces: recentPlaces,
                                              recentWordings: recentWordings) {
@@ -796,7 +803,7 @@ enum PlacesCurator {
                 continue
             }
             guard var level = placeLevel(pool: pool, recentPlaces: recentPlaces,
-                                         visualDistance: visualDistance),
+                                         visualDistance: visualDistance, anchor: anchor),
                   let asked = level.focusTag else { continue }
             let chosen = Recency.choose(Wordings.place, kind: "place", x: asked,
                                         recent: recentWordings)
@@ -885,7 +892,8 @@ enum PlacesCurator {
     /// elsewhere. Harder levels draw those distractors from nearby places (spec §5.2–5.3).
     private static func placeLevel(pool: [GamePhoto],
                                    recentPlaces: [String],
-                                   visualDistance: ((GamePhoto, GamePhoto) -> Double?)?) -> Level? {
+                                   visualDistance: ((GamePhoto, GamePhoto) -> Double?)?,
+                                   anchor: GamePhoto? = nil) -> Level? {
         // `placeName != nil` is not enough: a photograph whose place resolved to ""
         // passed that test, grouped itself under an empty key, and asked "Which photo is
         // from ?". A name has to say something before a question can be built on it.
@@ -921,7 +929,7 @@ enum PlacesCurator {
         // below is stable, the same place keeps winning it, and the game feels like it
         // knows one question. Things has had this memory for weeks; Places never got it.
         let stale = Set(recentPlaces)
-        let placeNames = usable.keys.shuffled().sorted { lhs, rhs in
+        var placeNames = usable.keys.shuffled().sorted { lhs, rhs in
             let lFresh = stale.contains(lhs) ? 0 : 1
             let rFresh = stale.contains(rhs) ? 0 : 1
             if lFresh != rFresh { return lFresh > rFresh }
@@ -929,9 +937,14 @@ enum PlacesCurator {
             let r = usable[rhs]!.contains(where: \.isPersonal) ? 1 : 0
             return l > r
         }
+        // A round about the player's photograph asks about its place and nowhere else.
+        if let anchorPlace = anchor?.placeName {
+            placeNames = byPlace[anchorPlace] == nil ? [] : [anchorPlace]
+        }
 
         for targetName in placeNames.prefix(12) {
-            guard let target = usable[targetName]?.randomElement(),
+            let pick = anchor.flatMap { a in byPlace[targetName]?.first { $0.id == a.id } }
+            guard let target = pick ?? usable[targetName]?.randomElement(),
                   let targetCoordinate = target.coordinate else { continue }
 
             // Other places, nearest first.
@@ -1267,8 +1280,29 @@ enum ObjectsCurator {
                           recentWordings: [String] = [],
                           visualDistance: ((GamePhoto, GamePhoto) -> Double?)? = nil,
                           conceptScore: ((GamePhoto, String) -> Double?)? = nil,
-                          bestConcept: ((GamePhoto) -> String?)? = nil) -> Level? {
+                          bestConcept: ((GamePhoto) -> String?)? = nil,
+                          anchor: GamePhoto? = nil,
+                          anchorTags: [String] = []) -> Level? {
         let wanted = DifficultyKnob.photoCount
+
+        // A round about one of the player's own photographs — their dog among the
+        // Animals — asks what is in it, and nothing else. Left to the rotation below,
+        // the named and kind questions won most rounds, and neither has room for a
+        // photograph of theirs, so in practice theirs never came up.
+        if let anchor {
+            guard var level = ownAnimalLevel(anchor: anchor, tags: anchorTags, pool: pool,
+                                             wanted: wanted)
+                    ?? categoryLevel(pool: pool, wanted: wanted, prompts: prompts,
+                                     recentCategories: recentCategories,
+                                     visualDistance: visualDistance,
+                                     conceptScore: conceptScore,
+                                     bestConcept: bestConcept,
+                                     anchor: anchor, anchorTags: anchorTags)
+            else { return nil }
+            level.ask = Ask.category.rawValue
+            reword(&level, as: .category, recent: recentWordings)
+            return level
+        }
 
         // Four ways of asking about a set of photographs, tried in turn.
         //
@@ -1351,7 +1385,7 @@ enum ObjectsCurator {
         switch kind {
         case .named:
             guard let name = answer.askableName else { return }
-            // A person is asked about as a person: "Who is Louis Pasteur?", "Which
+            // A person is asked about as a person: "Which person is Louis Pasteur?", "Which
             // scientist is Louis Pasteur?" — never "which one shows" — and with no hint.
             if answer.dateIsBirth {
                 chosen = Recency.choose(PeopleWording.named(among: level.photos),
@@ -1449,7 +1483,9 @@ enum ObjectsCurator {
         recentCategories: [String],
         visualDistance: ((GamePhoto, GamePhoto) -> Double?)?,
         conceptScore: ((GamePhoto, String) -> Double?)?,
-        bestConcept: ((GamePhoto) -> String?)?) -> Level? {
+        bestConcept: ((GamePhoto) -> String?)?,
+        anchor: GamePhoto? = nil,
+        anchorTags: [String] = []) -> Level? {
 
         // Grouped by what the themes model says each photograph is, where it has
         // looked. A library it has not reached yet still plays, on the classifier's
@@ -1469,7 +1505,7 @@ enum ObjectsCurator {
                 }
             }
         }
-        guard !byCategory.isEmpty else { return nil }
+        guard !byCategory.isEmpty || anchor != nil else { return nil }
 
         // Anything asked about lately goes to the back of the queue, then the player's
         // own photos come first. Without this a session asked about pumpkins three times
@@ -1487,9 +1523,15 @@ enum ObjectsCurator {
             return l > r
         }
 
+        // With an anchor, only what is in that photograph is asked about, and it is the
+        // answer.
+        let asked = anchor == nil
+            ? Array(candidates.prefix(12))
+            : anchorTags.filter { ObjectCatalog.category(id: $0) != nil }
+
         let preferSameFamily = Double.random(in: 0...1) < DifficultyKnob.objectsSameFamilyChance
 
-        for categoryID in candidates.prefix(12) {
+        for categoryID in asked {
             guard let category = ObjectCatalog.category(id: categoryID) else { continue }
             // Of the photographs read as this thing, ask about the clearest one — and
             // never about a portrait.
@@ -1499,7 +1541,7 @@ enum ObjectsCurator {
             // still has to hunt the frame for a bit of rail behind a shoulder to know why
             // their own photograph is the answer. A face this large means the photograph
             // is about the face, whatever else is in it.
-            let holders = (byCategory[categoryID] ?? [])
+            let holders = (anchor.map { [$0] } ?? byCategory[categoryID] ?? [])
                 .filter { !$0.isAPortrait }
                 .sorted { $0.conceptScore > $1.conceptScore }
             guard let target = holders.first.map({ best in
@@ -1628,6 +1670,56 @@ enum ObjectsCurator {
         }
         return nil
     }
+
+    /// "Which photo has a dog in it?" — the player's dog, beside three of the Animals
+    /// pack's creatures that are not even the same kind of animal.
+    ///
+    /// The pack's photographs carry no classifier tags, so the usual test of a distractor
+    /// — nothing says it might contain a dog — has nothing to go on, and every round was
+    /// refused. What the pack does carry is a hand-written group: a mammal, a bird, an
+    /// insect. A distractor from another group cannot be a dog, or a cat: "which photo has
+    /// a cat in it?" beside a lion would have two answers, so a lion is never offered.
+    private nonisolated static func ownAnimalLevel(anchor: GamePhoto, tags: [String],
+                                                   pool: [GamePhoto], wanted: Int) -> Level? {
+        for tag in tags {
+            guard let category = ObjectCatalog.category(id: tag),
+                  let group = Self.animalGroup[tag] else { continue }
+            var seen: Set<String> = []
+            let others = pool.filter { photo in
+                guard !photo.isPersonal, let theirs = photo.subjectKind, theirs != group,
+                      !(photo.title ?? "").lowercased().contains(category.displayName)
+                else { return false }
+                return seen.insert(photo.subjectID ?? photo.id).inserted
+            }
+            // Different groups where it can — a bird, an insect and a reptile reads as a
+            // row of animals; three birds beside a dog reads as a puzzle about birds.
+            let byGroup = Dictionary(grouping: others.shuffled(), by: { $0.subjectKind ?? "" })
+            var distractors: [GamePhoto] = []
+            for kind in byGroup.keys.shuffled() where distractors.count < wanted - 1 {
+                if let one = byGroup[kind]?.first { distractors.append(one) }
+            }
+            for photo in others.shuffled() where distractors.count < wanted - 1 {
+                if !distractors.contains(where: { $0.id == photo.id }) { distractors.append(photo) }
+            }
+            guard distractors.count == wanted - 1 else { continue }
+            return Level(theme: .objects,
+                         prompt: category.question,
+                         photos: ([anchor] + distractors).shuffled(),
+                         correctPhotoID: anchor.id,
+                         curationNote: "\(tag) · theirs among \(group == "a mammal" ? "non-mammals" : "other animals")",
+                         focusTag: tag)
+        }
+        return nil
+    }
+
+    /// The Animals pack's group for each animal the classifier can see in a photograph.
+    nonisolated static let animalGroup: [String: String] = [
+        "dog": "a mammal", "cat": "a mammal", "horse": "a mammal", "jaguar": "a mammal",
+        "elephant": "a mammal", "giraffe": "a mammal", "dolphin": "a mammal",
+        "kangaroo": "a mammal", "polar_bear": "a mammal",
+        "bird": "a bird", "penguin": "a bird", "owl": "a bird", "flamingo": "a bird",
+        "seahorse": "a fish",
+    ]
 
     /// "Which photo has a lion in it?" — when the pack already knows it is a lion.
     ///

@@ -829,6 +829,18 @@ struct HomeView: View {
                 }
             }
 
+            // Setup, one tap from Home as from the play screen, in the corner where people
+            // look for it.
+            VStack {
+                HStack {
+                    Spacer()
+                    SettingsGear(onOpen: onCaregiverGate, compact: true)
+                }
+                Spacer()
+            }
+            .padding(.horizontal, 18)
+            .padding(.top, 6)
+
             if isAskingForSupport {
                 SupportNote {
                     engine.settings.hasAskedAboutSupport = true
@@ -862,7 +874,7 @@ struct HomeView: View {
     // MARK: Two tiles
 
     private var whatToPlayTile: some View {
-        HomeTile(title: "What to play",
+        HomeTile(title: "Themes",
                  hint: "Choose the categories you play",
                  fill: highContrast ? Palette.surface(true) : Meadow.tileLavender,
                  arrowWash: Meadow.badgePlum.opacity(0.14)) {
@@ -891,7 +903,7 @@ struct HomeView: View {
             NavigationStack {
                 // On the same meadow as How's it going, so the two screens Home opens
                 // look like they belong together.
-                MeadowScreen(title: "What to play") {
+                MeadowScreen(title: "Themes") {
                     CategoryGrid(engine: engine)
                 }
                 .toolbar { doneButton { isChoosingCategories = false } }
@@ -900,7 +912,7 @@ struct HomeView: View {
     }
 
     private var howsItGoingTile: some View {
-        HomeTile(title: "How's it going",
+        HomeTile(title: "Progress",
                  hint: "Your progress this week",
                  fill: highContrast ? Palette.surface(true) : Meadow.cardMint,
                  arrowWash: Meadow.badgeSage.opacity(0.14)) {

@@ -6,7 +6,7 @@
   "themes": [
     "sports"
   ],
-  "namedSubjectPrompt": "Who is {name}?|Which person is {name}?|Which athlete is {name}?",
+  "namedSubjectPrompt": "Which person is {name}?|Which athlete is {name}?",
   "questions": [
     {
       "id": "team",
@@ -33,7 +33,7 @@
       "id": "hall",
       "ask": "hallOfFame",
       "exclude": "hallOfFame",
-      "prompt": "Who is in the {value}?|Which athlete is in the {value}?",
+      "prompt": "Which person is in the {value}?|Which athlete is in the {value}?",
       "sameCluster": true
     }
   ],

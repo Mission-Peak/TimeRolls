@@ -828,7 +828,7 @@ def main():
         "title": "Sports Stars",
         "blurb": "Legends of the field, the court and the ring.",
         "themes": ["sports"],
-        "namedSubjectPrompt": "Who is {name}?|Which person is {name}?|Which athlete is {name}?",
+        "namedSubjectPrompt": "Which person is {name}?|Which athlete is {name}?",
         "questions": [
             {"id": "team", "ask": "teams", "exclude": "teamsAny",
              "prompt": "Who played for {value}?|Which player played for {value}?", "sameCluster": True},
@@ -837,7 +837,7 @@ def main():
             {"id": "honour", "ask": "honours", "exclude": "honours",
              "prompt": "Who was named {value}?|Which athlete was named {value}?", "sameCluster": True},
             {"id": "hall", "ask": "hallOfFame", "exclude": "hallOfFame",
-             "prompt": "Who is in the {value}?|Which athlete is in the {value}?", "sameCluster": True},
+             "prompt": "Which person is in the {value}?|Which athlete is in the {value}?", "sameCluster": True},
         ],
     }
     json.dump(chosen, open(cache_path("result"), "w"), ensure_ascii=False, indent=1)

@@ -108,7 +108,7 @@ struct CaregiverHubView: View {
                     HowsItGoingView(engine: engine)
                 } label: {
                     MeadowRow(symbol: "photo.stack.fill", tint: Meadow.badgeSlate,
-                              title: "How's it going", detail: sessionSummary, chevron: true)
+                              title: "Progress", detail: sessionSummary, chevron: true)
                         .padding(12)
                         .background(Meadow.cardSky,
                                     in: RoundedRectangle(cornerRadius: 18, style: .continuous))

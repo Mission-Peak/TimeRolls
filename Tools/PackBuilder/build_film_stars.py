@@ -40,7 +40,7 @@ META = {
     "title": "Film Stars",
     "blurb": "Screen legends from the golden age of Hollywood to today.",
     "themes": ["film"],
-    "namedSubjectPrompt": "Who is {name}?|Which person is {name}?|Which film star is {name}?",
+    "namedSubjectPrompt": "Which person is {name}?|Which film star is {name}?",
     "questions": [
         {"id": "starred", "ask": "notableFilms", "exclude": "films",
          "prompt": "Who starred in {value}?|Which film star was in {value}?"},
