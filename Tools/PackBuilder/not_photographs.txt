@@ -1,0 +1,18 @@
+# Pictures in the photo sets that are not photographs: maps, drawings, engravings, book
+# plates, a museum pelt, a book cover. Removed by hand; the curation harness fails if any
+# of these file names comes back into a pack when one is rebuilt. One Commons file name
+# per line, without the 1280px- thumbnail prefix.
+2011 Dimos Mykonou.png
+202501_Blue_whale.svg.png
+202305_Mustela_putorius_furo.svg.png
+Neue_Wirbelthiere_zu_der_Fauna_von_Abyssinien_gehörig_(1835)_Genetta_abyssinica.png
+202407_Pacific_oyster.svg.png
+Genetta_pardina.png
+Genetta_bourloni.png
+202304_7_Tr.spelta_color.svg.png
+Cucurbita_maxima_Blanco2.320.png
+Atriplex_hortensis_cleaned_Sturm.png
+The_Botanical_Magazine,_Plate_3_(Volume_1,_1787).png
+ANTHEMIS_arvensis_Köhler.png
+Beklädnadsväxter,_Gossypium_herbaceum,_Nordisk_familjebok.png
+A_Maravilhosa_Vida_de_Santos=Dumont_(page_18b_crop).jpg

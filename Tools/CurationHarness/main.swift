@@ -1874,6 +1874,29 @@ let repoRoot = FileManager.default.currentDirectoryPath + "/../.."
 let shippedPacks = loadPacks(from: repoRoot)
 check(!shippedPacks.isEmpty, "no packs could be read from TimeRolls/Packs")
 
+// No picture in a photo set may be something other than a photograph. Maps belong to
+// Geography alone; drawings, engravings, book plates and covers were found among the
+// animals, plants, landmarks and people and taken out by hand. A rebuild that brings one
+// back, or brings in anything rendered from a vector drawing, fails here.
+let notPhotographs = Set(((try? String(contentsOfFile: repoRoot + "/Tools/PackBuilder/not_photographs.txt",
+                                        encoding: .utf8)) ?? "")
+    .split(separator: "\n").map { $0.trimmingCharacters(in: .whitespaces) }
+    .filter { !$0.isEmpty && !$0.hasPrefix("#") })
+check(!notPhotographs.isEmpty, "Tools/PackBuilder/not_photographs.txt could not be read")
+for pack in shippedPacks where pack.id != "geography" {
+    for item in pack.items {
+        let url = (item["originalURL"] as? String) ?? (item["remoteURL"] as? String) ?? ""
+        var name = (url.removingPercentEncoding ?? url)
+            .split(separator: "?").first.map(String.init)?
+            .split(separator: "/").last.map(String.init) ?? ""
+        if let dash = name.range(of: "px-"), name[..<dash.lowerBound].allSatisfy(\.isNumber) {
+            name = String(name[dash.upperBound...])
+        }
+        check(!notPhotographs.contains(name) && !name.contains(".svg."),
+              "\(pack.id): \(item["id"] as? String ?? "?") is not a photograph (\(name))")
+    }
+}
+
 var packSummary: [String] = []
 for pack in shippedPacks {
     let items = pack.items
