@@ -6335,27 +6335,6 @@
       "country": "Malta"
     },
     {
-      "id": "travel-landmarks-mykonos",
-      "objectTags": [],
-      "remoteURL": "https://commons.wikimedia.org/wiki/Special:FilePath/2011%20Dimos%20Mykonou.png?width=1200",
-      "title": "Mykonos",
-      "year": 2015,
-      "month": 6,
-      "credit": "Pitichinaccio",
-      "source": "Wikimedia Commons",
-      "sourceURL": "https://commons.wikimedia.org/wiki/File:2011_Dimos_Mykonou.png",
-      "license": "CC BY 3.0",
-      "fact": "Mykonos is a Greek island, part of the Cyclades, lying between Tinos, Syros, Paros and Naxos.",
-      "place": "Cyclades Prefecture, Greece",
-      "latitude": 37.4589,
-      "longitude": 25.3642,
-      "originalURL": "https://commons.wikimedia.org/wiki/Special:FilePath/2011%20Dimos%20Mykonou.png?width=1200",
-      "remoteKey": "packs/travel-landmarks/travel-landmarks-mykonos.jpg",
-      "isResizedCopy": true,
-      "licenseURL": "https://creativecommons.org/licenses/by/3.0/",
-      "country": "Greece"
-    },
-    {
       "id": "travel-landmarks-rhodes-old-town",
       "objectTags": [],
       "remoteURL": "https://commons.wikimedia.org/wiki/Special:FilePath/Marientor%20Rhodos.jpg?width=1200",

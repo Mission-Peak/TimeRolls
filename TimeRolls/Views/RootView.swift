@@ -16,7 +16,13 @@ struct RootView: View {
     /// session so the screen does not come back between rounds.
     @State private var hasSkippedIndexing = false
     /// Home or Play. The app opens on Home.
+#if DEBUG
+    // Screenshots: TIMEROLLS_TAB=play opens on the play screen.
+    @State private var tab: RootTab =
+        ProcessInfo.processInfo.environment["TIMEROLLS_TAB"] == "play" ? .play : .home
+#else
     @State private var tab: RootTab = .home
+#endif
     @Environment(\.scenePhase) private var scenePhase
     @Environment(\.horizontalSizeClass) private var sizeClass
 

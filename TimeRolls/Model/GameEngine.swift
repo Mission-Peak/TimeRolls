@@ -90,6 +90,14 @@ final class GameEngine {
         GamePhoto.identifyQuestion = { id in
             PhotoThemeIndex.shared.themes.first { $0.id == id }?.identify
         }
+#if DEBUG
+        // Screenshots: one category at a time, without touching the saved settings.
+        if let packs = ProcessInfo.processInfo.environment["TIMEROLLS_PACKS"] {
+            settings.enabledPackIDs = Set(packs.split(separator: ",").map(String.init))
+            settings.ownPhotosOn = false
+            settings.localTriviaEnabled = false
+        }
+#endif
         guard phase != .firstRun else { return }
         await prepare()
     }
