@@ -65,13 +65,22 @@ final class RemoteImageCache {
     // MARK: - Reading
 
     func cachedImage(for item: PackItem) -> UIImage? {
-        guard let file = localFile(for: item),
-              FileManager.default.fileExists(atPath: file.path) else { return nil }
+        guard let file = cachedFile(for: item) else { return nil }
         return UIImage(contentsOfFile: file.path)
     }
 
+    /// Where the downloaded photograph is on disk, if it has been downloaded — so it can
+    /// be read at the size it is shown rather than in full.
+    func cachedFile(for item: PackItem) -> URL? {
+        guard let file = localFile(for: item),
+              FileManager.default.fileExists(atPath: file.path) else { return nil }
+        return file
+    }
+
+    /// Whether it is on the device. Asked of every pack photograph each time the pools
+    /// are built, so it looks for the file and does not open it.
     func isAvailableOffline(_ item: PackItem) -> Bool {
-        cachedImage(for: item) != nil
+        cachedFile(for: item) != nil
     }
 
     /// Fetch if we don't already have it. Returns nil when the photograph can't be had,

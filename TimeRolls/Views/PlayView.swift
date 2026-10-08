@@ -878,24 +878,7 @@ struct HomeView: View {
                  hint: "Choose the categories you play",
                  fill: highContrast ? Palette.surface(true) : Meadow.tileLavender,
                  arrowWash: Meadow.badgePlum.opacity(0.14)) {
-            ZStack {
-                ForEach(0..<2) { index in
-                    RoundedRectangle(cornerRadius: 10, style: .continuous)
-                        .fill(Meadow.badgePlum.opacity(index == 0 ? 0.35 : 0.5))
-                        .frame(width: 44, height: 56)
-                        .rotationEffect(.degrees(index == 0 ? -22 : 18))
-                        .offset(x: index == 0 ? -26 : 26, y: 4)
-                }
-                TileBadge(symbol: "gamecontroller.fill", tint: Meadow.badgePlum)
-                Image(systemName: "sparkle")
-                    .font(.system(size: 16, weight: .bold))
-                    .foregroundStyle(Meadow.sparkle)
-                    .offset(x: 52, y: -26)
-                Image(systemName: "sparkle")
-                    .font(.system(size: 11, weight: .bold))
-                    .foregroundStyle(Meadow.sparkle)
-                    .offset(x: -50, y: 26)
-            }
+            PaintPalette()
         } action: {
             isChoosingCategories = true
         }
@@ -916,11 +899,7 @@ struct HomeView: View {
                  hint: "Your progress this week",
                  fill: highContrast ? Palette.surface(true) : Meadow.cardMint,
                  arrowWash: Meadow.badgeSage.opacity(0.14)) {
-            ZStack {
-                BurstMarks(tint: Meadow.badgeSage)
-                    .frame(width: 112, height: 60)
-                TileBadge(symbol: "chart.bar.fill", tint: Meadow.badgeSage)
-            }
+            RisingChart()
         } action: {
             isShowingProgress = true
         }
@@ -1148,25 +1127,131 @@ private struct HomeTile<Art: View>: View {
     }
 }
 
-/// The big rounded square on a Home tile: a white symbol on a colour.
-private struct TileBadge: View {
-    let symbol: String
-    let tint: Color
+/// The Themes tile's drawing: a painter's palette with four paints on it and a brush
+/// laid across, a burst of strokes and a few sparkles.
+private struct PaintPalette: View {
+
+    private static let wood = [Color.hex(0xF7D493), Color.hex(0xE6A953)]
+    private static let paints: [(Color, CGFloat, CGFloat)] = [
+        (Color.hex(0xD9483B), 6, -17),     // red
+        (Color.hex(0xF0A532), -17, -7),    // yellow
+        (Color.hex(0x3E6DA8), -18, 13),    // blue
+        (Color.hex(0x6A4C9C), 0, 21),      // purple
+    ]
+    private static let plum = Color.hex(0x5B4790)
+    private static let spark = Color.hex(0xF3C341)
 
     var body: some View {
-        RoundedRectangle(cornerRadius: 18, style: .continuous)
-            .fill(tint)
-            .frame(width: 66, height: 66)
-            .overlay {
-                Image(systemName: symbol)
-                    .font(.system(size: 30, weight: .bold))
-                    .foregroundStyle(.white)
+        ZStack {
+            // The burst, at the palette's top left.
+            ForEach(0..<3, id: \.self) { index in
+                Capsule()
+                    .fill(Self.plum)
+                    .frame(width: 12, height: 3.5)
+                    .rotationEffect(.degrees([55.0, 30, 0][index]))
+                    .offset(x: [-38.0, -48, -53][index], y: [-36.0, -25, -10][index])
             }
-            .overlay {
-                RoundedRectangle(cornerRadius: 18, style: .continuous)
-                    .strokeBorder(.white.opacity(0.85), lineWidth: 3)
+            PaletteShape()
+                .fill(LinearGradient(colors: Self.wood, startPoint: .topLeading,
+                                     endPoint: .bottomTrailing), style: FillStyle(eoFill: true))
+                .frame(width: 74, height: 64)
+                .rotationEffect(.degrees(-12))
+                .shadow(color: .black.opacity(0.18), radius: 3, y: 2)
+            ForEach(0..<Self.paints.count, id: \.self) { index in
+                let paint = Self.paints[index]
+                Circle()
+                    .fill(paint.0)
+                    .frame(width: 15, height: 15)
+                    .overlay(alignment: .topLeading) {
+                        Circle().fill(.white.opacity(0.45)).frame(width: 4, height: 4).offset(x: 3, y: 3)
+                    }
+                    .offset(x: paint.1, y: paint.2)
             }
-            .shadow(color: .black.opacity(0.18), radius: 4, y: 2)
+            // The brush, laid across the palette's right side.
+            VStack(spacing: 0) {
+                Ellipse().fill(Self.plum).frame(width: 10, height: 17)
+                Rectangle().fill(Color.hex(0xB9B4B0)).frame(width: 7, height: 6)
+                Capsule().fill(Color.hex(0x7A4B2A)).frame(width: 5.5, height: 44)
+            }
+            .rotationEffect(.degrees(32))
+            .offset(x: 26, y: 6)
+            .shadow(color: .black.opacity(0.18), radius: 2, y: 1)
+            ForEach(0..<4, id: \.self) { index in
+                Image(systemName: "sparkle")
+                    .font(.system(size: [15.0, 12, 11, 9][index], weight: .bold))
+                    .foregroundStyle(Self.spark)
+                    .offset(x: [26.0, 48, -48, 40][index], y: [-38.0, 10, 30, 32][index])
+            }
+        }
+        .frame(width: 120, height: 92)
+    }
+}
+
+/// An artist's palette: a rounded slab with a thumb hole near one edge.
+private struct PaletteShape: Shape {
+    func path(in rect: CGRect) -> Path {
+        var path = Path(ellipseIn: rect)
+        let hole = rect.width * 0.15
+        path.addEllipse(in: CGRect(x: rect.maxX - hole * 2.1, y: rect.midY + hole * 0.2,
+                                   width: hole, height: hole))
+        return path
+    }
+}
+
+/// The Progress tile's drawing: three bars rising in shades of green, an arrow climbing
+/// over them, and a burst either side.
+private struct RisingChart: View {
+
+    private static let greens = [Color.hex(0xA7C88A), Color.hex(0x7EA55E), Color.hex(0x4E7A45)]
+    private static let ink = Color.hex(0x3E6838)
+
+    var body: some View {
+        ZStack {
+            BurstMarks(tint: Self.ink)
+                .frame(width: 128, height: 50)
+                .offset(y: 4)
+            HStack(alignment: .bottom, spacing: 6) {
+                ForEach(0..<3, id: \.self) { index in
+                    RoundedRectangle(cornerRadius: 5, style: .continuous)
+                        .fill(Self.greens[index])
+                        .frame(width: 19, height: [24.0, 40, 58][index])
+                }
+            }
+            .offset(y: 18)
+            Arrow()
+                .stroke(Self.ink, style: StrokeStyle(lineWidth: 5, lineCap: .round, lineJoin: .round))
+                .frame(width: 66, height: 44)
+                .offset(x: 2, y: -16)
+            // The arrowhead, at the top right end of the climb.
+            Triangle()
+                .fill(Self.ink)
+                .frame(width: 17, height: 15)
+                .rotationEffect(.degrees(48))
+                .offset(x: 33, y: -38)
+        }
+        .frame(width: 120, height: 92)
+    }
+
+    private struct Arrow: Shape {
+        func path(in rect: CGRect) -> Path {
+            var path = Path()
+            path.move(to: CGPoint(x: rect.minX, y: rect.maxY))
+            path.addLine(to: CGPoint(x: rect.width * 0.38, y: rect.height * 0.42))
+            path.addLine(to: CGPoint(x: rect.width * 0.56, y: rect.height * 0.62))
+            path.addLine(to: CGPoint(x: rect.maxX - 4, y: rect.minY + 4))
+            return path
+        }
+    }
+
+    private struct Triangle: Shape {
+        func path(in rect: CGRect) -> Path {
+            var path = Path()
+            path.move(to: CGPoint(x: rect.midX, y: rect.minY))
+            path.addLine(to: CGPoint(x: rect.maxX, y: rect.maxY))
+            path.addLine(to: CGPoint(x: rect.minX, y: rect.maxY))
+            path.closeSubpath()
+            return path
+        }
     }
 }
 

@@ -8,6 +8,7 @@
 
 import UIKit
 import Photos
+import ImageIO
 
 @Observable
 @MainActor
@@ -22,7 +23,43 @@ final class ImageProvider {
     @ObservationIgnored private let manager = PHImageManager.default()
 
     init() {
-        cache.countLimit = 120
+        // By size, not by count. A count of 120 held up to 120 full-size pack photographs
+        // — about nine megabytes each once decoded — and memory climbed past 700 MB within
+        // a minute of steady play, which is how an iPhone ends a game for you.
+        cache.totalCostLimit = 80 * 1024 * 1024
+    }
+
+    /// The most pixels along the longer side a photograph is ever decoded at. The zoom
+    /// view asks for 1400 points, which on a 3x phone was 4200 pixels — seventy megabytes
+    /// for one picture, far more than the screen can show.
+    private static let largestSide: CGFloat = 2400
+
+    private func pixels(for targetSize: CGSize) -> CGFloat {
+        min(max(targetSize.width, targetSize.height) * UITraitCollection.current.displayScale,
+            Self.largestSide)
+    }
+
+    /// A photograph file read at the size it will be shown, never in full. Decoding a
+    /// 1280×1700 pack photograph to put it in a 200-point tile cost nine megabytes; read
+    /// this way it costs what the tile needs.
+    private nonisolated static func downsampled(_ url: URL, maxPixels: CGFloat) -> UIImage? {
+        guard let source = CGImageSourceCreateWithURL(url as CFURL,
+                                                      [kCGImageSourceShouldCache: false] as CFDictionary)
+        else { return nil }
+        let options: [CFString: Any] = [
+            kCGImageSourceCreateThumbnailFromImageAlways: true,
+            kCGImageSourceCreateThumbnailWithTransform: true,
+            kCGImageSourceShouldCacheImmediately: true,
+            kCGImageSourceThumbnailMaxPixelSize: maxPixels,
+        ]
+        guard let image = CGImageSourceCreateThumbnailAtIndex(source, 0, options as CFDictionary)
+        else { return nil }
+        return UIImage(cgImage: image)
+    }
+
+    private static func cost(of image: UIImage) -> Int {
+        guard let cg = image.cgImage else { return 1 }
+        return cg.bytesPerRow * cg.height
     }
 
     /// A representative photo for a pack, for the category chooser.
@@ -43,12 +80,25 @@ final class ImageProvider {
         switch photo.origin {
         case let .pack(packID, itemID):
             guard let item = PublicPackLibrary.item(packID: packID, itemID: itemID) else { return nil }
+            let maxPixels = pixels(for: targetSize)
             if let url = PublicPackLibrary.imageURL(for: item),
-               let photograph = UIImage(contentsOfFile: url.path) {
+               let photograph = await Task.detached(priority: .userInitiated, operation: {
+                   Self.downsampled(url, maxPixels: maxPixels)
+               }).value {
                 image = photograph
             } else if item.remoteURL != nil || item.remoteKey != nil {
-                // Carried as metadata only: fetch it from where it lives, once.
-                image = await RemoteImageCache.shared.image(for: item)
+                // Carried as metadata only: fetch it from where it lives, once, then read
+                // the saved file at the size it is shown.
+                let fetched = RemoteImageCache.shared.cachedFile(for: item) == nil
+                    ? await RemoteImageCache.shared.image(for: item) : nil
+                if let file = RemoteImageCache.shared.cachedFile(for: item),
+                   let small = await Task.detached(priority: .userInitiated, operation: {
+                       Self.downsampled(file, maxPixels: maxPixels)
+                   }).value {
+                    image = small
+                } else {
+                    image = fetched
+                }
             } else {
                 image = PackArtRenderer.image(for: item, size: targetSize)
             }
@@ -59,7 +109,7 @@ final class ImageProvider {
             }
         }
 
-        if let image { cache.setObject(image, forKey: key) }
+        if let image { cache.setObject(image, forKey: key, cost: Self.cost(of: image)) }
         return image
     }
 
@@ -73,8 +123,8 @@ final class ImageProvider {
         options.isNetworkAccessAllowed = true
         options.isSynchronous = false
 
-        let scale = UITraitCollection.current.displayScale
-        let pixelSize = CGSize(width: targetSize.width * scale, height: targetSize.height * scale)
+        let side = pixels(for: targetSize)
+        let pixelSize = CGSize(width: side, height: side)
 
         return await withCheckedContinuation { continuation in
             let state = RequestState()

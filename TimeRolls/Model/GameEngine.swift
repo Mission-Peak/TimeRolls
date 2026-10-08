@@ -870,6 +870,39 @@ final class GameEngine {
         return .correct
     }
 
+#if DEBUG
+    /// Plays by itself, one round every `TIMEROLLS_SOAK` seconds, when launched with that
+    /// set: right answer, move on, keep going past the day's challenge. For measuring
+    /// what memory does over a long run without somebody tapping for an hour. Debug
+    /// builds only.
+    func soakIfAsked() {
+        guard let pace = ProcessInfo.processInfo.environment["TIMEROLLS_SOAK"]
+            .flatMap(Double.init) else { return }
+        Task { @MainActor [weak self] in
+            var played = 0
+            while true {
+                try? await Task.sleep(for: .seconds(pace))
+                guard let self else { return }
+                switch phase {
+                case .playing:
+                    guard let level,
+                          let answer = level.photos.first(where: { $0.id == level.correctPhotoID })
+                    else { continue }
+                    select(answer)
+                    try? await Task.sleep(for: .seconds(pace / 2))
+                    advance()
+                    played += 1
+                    if played % 25 == 0 { print("soak: \(played) rounds") }
+                case .sessionComplete:
+                    continueSession()
+                default:
+                    break
+                }
+            }
+        }
+    }
+#endif
+
     /// "Show me different photos" — a fresh set without spending a slot in the session.
     func skip() {
         nextLevel()

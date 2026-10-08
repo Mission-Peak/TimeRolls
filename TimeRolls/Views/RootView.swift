@@ -52,7 +52,12 @@ struct RootView: View {
                      engine.settings.textScale.multiplier * (sizeClass == .regular ? 1.12 : 1.0))
         .environment(\.photoHighContrast, highContrast)
         .tint(Palette.accent)
-        .task { await engine.start() }
+        .task {
+            await engine.start()
+#if DEBUG
+            engine.soakIfAsked()
+#endif
+        }
         .onChange(of: scenePhase) { _, phase in
             // Engagement events ride along quietly; leaving the app is a good moment to send.
             if phase != .active {
@@ -193,15 +198,16 @@ struct FirstRunView: View {
     /// chosen anyway, and asking put a list of five things to weigh up in front of
     /// somebody who had not yet seen a single round. Whoever wants fewer can turn them off
     /// in setup, once they know what they are turning off.
-    private enum Stage { case intro, voice, challenge, movingOn }
+    ///
+    /// The same went for the daily challenge's size: it starts at eight cards, and is
+    /// changed in setup by whoever wants it shorter or longer.
+    private enum Stage { case intro, voice, movingOn }
     @State private var stage: Stage = .intro
 
     var body: some View {
         switch stage {
         case .voice:
-            VoiceSetupView(engine: engine) { stage = .challenge }
-        case .challenge:
-            DailyChallengeSetupView(engine: engine) { stage = .movingOn }
+            VoiceSetupView(engine: engine) { stage = .movingOn }
         case .movingOn:
             MovingOnView(engine: engine) {
                 Task { await engine.completeFirstRun() }
@@ -515,141 +521,6 @@ struct VoiceSetupView: View {
     }
 }
 
-/// How much of a day the game should ask for.
-///
-/// Asked during setup rather than buried in caregiver settings, because it is the one
-/// number that decides what playing this game feels like. Too high and the challenge is
-/// something to fail; too low and finishing means nothing. It is also the only thing in
-/// the app a person can fall short of, which is why the wording never mentions failing and
-/// why the smallest option is offered first and described as a real choice rather than a
-/// lesser one.
-struct DailyChallengeSetupView: View {
-
-    @Bindable var engine: GameEngine
-    let onDone: () -> Void
-
-    /// Three sizes of day, described by what they feel like rather than by how long they
-    /// take.
-    ///
-    /// They used to carry times — "about five minutes", "ten minutes or so", "twenty
-    /// minutes". That was a promise the game cannot keep. How long eight cards take
-    /// depends entirely on who is playing: somebody who studies each photograph and
-    /// somebody who answers straight away can take four times as long over the same
-    /// eight, and a caregiver who was told ten minutes and watched it run to half an hour
-    /// has been let down by the setup screen rather than by the person playing.
-    private static let choices: [(cards: Int, name: String, detail: String)] = [
-        (5, "A short visit", "A good place to start, and enough on a day when somebody "
-                           + "is tired."),
-        (8, "A proper sit-down", "Long enough to settle into, short enough to finish."),
-        (12, "A good long session", "For somebody who would rather keep going than be "
-                                  + "asked to stop."),
-    ]
-
-    /// The range the number may be nudged to by hand.
-    private static let fewest = 3
-    private static let most = 20
-
-    var body: some View {
-        OnboardingScroll {
-            VStack(alignment: .leading, spacing: 20) {
-                VStack(alignment: .leading, spacing: 8) {
-                    Text("Today's challenge")
-                        .font(.system(size: 30, weight: .heavy, design: .rounded))
-                        .foregroundStyle(Meadow.title)
-                        .accessibilityAddTraits(.isHeader)
-                    Text("Each day has a small challenge to finish. How many photo cards "
-                       + "should it take? You can change this later, and there's no hurry "
-                       + "— the day lasts as long as it lasts.")
-                        .font(.system(size: 17, design: .rounded))
-                        .foregroundStyle(Meadow.body)
-                }
-
-                ForEach(Self.choices, id: \.cards) { choice in
-                    Button {
-                        engine.settings.dailyCardGoal = choice.cards
-                        engine.settings.save()
-                    } label: {
-                        StickerCard(fill: engine.settings.dailyCardGoal == choice.cards
-                                    ? Meadow.cardMint : Meadow.cardCream) {
-                            HStack(alignment: .top, spacing: 14) {
-                                Image(systemName: engine.settings.dailyCardGoal == choice.cards
-                                      ? "checkmark.circle.fill" : "circle")
-                                    .font(.system(size: 26, weight: .black))
-                                    .foregroundStyle(engine.settings.dailyCardGoal == choice.cards
-                                                     ? Meadow.on : Meadow.muted)
-                                VStack(alignment: .leading, spacing: 4) {
-                                    Text("\(choice.name) · \(choice.cards) cards")
-                                        .font(.system(size: 19, weight: .heavy, design: .rounded))
-                                        .foregroundStyle(Meadow.title)
-                                    Text(choice.detail)
-                                        .font(.system(size: 15, design: .rounded))
-                                        .foregroundStyle(Meadow.body)
-                                        .fixedSize(horizontal: false, vertical: true)
-                                }
-                                Spacer(minLength: 0)
-                            }
-                        }
-                    }
-                    .buttonStyle(.plain)
-                    .accessibilityAddTraits(engine.settings.dailyCardGoal == choice.cards
-                                            ? [.isButton, .isSelected] : .isButton)
-                }
-
-                // The exact number, for anybody the three sizes do not fit. The named
-                // choices stay because most people want to pick a feeling rather than a
-                // number — this is here so that wanting seven is not a reason to settle
-                // for eight.
-                StickerCard(fill: Meadow.cardCream) {
-                    HStack(spacing: 14) {
-                        VStack(alignment: .leading, spacing: 2) {
-                            Text("Or set the number yourself")
-                                .font(.system(size: 17, weight: .heavy, design: .rounded))
-                                .foregroundStyle(Meadow.title)
-                            Text("\(engine.settings.dailyCardGoal) photo "
-                               + "\(engine.settings.dailyCardGoal == 1 ? "card" : "cards") a day")
-                                .font(.system(size: 15, design: .rounded))
-                                .foregroundStyle(Meadow.body)
-                        }
-                        Spacer(minLength: 0)
-                        Stepper(value: $engine.settings.dailyCardGoal,
-                                in: Self.fewest...Self.most) {
-                            EmptyView()
-                        }
-                        .labelsHidden()
-                        .onChange(of: engine.settings.dailyCardGoal) { _, _ in
-                            engine.settings.save()
-                        }
-                    }
-                }
-                .accessibilityElement(children: .combine)
-                .accessibilityLabel("Photo cards a day")
-                .accessibilityValue("\(engine.settings.dailyCardGoal)")
-
-                Text("Finishing the challenge is the only thing the game keeps score of, "
-                   + "and it can be finished across the whole day. Afterwards the game "
-                   + "carries on for as long as anybody wants to play.")
-                    .font(.system(size: 14, design: .rounded))
-                    .foregroundStyle(Meadow.muted)
-                    .fixedSize(horizontal: false, vertical: true)
-
-                Button {
-                    engine.settings.save()
-                    onDone()
-                } label: {
-                    // Not "Start playing". The next screen is one more thing to read —
-                    // how to move on from a photograph — and a button that promises the
-                    // game and delivers another setup screen is a small lie.
-                    MeadowButtonLabel(title: "Next", symbol: "arrow.right")
-                }
-                .buttonStyle(.plain)
-                .frame(maxWidth: .infinity)
-            }
-            .padding(24)
-            .readableColumn(maxWidth: 620)
-        }
-    }
-}
-
 // MARK: - Getting the photos ready
 
 /// Shown while the first pass over a library is still running (spec §8).
@@ -675,7 +546,7 @@ struct GettingReadyView: View {
         ScrollView {
             VStack(spacing: 22) {
                 VStack(spacing: 8) {
-                    Text("Getting your photos ready")
+                    Text("Preparing your photos")
                         .font(.system(size: 30, weight: .heavy, design: .rounded))
                         .foregroundStyle(Meadow.title)
                         .multilineTextAlignment(.center)
@@ -717,7 +588,7 @@ struct GettingReadyView: View {
                         .accessibilityElement(children: .ignore)
                         .accessibilityLabel(total > 0
                                             ? "\(done) of \(total) photos looked at"
-                                            : "Getting your photos ready")
+                                            : "Preparing your photos")
 
                         Text("Your photos never leave this device.")
                             .font(.system(size: 14, weight: .semibold, design: .rounded))
