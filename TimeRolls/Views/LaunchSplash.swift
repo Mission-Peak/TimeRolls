@@ -2,9 +2,9 @@
 //  LaunchSplash.swift
 //  Time Rolls
 //
-//  The first thing anybody sees, on every launch: the app icon's own picture — the hills,
-//  the sun, the film strip — across the bottom of the screen, and "Time Rolls, by Mission
-//  Peak" written in the sky above it.
+//  The first thing anybody sees, on every launch: a meadow with a sun and a winding film
+//  strip across the bottom of the screen — Hanna's launch designs, one tall and one wide —
+//  and "Time Rolls, by Mission Peak" written in the sky above it.
 //
 //  iOS shows a static launch screen while the app loads, and cannot be told how long to
 //  show it. That screen is the sky's colour alone (Info.plist), so the picture and the name
@@ -29,12 +29,8 @@ struct LaunchSplash: View {
             let screen = geo.size
             ZStack {
                 Color("LaunchSky")
-                // The picture is square. Across the bottom of a tall screen it is the
-                // whole background with sky above it for the name; on a screen wider
-                // than it is tall — an iPad on its side — filling the width made it
-                // taller than the screen, cut off its top and bottom, and put the name
-                // over the sun and the film strip. There it is the icon itself instead,
-                // beside the name.
+                // Two of Hanna's designs: a tall one for phones and iPads upright, a
+                // wide one for screens on their side.
                 if screen.width > screen.height * 0.9 {
                     wide(screen)
                 } else {
@@ -51,66 +47,48 @@ struct LaunchSplash: View {
         .accessibilityAddTraits(.isModal)
     }
 
-    private var pictureSize: CGSize {
-        UIImage(named: "LaunchScene")?.size ?? CGSize(width: 2400, height: 5215)
-    }
-
-    /// Phones, and iPads upright: the icon's picture across the bottom, the name in the
-    /// sky above it.
+    /// Phones, and iPads upright: the tall design, its meadow along the bottom and the
+    /// name in the sky above it.
     private func tall(_ screen: CGSize) -> some View {
-        let picture = pictureSize
-        // Tools/Brand/make_launch_art.py draws the icon square across the full width at
-        // the bottom of a tall sky, so filling the width puts the icon's picture at the
-        // bottom of every screen; an iPad, being wider, shows less of the sky.
-        let scale = max(screen.width / picture.width, screen.height / picture.height)
-        let size = CGSize(width: picture.width * scale, height: picture.height * scale)
-        // The sky left above the icon's picture, where the name goes.
-        let sky = max(screen.height - picture.width * scale, screen.height * 0.3)
-        return ZStack(alignment: .top) {
-            Image("LaunchScene")
-                .resizable()
-                .interpolation(.high)
-                .frame(width: size.width, height: size.height)
-                .position(x: screen.width / 2, y: screen.height - size.height / 2)
-                .opacity(shown ? 1 : 0)
-            name(size: min(screen.width * 0.17, 120), alignment: .center)
-                .frame(width: screen.width, height: sky)
-                .opacity(shown ? 1 : 0)
-        }
-        .frame(width: screen.width, height: screen.height)
+        scene("LaunchScene", screen, artTop: Self.tallArtTop,
+              fallback: CGSize(width: 2064, height: 4690),
+              nameSize: min(screen.width * 0.17, 120))
     }
 
-    /// Screens wider than they are tall: a wide meadow across the whole screen, from
-    /// Hanna's design, with the name in the sky on the left.
-    ///
-    /// The square icon picture could not do this. Filled to the width of an iPad on its
-    /// side it was taller than the screen, lost its top and bottom, and the name sat on
-    /// the sun and the film strip. The wide picture (make_launch_art.py, `launch_wide`)
-    /// is 4:3 with its meadow along the bottom, so it fills an iPad exactly and a wider
-    /// screen crops only sky.
+    /// Screens wider than they are tall: the wide design. It is 4:3 like an iPad on its
+    /// side; an iPhone on its side is wider still and shows the picture's mirrored edges,
+    /// which make_launch_art.py adds for it.
     private func wide(_ screen: CGSize) -> some View {
-        let picture = UIImage(named: "LaunchWide")?.size ?? CGSize(width: 2752, height: 2064)
+        scene("LaunchWide", screen, artTop: Self.wideArtTop,
+              fallback: CGSize(width: 4607, height: 2064),
+              nameSize: min(screen.width * 0.08, screen.height * 0.11, 120))
+    }
+
+    /// Where the art begins — the top of the sun — as a share of each picture's height,
+    /// measured on the designs by Tools/Brand/make_launch_art.py's layout. The name sits a
+    /// little above the middle of the sky over it, where the designs put it.
+    private static let tallArtTop: CGFloat = 0.574
+    private static let wideArtTop: CGFloat = 0.344
+
+    /// The picture filling the screen, its meadow at the bottom, the name in its sky.
+    private func scene(_ image: String, _ screen: CGSize, artTop: CGFloat, fallback: CGSize,
+                       nameSize: CGFloat) -> some View {
+        let picture = UIImage(named: image)?.size ?? fallback
         let scale = max(screen.width / picture.width, screen.height / picture.height)
         let size = CGSize(width: picture.width * scale, height: picture.height * scale)
-        let left = (screen.width - size.width) / 2
-        // Where the trees on the left begin, as a share of the picture's height: the name
-        // sits in the sky above them, where the design has it.
-        let treeline = screen.height - size.height * (1 - Self.wideTreeline)
-        return ZStack(alignment: .topLeading) {
-            Image("LaunchWide")
+        let artTopOnScreen = screen.height - size.height * (1 - artTop)
+        return ZStack {
+            Image(image)
                 .resizable()
                 .interpolation(.high)
                 .frame(width: size.width, height: size.height)
                 .position(x: screen.width / 2, y: screen.height - size.height / 2)
-            name(size: min(size.width * 0.08, 120), alignment: .center)
-                .position(x: left + size.width * 0.256, y: treeline * 0.6)
+            name(size: nameSize, alignment: .center)
+                .position(x: screen.width / 2, y: artTopOnScreen * 0.53)
         }
         .frame(width: screen.width, height: screen.height)
         .opacity(shown ? 1 : 0)
     }
-
-    /// The top of the treeline on the left of the wide picture, as a share of its height.
-    private static let wideTreeline: CGFloat = 0.697
 
     private func name(size: CGFloat, alignment: HorizontalAlignment) -> some View {
         VStack(alignment: alignment, spacing: size * 0.12) {

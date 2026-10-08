@@ -24,6 +24,7 @@ from scipy import ndimage
 
 ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 ASSETS = os.path.join(ROOT, "TimeRolls", "Assets.xcassets")
+BRAND = os.path.dirname(os.path.abspath(__file__))
 
 # Taken from the icon itself.
 SKY = (0xE5, 0xD0, 0xCD)
@@ -143,6 +144,36 @@ def film_strip(draw, width, centre, half, frames):
         x += frame
 
 
+# The icon in the launch designs' colours. Each pair is a colour as the icon source has
+# it, and the same part of the scene as the launch designs paint it: a cream sky, a peach
+# sun, their greens, film strip and trees.
+LAUNCH_COLOURS = [
+    ((229, 209, 206), (247, 243, 231)),   # sky
+    ((190, 156, 133), (245, 175, 124)),   # sun
+    ((115, 129, 101), (110, 131, 98)),    # far hills
+    ((86, 102, 77), (86, 107, 76)),       # middle hills
+    ((66, 86, 62), (61, 84, 58)),         # front hill
+    ((109, 95, 79), (120, 99, 79)),       # trees
+    ((82, 88, 82), (85, 92, 84)),         # film strip
+    ((50, 50, 44), (48, 53, 39)),         # outlines
+]
+
+
+def recolour(image, pairs, sharpness=6):
+    """Move every pixel toward the new colour of the palette colours it is nearest.
+
+    Weighted by closeness rather than snapped to the nearest, so the soft edge between a
+    hill and the sky becomes a soft edge between the new hill and the new sky.
+    """
+    src = np.array([a for a, _ in pairs], np.float32)
+    shift = np.array([b for _, b in pairs], np.float32) - src
+    a = np.asarray(image.convert("RGB"), np.float32)
+    d = np.sqrt(((a[:, :, None, :] - src[None, None]) ** 2).sum(-1)) + 1e-3
+    w = 1 / d ** sharpness
+    w /= w.sum(-1, keepdims=True)
+    return Image.fromarray((a + (w[..., None] * shift[None, None]).sum(-2)).clip(0, 255).astype(np.uint8))
+
+
 def diffuse(a, iters, k, lam=0.2):
     """Smooth flat areas while keeping edges (Perona-Malik): compression noise goes, the
     lines stay."""
@@ -228,28 +259,57 @@ def sharp(src, out_w, out_h, film):
     return Image.composite(photo, flat, mask)
 
 
-def launch_wide(source_path, width=2752, height=2064):
-    """The launch screen for screens wider than they are tall, from Hanna's design.
+def enlarge(image, width, height):
+    """A clean flat illustration made larger without going soft or blocky: the JPEG noise
+    smoothed out first (keeping the edges), then enlarged, then lightly sharpened."""
+    cleaned = diffuse(np.asarray(image.convert("RGB"), np.float32), 20, 6.0)
+    big = Image.fromarray(cleaned.clip(0, 255).astype(np.uint8)).resize((width, height), Image.LANCZOS)
+    return big.filter(ImageFilter.UnsharpMask(radius=2.5, percent=70, threshold=2))
 
-    The design (Tools/Brand/launch-wide-source.jpg) is a wide meadow — hills across the
-    whole width, the sun, two film strips, pines and round trees — with the name written
-    in the sky on the left. The name is taken out of the picture here and drawn by
-    LaunchSplash.swift instead, so it is crisp at any size; the picture is rebuilt sharp
-    at iPad resolution; and sky is added above it, because the design is 16:9 and an iPad
-    on its side is 4:3. Wider screens crop that added sky off the top.
-    """
-    art = Image.open(source_path).convert("RGB")
-    a = np.asarray(art).copy()
-    # Paint the sky back over the name, row by row, from a strip of plain sky beside it.
-    for y in range(195, 395):
-        a[y, 70:645] = np.median(a[y, 655:720], axis=0)
+
+def erase(a, box, pad=14):
+    """Paint the sky back over a block of text, row by row, from the sky either side of it."""
+    x0, y0, x1, y1 = box
+    x0, y0, x1, y1 = max(x0 - pad, 0), y0 - pad, min(x1 + pad, a.shape[1]), y1 + pad
+    for y in range(y0, y1):
+        beside = np.concatenate([a[y, max(x0 - 40, 0):x0], a[y, x1:x1 + 40]])
+        a[y, x0:x1] = np.median(beside, axis=0)
+    return a
+
+
+# Hanna's two launch designs (October 2026). Each had "Time Rolls / by Mission Peak" set in
+# a serif; the app draws the name itself in its own bold rounded face, so it is taken out
+# of the pictures here. Where the name was, and where the art begins, are measured on the
+# designs and must match LaunchSplash.swift.
+TALL_SOURCE = "launch-tall-source.jpg"   # 768 x 1376
+TALL_TEXT = (92, 244, 677, 425)
+TALL_EXTRA_SKY = 369                     # so the picture is 0.44 wide-to-tall, like a tall phone
+WIDE_SOURCE = "launch-wide-source.jpg"   # 1200 x 896
+WIDE_TEXT = (343, 84, 858, 243)
+WIDE_EXTRA_SIDE = 400                    # each side, so it covers an iPhone on its side
+
+
+def launch_tall(width=2064):
+    """Phones, and iPads upright: the tall design, with sky added above it for the
+    tallest phones, at iPad width."""
+    a = np.asarray(Image.open(os.path.join(BRAND, TALL_SOURCE)).convert("RGB")).copy()
+    a = erase(a, TALL_TEXT)
+    sky = np.median(a[:40].reshape(-1, 3), axis=0).astype(np.uint8)
+    a = np.concatenate([np.tile(sky, (TALL_EXTRA_SKY, a.shape[1], 1)), a])
     art = Image.fromarray(a)
-    scene_h = round(width * art.height / art.width)
-    picture = sharp(art, width, scene_h, film=(79, 86, 71))
-    sky = tuple(int(v) for v in np.asarray(picture)[2:8, :].reshape(-1, 3).mean(0))
-    canvas = Image.new("RGB", (width, height), sky)
-    canvas.paste(picture, (0, height - scene_h))
-    return canvas
+    return enlarge(art, width, round(width * art.height / art.width))
+
+
+def launch_wide(height=2064):
+    """Screens wider than they are tall: the wide design, which is 4:3 like an iPad on its
+    side. An iPhone on its side is wider still, so the picture carries on past each edge as
+    its own mirror image; an iPad never shows that part."""
+    a = np.asarray(Image.open(os.path.join(BRAND, WIDE_SOURCE)).convert("RGB")).copy()
+    a = erase(a, WIDE_TEXT)
+    e = WIDE_EXTRA_SIDE
+    a = np.concatenate([a[:, e:0:-1], a, a[:, -2:-e - 2:-1]], axis=1)
+    art = Image.fromarray(a)
+    return enlarge(art, round(height * art.width / art.height), height)
 
 
 def launch_scene(icon, width=2400, height=5215):
@@ -283,24 +343,28 @@ def main():
     if icon.size != (1024, 1024):
         icon = icon.resize((1024, 1024), Image.LANCZOS)
 
+    # The app icon: the icon picture in the launch designs' colours, so the two match.
+    app_icon = recolour(icon, LAUNCH_COLOURS)
     folder = os.path.join(ASSETS, "AppIcon.appiconset")
     for name in ("icon.png", "icon-dark.png", "icon-tinted.png"):
-        icon.save(os.path.join(folder, name), optimize=True)
+        app_icon.save(os.path.join(folder, name), optimize=True)
 
-    folder = os.path.join(ASSETS, "LaunchWide.imageset")
-    os.makedirs(folder, exist_ok=True)
-    launch_wide(os.path.join(os.path.dirname(os.path.abspath(__file__)), "launch-wide-source.jpg")
-                ).save(os.path.join(folder, "launch-wide.jpg"), quality=90, optimize=True)
-    with open(os.path.join(folder, "Contents.json"), "w") as f:
-        json.dump({"images": [{"filename": "launch-wide.jpg", "idiom": "universal"}],
-                   "info": {"author": "xcode", "version": 1}}, f, indent=2)
-        f.write("\n")
-
-    launch_scene(icon).save(os.path.join(ASSETS, "LaunchScene.imageset", "launch-scene.jpg"),
-                        quality=90, optimize=True)
+    # PNG, not JPEG: these are flat illustrations, which PNG keeps exactly and JPEG
+    # blurs into blocks along every edge.
+    for folder, name, picture in (("LaunchScene.imageset", "launch-scene.png", launch_tall()),
+                                  ("LaunchWide.imageset", "launch-wide.png", launch_wide())):
+        folder = os.path.join(ASSETS, folder)
+        for old in os.listdir(folder):
+            if old.startswith("launch-") and old != name:
+                os.remove(os.path.join(folder, old))
+        picture.save(os.path.join(folder, name), optimize=True)
+        with open(os.path.join(folder, "Contents.json"), "w") as f:
+            json.dump({"images": [{"filename": name, "idiom": "universal"}],
+                       "info": {"author": "xcode", "version": 1}}, f, indent=2)
+            f.write("\n")
 
     # The static launch screen is this colour alone, the sky the scene fades in under.
-    sky = Image.open(os.path.join(ASSETS, "LaunchScene.imageset", "launch-scene.jpg")).getpixel((10, 10))
+    sky = Image.open(os.path.join(ASSETS, "LaunchScene.imageset", "launch-scene.png")).convert("RGB").getpixel((10, 10))
     colour = {"colors": [{"idiom": "universal", "color": {"color-space": "srgb", "components": {
         "red": "0x%02X" % sky[0], "green": "0x%02X" % sky[1], "blue": "0x%02X" % sky[2],
         "alpha": "1.000"}}}], "info": {"author": "xcode", "version": 1}}
