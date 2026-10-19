@@ -15,7 +15,7 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
-		8D7335E030532C5E00902078 /* PBXFileSystemSynchronizedBuildFileExceptionSet */ = {
+		8D7335E030532C5E00902078 /* Exceptions for "TimeRolls" folder in "TimeRolls" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				Secrets.xcconfig,
@@ -29,7 +29,7 @@
 		8D7335BF30532C5E00902078 /* TimeRolls */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
-				8D7335E030532C5E00902078 /* PBXFileSystemSynchronizedBuildFileExceptionSet */,
+				8D7335E030532C5E00902078 /* Exceptions for "TimeRolls" folder in "TimeRolls" target */,
 			);
 			path = TimeRolls;
 			sourceTree = "<group>";
@@ -171,6 +171,8 @@
 /* Begin XCBuildConfiguration section */
 		8D7335C630532C5F00902078 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReferenceAnchor = 8D7335BF30532C5E00902078 /* TimeRolls */;
+			baseConfigurationReferenceRelativePath = Secrets.xcconfig;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
@@ -235,6 +237,8 @@
 		};
 		8D7335C730532C5F00902078 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReferenceAnchor = 8D7335BF30532C5E00902078 /* TimeRolls */;
+			baseConfigurationReferenceRelativePath = Secrets.xcconfig;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
