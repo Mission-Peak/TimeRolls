@@ -18,12 +18,12 @@ struct AggregateStats: Codable, Sendable {
     var lastPlayed: Date?
     /// The first day anybody played. Set once and never moved.
     var firstPlayed: Date?
-    /// Stars earned, by day. Two for a round answered first time, one for a round that
-    /// took more than one go — nobody leaves a round with nothing — plus a bonus for
-    /// every three in a row, growing with the run.
     /// Questions somebody got wrong, as subject + answer, so they are never asked again.
     /// Play history rather than a caregiver's setting, which is why it lives here.
     var missedPairings: Set<String> = []
+    /// Stars earned, by day. Two for a round answered first time, one for a round that
+    /// took more than one go — nobody leaves a round with nothing — plus a bonus for
+    /// every three in a row, growing with the run.
     var starsByDay: [String: Int] = [:]
     /// Rounds answered first time, by day. Only used to grade a finished challenge out of
     /// three, never shown as a number — "you got 6 of 8 first time" is a mark, and this
@@ -47,6 +47,10 @@ struct AggregateStats: Codable, Sendable {
         totalLevels = value(.totalLevels, 0)
         totalSessions = value(.totalSessions, 0)
         lastPlayed = value(.lastPlayed, Date?.none)
+        // Every stored field has to be read back here. These two were saved and never
+        // loaded, so a restart forgot which questions had been missed and asked them again.
+        firstPlayed = value(.firstPlayed, Date?.none)
+        missedPairings = value(.missedPairings, Set<String>())
         starsByDay = value(.starsByDay, [:])
         firstTimeByDay = value(.firstTimeByDay, [:])
         totalStars = value(.totalStars, 0)
