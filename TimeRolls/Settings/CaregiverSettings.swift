@@ -120,6 +120,10 @@ struct CaregiverSettings: Codable, Equatable, Sendable {
     /// the ones it can't answer. iOS 27 and Apple Intelligence only; where either is
     /// missing, this does nothing at all.
     var checkedRounds = true
+    /// Whether anonymous usage statistics — screens opened, categories chosen, rounds
+    /// played — go to Firebase Analytics. Never a photo or anything about one; see
+    /// AppAnalytics.swift.
+    var shareUsageStats = true
 
     /// Everything the app makes a noise with, as one switch.
     ///
@@ -203,6 +207,7 @@ struct CaregiverSettings: Codable, Equatable, Sendable {
         livelyQuestions = value(.livelyQuestions, defaults.livelyQuestions)
         excludedPhotoIDs = value(.excludedPhotoIDs, defaults.excludedPhotoIDs)
         checkedRounds = value(.checkedRounds, defaults.checkedRounds)
+        shareUsageStats = value(.shareUsageStats, defaults.shareUsageStats)
         narration = value(.narration, defaults.narration)
         voiceIdentifier = value(.voiceIdentifier, defaults.voiceIdentifier)
         voiceAnswers = value(.voiceAnswers, defaults.voiceAnswers)

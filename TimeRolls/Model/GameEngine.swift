@@ -320,6 +320,9 @@ final class GameEngine {
         sessionLevelTotal = 0
         stats.recordSessionStart()
         telemetry.record(EngagementEvent(kind: .sessionStart))
+        AppAnalytics.sessionCategories(Array(settings.enabledPackIDs)
+                                        + (settings.localTriviaEnabled ? ["places_near_you"] : []),
+                                       ownPhotos: settings.ownPhotosOn)
         phase = .playing
         nextLevel()
     }
@@ -874,8 +877,23 @@ final class GameEngine {
                                          photoSetSize: level.photos.count,
                                          blendedPackPhotos: level.usesPackPhotos))
 
+        AppAnalytics.roundCompleted(category: Self.analyticsCategory(of: level),
+                                    game: level.theme.rawValue,
+                                    question: level.ask ?? "unknown",
+                                    firstTry: attempts == 1, attempts: attempts,
+                                    seconds: Int(elapsed.rounded()),
+                                    usedOwnPhoto: level.photos.contains(where: \.isPersonal))
+
         refreshCategories()
         return .correct
+    }
+
+    /// Which category a round counts under for usage statistics: the photo set its answer
+    /// came from, or "own_photos". Never the photo itself.
+    private static func analyticsCategory(of level: Level) -> String {
+        let answer = level.photos.first { $0.id == level.correctPhotoID }
+        if case let .pack(packID, _)? = answer?.origin { return packID }
+        return answer?.isPersonal == true ? "own_photos" : "unknown"
     }
 
 #if DEBUG
@@ -913,6 +931,10 @@ final class GameEngine {
 
     /// "Show me different photos" — a fresh set without spending a slot in the session.
     func skip() {
+        if let level, !answeredCorrectly {
+            AppAnalytics.roundSkipped(category: Self.analyticsCategory(of: level),
+                                      game: level.theme.rawValue)
+        }
         nextLevel()
     }
 
@@ -940,6 +962,7 @@ final class GameEngine {
         guard stats.hasMetChallenge(goal: goal) else { return false }
         settings.lastCelebratedDay = StatsStore.today
         settings.save()
+        AppAnalytics.dailyRollCompleted(goal: goal)
         return true
     }
 

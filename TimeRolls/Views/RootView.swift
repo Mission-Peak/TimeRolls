@@ -73,6 +73,7 @@ struct RootView: View {
         // The soft gate: a deliberate press-and-hold, then a plain confirmation. No password.
         .sheet(isPresented: $isShowingCaregiver) {
             CaregiverGateSheet(engine: engine)
+                .onAppear { AppAnalytics.screen(.setup) }
         }
         // Hold the session still while setup is open. Whoever opened it is not watching
         // the game, and the player is watching somebody else use the iPad.
@@ -113,6 +114,7 @@ struct RootView: View {
                              onCaregiverGate: { isShowingCaregiver = true },
                              onPlay: { tab = .play })
                 }
+                .onAppear { AppAnalytics.screen(.home) }
             }
             Tab("Play", systemImage: "play.fill", value: RootTab.play) {
                 ZStack {
@@ -127,6 +129,7 @@ struct RootView: View {
                         PlayView(engine: engine) { isShowingCaregiver = true }
                     }
                 }
+                .onAppear { AppAnalytics.screen(.play) }
             }
         }
         .tint(Meadow.button)
@@ -226,6 +229,10 @@ struct FirstRunView: View {
     }
 
     private var intro: some View {
+        introContent.onAppear { AppAnalytics.screen(.welcome) }
+    }
+
+    private var introContent: some View {
         OnboardingScroll {
             VStack(alignment: .leading, spacing: 22) {
                 VStack(alignment: .leading, spacing: 8) {

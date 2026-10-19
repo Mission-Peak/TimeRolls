@@ -13,6 +13,11 @@ struct TimeRollsApp: App {
     /// Up on every launch, first launch included, until `LaunchSplash.duration` has passed.
     @State private var showingSplash = true
 
+    init() {
+        // Before any screen appears, so the first app open is counted.
+        AppAnalytics.start(sharing: CaregiverSettings.load().shareUsageStats)
+    }
+
     var body: some Scene {
         WindowGroup {
             ZStack {

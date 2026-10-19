@@ -40,6 +40,7 @@ struct CategoryGrid: View {
                         tile(symbol: "person.crop.square.fill", tint: Meadow.badgeSage,
                              title: "My own photos",
                              isOn: engine.settings.ownPhotosOn) {
+                            AppAnalytics.themeToggled("own_photos", on: !engine.settings.ownPhotosOn)
                             choose(ownPhotos: !engine.settings.ownPhotosOn,
                                    packs: engine.settings.enabledPackIDs)
                         }
@@ -51,6 +52,7 @@ struct CategoryGrid: View {
                              isOn: engine.settings.enabledPackIDs.contains(pack.id)) {
                             var chosen = engine.settings.enabledPackIDs
                             if chosen.contains(pack.id) { chosen.remove(pack.id) } else { chosen.insert(pack.id) }
+                            AppAnalytics.themeToggled(pack.id, on: chosen.contains(pack.id))
                             choose(ownPhotos: engine.settings.ownPhotosOn, packs: chosen)
                         }
                     }
@@ -59,6 +61,7 @@ struct CategoryGrid: View {
                          title: "Places near you",
                          isOn: engine.settings.localTriviaEnabled) {
                         engine.settings.localTriviaEnabled.toggle()
+                        AppAnalytics.themeToggled("places_near_you", on: engine.settings.localTriviaEnabled)
                         engine.settings.save()
                         if engine.settings.localTriviaEnabled { engine.startLocalTriviaIfWanted() }
                     }

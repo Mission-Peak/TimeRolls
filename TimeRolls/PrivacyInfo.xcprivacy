@@ -2,20 +2,41 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-    <!-- No tracking of any kind: no advertising identifier, no third-party SDK, and
-         nothing that could link a person across apps or websites. -->
+    <!-- No tracking of any kind: no advertising identifier (FirebaseAnalyticsCore never
+         reads it), and nothing that could link a person across apps or websites. -->
     <key>NSPrivacyTracking</key>
     <false/>
     <key>NSPrivacyTrackingDomains</key>
     <array/>
 
-    <!-- Nothing is collected. Gameplay counts are written to a file inside this app's
-         own container and are never sent anywhere, so there is no collection to declare.
-         An earlier draft declared Product Interaction; that described an intention rather
-         than the code, and a manifest that over-declares is still a manifest that does not
-         match the app. -->
+    <!-- Anonymous usage statistics go to Firebase Analytics (TimeRolls/Telemetry/
+         AppAnalytics.swift): screens opened, categories chosen, how rounds go. Not linked
+         to anybody, not used for tracking, analytics only, and off when the player turns
+         off "Share usage statistics". Firebase's own SDK carries its own manifest for what
+         it collects itself (app instance ID, coarse location from the connection). -->
     <key>NSPrivacyCollectedDataTypes</key>
-    <array/>
+    <array>
+        <dict>
+            <key>NSPrivacyCollectedDataType</key>
+            <string>NSPrivacyCollectedDataTypeProductInteraction</string>
+            <key>NSPrivacyCollectedDataTypeLinked</key>
+            <false/>
+            <key>NSPrivacyCollectedDataTypeTracking</key>
+            <false/>
+            <key>NSPrivacyCollectedDataTypePurposes</key>
+            <array><string>NSPrivacyCollectedDataTypePurposeAnalytics</string></array>
+        </dict>
+        <dict>
+            <key>NSPrivacyCollectedDataType</key>
+            <string>NSPrivacyCollectedDataTypeOtherUsageData</string>
+            <key>NSPrivacyCollectedDataTypeLinked</key>
+            <false/>
+            <key>NSPrivacyCollectedDataTypeTracking</key>
+            <false/>
+            <key>NSPrivacyCollectedDataTypePurposes</key>
+            <array><string>NSPrivacyCollectedDataTypePurposeAnalytics</string></array>
+        </dict>
+    </array>
 
     <key>NSPrivacyAccessedAPITypes</key>
     <array>

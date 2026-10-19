@@ -889,6 +889,7 @@ struct HomeView: View {
                 MeadowScreen(title: "Themes") {
                     CategoryGrid(engine: engine)
                 }
+                .onAppear { AppAnalytics.screen(.themes) }
                 .toolbar { doneButton { isChoosingCategories = false } }
             }
         }
@@ -907,6 +908,7 @@ struct HomeView: View {
             NavigationStack {
                 HowsItGoingView(engine: engine)
                     .toolbar { doneButton { isShowingProgress = false } }
+                    .onAppear { AppAnalytics.screen(.progress) }
             }
         }
     }
@@ -992,7 +994,10 @@ struct HomeView: View {
                         .foregroundStyle(ink.opacity(0.9))
                         .fixedSize(horizontal: false, vertical: true)
                 }
-                Button(action: onPlay) {
+                Button {
+                    if challengeMet { AppAnalytics.playMore() }
+                    onPlay()
+                } label: {
                     HStack(spacing: 8) {
                         Text(buttonTitle)
                         Image(systemName: "arrow.right")

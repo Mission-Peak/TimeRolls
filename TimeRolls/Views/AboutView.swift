@@ -10,6 +10,10 @@ import SwiftUI
 struct AboutView: View {
 
     var body: some View {
+        content.onAppear { AppAnalytics.screen(.privacy) }
+    }
+
+    private var content: some View {
         MeadowScreen(title: "Privacy",
                      subtitle: "What stays on this device, and what leaves it.") {
             StickerCard(fill: Meadow.cardCream) {

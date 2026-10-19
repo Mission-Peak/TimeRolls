@@ -76,6 +76,17 @@ Made by Mission Peak.
 - Marketing URL: https://mission-peak.com/time-rolls
 - Privacy Policy URL: https://mission-peak.com/privacy/time-rolls
 
+### App Privacy (nutrition label) — since build 19, with Firebase Analytics
+
+Data Not Linked to You, used for Analytics only, not used for tracking:
+- Usage Data → Product Interaction (screens opened, categories chosen, rounds played)
+- Usage Data → Other Usage Data (session length, app opens)
+- Identifiers → Device ID (Firebase's app instance ID; not the advertising identifier)
+- Location → Coarse Location (Firebase derives country/region from the connection)
+
+Players can turn it off: Setup → Share usage statistics. No advertising identifier is read
+(FirebaseAnalyticsCore), so no App Tracking Transparency prompt is needed.
+
 ## Category
 
 - Primary: Games → Trivia

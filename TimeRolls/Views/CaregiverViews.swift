@@ -272,11 +272,26 @@ struct CaregiverHubView: View {
 
     private var privacyCard: some View {
         StickerCard(fill: Meadow.cardLavender) {
-            NavigationLink { AboutView() } label: {
-                MeadowRow(symbol: "lock.shield.fill", tint: Meadow.badgeOlive,
-                          title: "Privacy", detail: nil, chevron: true)
+            VStack(alignment: .leading, spacing: 12) {
+                NavigationLink { AboutView() } label: {
+                    MeadowRow(symbol: "lock.shield.fill", tint: Meadow.badgeOlive,
+                              title: "Privacy", detail: nil, chevron: true)
+                }
+                .buttonStyle(.plain)
+                VStack(alignment: .leading, spacing: 4) {
+                    toggleRow(symbol: "chart.bar.xaxis", tint: Meadow.badgeSlate,
+                              title: "Share usage statistics",
+                              isOn: $engine.settings.shareUsageStats)
+                        .background(.white.opacity(0.7),
+                                    in: RoundedRectangle(cornerRadius: 18, style: .continuous))
+                    MeadowNote(text: "Which screens and categories are used and how rounds "
+                               + "go, with no photos and nothing about them. Helps us "
+                               + "improve the game.")
+                }
             }
-            .buttonStyle(.plain)
+        }
+        .onChange(of: engine.settings.shareUsageStats) { _, sharing in
+            AppAnalytics.setSharing(sharing)
         }
     }
 
